@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="8dp"
+    app:cardBackgroundColor="@color/purple_500">
+
+    <FrameLayout
+        android:id="@+id/standard_bottom_sheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_whats_app"
+                style="@style/BottomSheetItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@android:drawable/ic_dialog_map"
+                android:drawableTint="#000000"
+                android:text="Whats App"
+                app:layout_constraintTop_toBottomOf="@+id/txt_share" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_download"
+                style="@style/BottomSheetItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@android:drawable/stat_sys_download"
+                android:drawableTint="#000000"
+                android:text="Download"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_copy"
+                style="@style/BottomSheetItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="?android:attr/actionModeWebSearchDrawable"
+                android:drawableTint="#000000"
+                android:text="Copy"
+                app:layout_constraintTop_toBottomOf="@+id/txt_download" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_share"
+                style="@style/BottomSheetItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:drawableStart="?attr/actionModeShareDrawable"
+                android:drawableTint="#000000"
+                android:text="Share"
+                app:layout_constraintTop_toBottomOf="@+id/txt_copy" />
+        </LinearLayout>
+
+    </FrameLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
