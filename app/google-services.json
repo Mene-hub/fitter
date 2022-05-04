@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "22435898778",
+    "project_id": "fitter-8363a",
+    "storage_bucket": "fitter-8363a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:22435898778:android:b8e0ca8cb430d790ac4623",
+        "android_client_info": {
+          "package_name": "com.fitterAPP.fitter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "22435898778-iijcvpeiov0k2d9a6krs0ubiad5ukf8u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVjD2BWT_zub0PYd2jIEANeK49MeZpyhE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "22435898778-iijcvpeiov0k2d9a6krs0ubiad5ukf8u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
