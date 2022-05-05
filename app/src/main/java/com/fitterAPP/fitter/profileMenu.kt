@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.fitterAPP.fitter.databinding.FragmentProfileMenuBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
@@ -35,7 +36,19 @@ class profileMenu : BottomSheetDialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_profile_menu, container, false)
+    ): View? {
+        var v:View  = inflater.inflate(R.layout.fragment_profile_menu, container, false)
+        val searchbt : AppCompatTextView = v.findViewById(R.id.txt_search_profiles)
+        searchbt.setOnClickListener( View.OnClickListener {
+            (activity as MainActivity).showSeach()
+            dismiss();
+        })
+
+
+
+        return v;
+    }
+
 
     companion object {
         const val TAG = "ModalBottomSheet"

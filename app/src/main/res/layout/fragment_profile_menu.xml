@@ -44,7 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:drawableStart="@android:drawable/checkbox_off_background"
+                android:drawableStart="?android:attr/actionModeWebSearchDrawable"
                 android:drawableTint="#000000"
                 android:text="Search Profiles"
                 app:layout_constraintTop_toTopOf="parent" />
