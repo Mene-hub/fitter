@@ -40,6 +40,15 @@
             android:textColor="@color/black"
             android:textSize="24dp" />
 
+        <ImageView
+            android:id="@+id/MenuBt"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_weight="0"
+            android:tint="#000000"
+            app:srcCompat="@drawable/baseline_menu_24" />
+
     </LinearLayout>
 
     <androidx.fragment.app.FragmentContainerView

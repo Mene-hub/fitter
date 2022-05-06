@@ -71,6 +71,18 @@
                 android:drawableTint="#000000"
                 android:text="Calendar"
                 app:layout_constraintTop_toBottomOf="@+id/txt_logout" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_mycards"
+                style="@style/BottomSheetItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_marginTop="8dp"
+                android:drawableStart="@android:drawable/checkbox_off_background"
+                android:drawableTint="#000000"
+                android:text="My Cards"
+                app:layout_constraintTop_toBottomOf="@+id/txt_logout" />
         </LinearLayout>
 
     </FrameLayout>

@@ -3,6 +3,7 @@ package com.fitterAPP.fitter
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -13,14 +14,15 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var ttMenu : LinearLayout;
+    private lateinit var ttprofile : LinearLayout;
+    private lateinit var menuiv : ImageView;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        ttMenu = findViewById(R.id.LL_Profile_menu)
-        ttMenu?.setOnClickListener {
+        menuiv = findViewById(R.id.MenuBt)
+        menuiv?.setOnClickListener {
             val modalBottomSheet = profileMenu()
             modalBottomSheet.show(supportFragmentManager, profileMenu.TAG)
         }
