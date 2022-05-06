@@ -8,7 +8,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
@@ -45,6 +47,7 @@ class MainActivity : AppCompatActivity() {
         val tmpButtonSignOut : Button = findViewById(R.id.btn_signout)
         tmpButtonSignOut.setOnClickListener{
             auth.signOut()
+            findViewById<TextView>(R.id.status).text =  "USER NOT LOGGED IN"
         }
     }
 
@@ -54,15 +57,17 @@ class MainActivity : AppCompatActivity() {
         val currentUser = auth.currentUser
         if(currentUser != null) {
             //updateUI(currentUser) UPDATE UI ACCORDINGLY
-            findViewById<TextView>(R.id.status).text =  auth.currentUser?.uid.toString()
+            findViewById<TextView>(R.id.status).text =  auth.currentUser?.displayName.toString()
             Log.w(TAG_login, auth.currentUser?.email.toString())
+            Log.w(TAG_login, auth.currentUser?.uid.toString())
+
         }else{
             //USER NOT LOGGED IN - needs to login
         }
     }
 
     //LOGIN VIA EMAIL AND PASSWORD
-    private fun loginEmailPSW(): View.OnClickListener? {
+    private fun loginEmailPSW(): View.OnClickListener {
         val listener = View.OnClickListener {
             val email : String = findViewById<EditText>(R.id.et_email).text.toString()
             val password : String = findViewById<EditText>(R.id.et_password).text.toString()
@@ -72,10 +77,10 @@ class MainActivity : AppCompatActivity() {
                     if(task.isSuccessful){
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG_login,  "Login success")
-                        val user = auth.currentUser
-                        //updateUI(user) UPDATE UI ACCORDINGLY
 
-                        findViewById<TextView>(R.id.status).text = auth.currentUser?.uid.toString()
+                        //val user = auth.currentUser
+                        //updateUI(user) UPDATE UI ACCORDINGLY
+                        findViewById<TextView>(R.id.status).text = auth.currentUser?.displayName.toString()
                     }else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG_login, "Login failed", task.exception)
@@ -99,13 +104,21 @@ class MainActivity : AppCompatActivity() {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG_login, "User creation: OK")
 
-                        findViewById<TextView>(R.id.status).text =  auth.currentUser?.uid.toString()
+                        /*
+                        //TESTING AGGIUNTA NOME UTENTE AL PROFILO
+                        var updater = UserProfileChangeRequest.Builder().setDisplayName("MiraiMizu").build()
+                        auth.currentUser?.updateProfile(updater)
+                        Log.w(TAG_login,auth.currentUser?.displayName.toString())
+                        */
+
+                        findViewById<TextView>(R.id.status).text =  auth.currentUser?.displayName.toString()
                     }else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG_login, "User creation: FAILED", task.exception)
                         finish()
                     }
                 }
+
         }
         return listener
     }
