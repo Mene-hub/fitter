@@ -13,6 +13,7 @@
     <color name="gray">#465154</color>
     <color name="black">#191d1e</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="blue_link">#0645AD</color>
 
 
 </resources>
