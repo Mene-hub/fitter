@@ -8,19 +8,19 @@ class RealTimeDBHelper {
 
         private val database = FirebaseDatabase
             .getInstance("https://fitter-8363a-default-rtdb.europe-west1.firebasedatabase.app/")
-            .getReference("Athlete")
+            .getReference("FITNESS_CARDS")
 
-        //Lettura dal database
+        //Reading from db
         fun readToDoItems(athleteEventListener: ChildEventListener){
             database.addChildEventListener(athleteEventListener)
         }
 
-        //scrittura
+        //Writing
         fun setToDoItem(key : String, athlete : Athlete){
             database.child(key).setValue(athlete)
         }
 
-        //eliminazione
+        //Deleting entire node
         fun removeToDoItem(key : String){
             database.child(key).removeValue()
         }
