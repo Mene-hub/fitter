@@ -46,7 +46,7 @@
             android:layout_height="30dp"
             android:layout_gravity="center"
             android:layout_weight="0"
-            android:tint="#000000"
+            app:tint="#000000"
             app:srcCompat="@drawable/baseline_menu_24" />
 
     </LinearLayout>
