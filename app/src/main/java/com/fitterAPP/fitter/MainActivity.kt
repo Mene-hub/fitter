@@ -33,10 +33,16 @@ class MainActivity : AppCompatActivity() {
 
     fun showSearch(){
         val transaction = supportFragmentManager.beginTransaction()
+        transaction.addToBackStack("findprofilefragment")
         transaction.replace(R.id.searchprofileFragmentContainer, findprofile() )
         transaction.commit()
     }
 
+    fun showlogout(){
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.searchprofileFragmentContainer, login() )
+        transaction.commit()
+    }
 
     private fun getAthleteEventListener(): ChildEventListener {
         val childEventListener = object : ChildEventListener{
