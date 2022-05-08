@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Fitter</string>
+
+    <string name="hello_blank_fragment" translatable="false">blank fragment</string>
     <string name="password_incorrect">Password is incorrect</string>
     <string name="invalid_email">Invalid email</string>
     <string name="login_welcome_back">Welcome back,</string>
