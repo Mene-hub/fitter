@@ -4,14 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".signup">
+    tools:context=".Fragment_SignUp">
 
     <!-- TODO: Update blank fragment layout -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/et_loginEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/topPanel"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"

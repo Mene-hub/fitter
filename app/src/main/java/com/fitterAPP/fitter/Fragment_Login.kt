@@ -18,7 +18,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 
-class login : Fragment() {
+class Fragment_Login : Fragment() {
     private val TAG_login : String = "LoginActivity-Login"
     private val TAG_register : String = "LoginActivity-Register"
 
@@ -42,8 +42,8 @@ class login : Fragment() {
         loginButton = binding.btnLogin
         loginButton.setOnClickListener(loginEmailPSW())
 
+        //ERRORE PER PASSWORD SBAGLIATA / EMAIL SBAGLIATA
         psw_text_layout = binding.etLoginPasswordLayout
-
         val psw_editText = binding.etLoginPassword
         psw_editText.doOnTextChanged { text, start, before, count ->
             if(psw_text_layout.error != null) {
@@ -51,6 +51,7 @@ class login : Fragment() {
             }
         }
 
+        //EVENTO PER CONTROLLARE SE L'EMAIL INSERITA E' CORRETTA
         binding.etLoginEmail.setOnFocusChangeListener{
             _, focused ->
             if(!focused){
@@ -58,10 +59,10 @@ class login : Fragment() {
             }
         }
 
+        //INTENT PER APRIRE MAIN WINDOW
         intent = Intent(requireActivity(), MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-
 
         // Inflate the layout for this fragment
         return binding.root
@@ -70,7 +71,7 @@ class login : Fragment() {
     private fun validEmail(): String? {
         val emailText = binding.etLoginEmail.text.toString()
         if(!Patterns.EMAIL_ADDRESS.matcher(emailText).matches()){
-            return "Invalid Email"
+            return getString(R.string.invalid_email)
         }
         return null
     }
@@ -82,12 +83,12 @@ class login : Fragment() {
 
         if(currentUser != null) {
             //START MAIN ACTIVITY
-            Log.d(TAG_login,"LOGGATO")
+            Log.d(TAG_login,"LOGGED")
             intent.putExtra("USER", auth.currentUser)
             startActivity(intent)
         }else{
             //USER NOT LOGGED IN - needs to login
-            Log.d(TAG_login,"NON LOGGATO")
+            Log.d(TAG_login,"NOT LOGGED")
         }
     }
 
@@ -112,44 +113,12 @@ class login : Fragment() {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG_login, "Login failed", task.exception)
 
-                        psw_text_layout.error = "PASSWORD INCORRECT"
-                        Toast.makeText(requireActivity().baseContext, "USERNAME OR PASSWORD ERROR", Toast.LENGTH_LONG).show()
+                        psw_text_layout.error = getString(R.string.password_incorrect)
+                        Toast.makeText(requireActivity().baseContext, getString(R.string.password_incorrect), Toast.LENGTH_LONG).show()
                     }
             }
         }
         return listener
     }
 
-    /*
-    //IF USER NOT FOUND IN "loginEmailPSW" THEN CREATES ONE
-    private fun createUser() : View.OnClickListener {
-        val listener = View.OnClickListener {
-            val email : String = findViewById<EditText>(R.id.et_email).text.toString()
-            val password : String = findViewById<EditText>(R.id.et_password).text.toString()
-
-            auth.createUserWithEmailAndPassword(email,password)
-                .addOnCompleteListener(this){ task ->
-                    if(task.isSuccessful){
-                        // Sign in success, update UI with the signed-in user's information
-                        Log.d(TAG_register, "User creation: OK")
-
-                        /*
-                        //TESTING AGGIUNTA NOME UTENTE AL PROFILO
-                        var updater = UserProfileChangeRequest.Builder().setDisplayName("MiraiMizu").build()
-                        auth.currentUser?.updateProfile(updater)
-                        Log.w(TAG_login,auth.currentUser?.displayName.toString())
-                        */
-
-                        findViewById<TextView>(R.id.status).text =  auth.currentUser?.displayName.toString()
-                    }else {
-                        // If sign in fails, display a message to the user.
-                        Log.w(TAG_register, "User creation: FAILED", task.exception)
-                        finish()
-                    }
-                }
-
-        }
-        return listener
-    }
-*/
 }

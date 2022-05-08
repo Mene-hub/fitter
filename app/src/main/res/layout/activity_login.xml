@@ -8,7 +8,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/loginContainer"
-        android:name="com.fitterAPP.fitter.login"
+        android:name="com.fitterAPP.fitter.Fragment_Login"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"

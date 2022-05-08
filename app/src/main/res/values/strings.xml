@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">Fitter</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="password_incorrect">Password is incorrect</string>
+    <string name="invalid_email">Invalid email</string>
+    <string name="login_welcome_back">Welcome back,</string>
+    <string name="login_log_in">Log In!</string>
+    <string name="Email">Email</string>
+    <string name="Password">Password</string>
+    <string name="login_forgot_password">Forgot password?</string>
+    <string name="login_text">Login</string>
 </resources>
