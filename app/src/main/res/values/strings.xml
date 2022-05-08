@@ -11,4 +11,6 @@
     <string name="login_forgot_password">Forgot password?</string>
     <string name="login_text">Login</string>
     <string name="use_other_methods">---------- Use other methods ----------</string>
+    <string name="create_account">---------- Create an account ----------</string>
+    <string name="signup">sign up</string>
 </resources>

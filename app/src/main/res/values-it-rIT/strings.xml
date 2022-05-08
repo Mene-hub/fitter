@@ -10,4 +10,6 @@
     <string name="login_forgot_password">Password dimenticata?</string>
     <string name="login_text">Accedi</string>
     <string name="use_other_methods">---------- Usa altri metodi ----------</string>
+    <string name="create_account">---------- Crea un account ----------</string>
+    <string name="signup">Registrati</string>
 </resources>

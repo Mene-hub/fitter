@@ -7,6 +7,7 @@ import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
@@ -47,6 +48,13 @@ class Fragment_Login : Fragment() {
                 binding.etLoginEmailLayout.helperText = validEmail()
             }
         }
+
+        val btSignup : Button = binding.btnSignup
+        btSignup.setOnClickListener {
+            (activity as LoginActivity).showRegister()
+        }
+
+
         //INTENT PER APRIRE MAIN WINDOW
         intent = Intent(requireActivity(), MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
