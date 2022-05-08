@@ -9,7 +9,7 @@
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:src="@drawable/side_nav_bar"
         android:tint="@color/primary_variant"
         app:layout_constraintBottom_toTopOf="@+id/imageView7"
