@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#00A3CC</color>
-    <color name="primary_variant">#00B5E2</color>
+    <color name="primary">#0094ff</color>
+    <color name="primary_variant">#2842ff</color>
 
     <color name="secondary">#FFAF00</color>
     <color name="secondary_variant">#FFB412</color>
@@ -13,6 +13,7 @@
     <color name="gray">#465154</color>
     <color name="black">#191d1e</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="red">#FF3030</color>
     <color name="blue_link">#0645AD</color>
 
 
