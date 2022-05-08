@@ -3,12 +3,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".signup">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/et_loginEmail"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:layout_below="@id/topPanel"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:helperText="Required*"
+        app:helperTextTextColor="@color/red"
+
+        app:endIconMode="dropdown_menu"
+        app:counterEnabled="true"
+        app:counterMaxLength="20"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:maxLength="20"
+
+            android:autofillHints="emailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_email_24"
+            android:drawablePadding="10dp"
+            android:inputType="textEmailAddress"
+            android:hint="Email"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
 
 </FrameLayout>

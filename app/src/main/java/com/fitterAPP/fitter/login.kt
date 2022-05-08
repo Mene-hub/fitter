@@ -1,16 +1,18 @@
 package com.fitterAPP.fitter
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import com.fitterAPP.fitter.databinding.FragmentLoginBinding
+import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -25,31 +27,52 @@ class login : Fragment() {
     private lateinit var loginButton : Button
     private lateinit var registerButton : Button
 
+    private lateinit var intent : Intent
+    private lateinit var psw_text_layout : TextInputLayout
+
+    private lateinit var binding : FragmentLoginBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val v = inflater.inflate(R.layout.fragment_login, container, false)
-
+        binding = FragmentLoginBinding.inflate(inflater, container, false)
 
         //istantiate auth variable
         auth = Firebase.auth
 
         //BUTTONS for login/register
-        loginButton = v.findViewById(R.id.btn_login)
+        loginButton = binding.btnLogin
         loginButton.setOnClickListener(loginEmailPSW())
 
-        /*
-        registerButton = findViewById(R.id.btn_register)
-        tmpButtonRegister.setOnClickListener(createUser())
+        psw_text_layout = binding.etLoginPasswordLayout
 
-        val tmpButtonSignOut : Button = findViewById(R.id.btn_signout)
-        tmpButtonSignOut.setOnClickListener{
-            auth.signOut()
-            findViewById<TextView>(R.id.status).text =  "USER NOT LOGGED IN"
+        val psw_editText = binding.etLoginPassword
+        psw_editText.doOnTextChanged { text, start, before, count ->
+            if(psw_text_layout.error != null) {
+                psw_text_layout.error = null
+            }
         }
-        */
+
+        binding.etLoginEmail.setOnFocusChangeListener{
+            _, focused ->
+            if(!focused){
+                binding.etLoginEmailLayout.helperText = validEmail()
+            }
+        }
+
+        intent = Intent(requireActivity(), MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+
 
         // Inflate the layout for this fragment
-        return v
+        return binding.root
+    }
+
+    private fun validEmail(): String? {
+        val emailText = binding.etLoginEmail.text.toString()
+        if(!Patterns.EMAIL_ADDRESS.matcher(emailText).matches()){
+            return "Invalid Email"
+        }
+        return null
     }
 
     override fun onStart() {
@@ -58,9 +81,10 @@ class login : Fragment() {
         val currentUser = auth.currentUser
 
         if(currentUser != null) {
-            //updateUI(currentUser) UPDATE UI ACCORDINGLY
             //START MAIN ACTIVITY
             Log.d(TAG_login,"LOGGATO")
+            intent.putExtra("USER", auth.currentUser)
+            startActivity(intent)
         }else{
             //USER NOT LOGGED IN - needs to login
             Log.d(TAG_login,"NON LOGGATO")
@@ -70,37 +94,31 @@ class login : Fragment() {
     //LOGIN VIA EMAIL AND PASSWORD
     fun loginEmailPSW(): View.OnClickListener {
         val listener = View.OnClickListener {
-            val email : String = view?.findViewById<EditText>(R.id.et_loginEmail)?.text.toString()
-            val password : String = view?.findViewById<EditText>(R.id.et_loginPassword)?.text.toString()
+            val email : String = binding.etLoginEmail.text.toString()
+            val password : String = binding.etLoginPassword.text.toString()
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                auth.signInWithEmailAndPassword(email,password)
-                    .addOnCompleteListener(requireActivity().mainExecutor){ task ->
-                        if(task.isSuccessful){
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG_login,  "Login success")
+            auth.signInWithEmailAndPassword(email,password)
+                .addOnCompleteListener((activity as LoginActivity)){ task ->
+                    if(task.isSuccessful){
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG_login,  "Login success")
 
-                            //val user = auth.currentUser
-                            //updateUI(user) UPDATE UI ACCORDINGLY
-                            Log.d(TAG_login,auth.currentUser?.displayName.toString())
+                        //val user = auth.currentUser
+                        //updateUI(user) UPDATE UI ACCORDINGLY
+                        intent.putExtra("USER", auth.currentUser)
+                        startActivity(intent)
 
-                            val i : Intent = Intent(requireActivity(), MainActivity::class.java)
-                            i.putExtra("USER", auth.currentUser)
-                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                            startActivity(i)
+                    }else {
+                        // If sign in fails, display a message to the user.
+                        Log.w(TAG_login, "Login failed", task.exception)
 
-                        }else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG_login, "Login failed", task.exception)
-                            Toast.makeText(requireActivity().baseContext, "USERNAME OR PASSWORD ERROR", Toast.LENGTH_LONG).show()
-                        }
+                        psw_text_layout.error = "PASSWORD INCORRECT"
+                        Toast.makeText(requireActivity().baseContext, "USERNAME OR PASSWORD ERROR", Toast.LENGTH_LONG).show()
                     }
             }
         }
         return listener
     }
-
 
     /*
     //IF USER NOT FOUND IN "loginEmailPSW" THEN CREATES ONE
