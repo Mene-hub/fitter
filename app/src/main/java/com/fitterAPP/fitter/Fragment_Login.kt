@@ -20,7 +20,6 @@ import com.google.firebase.ktx.Firebase
 
 class Fragment_Login : Fragment() {
     private val TAG_login : String = "LoginActivity-Login"
-    private val TAG_register : String = "LoginActivity-Register"
 
     private lateinit var auth: FirebaseAuth
 
