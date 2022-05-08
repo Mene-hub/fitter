@@ -1,17 +1,23 @@
 package com.fitterAPP.fitter
 
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import android.widget.ImageView
-import android.widget.LinearLayout
+import com.google.firebase.ktx.Firebase
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
     private lateinit var listView : RecyclerView
     private lateinit var user : Athlete
+
+
 
     //Bottom sheet dialog
     private lateinit var ttprofile : LinearLayout
@@ -21,6 +27,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
+
+        //grab event from companion class RealTimeDBHelper
         RealTimeDBHelper.readToDoItems(getAthleteEventListener())
 
         //Bottom sheet dialog

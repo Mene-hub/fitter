@@ -1,6 +1,12 @@
 package com.fitterAPP.fitter
 
-data class Athlete(var firstName : String, var lastName : String, var schede : MutableList<FitnessCard>?, var isInstructor : Boolean = false){
+import android.net.Uri
 
-    constructor() : this("", "", null, false)
+
+data class Athlete(var firstName : String, var lastName : String, var username : String, var profilePic : String){
+    constructor() : this("", "", "", "")
+
+    fun getUri() : Uri{
+        return Uri.parse(profilePic)
+    }
 }
