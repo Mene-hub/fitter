@@ -49,6 +49,7 @@ class Fragment_Login : Fragment() {
             }
         }
 
+        //EVENTO PER INSERIRE IL FRAGMENT DI SIGNUP
         val btSignup : Button = binding.btnSignup
         btSignup.setOnClickListener {
             (activity as LoginActivity).showRegister()

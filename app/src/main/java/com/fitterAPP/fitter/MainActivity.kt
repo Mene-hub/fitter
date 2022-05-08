@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity() {
             modalBottomSheet.show(supportFragmentManager, profileMenu.TAG)
         }
 
+        //inserisco come fragment default la lista di schede caricate
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.FragmentContainer, MyFitnessCards() )
         transaction.commit()
@@ -70,6 +71,8 @@ class MainActivity : AppCompatActivity() {
         return childEventListener
     }
 
+
+    //METODO PER LA VISUALIZZAZIONE DEL FRAGMENT DI RICERCA
     fun showSearch(){
         val transaction = supportFragmentManager.beginTransaction()
         transaction.addToBackStack("FindProfileFragment")
@@ -77,6 +80,7 @@ class MainActivity : AppCompatActivity() {
         transaction.commit()
     }
 
+    //METODO PER LA VISUALIZZAZIONE DEL FRAGMENT DI RECAP
     fun showRecap(){
         val transaction = supportFragmentManager.beginTransaction()
         transaction.addToBackStack("TimeRacapFragment")
@@ -84,6 +88,7 @@ class MainActivity : AppCompatActivity() {
         transaction.commit()
     }
 
+    //METODO PER LA VISUALIZZAZIONE DEL FRAGMENT DEL CALENDARIO
     fun showCalendar(){
         val transaction = supportFragmentManager.beginTransaction()
         transaction.addToBackStack("CalendarFragment")
@@ -91,6 +96,7 @@ class MainActivity : AppCompatActivity() {
         transaction.commit()
     }
 
+    //METODO PER LA VISUALIZZAZIONE DEL FRAGMENT CON LA LISTA DI SCHEDE SALVATE
     fun showMyFitnessCards(){
         val transaction = supportFragmentManager.beginTransaction()
         transaction.addToBackStack("MyFitnessCardsFragment")
@@ -98,6 +104,7 @@ class MainActivity : AppCompatActivity() {
         transaction.commit()
     }
 
+    //METODO PER LA DISCONNESSIONE DELL'ACCOUNT
     fun logout(){
 
         Log.d("MainWindow-Signout", auth.toString())

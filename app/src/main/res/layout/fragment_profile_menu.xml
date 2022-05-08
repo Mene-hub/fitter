@@ -15,6 +15,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:orientation="vertical">
 
 
@@ -22,74 +23,139 @@
                 android:layout_width="50dp"
                 android:layout_height="5dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="5dp"
                 app:cardBackgroundColor="#333333"
                 app:cardCornerRadius="2dp"
-                app:cardElevation="0dp" >
+                app:cardElevation="0dp">
 
             </androidx.cardview.widget.CardView>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txt_search_profiles"
-                style="@style/BottomSheetItem"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:drawableStart="@drawable/search"
-                android:drawableTint="#000000"
-                android:text="Search Profiles"
-                android:textColor="@color/black"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txt_mycards"
-                style="@style/BottomSheetItem"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_marginTop="8dp"
-                android:drawableStart="@drawable/fitness_item"
-                android:drawableTint="#000000"
-                android:text="My Cards"
-                android:textColor="@color/black"
-                app:layout_constraintTop_toBottomOf="@+id/txt_logout" />
+                <ImageView
+                    android:id="@+id/imageView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:tint="@color/black"
+                    app:srcCompat="@drawable/search" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txt_calendar"
-                style="@style/BottomSheetItem"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_marginTop="8dp"
-                android:drawableStart="@drawable/calendar"
-                android:drawableTint="#000000"
-                android:text="Calendar"
-                android:textColor="@color/black"
-                app:layout_constraintTop_toBottomOf="@+id/txt_logout" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txt_search_profiles"
+                    style="@style/BottomSheetItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableTint="#000000"
+                    android:text="Search Profiles"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txt_recap"
-                style="@style/BottomSheetItem"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:drawableStart="@drawable/graph"
-                android:drawableTint="#000000"
-                android:text="Weekly Recap"
-                android:textColor="@color/black"
-                app:layout_constraintTop_toBottomOf="@+id/txt_calendar" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txt_logout"
-                style="@style/BottomSheetItem"
+                <ImageView
+                    android:id="@+id/imageView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:tint="@color/black"
+                    app:srcCompat="@drawable/fitness_item" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txt_mycards"
+                    style="@style/BottomSheetItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:drawableTint="#000000"
+                    android:text="My Cards"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_logout" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:drawableStart="@drawable/logout"
-                android:drawableTint="#000000"
-                android:text="Log out"
-                android:textColor="@color/black"
-                app:layout_constraintTop_toBottomOf="@+id/txt_search_profiles" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:tint="@color/black"
+                    app:srcCompat="@drawable/calendar" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txt_calendar"
+                    style="@style/BottomSheetItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:drawableTint="#000000"
+                    android:text="Calendar"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_logout" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:tint="@color/black"
+                    app:srcCompat="@drawable/graph" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txt_recap"
+                    style="@style/BottomSheetItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableTint="#000000"
+                    android:text="Weekly Recap"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_calendar" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageView11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:tint="@color/black"
+                    app:srcCompat="@drawable/logout" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txt_logout"
+                    style="@style/BottomSheetItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableTint="#000000"
+                    android:text="Log out"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_search_profiles" />
+            </LinearLayout>
+
         </LinearLayout>
 
     </FrameLayout>

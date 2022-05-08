@@ -20,6 +20,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
     }
 
+    //EEVENTO PER CAMBIARE IL FRAGMENT DI LOGIN NEL FRAGMENT DI SIGN UP
     fun showRegister(){
         val transaction = supportFragmentManager.beginTransaction()
         transaction.addToBackStack("registerFragment")
