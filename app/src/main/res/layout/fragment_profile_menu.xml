@@ -25,18 +25,9 @@
                 android:layout_marginTop="5dp"
                 app:cardBackgroundColor="#333333"
                 app:cardCornerRadius="2dp"
-                app:cardElevation="0dp" />
+                app:cardElevation="0dp" >
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txt_recap"
-                style="@style/BottomSheetItem"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:drawableStart="@android:drawable/checkbox_off_background"
-                android:drawableTint="#000000"
-                android:text="Weekly Recap"
-                app:layout_constraintTop_toBottomOf="@+id/txt_share" />
+            </androidx.cardview.widget.CardView>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_search_profiles"
@@ -44,33 +35,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:drawableStart="?android:attr/actionModeWebSearchDrawable"
+                android:drawableStart="@drawable/search"
                 android:drawableTint="#000000"
                 android:text="Search Profiles"
+                android:textColor="@color/black"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txt_logout"
-                style="@style/BottomSheetItem"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:drawableStart="@android:drawable/checkbox_off_background"
-                android:drawableTint="#000000"
-                android:text="Log out"
-                app:layout_constraintTop_toBottomOf="@+id/txt_search_profiles" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txt_share"
-                style="@style/BottomSheetItem"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_marginTop="8dp"
-                android:drawableStart="@android:drawable/checkbox_off_background"
-                android:drawableTint="#000000"
-                android:text="Calendar"
-                app:layout_constraintTop_toBottomOf="@+id/txt_logout" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_mycards"
@@ -79,10 +48,48 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_marginTop="8dp"
-                android:drawableStart="@android:drawable/checkbox_off_background"
+                android:drawableStart="@drawable/fitness_item"
                 android:drawableTint="#000000"
                 android:text="My Cards"
+                android:textColor="@color/black"
                 app:layout_constraintTop_toBottomOf="@+id/txt_logout" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_calendar"
+                style="@style/BottomSheetItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_marginTop="8dp"
+                android:drawableStart="@drawable/calendar"
+                android:drawableTint="#000000"
+                android:text="Calendar"
+                android:textColor="@color/black"
+                app:layout_constraintTop_toBottomOf="@+id/txt_logout" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_recap"
+                style="@style/BottomSheetItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:drawableStart="@drawable/graph"
+                android:drawableTint="#000000"
+                android:text="Weekly Recap"
+                android:textColor="@color/black"
+                app:layout_constraintTop_toBottomOf="@+id/txt_calendar" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_logout"
+                style="@style/BottomSheetItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:drawableStart="@drawable/logout"
+                android:drawableTint="#000000"
+                android:text="Log out"
+                android:textColor="@color/black"
+                app:layout_constraintTop_toBottomOf="@+id/txt_search_profiles" />
         </LinearLayout>
 
     </FrameLayout>

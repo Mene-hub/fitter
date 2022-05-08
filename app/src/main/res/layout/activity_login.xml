@@ -4,19 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".findprofile">
+    tools:context=".LoginActivity">
 
-    <EditText
-        android:id="@+id/editTextTextPersonName"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/loginContainer"
+        android:name="com.fitterAPP.fitter.Fragment_Login"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        android:background="@drawable/round_border"
-        android:backgroundTint="@color/midgray"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:padding="10dp"
-        android:text="Name"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="10dp" />
+        tools:layout="@layout/fragment_login" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

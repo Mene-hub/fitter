@@ -15,6 +15,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="red">#FF3030</color>
     <color name="blue_link">#0645AD</color>
+    <color name="red">#ff3030</color>
 
 
 </resources>

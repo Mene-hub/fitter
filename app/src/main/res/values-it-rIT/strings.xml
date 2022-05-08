@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Fitter</string>
+    <string name="password_incorrect">Password errata</string>
+    <string name="invalid_email">Inserisci una email valida</string>
+    <string name="login_welcome_back">Ben tornato,</string>
+    <string name="login_log_in">Accedi!</string>
+    <string name="Email">Email</string>
+    <string name="Password">Password</string>
+    <string name="login_forgot_password">Password dimenticata?</string>
+    <string name="login_text">Accedi</string>
+</resources>
