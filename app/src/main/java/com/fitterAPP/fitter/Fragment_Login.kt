@@ -17,7 +17,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-
 class Fragment_Login : Fragment() {
     private val TAG_login : String = "LoginActivity-Login"
 
@@ -79,6 +78,7 @@ class Fragment_Login : Fragment() {
         super.onStart()
         //GRAB CURRENT USER IF ALREADY LOGGED-IN IN THE PAST
         val currentUser = auth.currentUser
+        Log.d(TAG_login, currentUser.toString())
 
         if(currentUser != null) {
             //START MAIN ACTIVITY

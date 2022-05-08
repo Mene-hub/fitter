@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".signup">
+    tools:context=".Fragment_SignUp">
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:src="@drawable/side_nav_bar"
-        android:tint="@color/primary_variant"
+        app:tint="@color/primary_variant"
         app:layout_constraintBottom_toTopOf="@+id/imageView7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,17 +55,15 @@
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:src="@drawable/fitness_24"
-            android:tint="@color/white" />
+            app:tint="@color/white" />
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_weight="1"
             android:fontFamily="@font/roboto_regular"
             android:text="Fitter"
-            android:textAlignment="viewStart"
             android:textColor="@color/white"
             android:textSize="40dp" />
     </LinearLayout>

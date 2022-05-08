@@ -2,16 +2,23 @@ package com.fitterAPP.fitter
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() {
     private lateinit var listView : RecyclerView
     private lateinit var user : Athlete
+    private lateinit var auth : FirebaseAuth
+    private lateinit var currentUser : FirebaseUser
 
     //Bottom sheet dialog
     private lateinit var ttprofile : LinearLayout
@@ -20,6 +27,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        auth = Firebase.auth
+        currentUser = auth.currentUser!!
 
         //grab event from companion class RealTimeDBHelper
         RealTimeDBHelper.readToDoItems(getAthleteEventListener())
@@ -90,6 +99,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun logout(){
+
+        Log.d("MainWindow-Signout", auth.toString())
+        if(auth != null){
+            Log.d("MainWindow-Signout", "Sloggato")
+            auth.signOut()
+        }
+
         val I : Intent =  Intent(this, LoginActivity::class.java)
         I.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         I.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
