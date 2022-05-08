@@ -1,16 +1,12 @@
 package com.fitterAPP.fitter
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.ktx.Firebase
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
@@ -38,18 +34,9 @@ class MainActivity : AppCompatActivity() {
             val modalBottomSheet = profileMenu()
             modalBottomSheet.show(supportFragmentManager, profileMenu.TAG)
         }
-    }
 
-    fun showSearch(){
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.addToBackStack("findprofilefragment")
-        transaction.replace(R.id.searchprofileFragmentContainer, findprofile() )
-        transaction.commit()
-    }
-
-    fun showlogout(){
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.searchprofileFragmentContainer, login() )
+        transaction.replace(R.id.FragmentContainer, MyFitnessCards() )
         transaction.commit()
     }
 
@@ -77,4 +64,40 @@ class MainActivity : AppCompatActivity() {
         }
         return childEventListener
     }
+
+    fun showSearch(){
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.addToBackStack("FindProfileFragment")
+        transaction.replace(R.id.FragmentContainer, findprofile() )
+        transaction.commit()
+    }
+
+    fun showRecap(){
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.addToBackStack("TimeRacapFragment")
+        transaction.replace(R.id.FragmentContainer, TimeRacap() )
+        transaction.commit()
+    }
+
+    fun showCalendar(){
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.addToBackStack("CalendarFragment")
+        transaction.replace(R.id.FragmentContainer, Calendar() )
+        transaction.commit()
+    }
+
+    fun showMyFitnessCards(){
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.addToBackStack("MyFitnessCardsFragment")
+        transaction.replace(R.id.FragmentContainer, MyFitnessCards() )
+        transaction.commit()
+    }
+
+    fun logout(){
+        val I : Intent =  Intent(this, LoginActivity::class.java)
+        I.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        I.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(I)
+    }
+
 }

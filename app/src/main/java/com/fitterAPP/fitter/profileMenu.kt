@@ -15,6 +15,9 @@ class profileMenu : BottomSheetDialogFragment() {
         val v:View  = inflater.inflate(R.layout.fragment_profile_menu, container, false)
         val searchbt : AppCompatTextView = v.findViewById(R.id.txt_search_profiles)
         val logoutbt : AppCompatTextView = v.findViewById(R.id.txt_logout)
+        val recapbt : AppCompatTextView = v.findViewById(R.id.txt_recap)
+        val calendarbt : AppCompatTextView = v.findViewById(R.id.txt_calendar)
+        val myCardsbt : AppCompatTextView = v.findViewById(R.id.txt_mycards)
 
         searchbt.setOnClickListener( View.OnClickListener {
             (activity as MainActivity).showSearch()
@@ -22,9 +25,25 @@ class profileMenu : BottomSheetDialogFragment() {
         })
 
         logoutbt.setOnClickListener( View.OnClickListener {
-            (activity as MainActivity).showlogout()
+            (activity as MainActivity).logout()
             dismiss()
         })
+
+        recapbt.setOnClickListener( View.OnClickListener {
+            (activity as MainActivity).showRecap()
+            dismiss()
+        })
+
+        calendarbt.setOnClickListener( View.OnClickListener {
+            (activity as MainActivity).showCalendar()
+            dismiss()
+        })
+
+        myCardsbt.setOnClickListener( View.OnClickListener {
+            (activity as MainActivity).showMyFitnessCards()
+            dismiss()
+        })
+
 
         return v
     }

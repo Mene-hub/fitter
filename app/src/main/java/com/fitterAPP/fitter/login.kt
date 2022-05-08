@@ -73,28 +73,25 @@ class login : Fragment() {
             val email : String = view?.findViewById<EditText>(R.id.et_loginEmail)?.text.toString()
             val password : String = view?.findViewById<EditText>(R.id.et_loginPassword)?.text.toString()
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                auth.signInWithEmailAndPassword(email,password)
-                    .addOnCompleteListener(requireActivity().mainExecutor){ task ->
-                        if(task.isSuccessful){
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG_login,  "Login success")
+                auth.signInWithEmailAndPassword(email,password).addOnCompleteListener((activity as LoginActivity))
+                { task ->
+                    if(task.isSuccessful){
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG_login,  "Login success")
 
-                            //val user = auth.currentUser
-                            //updateUI(user) UPDATE UI ACCORDINGLY
-                            Log.d(TAG_login,auth.currentUser?.displayName.toString())
+                        //val user = auth.currentUser
+                        //updateUI(user) UPDATE UI ACCORDINGLY
+                        Log.d(TAG_login,auth.currentUser?.displayName.toString())
 
-                            val i : Intent = Intent(requireActivity(), MainActivity::class.java)
-                            i.putExtra("USER", auth.currentUser)
-                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                            startActivity(i)
-
-                        }else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG_login, "Login failed", task.exception)
-                            Toast.makeText(requireActivity().baseContext, "USERNAME OR PASSWORD ERROR", Toast.LENGTH_LONG).show()
-                        }
+                        val i : Intent = Intent((activity as LoginActivity), MainActivity::class.java)
+                        i.putExtra("USER", auth.currentUser)
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(i)
+                    }else {
+                        // If sign in fails, display a message to the user.
+                        Log.w(TAG_login, "Login failed", task.exception)
+                        Toast.makeText(requireActivity().baseContext, "USERNAME OR PASSWORD ERROR", Toast.LENGTH_LONG).show()
                     }
             }
         }
