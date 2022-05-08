@@ -110,7 +110,8 @@
         android:paddingEnd="10dp"
         android:paddingStart="10dp"
         android:text="@string/login_forgot_password"
-        android:textColor="@color/blue_link" />
+        android:textColor="@color/blue_link"
+        android:fontFamily="@font/roboto_regular"/>
 
     <!--BUTTON LOGIN-->
     <Button
@@ -120,14 +121,53 @@
         android:layout_below="@id/tv_forgotPSW"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
         android:layout_marginTop="15dp"
+        android:layout_marginEnd="20dp"
         android:width="100dp"
         android:background="@drawable/round_border"
 
         android:text="@string/login_text"
-        android:textSize="17sp" />
+        android:textSize="17sp"
+        android:fontFamily="@font/roboto_regular"/>
 
+    <TextView
+        android:id="@+id/tv_or"
 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_login"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+
+        android:text="@string/use_other_methods"
+        android:textSize="15sp"
+        android:fontFamily="@font/roboto_regular"
+         />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_or"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp">
+
+        <ImageView
+            android:id="@+id/IV_loginGoogle"
+            android:layout_marginEnd="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_google"
+            />
+
+        <ImageView
+            android:id="@+id/IV_loginFacebook"
+            android:layout_marginStart="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_facebook"
+            />
+
+    </LinearLayout>
 
 </RelativeLayout>
