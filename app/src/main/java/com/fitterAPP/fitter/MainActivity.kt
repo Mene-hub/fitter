@@ -1,5 +1,6 @@
 package com.fitterAPP.fitter
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +14,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var user : Athlete
 
     //Bottom sheet dialog
+    private lateinit var ttprofile : LinearLayout
     private lateinit var menuiv : ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,8 +31,10 @@ class MainActivity : AppCompatActivity() {
             modalBottomSheet.show(supportFragmentManager, profileMenu.TAG)
         }
 
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.FragmentContainer, MyFitnessCards() )
+        transaction.commit()
     }
-
 
     private fun getAthleteEventListener(): ChildEventListener {
         val childEventListener = object : ChildEventListener{
@@ -57,10 +61,39 @@ class MainActivity : AppCompatActivity() {
         return childEventListener
     }
 
-
     fun showSearch(){
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.searchprofileFragmentContainer, findprofile() )
+        transaction.addToBackStack("FindProfileFragment")
+        transaction.replace(R.id.FragmentContainer, findprofile() )
         transaction.commit()
     }
+
+    fun showRecap(){
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.addToBackStack("TimeRacapFragment")
+        transaction.replace(R.id.FragmentContainer, TimeRacap() )
+        transaction.commit()
+    }
+
+    fun showCalendar(){
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.addToBackStack("CalendarFragment")
+        transaction.replace(R.id.FragmentContainer, Calendar() )
+        transaction.commit()
+    }
+
+    fun showMyFitnessCards(){
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.addToBackStack("MyFitnessCardsFragment")
+        transaction.replace(R.id.FragmentContainer, MyFitnessCards() )
+        transaction.commit()
+    }
+
+    fun logout(){
+        val I : Intent =  Intent(this, LoginActivity::class.java)
+        I.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        I.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(I)
+    }
+
 }
