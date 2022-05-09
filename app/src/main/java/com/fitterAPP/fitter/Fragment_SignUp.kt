@@ -32,6 +32,7 @@ class Fragment_SignUp : Fragment() {
         //firebase auth
         auth = Firebase.auth
 
+        //SERVE PER TORNARE ALLA REGISTER FRAGMENT
         binding.openLogin.setOnClickListener {
             (activity as LoginActivity).showLogin()
         }
@@ -49,11 +50,11 @@ class Fragment_SignUp : Fragment() {
             }
         }
 
-
+        //CONTROLLA SE LA PASSWOD DI CONFERMA è UGUALE ALLA PASSWORD
         binding.etSignupConfirmPassword.setOnFocusChangeListener{ _, focused ->
             if(!focused){
                 if(!checkPassword()){
-                    binding.etSignupConfirmPasswordLayout.error = "PASSWORDS DON'T MATCH"
+                    binding.etSignupConfirmPasswordLayout.error = getString(R.string.pass_dont_match)
                 }
             }else{
                 binding.etSignupConfirmPasswordLayout.error = null
@@ -130,8 +131,8 @@ class Fragment_SignUp : Fragment() {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG_register, "User creation: FAILED", task.exception)
 
-                            binding.etSignupEmailLayout.helperText = "EMAIL ALREADY REGISTERED"
-                            Toast.makeText(requireActivity().baseContext, "EMAIL ALREADY REGISTERED", Toast.LENGTH_LONG).show()
+                            binding.etSignupEmailLayout.helperText = getString(R.string.email_already_registered)
+                            Toast.makeText(requireActivity().baseContext, getString(R.string.email_already_registered), Toast.LENGTH_LONG).show()
                         }
                     }
             }

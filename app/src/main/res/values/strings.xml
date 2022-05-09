@@ -17,4 +17,6 @@
     <string name="already_exist_account">Already registered? Log In!</string>
     <string name="Username">Username</string>
     <string name="ConfirmPassword">Confirm password</string>
+    <string name="email_already_registered">EMAIL ALREADY REGISTERED</string>
+    <string name="pass_dont_match">PASSWORDS DON\'T MATCH</string>
 </resources>

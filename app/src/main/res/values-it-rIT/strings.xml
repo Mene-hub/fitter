@@ -16,4 +16,6 @@
     <string name="already_exist_account">Hai già un account? Accedi!</string>
     <string name="Username">Nome Profilo</string>
     <string name="ConfirmPassword">Conferma Password</string>
+    <string name="email_already_registered">L\'email inserità è già stata usata</string>
+    <string name="pass_dont_match">La password non combacia</string>
 </resources>
