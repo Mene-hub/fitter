@@ -5,7 +5,7 @@
     <string name="password_incorrect">Password is incorrect</string>
     <string name="invalid_email">Invalid email</string>
     <string name="login_welcome_back">Welcome back,</string>
-    <string name="login_log_in">Log In!</string>
+    <string name="login_log_in">Log In</string>
     <string name="Email">Email</string>
     <string name="Password">Password</string>
     <string name="login_forgot_password">Forgot password?</string>
@@ -14,4 +14,7 @@
     <string name="create_account">---------- Create an account ----------</string>
     <string name="signup">sign up</string>
     <string name="new_user_register">New user? Register now!</string>
+    <string name="already_exist_account">Already registered? Log In!</string>
+    <string name="Username">Username</string>
+    <string name="ConfirmPassword">Confirm password</string>
 </resources>

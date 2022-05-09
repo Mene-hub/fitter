@@ -23,8 +23,13 @@ class LoginActivity : AppCompatActivity() {
     //EEVENTO PER CAMBIARE IL FRAGMENT DI LOGIN NEL FRAGMENT DI SIGN UP
     fun showRegister(){
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.addToBackStack("registerFragment")
         transaction.replace(R.id.loginContainer, Fragment_SignUp() )
+        transaction.commit()
+    }
+
+    fun showLogin(){
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.loginContainer, Fragment_Login() )
         transaction.commit()
     }
 }

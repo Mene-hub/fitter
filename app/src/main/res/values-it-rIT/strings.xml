@@ -4,7 +4,7 @@
     <string name="password_incorrect">Password errata</string>
     <string name="invalid_email">Inserisci una email valida</string>
     <string name="login_welcome_back">Ben tornato,</string>
-    <string name="login_log_in">Accedi!</string>
+    <string name="login_log_in">Accedi</string>
     <string name="Email">Email</string>
     <string name="Password">Password</string>
     <string name="login_forgot_password">Password dimenticata?</string>
@@ -13,4 +13,7 @@
     <string name="create_account">---------- Crea un account ----------</string>
     <string name="signup">Registrati</string>
     <string name="new_user_register">Nuovo utente? Registrati adesso!</string>
+    <string name="already_exist_account">Hai già un account? Accedi!</string>
+    <string name="Username">Nome Profilo</string>
+    <string name="ConfirmPassword">Conferma Password</string>
 </resources>
