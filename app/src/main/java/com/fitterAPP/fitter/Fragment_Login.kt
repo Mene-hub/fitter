@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
@@ -44,7 +45,8 @@ class Fragment_Login : Fragment() {
             }
         }
         //EVENTO PER CONTROLLARE SE L'EMAIL INSERITA E' CORRETTA
-        binding.etLoginEmail.setOnFocusChangeListener{ _, focused ->
+        val email:EditText = binding.etLoginEmail
+            email.setOnFocusChangeListener{ _, focused ->
             if(!focused){
                 binding.etLoginEmailLayout.helperText = validEmail()
             }
@@ -112,23 +114,30 @@ class Fragment_Login : Fragment() {
             val email : String = binding.etLoginEmail.text.toString()
             val password : String = binding.etLoginPassword.text.toString()
 
-            auth.signInWithEmailAndPassword(email,password)
-                .addOnCompleteListener((activity as LoginActivity)){ task ->
-                    if(task.isSuccessful){
-                        // Sign in success, update UI with the signed-in user's information
-                        Log.d(TAG_login,  "Login success")
+            if(!email.isNullOrBlank() && !password.isNullOrBlank()) {
+                auth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener((activity as LoginActivity)) { task ->
+                        if (task.isSuccessful) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG_login, "Login success")
 
-                        //val user = auth.currentUser
-                        //updateUI(user) UPDATE UI ACCORDINGLY
-                        intent.putExtra("USER", auth.currentUser)
-                        startActivity(intent)
+                            //val user = auth.currentUser
+                            //updateUI(user) UPDATE UI ACCORDINGLY
+                            intent.putExtra("USER", auth.currentUser)
+                            startActivity(intent)
 
-                    }else {
-                        // If sign in fails, display a message to the user.
-                        Log.w(TAG_login, "Login failed", task.exception)
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG_login, "Login failed", task.exception)
 
-                        binding.etLoginPasswordLayout.error = getString(R.string.password_incorrect)
-                        Toast.makeText(requireActivity().baseContext, getString(R.string.password_incorrect), Toast.LENGTH_LONG).show()
+                            binding.etLoginPasswordLayout.error =
+                                getString(R.string.password_incorrect)
+                            Toast.makeText(
+                                requireActivity().baseContext,
+                                getString(R.string.password_incorrect),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
                     }
             }
         }
