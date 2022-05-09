@@ -45,16 +45,20 @@ class Fragment_Login : Fragment() {
             }
         }
         //EVENTO PER CONTROLLARE SE L'EMAIL INSERITA E' CORRETTA
-        val email:EditText = binding.etLoginEmail
-            email.setOnFocusChangeListener{ _, focused ->
+        binding.etLoginEmail.setOnFocusChangeListener{ _, focused ->
             if(!focused){
                 binding.etLoginEmailLayout.helperText = validEmail()
             }
         }
 
+        binding.etLoginPassword.setOnFocusChangeListener{_, focused ->
+            if(focused){
+                binding.etLoginPasswordLayout.error = null
+            }
+        }
+
         //EVENTO PER INSERIRE IL FRAGMENT DI SIGNUP
-        val btSignup : TextView = binding.btnSignup
-        btSignup.setOnClickListener {
+        binding.btnSignup.setOnClickListener {
             (activity as LoginActivity).showRegister()
         }
 
@@ -100,14 +104,12 @@ class Fragment_Login : Fragment() {
         if(currentUser != null) {
             //START MAIN ACTIVITY
             Log.d(TAG_login,"LOGGED")
-            intent.putExtra("USER", auth.currentUser)
             startActivity(intent)
         }else{
             //USER NOT LOGGED IN - needs to login
             Log.d(TAG_login,"NOT LOGGED")
         }
     }
-
     //LOGIN VIA EMAIL AND PASSWORD
     fun loginEmailPSW(): View.OnClickListener {
         val listener = View.OnClickListener {
@@ -123,20 +125,14 @@ class Fragment_Login : Fragment() {
 
                             //val user = auth.currentUser
                             //updateUI(user) UPDATE UI ACCORDINGLY
-                            intent.putExtra("USER", auth.currentUser)
                             startActivity(intent)
 
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG_login, "Login failed", task.exception)
 
-                            binding.etLoginPasswordLayout.error =
-                                getString(R.string.password_incorrect)
-                            Toast.makeText(
-                                requireActivity().baseContext,
-                                getString(R.string.password_incorrect),
-                                Toast.LENGTH_LONG
-                            ).show()
+                            binding.etLoginPasswordLayout.error = getString(R.string.password_incorrect)
+                            Toast.makeText(requireActivity().baseContext, getString(R.string.password_incorrect), Toast.LENGTH_LONG).show()
                         }
                     }
             }

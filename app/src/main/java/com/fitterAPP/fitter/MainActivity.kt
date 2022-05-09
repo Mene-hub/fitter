@@ -3,6 +3,7 @@ package com.fitterAPP.fitter
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.ChildEventListener
@@ -11,6 +12,7 @@ import com.google.firebase.database.DatabaseError
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -29,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         auth = Firebase.auth
         currentUser = auth.currentUser!!
+        Log.d("TAG", auth.currentUser?.displayName.toString())
 
         //grab event from companion class RealTimeDBHelper
         RealTimeDBHelper.readToDoItems(getAthleteEventListener())
