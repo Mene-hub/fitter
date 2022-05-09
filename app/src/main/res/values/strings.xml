@@ -19,4 +19,5 @@
     <string name="ConfirmPassword">Confirm password</string>
     <string name="email_already_registered">EMAIL ALREADY REGISTERED</string>
     <string name="pass_dont_match">PASSWORDS DON\'T MATCH</string>
+    <string name="fitter" translatable="false">Fitter</string>
 </resources>
