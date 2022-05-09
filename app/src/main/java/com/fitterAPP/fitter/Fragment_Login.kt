@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
@@ -50,7 +51,7 @@ class Fragment_Login : Fragment() {
         }
 
         //EVENTO PER INSERIRE IL FRAGMENT DI SIGNUP
-        val btSignup : Button = binding.btnSignup
+        val btSignup : TextView = binding.btnSignup
         btSignup.setOnClickListener {
             (activity as LoginActivity).showRegister()
         }

@@ -12,4 +12,5 @@
     <string name="use_other_methods">---------- Usa altri metodi ----------</string>
     <string name="create_account">---------- Crea un account ----------</string>
     <string name="signup">Registrati</string>
+    <string name="new_user_register">Nuovo utente? Registrati adesso!</string>
 </resources>
