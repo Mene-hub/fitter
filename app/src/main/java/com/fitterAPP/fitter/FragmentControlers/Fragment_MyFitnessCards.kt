@@ -12,26 +12,20 @@ import com.fitterAPP.fitter.Classes.Athlete
 import com.fitterAPP.fitter.Classes.FitnessCard
 import com.fitterAPP.fitter.ItemsAdapter.FitnessCardAdapter
 import com.fitterAPP.fitter.MainActivity
-import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.RealTimeDBHelper
-import com.fitterAPP.fitter.databinding.ActivityLoginBinding.inflate
-import com.fitterAPP.fitter.databinding.FragmentLoginBinding
 import com.fitterAPP.fitter.databinding.FragmentMyFitnessCardsBinding
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.ktx.Firebase
+
 
 class MyFitnessCards : Fragment() {
     private val TAG : String = "FragmentFitnessCard-"
     private lateinit var databaseHelper : RealTimeDBHelper
 
     private lateinit var binding : FragmentMyFitnessCardsBinding //Binding
+    private lateinit var adapter : FitnessCardAdapter
     //firebase database
-    private lateinit var user : Athlete
     private val fitnessCads : MutableList<FitnessCard> = ArrayList()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -52,11 +46,24 @@ class MyFitnessCards : Fragment() {
         fitnessCads.add(FitnessCard())
 
         val recycle : RecyclerView = binding.MyFitnessCardsRV
-        val adapter : FitnessCardAdapter = context?.let { FitnessCardAdapter((activity as MainActivity).baseContext, fitnessCads) }!!
+        adapter = context?.let { FitnessCardAdapter((activity as MainActivity), fitnessCads) }!!
         recycle.adapter = adapter
+
+        Log.w("Fragment", binding.MyFitnessCardsRV.id.toString())
         return binding.root
     }
 
+
+    /**
+     * @author Daniel Satriano
+     * @param UID use Athlete.UID
+     * @param card FitnessCard object
+     * @see Athlete
+     * @see FitnessCard
+     */
+    fun addFitnessCard(UID : String, card : FitnessCard){
+        databaseHelper.setFitnessCardItem(UID,card)
+    }
 
     private fun getAthleteEventListener(): ChildEventListener {
         val childEventListener = object : ChildEventListener {
@@ -64,7 +71,7 @@ class MyFitnessCards : Fragment() {
                 val item = snapshot.getValue(FitnessCard::class.java)
                 //aggiungo nuova fitness card
                 fitnessCads.add((item!!))
-                //adapter.notifyDataSetChanged()
+                adapter.notifyItemInserted(fitnessCads.indexOf(item))
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
@@ -72,13 +79,14 @@ class MyFitnessCards : Fragment() {
                 //cerco fitness card modificata
                 val index = fitnessCads.indexOf(item)
                 fitnessCads[index].set(item)
-                //adapter.notifyDataSetChanged()
+                adapter.notifyItemChanged(index)
             }
 
             override fun onChildRemoved(snapshot: DataSnapshot) {
                 val item = snapshot.getValue(FitnessCard::class.java)
+                val index = fitnessCads.indexOf(item)
                 fitnessCads.remove(item)
-                //adapter.notifyDataSetChanged()
+                adapter.notifyItemRemoved(index)
             }
 
             override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {

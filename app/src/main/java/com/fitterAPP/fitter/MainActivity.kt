@@ -2,10 +2,8 @@ package com.fitterAPP.fitter
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils.indexOf
 import android.util.Log
 import android.widget.*
-import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
