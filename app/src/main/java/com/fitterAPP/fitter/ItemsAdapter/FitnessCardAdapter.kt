@@ -15,7 +15,19 @@ class FitnessCardAdapter (val context2: Context, val Cards:ArrayList<FitnessCard
 
     class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+        val CardName : TextView = itemView.findViewById(R.id.CardName_TV)
+        val CardDescription : TextView = itemView.findViewById(R.id.Description_TV)
+        val CardDuration : TextView = itemView.findViewById(R.id.TimeDuration_TV)
+        val CardExercises : TextView = itemView.findViewById(R.id.ExerciseCount_TV)
+
         fun setCard(Card:FitnessCard, context: Context){
+            CardName.text = Card.name
+            CardDescription.text = Card.description
+            CardDuration.text = "Duration: " + Card.timeDuration.toString() + " min"
+            if(Card.exercises != null)
+                CardExercises.text = Card.exercises?.count().toString() + " exercise"
+            else
+                CardExercises.text = "0 exercise"
 
         }
     }

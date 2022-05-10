@@ -1,4 +1,4 @@
-package com.fitterAPP.fitter
+package com.fitterAPP.fitter.FragmentControlers
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.fitterAPP.fitter.LoginActivity
+import com.fitterAPP.fitter.R
 
 class Fragment_SignUp : Fragment() {
 

@@ -2,16 +2,8 @@ package com.fitterAPP.fitter
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
-import androidx.fragment.app.FragmentContainer
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+import com.fitterAPP.fitter.FragmentControlers.Fragment_Login
+import com.fitterAPP.fitter.FragmentControlers.Fragment_SignUp
 
 class LoginActivity : AppCompatActivity() {
 
