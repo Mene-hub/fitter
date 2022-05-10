@@ -8,15 +8,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import com.fitterAPP.fitter.databinding.FragmentSignupBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-
 
 //FARE CONTROLLO USERNAME NON CONTIENE SPAZI + CARATTERI CONSENTITI = _
 //LUNGHEZZA MASSIMA DISPLAY NAME 15 CARATTERI

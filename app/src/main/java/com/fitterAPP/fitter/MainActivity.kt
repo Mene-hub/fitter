@@ -55,9 +55,11 @@ class MainActivity : AppCompatActivity() {
         transaction.commit()
     }
 
+    /**
+     * @author Daniel Satriano
+     */
     override fun onStart() {
         super.onStart()
-
         auth.currentUser?.reload()
         Log.i("mainwindow", auth.currentUser?.displayName.toString())
 
@@ -66,47 +68,59 @@ class MainActivity : AppCompatActivity() {
             user.SetNewValue(Athlete(currentUser.uid, currentUser.displayName, currentUser.photoUrl))
             Athlete.setValues(currentUser.uid, currentUser.displayName, currentUser.photoUrl)
 
+            //IF THE USER COMES FROM THE REGISTRATION FORM THEN IT HAS TO SAVE THE DATA TO THE DB, OOTHERWISE IF FROM LOGIN FORM  THE INFOS WILL GET GRABBED FROM
             if(intent.extras!!.getBoolean("HASTOSAVE")){
                 Log.d("MainWindow-Signout", "Entro")
                 databaseHelper.setAthleteItem(user.UID,user)
             }
-
         }
     }
 
-    //METODO PER LA VISUALIZZAZIONE DEL FRAGMENT DI RICERCA
+    /**
+     * @author Claudio Menegotto
+     * METODO PER LA VISUALIZZAZIONE DEL FRAGMENT DI RICERCA
+     */
     fun showSearch(){
         val transaction = supportFragmentManager.beginTransaction()
         transaction.addToBackStack("FindProfileFragment")
         transaction.replace(R.id.FragmentContainer, findprofile() )
         transaction.commit()
     }
-
-    //METODO PER LA VISUALIZZAZIONE DEL FRAGMENT DI RECAP
+    /**
+     * @author Claudio Menegotto
+     * METODO PER LA VISUALIZZAZIONE DEL FRAGMENT DI RECAP
+     */
     fun showRecap(){
         val transaction = supportFragmentManager.beginTransaction()
         transaction.addToBackStack("TimeRacapFragment")
         transaction.replace(R.id.FragmentContainer, TimeRacap() )
         transaction.commit()
     }
-
-    //METODO PER LA VISUALIZZAZIONE DEL FRAGMENT DEL CALENDARIO
+    /**
+     * @author Claudio Menegotto
+     * METODO PER LA VISUALIZZAZIONE DEL FRAGMENT DEL CALENDARIO
+     */
     fun showCalendar(){
         val transaction = supportFragmentManager.beginTransaction()
         transaction.addToBackStack("CalendarFragment")
         transaction.replace(R.id.FragmentContainer, Calendar() )
         transaction.commit()
     }
-
-    //METODO PER LA VISUALIZZAZIONE DEL FRAGMENT CON LA LISTA DI SCHEDE SALVATE
+    /**
+     * @author Claudio Menegotto
+     * METODO PER LA VISUALIZZAZIONE DEL FRAGMENT CON LA LISTA DI SCHEDE SALVATE
+     */
     fun showMyFitnessCards(){
         val transaction = supportFragmentManager.beginTransaction()
         transaction.addToBackStack("MyFitnessCardsFragment")
         transaction.replace(R.id.FragmentContainer, MyFitnessCards() )
         transaction.commit()
     }
-
-    //METODO PER LA DISCONNESSIONE DELL'ACCOUNT
+    /**
+     * @author Claudio Menegotto
+     * @author Daniel Satriano
+     * METODO PER LA DISCONNESSIONE DELL'ACCOUNT
+     */
     fun logout(){
         if(auth.currentUser != null){
             Log.d("MainWindow-Signout", "Sloggato")
@@ -119,6 +133,10 @@ class MainActivity : AppCompatActivity() {
         startActivity(I)
     }
 
+    /**
+     *  @author Daniel Satriano
+     *  Used to update - retrieve data from database
+     */
     private fun getAthleteEventListener(): ChildEventListener {
         val childEventListener = object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
