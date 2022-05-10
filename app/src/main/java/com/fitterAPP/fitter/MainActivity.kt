@@ -2,6 +2,7 @@ package com.fitterAPP.fitter
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils.indexOf
 import android.util.Log
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
@@ -20,13 +21,15 @@ import com.google.firebase.ktx.Firebase
  * Main activity for the android app, in this activity you'll be able to access all your data and your fitness cards.
  */
 class MainActivity : AppCompatActivity() {
-    private lateinit var listView : RecyclerView
-    private lateinit var user : Athlete
+    private val TAG : String = "MainWindow-"
     private lateinit var auth : FirebaseAuth
     private lateinit var currentUser : FirebaseUser
 
+    //firebase database
+    private lateinit var user : Athlete
+    private val fitCardData : MutableList<FitnessCard> = ArrayList()
+
     //Bottom sheet dialog
-    private lateinit var ttprofile : LinearLayout
     private lateinit var menuiv : ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +39,11 @@ class MainActivity : AppCompatActivity() {
         //FIREBASE ACCOUNT
         auth = Firebase.auth
         currentUser = auth.currentUser!!
-        Log.d("TAG", auth.currentUser?.displayName.toString())
+        //User update
+        user.username = currentUser.displayName
+        user.profilePic = currentUser.photoUrl
+        user.UID = currentUser.uid
+
 
         //grab event from companion class RealTimeDBHelper
         RealTimeDBHelper.readToDoItems(getAthleteEventListener())
@@ -54,26 +61,44 @@ class MainActivity : AppCompatActivity() {
         transaction.commit()
     }
 
+    fun generate_random_cards(){
+
+    }
+
+    fun populate_atlhete(){
+
+    }
+
     private fun getAthleteEventListener(): ChildEventListener {
         val childEventListener = object : ChildEventListener{
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                TODO("Not yet implemented")
+                val item = snapshot.getValue(FitnessCard::class.java)
+                //aggiungo nuova fitness card
+                fitCardData.add((item!!))
+                //adapter.notifyDataSetChanged()
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                TODO("Not yet implemented")
+                val item = snapshot.getValue(FitnessCard::class.java)
+                //cerco fitness card modificata
+                val index = fitCardData.indexOf(item)
+                fitCardData[index].set(item)
+                //adapter.notifyDataSetChanged()
             }
 
             override fun onChildRemoved(snapshot: DataSnapshot) {
-                TODO("Not yet implemented")
+                val item = snapshot.getValue(FitnessCard::class.java)
+                fitCardData.remove(item)
+               //adapter.notifyDataSetChanged()
             }
 
             override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
-                TODO("Not yet implemented")
+                //viene triggerato quando la locazione del child cambia
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                Log.w(TAG, "postcomments:onCancelled", error.toException())
+                Toast.makeText(this@MainActivity, "Failed to load comment.",Toast.LENGTH_SHORT).show()
             }
         }
         return childEventListener
@@ -114,8 +139,6 @@ class MainActivity : AppCompatActivity() {
 
     //METODO PER LA DISCONNESSIONE DELL'ACCOUNT
     fun logout(){
-
-        Log.d("MainWindow-Signout", auth.toString())
         if(auth != null){
             Log.d("MainWindow-Signout", "Sloggato")
             auth.signOut()

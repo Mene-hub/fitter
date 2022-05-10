@@ -3,10 +3,7 @@ package com.fitterAPP.fitter
 import android.net.Uri
 
 
-data class Athlete(var firstName : String, var lastName : String, var username : String, var profilePic : String){
-    constructor() : this("", "", "", "")
+data class Athlete(var UID : String , var username : String?, var profilePic : Uri?){
+    constructor() : this("", "", Uri.EMPTY)
 
-    fun getUri() : Uri{
-        return Uri.parse(profilePic)
-    }
 }
