@@ -7,9 +7,6 @@ import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
@@ -26,6 +23,11 @@ class Fragment_Login : Fragment() {
     private lateinit var intent : Intent    //MainWindow caller
     private lateinit var binding : FragmentLoginBinding //Binding
 
+    /**
+     * @author Daniel Satriano
+     * @since 10/05/2022
+     * onCreateView, once view is created it sets all the needed listeners for the UI
+     */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
 
@@ -73,6 +75,10 @@ class Fragment_Login : Fragment() {
         return binding.root
     }
 
+    /**
+     * @author Daniel Satriano
+     * @since 10/05/2022
+     */
     private fun loginGoogle(): View.OnClickListener {
         val listener = View.OnClickListener {
 
@@ -80,6 +86,10 @@ class Fragment_Login : Fragment() {
         return listener
     }
 
+    /**
+     * @author Daniel Satriano
+     * @since 10/05/2022
+     */
     private fun loginFacebook(): View.OnClickListener {
         val listener = View.OnClickListener {
 
@@ -87,6 +97,11 @@ class Fragment_Login : Fragment() {
         return listener
     }
 
+    /**
+     * @author Daniel Satriano
+     * @since 10/05/2022
+     * Checks if the inserted email is valid or not
+     */
     private fun validEmail(): String? {
         val emailText = binding.etLoginEmail.text.toString()
         if(!Patterns.EMAIL_ADDRESS.matcher(emailText).matches()){
@@ -95,6 +110,12 @@ class Fragment_Login : Fragment() {
         return null
     }
 
+    /**
+     * @author Daniel Satriano
+     * @since 10/05/2022
+     * Checks if the user is currently signed in or not. If it is then it launches MainActivity
+     * @see MainActivity for more information about it
+     */
     override fun onStart() {
         super.onStart()
         //GRAB CURRENT USER IF ALREADY LOGGED-IN IN THE PAST
@@ -110,7 +131,13 @@ class Fragment_Login : Fragment() {
             Log.d(TAG_login,"NOT LOGGED")
         }
     }
-    //LOGIN VIA EMAIL AND PASSWORD
+
+    /**
+     * @author Daniel Satriano
+     * @since 10/05/2022
+     * Login via password and email, if it finds an account it Log In and start MainActivity, if it doesn't it'll throw an error at the UI for the user
+     * @see MainActivity for more information about it
+     */
     fun loginEmailPSW(): View.OnClickListener {
         val listener = View.OnClickListener {
             val email : String = binding.etLoginEmail.text.toString()

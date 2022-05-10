@@ -17,14 +17,20 @@ import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
+
 //FARE CONTROLLO PASSWORD ALMENO 6 CARATTERI
 
 class Fragment_SignUp : Fragment() {
+
     private val TAG_register : String = "LoginActivity-Register"
 
     private lateinit var binding : FragmentSignupBinding
     private lateinit var auth: FirebaseAuth
 
+    /**
+     * @author Daniel Satriano
+     * onCreateView, once view is created it sets all the needed listeners for the UI
+     */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         binding = FragmentSignupBinding.inflate(inflater, container, false)
@@ -51,21 +57,48 @@ class Fragment_SignUp : Fragment() {
         }
 
         //CONTROLLA SE LA PASSWOD DI CONFERMA è UGUALE ALLA PASSWORD
-        binding.etSignupConfirmPassword.setOnFocusChangeListener{ _, focused ->
+        binding.etSignupConfirmPassword.onFocusChangeListener = signUpConfPasswordEventListener()
+        binding.etSignupPassword.onFocusChangeListener = signUpPasswordEventListener()
+
+
+        // Inflate the layout for this fragment
+        return binding.root;
+    }
+
+    private fun signUpConfPasswordEventListener(): View.OnFocusChangeListener {
+        val listener = View.OnFocusChangeListener{ _, focused ->
             if(!focused){
-                if(!checkPassword()){
+                if(!checkPasswordConfirmation(binding.etSignupPassword.text.toString(), binding.etSignupConfirmPassword.text.toString())){
                     binding.etSignupConfirmPasswordLayout.error = getString(R.string.pass_dont_match)
                 }
             }else{
                 binding.etSignupConfirmPasswordLayout.error = null
             }
         }
+        return listener
+    }
 
-        // Inflate the layout for this fragment
-        return binding.root;
+    private fun signUpPasswordEventListener(): View.OnFocusChangeListener {
+        val listener = View.OnFocusChangeListener{ _, focused ->
+            if(!focused){
+                if(!binding.etSignupPassword.text.isNullOrBlank()) {
+                    if (!checkPasswordLength(binding.etSignupPassword.text.toString())) {
+                        binding.etSignupPasswordLayout.helperText =
+                            "Password length must be at least 6 characters"
+                    }
+                }else{
+                    binding.etSignupPasswordLayout.helperText = "Password cannot be empty or blank spaces"
+                }
+            }else{
+                binding.etSignupPasswordLayout.helperText = null
+            }
+        }
+        return listener
     }
 
     /**
+     * @author Daniel Satriano
+     * @since 21/05/2022
      * Checks if the inserted email is valid or not
      */
     private fun validEmail(): String? {
@@ -75,23 +108,49 @@ class Fragment_SignUp : Fragment() {
         }
         return null
     }
+
     /**
-     * returns true if confirm password and password are the same,
-     * returns false is the passwords don't match
+     * @author Daniel Satriano
+     * @since 21/05/2022
+     * @return true if confirm password and password are the same, false is the passwords don't match
+     * this mathod its used in registerEmailPSW()
+     * @see registerEmailPSW
      */
-    private fun checkPassword() : Boolean {
-        if(binding.etSignupPassword.text.toString() == binding.etSignupConfirmPassword.text.toString()){
+    private fun checkPasswordConfirmation(password : String, confPassword: String) : Boolean {
+        if (password == confPassword) {
             return true
         }
         return false
     }
 
+    /**
+     * @author Daniel Satriano
+     * @since 21/05/2022
+     * @return true if password has 6 or more chars, false if it doesn't
+     * this mathod its used in registerEmailPSW()
+     * @see registerEmailPSW
+     */
+    private fun checkPasswordLength(password : String) : Boolean{
+        if(password.length >= 6){
+            return true
+        }
+        return false
+    }
+
+    /**
+     * @author Daniel Satriano
+     * @since 21/05/2022
+     */
     private fun loginGoogle(): View.OnClickListener {
         val listener = View.OnClickListener {
 
         }
         return listener
     }
+    /**
+     * @author Daniel Satriano
+     * @since 21/05/2022
+     */
     private fun loginFacebook(): View.OnClickListener {
         val listener = View.OnClickListener {
 
@@ -99,7 +158,12 @@ class Fragment_SignUp : Fragment() {
         return listener
     }
 
-    //IF USER NOT FOUND IN "loginEmailPSW" THEN CREATES ONE
+    /**
+     * @author Daniel Satriano
+     * @since 21/05/2022
+     * IF USER NOT FOUND IN "loginEmailPSW" THEN CREATES ONE
+     * It uses email, password, username
+     */
     private fun registerEmailPSW() : View.OnClickListener {
         val listener = View.OnClickListener {
             binding.etSignupConfirmPassword.clearFocus()
@@ -107,7 +171,9 @@ class Fragment_SignUp : Fragment() {
             val password : String = binding.etSignupPassword.text.toString()
             val username : String = binding.etSignupUsername.text.toString()
 
-            if(!email.isNullOrBlank() && !password.isNullOrBlank() && checkPassword()) {
+            if(!email.isNullOrBlank() && !password.isNullOrBlank()
+                && checkPasswordConfirmation(password, binding.etSignupConfirmPassword.text.toString()) && checkPasswordLength(password)) {
+
                 auth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener((activity as LoginActivity)) { task ->
                         if (task.isSuccessful) {

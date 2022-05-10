@@ -3,7 +3,6 @@ package com.fitterAPP.fitter
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.ChildEventListener
@@ -12,10 +11,14 @@ import com.google.firebase.database.DatabaseError
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
+/**
+ * @author Daniel Satriano
+ * @author Claudio Menegotto
+ * Main activity for the android app, in this activity you'll be able to access all your data and your fitness cards.
+ */
 class MainActivity : AppCompatActivity() {
     private lateinit var listView : RecyclerView
     private lateinit var user : Athlete
@@ -29,6 +32,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        //FIREBASE ACCOUNT
         auth = Firebase.auth
         currentUser = auth.currentUser!!
         Log.d("TAG", auth.currentUser?.displayName.toString())
@@ -43,7 +48,7 @@ class MainActivity : AppCompatActivity() {
             modalBottomSheet.show(supportFragmentManager, profileMenu.TAG)
         }
 
-        //inserisco come fragment default la lista di schede caricate
+        //default fragment is the fitness cards
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.FragmentContainer, MyFitnessCards() )
         transaction.commit()
