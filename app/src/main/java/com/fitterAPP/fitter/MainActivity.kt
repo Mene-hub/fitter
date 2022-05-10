@@ -57,15 +57,20 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+
+        auth.currentUser?.reload()
+        Log.i("mainwindow", auth.currentUser?.displayName.toString())
+
         if(auth.currentUser != null){
             currentUser = auth.currentUser!!
             user.SetNewValue(Athlete(currentUser.uid, currentUser.displayName, currentUser.photoUrl))
             Athlete.setValues(currentUser.uid, currentUser.displayName, currentUser.photoUrl)
 
-            if(user.UID != ""){
+            if(intent.extras!!.getBoolean("HASTOSAVE")){
                 Log.d("MainWindow-Signout", "Entro")
                 databaseHelper.setAthleteItem(user.UID,user)
             }
+
         }
     }
 

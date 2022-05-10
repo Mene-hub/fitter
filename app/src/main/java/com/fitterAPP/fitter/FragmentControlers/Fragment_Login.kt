@@ -72,7 +72,7 @@ public class Fragment_Login : Fragment() {
         intent = Intent(requireActivity(), MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-
+        intent.putExtra("HASTOSAVE",false)
 
         // Inflate the layout for this fragment
         return binding.root
@@ -123,6 +123,7 @@ public class Fragment_Login : Fragment() {
         super.onStart()
         //GRAB CURRENT USER IF ALREADY LOGGED-IN IN THE PAST
         val currentUser = auth.currentUser
+
         Log.d(TAG_login, currentUser.toString())
 
         if(currentUser != null) {
