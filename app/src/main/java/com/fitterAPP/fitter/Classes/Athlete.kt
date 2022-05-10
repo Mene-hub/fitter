@@ -1,4 +1,4 @@
-package com.fitterAPP.fitter
+package com.fitterAPP.fitter.Classes
 
 import android.net.Uri
 

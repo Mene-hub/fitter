@@ -1,5 +1,6 @@
 package com.fitterAPP.fitter
 
+import com.fitterAPP.fitter.Classes.Athlete
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.FirebaseDatabase
 

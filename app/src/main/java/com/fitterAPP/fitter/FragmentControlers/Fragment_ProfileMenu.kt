@@ -1,4 +1,4 @@
-package com.fitterAPP.fitter
+package com.fitterAPP.fitter.FragmentControlers
 
 import android.os.Bundle
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
+import com.fitterAPP.fitter.MainActivity
+import com.fitterAPP.fitter.R
 
 const val ARG_ITEM_COUNT = "item_count"
 
