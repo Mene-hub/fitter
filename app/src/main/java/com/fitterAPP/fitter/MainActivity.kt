@@ -23,8 +23,11 @@ import com.google.firebase.ktx.Firebase
  * Main activity for the android app, in this activity you'll be able to access all your data and your fitness cards.
  */
 class MainActivity : AppCompatActivity() {
+    private val _REFERENCE = "USERS"
+    private val user = Athlete()
     private lateinit var auth : FirebaseAuth
     private lateinit var currentUser : FirebaseUser
+    private lateinit var databaseHelper : RealTimeDBHelper
 
     //Bottom sheet dialog
     private lateinit var menuiv : ImageView
@@ -35,10 +38,8 @@ class MainActivity : AppCompatActivity() {
 
         //FIREBASE ACCOUNT
         auth = Firebase.auth
-        currentUser = auth.currentUser!!
-
-
-
+        databaseHelper = RealTimeDBHelper(_REFERENCE)
+        databaseHelper.readItems(getAthleteEventListener())
 
 
         //Bottom sheet dialog
@@ -54,14 +55,19 @@ class MainActivity : AppCompatActivity() {
         transaction.commit()
     }
 
-    fun generate_random_cards(){
+    override fun onStart() {
+        super.onStart()
+        if(auth.currentUser != null){
+            currentUser = auth.currentUser!!
+            user.SetNewValue(Athlete(currentUser.uid, currentUser.displayName, currentUser.photoUrl))
+            Athlete.setValues(currentUser.uid, currentUser.displayName, currentUser.photoUrl)
 
+            if(user.UID != ""){
+                Log.d("MainWindow-Signout", "Entro")
+                databaseHelper.setAthleteItem(user.UID,user)
+            }
+        }
     }
-
-    fun populate_atlhete(){
-
-    }
-
 
     //METODO PER LA VISUALIZZAZIONE DEL FRAGMENT DI RICERCA
     fun showSearch(){
@@ -97,7 +103,7 @@ class MainActivity : AppCompatActivity() {
 
     //METODO PER LA DISCONNESSIONE DELL'ACCOUNT
     fun logout(){
-        if(auth != null){
+        if(auth.currentUser != null){
             Log.d("MainWindow-Signout", "Sloggato")
             auth.signOut()
         }
@@ -108,4 +114,38 @@ class MainActivity : AppCompatActivity() {
         startActivity(I)
     }
 
+    private fun getAthleteEventListener(): ChildEventListener {
+        val childEventListener = object : ChildEventListener {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                val item = snapshot.getValue(Athlete::class.java)
+                //aggiungo nuova fitness card
+                user.SetNewValue(item!!)
+                Athlete.setValues(user.UID,user.username,user.profilePic)
+                findViewById<TextView>(R.id.TV_Username).text = user.username
+            }
+
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                val item = snapshot.getValue(Athlete::class.java)
+                user.SetNewValue(item!!)
+                findViewById<TextView>(R.id.TV_Username).text = user.username
+                Athlete.setValues(user.UID,user.username,user.profilePic)
+            }
+
+            override fun onChildRemoved(snapshot: DataSnapshot) {
+                auth.signOut()
+                val intent = Intent(this@MainActivity,LoginActivity::class.java)
+                startActivity(intent)
+            }
+
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+                //viene triggerato quando la locazione del child cambia
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.w("MainActivity-Database-User", "postcomments:onCancelled", error.toException())
+                Toast.makeText(this@MainActivity, "Failed to load comment.", Toast.LENGTH_SHORT).show()
+            }
+        }
+        return childEventListener
+    }
 }

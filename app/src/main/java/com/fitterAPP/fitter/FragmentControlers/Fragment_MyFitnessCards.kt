@@ -27,29 +27,20 @@ import com.google.firebase.ktx.Firebase
 
 class MyFitnessCards : Fragment() {
     private val TAG : String = "FragmentFitnessCard-"
-    private lateinit var auth : FirebaseAuth
-    private lateinit var currentUser : FirebaseUser
+    private lateinit var databaseHelper : RealTimeDBHelper
 
     private lateinit var binding : FragmentMyFitnessCardsBinding //Binding
     //firebase database
     private lateinit var user : Athlete
     private val fitnessCads : MutableList<FitnessCard> = ArrayList()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
         binding = FragmentMyFitnessCardsBinding.inflate(inflater, container, false)
 
         //grab event from companion class RealTimeDBHelper
-        RealTimeDBHelper.readToDoItems(getAthleteEventListener())
-
-        //FIREBASE ACCOUNT
-        auth = Firebase.auth
-        currentUser = auth.currentUser!!
-        //User update
-        user.username = currentUser.displayName
-        user.profilePic = currentUser.photoUrl
-        user.UID = currentUser.uid
-
+        databaseHelper = RealTimeDBHelper() //USING DEFAULT VALUE
+        databaseHelper.readItems(getAthleteEventListener())
 
         fitnessCads.add(FitnessCard())
         fitnessCads.add(FitnessCard())
@@ -60,10 +51,9 @@ class MyFitnessCards : Fragment() {
         fitnessCads.add(FitnessCard())
         fitnessCads.add(FitnessCard())
 
-        val adapter : FitnessCardAdapter
         val recycle : RecyclerView = binding.MyFitnessCardsRV
-        adapter = context?.let { fitnessCads?.let { it1 -> FitnessCardAdapter((activity as MainActivity).baseContext, it1) } }!!
-        recycle!!.setAdapter(adapter)
+        val adapter : FitnessCardAdapter = context?.let { FitnessCardAdapter((activity as MainActivity).baseContext, fitnessCads) }!!
+        recycle.adapter = adapter
         return binding.root
     }
 

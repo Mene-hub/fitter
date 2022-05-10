@@ -37,7 +37,7 @@ class FitnessCardAdapter (val context2: Context, val Cards:MutableList<FitnessCa
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        var Card: FitnessCard = Cards.get(position)
+        val Card: FitnessCard = Cards[position]
         holder.setCard(Card, context2)
     }
 

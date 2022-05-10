@@ -18,7 +18,8 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 
-//FARE CONTROLLO PASSWORD ALMENO 6 CARATTERI
+//FARE CONTROLLO USERNAME NON CONTIENE SPAZI + CARATTERI CONSENTITI = _
+//LUNGHEZZA MASSIMA DISPLAY NAME 15 CARATTERI
 
 class Fragment_SignUp : Fragment() {
 
