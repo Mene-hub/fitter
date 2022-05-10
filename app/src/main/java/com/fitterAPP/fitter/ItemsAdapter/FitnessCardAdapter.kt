@@ -5,13 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.cardview.widget.CardView
-import androidx.core.content.ContextCompat
+
 import androidx.recyclerview.widget.RecyclerView
 import com.fitterAPP.fitter.Classes.FitnessCard
 import com.fitterAPP.fitter.R
 
-class FitnessCardAdapter (val context2: Context, val Cards:ArrayList<FitnessCard>) : RecyclerView.Adapter<FitnessCardAdapter.Holder>() {
+class FitnessCardAdapter (val context2: Context, val Cards:MutableList<FitnessCard>) : RecyclerView.Adapter<FitnessCardAdapter.Holder>() {
 
     class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 

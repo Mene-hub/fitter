@@ -23,13 +23,8 @@ import com.google.firebase.ktx.Firebase
  * Main activity for the android app, in this activity you'll be able to access all your data and your fitness cards.
  */
 class MainActivity : AppCompatActivity() {
-    private val TAG : String = "MainWindow-"
     private lateinit var auth : FirebaseAuth
     private lateinit var currentUser : FirebaseUser
-
-    //firebase database
-    private lateinit var user : Athlete
-    private val fitCardData : MutableList<FitnessCard> = ArrayList()
 
     //Bottom sheet dialog
     private lateinit var menuiv : ImageView
@@ -41,14 +36,10 @@ class MainActivity : AppCompatActivity() {
         //FIREBASE ACCOUNT
         auth = Firebase.auth
         currentUser = auth.currentUser!!
-        //User update
-        user.username = currentUser.displayName
-        user.profilePic = currentUser.photoUrl
-        user.UID = currentUser.uid
 
 
-        //grab event from companion class RealTimeDBHelper
-        RealTimeDBHelper.readToDoItems(getAthleteEventListener())
+
+
 
         //Bottom sheet dialog
         menuiv = findViewById(R.id.MenuBt)
@@ -69,41 +60,6 @@ class MainActivity : AppCompatActivity() {
 
     fun populate_atlhete(){
 
-    }
-
-    private fun getAthleteEventListener(): ChildEventListener {
-        val childEventListener = object : ChildEventListener{
-            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                val item = snapshot.getValue(FitnessCard::class.java)
-                //aggiungo nuova fitness card
-                fitCardData.add((item!!))
-                //adapter.notifyDataSetChanged()
-            }
-
-            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                val item = snapshot.getValue(FitnessCard::class.java)
-                //cerco fitness card modificata
-                val index = fitCardData.indexOf(item)
-                fitCardData[index].set(item)
-                //adapter.notifyDataSetChanged()
-            }
-
-            override fun onChildRemoved(snapshot: DataSnapshot) {
-                val item = snapshot.getValue(FitnessCard::class.java)
-                fitCardData.remove(item)
-               //adapter.notifyDataSetChanged()
-            }
-
-            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
-                //viene triggerato quando la locazione del child cambia
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.w(TAG, "postcomments:onCancelled", error.toException())
-                Toast.makeText(this@MainActivity, "Failed to load comment.",Toast.LENGTH_SHORT).show()
-            }
-        }
-        return childEventListener
     }
 
 

@@ -2,8 +2,6 @@ package com.fitterAPP.fitter
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.fitterAPP.fitter.FragmentControlers.Fragment_Login
-import com.fitterAPP.fitter.FragmentControlers.Fragment_SignUp
 
 class LoginActivity : AppCompatActivity() {
 
