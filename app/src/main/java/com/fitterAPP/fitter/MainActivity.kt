@@ -9,6 +9,8 @@ import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import androidx.appcompat.app.AppCompatActivity
+import com.fitterAPP.fitter.Classes.Athlete
+import com.fitterAPP.fitter.FragmentControlers.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
