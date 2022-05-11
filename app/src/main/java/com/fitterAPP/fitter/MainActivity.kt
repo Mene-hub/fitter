@@ -19,6 +19,7 @@ import com.google.firebase.ktx.Firebase
  * Main activity for the android app, in this activity you'll be able to access all your data and your fitness cards.
  */
 class MainActivity : AppCompatActivity() {
+
     private val _REFERENCE = "USERS"
     private val user = Athlete()
     private lateinit var auth : FirebaseAuth
