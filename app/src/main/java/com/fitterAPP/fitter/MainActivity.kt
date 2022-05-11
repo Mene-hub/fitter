@@ -67,9 +67,9 @@ class MainActivity : AppCompatActivity() {
                 databaseHelper.setAthleteItem(user.UID,user)
             }
 
-            databaseHelper = RealTimeDBHelper(dbReference.child(user.UID))
-            databaseHelper.readItems(getAthleteEventListener())
-            findViewById<TextView>(R.id.TV_Username).text = user.username
+            databaseHelper = RealTimeDBHelper(dbReference.child(user.UID))      //Changing reference so that the db doesn't give me the whole node, but only the current logged user
+            databaseHelper.readItems(getAthleteEventListener())                 //Applying listener for the "on update" call
+            findViewById<TextView>(R.id.TV_Username).text = user.username       //Changing textview username text
         }
     }
 
