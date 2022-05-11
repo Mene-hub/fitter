@@ -7,9 +7,6 @@ import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
@@ -75,7 +72,7 @@ class Fragment_Login : Fragment() {
         intent = Intent(requireActivity(), MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-
+        intent.putExtra("HASTOSAVE",false)
 
         // Inflate the layout for this fragment
         return binding.root
@@ -126,12 +123,12 @@ class Fragment_Login : Fragment() {
         super.onStart()
         //GRAB CURRENT USER IF ALREADY LOGGED-IN IN THE PAST
         val currentUser = auth.currentUser
+
         Log.d(TAG_login, currentUser.toString())
 
         if(currentUser != null) {
             //START MAIN ACTIVITY
             Log.d(TAG_login,"LOGGED")
-            intent.putExtra("USER", auth.currentUser)
             startActivity(intent)
         }else{
             //USER NOT LOGGED IN - needs to login
@@ -159,7 +156,6 @@ class Fragment_Login : Fragment() {
 
                             //val user = auth.currentUser
                             //updateUI(user) UPDATE UI ACCORDINGLY
-                            intent.putExtra("USER", auth.currentUser)
                             startActivity(intent)
 
                         } else {

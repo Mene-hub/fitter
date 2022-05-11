@@ -1,30 +1,40 @@
 package com.fitterAPP.fitter
 
 import com.fitterAPP.fitter.Classes.Athlete
+import com.fitterAPP.fitter.Classes.FitnessCard
 import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
-class RealTimeDBHelper {
-    companion object{
+/**
+ * @author Daniel Satriano
+ */
+class RealTimeDBHelper(val database: DatabaseReference) {
 
-        private val database = FirebaseDatabase
-            .getInstance("https://fitter-8363a-default-rtdb.europe-west1.firebasedatabase.app/")
-            .getReference("FITNESS_CARDS")
-
-        //Reading from db
-        fun readToDoItems(athleteEventListener: ChildEventListener){
-            database.addChildEventListener(athleteEventListener)
-        }
-
-        //Writing
-        fun setToDoItem(key : String, athlete : Athlete){
-            database.child(key).setValue(athlete)
-        }
-
-        //Deleting entire node
-        fun removeToDoItem(key : String){
-            database.child(key).removeValue()
+    companion object {
+        fun getDbURL() : String {
+            return "https://fitter-8363a-default-rtdb.europe-west1.firebasedatabase.app/"
         }
     }
+
+    //Reading from db
+    fun readItems(athleteEventListener: ChildEventListener){
+        database.addChildEventListener(athleteEventListener)
+    }
+
+    //Writing
+    fun setAthleteItem(key : String, athlete : Athlete){
+        database.child(key).setValue(athlete)
+    }
+    //Writing
+    fun setFitnessCardItem(UID : String, card : FitnessCard){
+        database.child(UID + "FITNESSCARD").setValue(card)
+    }
+
+    //Deleting entire node
+    fun removeItem(key : String){
+        database.child(key).removeValue()
+    }
+
 }
 

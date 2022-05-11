@@ -8,20 +8,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
-import com.fitterAPP.fitter.LoginActivity
-import com.fitterAPP.fitter.MainActivity
-import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.databinding.FragmentSignupBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-
-//FARE CONTROLLO PASSWORD ALMENO 6 CARATTERI
+//FARE CONTROLLO USERNAME NON CONTIENE SPAZI + CARATTERI CONSENTITI = _
+//LUNGHEZZA MASSIMA DISPLAY NAME 15 CARATTERI
 
 class Fragment_SignUp : Fragment() {
 
@@ -185,17 +180,20 @@ class Fragment_SignUp : Fragment() {
 
                             //TESTING AGGIUNTA NOME UTENTE AL PROFILO
                             var updater = UserProfileChangeRequest.Builder().setDisplayName(username).build()
-                            auth.currentUser?.updateProfile(updater)
-
-                            Log.w(TAG_register,auth.currentUser?.displayName.toString())
-
-                            //Login into MainActivity
-                            //INTENT PER APRIRE MAIN WINDOW
-                            val intent : Intent = Intent(requireActivity(), MainActivity::class.java)
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                            startActivity(intent)
-
+                            auth.currentUser!!.updateProfile(updater).addOnCompleteListener{ task ->
+                                if(task.isSuccessful){
+                                    Log.d(TAG_register, "User profile updated")
+                                    auth.currentUser?.reload()
+                                    Log.w(TAG_register,auth.currentUser?.displayName.toString())
+                                    val intent : Intent = Intent(requireActivity(), MainActivity::class.java)
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                    intent.putExtra("HASTOSAVE",true)
+                                    startActivity(intent)
+                                }else{
+                                    Toast.makeText(requireActivity().baseContext,"There was a problem during the registration, try again later", Toast.LENGTH_LONG).show()
+                                }
+                            }
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG_register, "User creation: FAILED", task.exception)
