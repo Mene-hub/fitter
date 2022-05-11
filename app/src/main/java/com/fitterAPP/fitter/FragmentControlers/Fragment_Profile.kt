@@ -13,7 +13,7 @@ class profile : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_fitness_cards, container, false)
+        return inflater.inflate(R.layout.fragment_findprofile, container, false)
     }
 
 }
