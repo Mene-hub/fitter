@@ -60,8 +60,8 @@ class MyFitnessCards : Fragment() {
      * @see Athlete
      * @see FitnessCard
      */
-    fun addFitnessCard(UID : String, card : FitnessCard){
-        databaseHelper.setFitnessCardItem(UID,card)
+    fun addFitnessCard(UID : String, card : MutableList<FitnessCard>){
+        databaseHelper.setFitnessCardItem(UID, card)
     }
 
     private fun getAthleteEventListener(): ChildEventListener {

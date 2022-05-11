@@ -27,7 +27,7 @@ class RealTimeDBHelper(val database: DatabaseReference) {
         database.child(key).setValue(athlete)
     }
     //Writing
-    fun setFitnessCardItem(UID : String, card : FitnessCard){
+    fun setFitnessCardItem(UID : String, card : MutableList<FitnessCard>){
         database.child(UID + "FITNESSCARD").setValue(card)
     }
 
