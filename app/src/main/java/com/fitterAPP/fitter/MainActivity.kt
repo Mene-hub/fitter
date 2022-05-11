@@ -4,15 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import androidx.appcompat.app.AppCompatActivity
 import com.fitterAPP.fitter.Classes.Athlete
 import com.fitterAPP.fitter.FragmentControlers.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 
 /**
@@ -26,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var auth : FirebaseAuth
     private lateinit var currentUser : FirebaseUser
     private lateinit var databaseHelper : RealTimeDBHelper
-
+    private var dbReference : DatabaseReference = FirebaseDatabase.getInstance(RealTimeDBHelper.getDbURL()).getReference(_REFERENCE)
     //Bottom sheet dialog
     private lateinit var menuiv : ImageView
 
@@ -36,9 +34,7 @@ class MainActivity : AppCompatActivity() {
 
         //FIREBASE ACCOUNT
         auth = Firebase.auth
-        databaseHelper = RealTimeDBHelper(_REFERENCE)
-        databaseHelper.readItems(getAthleteEventListener())
-
+        databaseHelper = RealTimeDBHelper(dbReference)
 
         //Bottom sheet dialog
         menuiv = findViewById(R.id.MenuBt)
@@ -59,7 +55,6 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         auth.currentUser?.reload()
-        Log.i("mainwindow", auth.currentUser?.displayName.toString())
 
         if(auth.currentUser != null){
             currentUser = auth.currentUser!!
@@ -71,6 +66,10 @@ class MainActivity : AppCompatActivity() {
                 Log.d("MainWindow-Signout", "Entro")
                 databaseHelper.setAthleteItem(user.UID,user)
             }
+
+            databaseHelper = RealTimeDBHelper(dbReference.child(user.UID))
+            databaseHelper.readItems(getAthleteEventListener())
+            findViewById<TextView>(R.id.TV_Username).text = user.username
         }
     }
 
@@ -133,21 +132,17 @@ class MainActivity : AppCompatActivity() {
 
     /**
      *  @author Daniel Satriano
-     *  Used to update - retrieve data from database
+     *  Used to update username from the database.
      */
     private fun getAthleteEventListener(): ChildEventListener {
         val childEventListener = object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                val item = snapshot.getValue(Athlete::class.java)
-                //aggiungo nuova fitness card
-                user.SetNewValue(item!!)
-                Athlete.setValues(user.UID,user.username,user.profilePic)
-                findViewById<TextView>(R.id.TV_Username).text = user.username
+                //NOT NEEDED FOR THE SCOPE OF THIS LISTENER
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                val item = snapshot.getValue(Athlete::class.java)
-                user.SetNewValue(item!!)
+                val item = snapshot.getValue(String::class.java)
+                user.changeUsername(item!!)
                 findViewById<TextView>(R.id.TV_Username).text = user.username
                 Athlete.setValues(user.UID,user.username,user.profilePic)
             }

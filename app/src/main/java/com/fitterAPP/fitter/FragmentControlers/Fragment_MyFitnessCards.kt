@@ -14,17 +14,16 @@ import com.fitterAPP.fitter.ItemsAdapter.FitnessCardAdapter
 import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.RealTimeDBHelper
 import com.fitterAPP.fitter.databinding.FragmentMyFitnessCardsBinding
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.*
 
 
 class MyFitnessCards : Fragment() {
     private val TAG : String = "FragmentFitnessCard-"
     private lateinit var databaseHelper : RealTimeDBHelper
-
+    private val _REFERENCE : String = "FITNESS_CARDS"
     private lateinit var binding : FragmentMyFitnessCardsBinding //Binding
     private lateinit var adapter : FitnessCardAdapter
+    private var dbReference : DatabaseReference = FirebaseDatabase.getInstance(RealTimeDBHelper.getDbURL()).getReference(_REFERENCE)
     //firebase database
     private val fitnessCads : MutableList<FitnessCard> = ArrayList()
 
@@ -33,7 +32,7 @@ class MyFitnessCards : Fragment() {
         binding = FragmentMyFitnessCardsBinding.inflate(inflater, container, false)
 
         //grab event from companion class RealTimeDBHelper
-        databaseHelper = RealTimeDBHelper() //USING DEFAULT VALUE
+        databaseHelper = RealTimeDBHelper(dbReference) //USING DEFAULT VALUE
         databaseHelper.readItems(getAthleteEventListener())
 
         fitnessCads.add(FitnessCard())

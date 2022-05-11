@@ -11,6 +11,16 @@ data class Athlete(var UID : String , var username : String?, var profilePic : U
         this.profilePic = user.profilePic
     }
 
+    fun SetNewValue(uid : String, user : String, uri : Uri = Uri.EMPTY){
+        this.UID = uid
+        this.username = user
+        this.profilePic = uri
+    }
+
+    fun changeUsername(username : String){
+        this.username = username
+    }
+
     companion object{
         var UID : String = ""
         var username : String = ""

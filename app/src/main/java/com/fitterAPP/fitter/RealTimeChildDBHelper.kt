@@ -3,29 +3,23 @@ package com.fitterAPP.fitter
 import com.fitterAPP.fitter.Classes.Athlete
 import com.fitterAPP.fitter.Classes.FitnessCard
 import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
 /**
  * @author Daniel Satriano
+ * @property reference default value "FITNESS_CARDS"
  */
-class RealTimeDBHelper(val database: DatabaseReference) {
+class RealTimeChildDBHelper(private val reference : String = "FITNESS_CARDS", private val child :String) {
 
-    companion object {
-        fun getDbURL() : String {
-            return "https://fitter-8363a-default-rtdb.europe-west1.firebasedatabase.app/"
-        }
-    }
+    private val database = FirebaseDatabase
+        .getInstance("https://fitter-8363a-default-rtdb.europe-west1.firebasedatabase.app/")
+        .getReference(reference).child(child)
 
     //Reading from db
     fun readItems(athleteEventListener: ChildEventListener){
         database.addChildEventListener(athleteEventListener)
     }
 
-    //Writing
-    fun setAthleteItem(key : String, athlete : Athlete){
-        database.child(key).setValue(athlete)
-    }
     //Writing
     fun setFitnessCardItem(UID : String, card : FitnessCard){
         database.child(UID + "FITNESSCARD").setValue(card)
