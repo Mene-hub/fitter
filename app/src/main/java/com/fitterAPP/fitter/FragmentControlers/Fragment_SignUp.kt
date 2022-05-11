@@ -9,6 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.fitterAPP.fitter.LoginActivity
+import com.fitterAPP.fitter.MainActivity
+import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.databinding.FragmentSignupBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
