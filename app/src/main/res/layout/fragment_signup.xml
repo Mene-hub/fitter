@@ -33,6 +33,7 @@
 
 
     <LinearLayout
+        android:id="@+id/topPanel_linear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -87,7 +88,8 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/topPanel"
+        android:layout_marginTop="80dp"
+        android:layout_below="@id/topPanel_linear"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         app:helperTextTextColor="@color/red">
