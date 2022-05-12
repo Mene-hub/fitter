@@ -35,21 +35,19 @@ class MyFitnessCards : Fragment() {
         databaseHelper = RealTimeDBHelper(dbReference) //USING DEFAULT VALUE
         databaseHelper.readItems(getAthleteEventListener())
 
-        fitnessCads.add(FitnessCard())
-        fitnessCads.add(FitnessCard())
-        fitnessCads.add(FitnessCard())
-        fitnessCads.add(FitnessCard())
-        fitnessCads.add(FitnessCard())
-        fitnessCads.add(FitnessCard())
-        fitnessCads.add(FitnessCard())
-        fitnessCads.add(FitnessCard())
-
         val recycle : RecyclerView = binding.MyFitnessCardsRV
         adapter = context?.let { FitnessCardAdapter((activity as MainActivity), fitnessCads) }!!
+        adapter.notifyDataSetChanged()
         recycle.adapter = adapter
 
         Log.w("Fragment", binding.MyFitnessCardsRV.id.toString())
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        addFitnessCard(Athlete.UID, FitnessCard())
     }
 
 
@@ -64,13 +62,17 @@ class MyFitnessCards : Fragment() {
         databaseHelper.setFitnessCardItem(UID,card)
     }
 
+    fun addFitnessCard(UID : String, card : MutableList<FitnessCard>){
+        databaseHelper.setFitnessCardItem(UID,card)
+    }
+
     private fun getAthleteEventListener(): ChildEventListener {
         val childEventListener = object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val item = snapshot.getValue(FitnessCard::class.java)
                 //aggiungo nuova fitness card
                 fitnessCads.add((item!!))
-                adapter.notifyItemInserted(fitnessCads.indexOf(item))
+                adapter.notifyDataSetChanged()
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
@@ -78,7 +80,7 @@ class MyFitnessCards : Fragment() {
                 //cerco fitness card modificata
                 val index = fitnessCads.indexOf(item)
                 fitnessCads[index].set(item)
-                adapter.notifyItemChanged(index)
+                adapter.notifyDataSetChanged()
             }
 
             override fun onChildRemoved(snapshot: DataSnapshot) {

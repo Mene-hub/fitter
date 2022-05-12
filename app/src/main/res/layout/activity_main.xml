@@ -69,8 +69,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LL_Profile_menu"
-        android:name="com.fitterAPP.fitter.FragmentControlers.MyFitnessCards"
-        tools:layout="@layout/fragment_my_fitness_cards" />
+        app:layout_constraintTop_toBottomOf="@+id/LL_Profile_menu"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

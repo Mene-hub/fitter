@@ -1,9 +1,10 @@
 package com.fitterAPP.fitter.Classes
 
-import com.fitterAPP.fitter.Classes.Exercise
+import java.text.SimpleDateFormat
+import java.util.*
 
 
-data class FitnessCard(var name:String? , var description : String?, var timeDuration : Int?, var exercises : MutableList<Exercise>? ) {
+data class FitnessCard(var name:String?, var description: String?, var timeDuration: Int?, var exercises: MutableList<Exercise>?, val key: String = SimpleDateFormat("dd-M-yyyy hh:mm:ss").format(Date())) {
 
     constructor() : this ("Scheda", "Default description",60, null)
 

@@ -43,10 +43,6 @@ class MainActivity : AppCompatActivity() {
             modalBottomSheet.show(supportFragmentManager, profileMenu.TAG)
         }
 
-        //default fragment is the fitness cards
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.FragmentContainer, MyFitnessCards() )
-        transaction.commit()
     }
 
     /**
@@ -60,6 +56,7 @@ class MainActivity : AppCompatActivity() {
             currentUser = auth.currentUser!!
             user.SetNewValue(Athlete(currentUser.uid, currentUser.displayName, currentUser.photoUrl))
             Athlete.setValues(currentUser.uid, currentUser.displayName, currentUser.photoUrl)
+            Log.d("USERUIDFROMFIREBASE", Athlete.UID)
 
             //IF THE USER COMES FROM THE REGISTRATION FORM THEN IT HAS TO SAVE THE DATA TO THE DB, OOTHERWISE IF FROM LOGIN FORM  THE INFOS WILL GET GRABBED FROM
             if(intent.extras!!.getBoolean("HASTOSAVE")){
@@ -71,6 +68,11 @@ class MainActivity : AppCompatActivity() {
             databaseHelper.readItems(getAthleteEventListener())                 //Applying listener for the "on update" call
             findViewById<TextView>(R.id.TV_Username).text = user.username       //Changing textview username text
         }
+
+        //default fragment is the fitness cards
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.FragmentContainer, MyFitnessCards() )
+        transaction.commit()
     }
 
     /**
