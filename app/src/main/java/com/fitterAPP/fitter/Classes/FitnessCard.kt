@@ -1,12 +1,9 @@
 package com.fitterAPP.fitter.Classes
 
-import java.text.SimpleDateFormat
-import java.util.*
 
+data class FitnessCard(var name:String?, var description: String?, var timeDuration: Int?, var exercises: MutableList<Exercise>?, var key : String) {
 
-data class FitnessCard(var name:String?, var description: String?, var timeDuration: Int?, var exercises: MutableList<Exercise>?, val key: String = SimpleDateFormat("dd-M-yyyy hh:mm:ss").format(Date())) {
-
-    constructor() : this ("Scheda", "Default description",60, null)
+    constructor() : this ("Scheda", "Default description",60, null, "")
 
     override fun toString() : String{
         return description.toString()
@@ -14,10 +11,11 @@ data class FitnessCard(var name:String?, var description: String?, var timeDurat
 
     //metodo per sovrascrivere un oggetto
     fun set(fitnessCard : FitnessCard?){
-        name = fitnessCard?.name
-        description = fitnessCard?.description
-        exercises = fitnessCard?.exercises
-        timeDuration = fitnessCard?.timeDuration
+        this.name = fitnessCard?.name
+        this.description = fitnessCard?.description
+        this.exercises = fitnessCard?.exercises
+        this.timeDuration = fitnessCard?.timeDuration
+        this.key = fitnessCard!!.key
     }
 }
 
