@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".FragmentControlers.Fragment_Login">
+    tools:context=".RegisterActivity">
 
     <ImageView
         android:id="@+id/imageView12"
@@ -25,20 +25,12 @@
         android:src="@drawable/signup_layered_waves"
         app:layout_constraintHorizontal_bias="0.0" />
 
-    <!-- USED TO SET EMAIL HEIGHT -->
-    <View
-        android:id="@+id/topPanel"
-        android:layout_width="match_parent"
-        android:layout_height="270dp" />
-
-
     <LinearLayout
         android:id="@+id/topPanel_linear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="70dp"
         android:gravity="center"
         android:orientation="vertical"
@@ -196,7 +188,7 @@
         android:fontFamily="@font/roboto_regular"
         android:text="@string/signup"
         android:textSize="17sp"
-         />
+        />
 
     <TextView
         android:id="@+id/open_login"
