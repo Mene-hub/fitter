@@ -46,8 +46,6 @@ class MyFitnessCards : Fragment() {
 
     override fun onStart() {
         super.onStart()
-
-        addFitnessCard(Athlete.UID, FitnessCard())
     }
 
 
@@ -58,7 +56,7 @@ class MyFitnessCards : Fragment() {
      * @see Athlete
      * @see FitnessCard
      */
-    fun addFitnessCard(UID : String, card : MutableList<FitnessCard>){
+    fun addFitnessCard(UID : String, card : FitnessCard){
         databaseHelper.setFitnessCardItem(UID, card)
     }
 

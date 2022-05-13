@@ -6,7 +6,7 @@
         <item name="shapeAppearance">@style/ShapeAppearance.App.LargeComponent</item>
     </style>
 
-<!--       CODICE ORIGINALE DI @CLAUDIO, NON SO A COSA TI SERVIVA, MA ANDAVA IN CONFLITTO CON QUELLO COPIATO DA MATERIAL DESIGN
+    <!--       CODICE ORIGINALE DI @CLAUDIO, NON SO A COSA TI SERVIVA, MA ANDAVA IN CONFLITTO CON QUELLO COPIATO DA MATERIAL DESIGN
     <style name="ModalBottomSheetDialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/ModalBottomSheet</item>
     </style>
@@ -19,13 +19,18 @@
 
     <!--  [START OF]  MATERIAL DESIGN THEME FOR BOTTOM SHEET DIALOG     -->
     <style name="ModalBottomSheetDialog" parent="Widget.MaterialComponents.BottomSheet.Modal">
-        <item name="backgroundTint">@color/white</item>                                    <!-- PURPLE COLOR IN THE GRAPHIC -->
+        <item name="backgroundTint">@color/white
+        </item>                                    <!-- PURPLE COLOR IN THE GRAPHIC -->
         <item name="shapeAppearance">@style/ShapeAppearance.App.LargeComponent</item>
     </style>
 
     <style name="ShapeAppearance.App.LargeComponent" parent="ShapeAppearance.MaterialComponents.LargeComponent">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">15dp</item>
+    </style>
+
+    <style name="Widget.Theme.Fitter.MyView" parent="">
+        <item name="android:background">@color/gray_400</item>
     </style>
     <!--  [END OF]  MATERIAL DESIGN THEME FOR BOTTOM SHEET DIALOG     -->
 
