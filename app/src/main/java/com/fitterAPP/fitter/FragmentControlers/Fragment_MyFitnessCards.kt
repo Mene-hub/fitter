@@ -16,6 +16,8 @@ import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.RealTimeDBHelper
 import com.fitterAPP.fitter.databinding.FragmentMyFitnessCardsBinding
 import com.google.firebase.database.*
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.collections.ArrayList
 
 class MyFitnessCards : Fragment() {
