@@ -71,9 +71,6 @@ class MyFitnessCards : Fragment() {
         val childEventListener = object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val item = snapshot.getValue(FitnessCard::class.java)
-                Log.d("Mmmm", item?.key.toString())
-                Log.d("Mmmm", item?.description.toString())
-                Log.d("Mmmm", item?.name.toString())
                 //aggiungo nuova fitness card
                 fitnessCads.add((item!!))
                 adapter.notifyItemInserted(fitnessCads.indexOf(item))
