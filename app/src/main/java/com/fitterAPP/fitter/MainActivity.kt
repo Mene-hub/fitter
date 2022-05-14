@@ -55,8 +55,8 @@ class MainActivity : AppCompatActivity() {
 
         if(auth.currentUser != null){
             currentUser = auth.currentUser!!
-            user.SetNewValue(Athlete(currentUser.uid, currentUser.displayName, currentUser.photoUrl))
-            Athlete.setValues(currentUser.uid, currentUser.displayName, currentUser.photoUrl)
+            user.SetNewValue(Athlete(currentUser.uid, currentUser.displayName, currentUser.photoUrl.toString()))
+            Athlete.setValues(currentUser.uid, currentUser.displayName, currentUser.photoUrl.toString())
             Log.d("USERUIDFROMFIREBASE", Athlete.UID)
 
             //IF THE USER COMES FROM THE REGISTRATION FORM THEN IT HAS TO SAVE THE DATA TO THE DB, OOTHERWISE IF FROM LOGIN FORM  THE INFOS WILL GET GRABBED FROM

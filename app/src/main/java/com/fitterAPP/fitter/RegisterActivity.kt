@@ -1,47 +1,34 @@
-package com.fitterAPP.fitter.FragmentControlers
+package com.fitterAPP.fitter
 
 import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
-import com.fitterAPP.fitter.LoginActivity
-import com.fitterAPP.fitter.MainActivity
-import com.fitterAPP.fitter.R
-import com.fitterAPP.fitter.databinding.FragmentSignupBinding
+import com.fitterAPP.fitter.databinding.ActivityRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-//FARE CONTROLLO USERNAME NON CONTIENE SPAZI + CARATTERI CONSENTITI = _
-//LUNGHEZZA MASSIMA DISPLAY NAME 15 CARATTERI
-
-class Fragment_SignUp : Fragment() {
+class RegisterActivity : AppCompatActivity() {
 
     private val TAG_register : String = "LoginActivity-Register"
-
-    private lateinit var binding : FragmentSignupBinding
     private lateinit var auth: FirebaseAuth
+    private lateinit var binding : ActivityRegisterBinding
 
-    /**
-     * @author Daniel Satriano
-     * onCreateView, once view is created it sets all the needed listeners for the UI
-     */
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        binding = FragmentSignupBinding.inflate(inflater, container, false)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityRegisterBinding.inflate(layoutInflater)
 
         //firebase auth
         auth = Firebase.auth
 
         //SERVE PER TORNARE ALLA REGISTER FRAGMENT
         binding.openLogin.setOnClickListener {
-            (activity as LoginActivity).showLogin()
+            showLogin()
         }
 
         //BUTTONS for login/register
@@ -61,9 +48,14 @@ class Fragment_SignUp : Fragment() {
         binding.etSignupConfirmPassword.onFocusChangeListener = signUpConfPasswordEventListener()
         binding.etSignupPassword.onFocusChangeListener = signUpPasswordEventListener()
 
+        setContentView(binding.root)
+    }
 
-        // Inflate the layout for this fragment
-        return binding.root;
+    private fun showLogin() {
+        val i : Intent = Intent(this, LoginActivity::class.java)
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(i)
     }
 
     private fun signUpConfPasswordEventListener(): View.OnFocusChangeListener {
@@ -176,25 +168,24 @@ class Fragment_SignUp : Fragment() {
                 && checkPasswordConfirmation(password, binding.etSignupConfirmPassword.text.toString()) && checkPasswordLength(password)) {
 
                 auth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener((activity as LoginActivity)) { task ->
+                    .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG_register, "User creation: OK")
 
-                            //TESTING AGGIUNTA NOME UTENTE AL PROFILO
                             var updater = UserProfileChangeRequest.Builder().setDisplayName(username).build()
                             auth.currentUser!!.updateProfile(updater).addOnCompleteListener{ task ->
                                 if(task.isSuccessful){
                                     Log.d(TAG_register, "User profile updated")
                                     auth.currentUser?.reload()
                                     Log.w(TAG_register,auth.currentUser?.displayName.toString())
-                                    val intent : Intent = Intent(requireActivity(), MainActivity::class.java)
+                                    val intent : Intent = Intent(this, MainActivity::class.java)
                                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                                     intent.putExtra("HASTOSAVE",true)
                                     startActivity(intent)
                                 }else{
-                                    Toast.makeText(requireActivity().baseContext,"There was a problem during the registration, try again later", Toast.LENGTH_LONG).show()
+                                    Toast.makeText(this,"There was a problem during the registration, try again later", Toast.LENGTH_LONG).show()
                                 }
                             }
                         } else {
@@ -202,7 +193,7 @@ class Fragment_SignUp : Fragment() {
                             Log.w(TAG_register, "User creation: FAILED", task.exception)
 
                             binding.etSignupEmailLayout.helperText = getString(R.string.email_already_registered)
-                            Toast.makeText(requireActivity().baseContext, getString(R.string.email_already_registered), Toast.LENGTH_LONG).show()
+                            Toast.makeText(this, getString(R.string.email_already_registered), Toast.LENGTH_LONG).show()
                         }
                     }
             }
