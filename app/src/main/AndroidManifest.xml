@@ -5,6 +5,9 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
 
+
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,6 +15,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Fitter">
+
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+        <meta-data android:name="com.facebook.sdk.ClientToken" android:value="@string/facebook_client_token"/>
+
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />
@@ -29,6 +36,10 @@
         <activity
             android:name=".MainActivity"
             android:exported="false" />
+
     </application>
 
+    <!--
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove"/>
+    -->
 </manifest>

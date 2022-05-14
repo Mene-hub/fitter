@@ -2,13 +2,19 @@ package com.fitterAPP.fitter
 
 import android.content.Intent
 import android.content.IntentSender
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
+import com.facebook.AccessToken
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
 import com.fitterAPP.fitter.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
@@ -16,11 +22,14 @@ import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import java.util.*
+
 
 class LoginActivity : AppCompatActivity() {
 
@@ -34,6 +43,10 @@ class LoginActivity : AppCompatActivity() {
         private val REQ_ONE_TAP = 2
     //endregion
 
+    //region facebookStuff
+        private lateinit var callbackManager : CallbackManager
+    //endregion
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -45,8 +58,6 @@ class LoginActivity : AppCompatActivity() {
 
         //BUTTONS for login/register
         binding.btnLogin.setOnClickListener(loginEmailPSW())
-        binding.IVLoginGoogle.setOnClickListener(loginGoogle())
-        binding.IVLoginFacebook.setOnClickListener(loginFacebook())
 
         //ERRORE PER PASSWORD SBAGLIATA / EMAIL SBAGLIATA
         val psw_text_layout : TextInputLayout = binding.etLoginPasswordLayout
@@ -83,6 +94,7 @@ class LoginActivity : AppCompatActivity() {
         //endregion
 
         //region googleStuff
+        binding.IVLoginGoogle.setOnClickListener(loginGoogle())
         oneTapClient = Identity.getSignInClient(this)
         signInRequest = BeginSignInRequest.builder()
             .setGoogleIdTokenRequestOptions(
@@ -97,10 +109,52 @@ class LoginActivity : AppCompatActivity() {
         //endregion
 
         //region facebookStuff
+        binding.IVLoginFacebook.setOnClickListener(loginFacebook())
+        callbackManager = CallbackManager.Factory.create();
 
+        LoginManager.getInstance().logInWithReadPermissions(this, listOf("public_profile"))
+
+        LoginManager.getInstance().registerCallback(callbackManager, object : FacebookCallback<LoginResult?> {
+            override fun onSuccess(loginResult: LoginResult?) {
+                Log.d(TAG_login, "facebook:onSuccess:$loginResult")
+                handleFacebookAccessToken(loginResult!!.accessToken)
+            }
+
+            override fun onCancel() {
+                Log.d(TAG_login, "facebook:onCancel")
+            }
+
+            override fun onError(exception: FacebookException) {
+                Log.d(TAG_login, "facebook:onError", exception)
+            }
+        })
         //endregion
 
     }
+
+    /**
+     * @author Daniel Satriano
+     */
+    private fun handleFacebookAccessToken(token: AccessToken) {
+        Log.d(TAG_login, "handleFacebookAccessToken:$token")
+
+        val credential = FacebookAuthProvider.getCredential(token.token)
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG_login, "signInWithCredential:success")
+                    val user = auth.currentUser
+                    //updateUI(user)
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG_login, "signInWithCredential:failure", task.exception)
+                    Toast.makeText(baseContext, "Authentication failed.", Toast.LENGTH_SHORT).show()
+                    //updateUI(null)
+                }
+            }
+    }
+
 
     /**
      * @author Daniel Satriano
@@ -127,6 +181,14 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
+        when(requestCode){
+            1 -> {
+                // Pass the activity result back to the Facebook SDK
+                callbackManager.onActivityResult(requestCode, resultCode, data)
+            }
+        }
+
 
         when (requestCode) {
             REQ_ONE_TAP -> {
