@@ -35,13 +35,13 @@ class LoginActivity : AppCompatActivity() {
     //region googleStuff
         private lateinit var oneTapClient: SignInClient
         private lateinit var signInRequest: BeginSignInRequest
-
     //endregion
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         //region Variabili istanziate
         //istantiate auth variable
         auth = Firebase.auth
@@ -89,15 +89,14 @@ class LoginActivity : AppCompatActivity() {
         //region googleStuff
         oneTapClient = Identity.getSignInClient(this)
         signInRequest = BeginSignInRequest.builder()
-
             .setGoogleIdTokenRequestOptions(
                 BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
                     .setSupported(true)
                     // Your server's client ID, not your Android client ID.
                     .setServerClientId(getString(R.string.web_client_id))
                     // Only show accounts previously used to sign in.
-                    .setFilterByAuthorizedAccounts(true)
-                    .build()).setAutoSelectEnabled(true)
+                    .setFilterByAuthorizedAccounts(false)
+                    .build())
             .build()
         //endregion
 

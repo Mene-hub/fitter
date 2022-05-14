@@ -5,8 +5,8 @@ import android.net.Uri
 /**
  * @author Daniel Satriano
  */
-data class Athlete(var UID : String , var username : String?, var profilePic : Uri?){
-    constructor() : this("", "", Uri.EMPTY)
+data class Athlete(var UID : String , var username : String?, var profilePic : String?){
+    constructor() : this("", "", "")
 
     fun SetNewValue(user : Athlete){
         this.UID = user.UID
@@ -14,10 +14,10 @@ data class Athlete(var UID : String , var username : String?, var profilePic : U
         this.profilePic = user.profilePic
     }
 
-    fun SetNewValue(uid : String, user : String, uri : Uri = Uri.EMPTY){
+    fun SetNewValue(uid : String, user : String, pic : String = ""){
         this.UID = uid
         this.username = user
-        this.profilePic = uri
+        this.profilePic = pic
     }
 
     fun changeUsername(username : String){
@@ -27,12 +27,12 @@ data class Athlete(var UID : String , var username : String?, var profilePic : U
     companion object{
         var UID : String = ""
         var username : String = ""
-        var profilePic : Uri = Uri.EMPTY
+        var profilePic : String = ""
 
-        fun setValues(UID: String, username: String?, profilePic: Uri?){
+        fun setValues(UID: String, username: String?, profilePic: String?){
             this.UID = UID
             this.username = username ?: "DEFAULT USERNAME"
-            this.profilePic = profilePic ?: Uri.EMPTY
+            this.profilePic = profilePic ?: ""
         }
     }
 }
