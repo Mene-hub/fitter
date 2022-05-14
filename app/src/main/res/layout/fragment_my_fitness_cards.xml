@@ -12,4 +12,15 @@
         android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        app:fabSize="auto"
+        android:id="@+id/FAP_addNewCard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:backgroundTint="@color/light_blue_600"
+        android:layout_margin="16dp"
+        android:contentDescription="Add a new fitness card"
+        app:srcCompat="@drawable/ic_plus"/>
+
 </FrameLayout>

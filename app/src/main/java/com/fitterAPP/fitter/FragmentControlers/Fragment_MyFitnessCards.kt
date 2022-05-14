@@ -1,20 +1,25 @@
 package com.fitterAPP.fitter.FragmentControlers
 
 import android.os.Bundle
+import android.system.Os.accept
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
+import com.facebook.login.Login
 import com.fitterAPP.fitter.Classes.Athlete
 import com.fitterAPP.fitter.Classes.Exercise
 import com.fitterAPP.fitter.Classes.FitnessCard
 import com.fitterAPP.fitter.ItemsAdapter.FitnessCardAdapter
+import com.fitterAPP.fitter.LoginActivity
 import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.RealTimeDBHelper
 import com.fitterAPP.fitter.databinding.FragmentMyFitnessCardsBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.database.*
 import kotlin.collections.ArrayList
 
@@ -40,16 +45,31 @@ class MyFitnessCards : Fragment() {
         adapter = context?.let { FitnessCardAdapter((activity as MainActivity), fitnessCads) }!!
         recycle.adapter = adapter
 
+        //create new fitnessCard
+        binding.FAPAddNewCard.setOnClickListener(createNewCard())
+
+
         Log.w("Fragment", binding.MyFitnessCardsRV.id.toString())
         return binding.root
     }
 
-    override fun onStart() {
-        super.onStart()
-        val a : MutableList<Exercise> = ArrayList()
+    private fun createNewCard(): View.OnClickListener? {
+        val listener = View.OnClickListener {
+            val fragmentManager = parentFragmentManager
+            val newFragment = Fragment_createCardDialog()
 
-        //TESTING
-        //addFitnessCard(Athlete.UID, FitnessCard("Scheda prova","Questa è una descrizione", 60, a, SimpleDateFormat("dd-M-yyyy hh:mm:ss").format(Date())))
+            // The device is smaller, so show the fragment fullscreen
+            val transaction = fragmentManager.beginTransaction()
+            // For a little polish, specify a transition animation
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            // To make it fullscreen, use the 'content' root view as the container
+            // for the fragment, which is always the root view for the activity
+            transaction
+                .add(android.R.id.content, newFragment)
+                .addToBackStack(null)
+                .commit()
+            }
+        return listener
     }
 
     /**

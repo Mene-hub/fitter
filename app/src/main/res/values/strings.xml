@@ -21,7 +21,7 @@
     <string name="pass_dont_match">PASSWORDS DON\'T MATCH</string>
     <string name="fitter" translatable="false">Fitter</string>
 
-    <string name="web_client_id" translatable="false" >22435898778-iijcvpeiov0k2d9a6krs0ubiad5ukf8u.apps.googleusercontent.com</string>
+    <string name="web_client_id" translatable="false">22435898778-iijcvpeiov0k2d9a6krs0ubiad5ukf8u.apps.googleusercontent.com</string>
 
 
     <string name="facebook_app_id" translatable="false">732692751253423</string>
