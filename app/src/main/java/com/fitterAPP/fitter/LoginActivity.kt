@@ -28,7 +28,6 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import java.util.*
 
 
 class LoginActivity : AppCompatActivity() {
@@ -65,7 +64,6 @@ class LoginActivity : AppCompatActivity() {
         binding.btnSignup.setOnClickListener {
             showRegister()
         }
-
 
         //region Login Email
         binding.btnLogin.setOnClickListener(loginEmailPSW())  //BUTTONS for login/register
