@@ -8,13 +8,13 @@
     tools:context=".FragmentControlers.TimeRacap">
 
     <com.github.mikephil.charting.charts.LineChart
-        android:layout_width="400dp"
+        android:id="@+id/lineChartRecap"
+        android:layout_width="0dp"
         android:layout_height="400dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints">
+        app:layout_constraintTop_toTopOf="parent">
 
     </com.github.mikephil.charting.charts.LineChart>
 
