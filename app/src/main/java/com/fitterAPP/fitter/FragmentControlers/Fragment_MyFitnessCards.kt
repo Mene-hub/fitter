@@ -1,27 +1,27 @@
 package com.fitterAPP.fitter.FragmentControlers
 
+import android.R
+import com.fitterAPP.fitter.R.layout
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
-import android.system.Os.accept
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
-import com.facebook.login.Login
 import com.fitterAPP.fitter.Classes.Athlete
-import com.fitterAPP.fitter.Classes.Exercise
 import com.fitterAPP.fitter.Classes.FitnessCard
 import com.fitterAPP.fitter.ItemsAdapter.FitnessCardAdapter
-import com.fitterAPP.fitter.LoginActivity
 import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.RealTimeDBHelper
 import com.fitterAPP.fitter.databinding.FragmentMyFitnessCardsBinding
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.database.*
-import kotlin.collections.ArrayList
+
 
 class MyFitnessCards : Fragment() {
     private val TAG : String = "FragmentFitnessCard-"
@@ -65,10 +65,11 @@ class MyFitnessCards : Fragment() {
             // To make it fullscreen, use the 'content' root view as the container
             // for the fragment, which is always the root view for the activity
             transaction
-                .add(android.R.id.content, newFragment)
+                .replace(android.R.id.content, newFragment)
                 .addToBackStack(null)
                 .commit()
             }
+
         return listener
     }
 

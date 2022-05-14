@@ -28,4 +28,6 @@
     <string name="fb_login_protocol_scheme" translatable="false">fb732692751253423</string>
     <string name="facebook_client_token" translatable="false">ce506f4996b75705964ec3157dc966db</string>
 
+    <string name="exercises" >exercises</string>
+
 </resources>
