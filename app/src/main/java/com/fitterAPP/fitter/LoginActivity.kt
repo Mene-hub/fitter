@@ -1,6 +1,5 @@
 package com.fitterAPP.fitter
 
-import android.content.ContentValues
 import android.content.Intent
 import android.content.IntentSender
 import androidx.appcompat.app.AppCompatActivity
@@ -29,12 +28,10 @@ class LoginActivity : AppCompatActivity() {
     private val TAG_login : String = "LoginActivity-Login"
     private lateinit var auth: FirebaseAuth
 
-    private val REQ_ONE_TAP = 2
-
-
     //region googleStuff
         private lateinit var oneTapClient: SignInClient
         private lateinit var signInRequest: BeginSignInRequest
+        private val REQ_ONE_TAP = 2
     //endregion
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,7 +82,6 @@ class LoginActivity : AppCompatActivity() {
 
         //endregion
 
-
         //region googleStuff
         oneTapClient = Identity.getSignInClient(this)
         signInRequest = BeginSignInRequest.builder()
@@ -100,6 +96,9 @@ class LoginActivity : AppCompatActivity() {
             .build()
         //endregion
 
+        //region facebookStuff
+
+        //endregion
 
     }
 
