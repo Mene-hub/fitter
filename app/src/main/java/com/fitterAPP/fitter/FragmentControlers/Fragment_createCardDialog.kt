@@ -15,9 +15,13 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import androidx.recyclerview.widget.RecyclerView
+import com.fitterAPP.fitter.Classes.Exercise
 import com.fitterAPP.fitter.Classes.FitnessCard
+import com.fitterAPP.fitter.ItemsAdapter.FitnessCardAdapter
+import com.fitterAPP.fitter.ItemsAdapter.FitnessCardExercisesAdapter
+import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.databinding.FragmentCreateCardDialogBinding
-import com.fitterAPP.fitter.databinding.FragmentMyFitnessCardsBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
@@ -35,7 +39,15 @@ class Fragment_createCardDialog(var newFitnessCard: FitnessCard) : DialogFragmen
             activity?.onBackPressed()
         }
 
-        Toast.makeText(activity, "nome scheda: ${newFitnessCard.name} descrizione: ${newFitnessCard.description}", Toast.LENGTH_SHORT).show()
+        val recycle : RecyclerView = binding.exercisesListRV
+
+        if(newFitnessCard.exercises != null && newFitnessCard.exercises?.size!! > 0){
+
+            Toast.makeText(activity, newFitnessCard.exercises?.count().toString(), Toast.LENGTH_SHORT).show()
+            var adapter = context?.let {FitnessCardExercisesAdapter((activity as MainActivity),newFitnessCard,newFitnessCard.exercises!!)}!!
+            recycle.adapter = adapter
+
+        }
 
         // Inflate the layout for this fragment
         return binding.root

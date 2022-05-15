@@ -5,15 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 
 import androidx.recyclerview.widget.RecyclerView
+import com.fitterAPP.fitter.Classes.Exercise
 import com.fitterAPP.fitter.Classes.FitnessCard
 import com.fitterAPP.fitter.FragmentControlers.Fragment_createCardDialog
 import com.fitterAPP.fitter.R
 
-class FitnessCardAdapter (val context2: Context, val Cards:MutableList<FitnessCard>) : RecyclerView.Adapter<FitnessCardAdapter.Holder>() {
+class FitnessCardExercisesAdapter (val context2: Context, val Card:FitnessCard, val exercises : MutableList<Exercise>) : RecyclerView.Adapter<FitnessCardExercisesAdapter.Holder>() {
 
     class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -22,25 +24,20 @@ class FitnessCardAdapter (val context2: Context, val Cards:MutableList<FitnessCa
         val CardDuration : TextView = itemView.findViewById(R.id.TimeDuration_TV)
         val CardExercises : TextView = itemView.findViewById(R.id.ExerciseCount_TV)
 
-        fun setCard(Card:FitnessCard, context: Context){
-            CardName.text = Card.name
-            CardDescription.text = Card.description
-            CardDuration.text = "Duration: " + Card.timeDuration.toString() + " min"
-            if(Card.exercises != null)
-                CardExercises.text = Card.exercises?.count().toString() + " exercise"
-            else
-                CardExercises.text = "0 exercise"
+        fun setCard(ex:Exercise, context: Context){
+
 
             itemView.setOnClickListener {
-                transaction(context, Card)
+                //transaction(context, ex)
             }
 
         }
 
-        private fun transaction(context2:Context, card : FitnessCard) {
+        /*
+        private fun transaction(context2:Context, ex : Exercise) {
 
             val fragmentManager = (context2 as AppCompatActivity).supportFragmentManager
-            val newFragment = Fragment_createCardDialog(card)
+            val newFragment = Fragment_createCardDialog(ex)
 
             // The device is smaller, so show the fragment fullscreen
             val transaction = fragmentManager.beginTransaction()
@@ -54,20 +51,21 @@ class FitnessCardAdapter (val context2: Context, val Cards:MutableList<FitnessCa
                 .commit()
 
         }
+         */
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val view: View = LayoutInflater.from(context2).inflate(R.layout.item_fitnesscard, parent, false)
+        val view: View = LayoutInflater.from(context2).inflate(R.layout.item_exercise, parent, false)
         return Holder(view)
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        val Card: FitnessCard = Cards[position]
+        val Card: Exercise = exercises?.get(position)!!
         holder.setCard(Card, context2)
     }
 
     override fun getItemCount(): Int {
-        return Cards.size
+        return exercises.size
     }
 
 }

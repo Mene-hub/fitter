@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/drawable-v24/calendar_month-40px.xml" value="0.1945" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/drawable-v24/edit_24.xml" value="0.301" />
+        <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/drawable-v24/fitness_24.xml" value="0.2255" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/drawable-v24/fitness_center-40px.xml" value="0.1275" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/drawable-v24/ic_menu_slideshow.xml" value="0.301" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/drawable-v24/leaderboard-40px.xml" value="0.1945" />
@@ -36,6 +37,7 @@
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/fragment_profile_menu_item.xml" value="0.3625" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/fragment_signup.xml" value="0.25" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/fragment_time_racap.xml" value="0.3625" />
+        <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/item_exercise.xml" value="0.3625" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/item_fitnesscard.xml" value="0.3625" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/signup_layout.xml" value="0.3625" />
         <entry key="..\:/Users/satri/AndroidStudioProjects/fitter/app/src/main/res/layout/fragment__addnew_card.xml" value="0.24375" />
