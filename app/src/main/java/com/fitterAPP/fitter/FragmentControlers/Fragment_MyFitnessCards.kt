@@ -29,7 +29,6 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 
-
 class MyFitnessCards : Fragment() {
     private val TAG : String = "FragmentFitnessCard-"
     private lateinit var databaseHelper : RealTimeDBHelper
@@ -93,7 +92,7 @@ class MyFitnessCards : Fragment() {
      * @see FitnessCard
      */
 
-    fun addFitnessCard(card : FitnessCard){
+    companion object fun addFitnessCard(card : FitnessCard){
         databaseHelper.setFitnessCardItem(card)
     }
 

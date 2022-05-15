@@ -15,14 +15,20 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import com.fitterAPP.fitter.Classes.Athlete
 import com.fitterAPP.fitter.Classes.Exercise
 import com.fitterAPP.fitter.Classes.FitnessCard
 import com.fitterAPP.fitter.ItemsAdapter.FitnessCardAdapter
 import com.fitterAPP.fitter.ItemsAdapter.FitnessCardExercisesAdapter
 import com.fitterAPP.fitter.MainActivity
+import com.fitterAPP.fitter.RealTimeDBHelper
 import com.fitterAPP.fitter.databinding.FragmentCreateCardDialogBinding
+import com.fitterAPP.fitter.databinding.FragmentMyFitnessCardsBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 
 class Fragment_createCardDialog(var newFitnessCard: FitnessCard) : DialogFragment() {
@@ -41,12 +47,19 @@ class Fragment_createCardDialog(var newFitnessCard: FitnessCard) : DialogFragmen
 
         val recycle : RecyclerView = binding.exercisesListRV
 
+        /*
+        var databaseHelper : RealTimeDBHelper
+        val _REFERENCE : String = "FITNESS_CARDS"
+        var dbReference : DatabaseReference = FirebaseDatabase.getInstance(RealTimeDBHelper.getDbURL()).getReference(_REFERENCE).child("${Athlete.UID}-FITNESSCARD")
+        databaseHelper = RealTimeDBHelper(dbReference) //USING DEFAULT VALUE
+
+        databaseHelper.setFitnessCardItem(newFitnessCard)*/
+
         if(newFitnessCard.exercises != null && newFitnessCard.exercises?.size!! > 0){
 
             Toast.makeText(activity, newFitnessCard.exercises?.count().toString(), Toast.LENGTH_SHORT).show()
             var adapter = context?.let {FitnessCardExercisesAdapter((activity as MainActivity),newFitnessCard,newFitnessCard.exercises!!)}!!
             recycle.adapter = adapter
-
         }
 
         // Inflate the layout for this fragment
