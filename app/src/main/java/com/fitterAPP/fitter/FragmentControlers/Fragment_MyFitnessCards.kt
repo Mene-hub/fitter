@@ -20,6 +20,7 @@ import com.fitterAPP.fitter.ItemsAdapter.FitnessCardAdapter
 import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.RealTimeDBHelper
 import com.fitterAPP.fitter.databinding.FragmentMyFitnessCardsBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.database.*
 import java.text.SimpleDateFormat
@@ -139,7 +140,7 @@ class MyFitnessCards : Fragment() {
         var newFitnessCard = FitnessCard()
 
         // Create an alert builder
-        val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
+        val builder = MaterialAlertDialogBuilder(requireContext())
         builder.setTitle("Create new fitness card")
 
         // set the custom layout
@@ -174,12 +175,13 @@ class MyFitnessCards : Fragment() {
                     activity?.onBackPressed()
                 }
             }
-            .setIcon(requireContext().getDrawable(com.fitterAPP.fitter.R.drawable.fitness_24))
+            .setIcon(requireContext().getDrawable(com.fitterAPP.fitter.R.drawable.fitness_24)).show()
 
         // create and show
         // the alert dialog
+        /*
         val dialog: AlertDialog = builder.create()
-        dialog.show()
+        dialog.show()*/
 
     }
 

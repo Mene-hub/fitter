@@ -11,8 +11,6 @@
         android:id="@+id/et_cardNameLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:helperText="Required*"
-        app:helperTextTextColor="@color/red"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:counterEnabled="true"
         app:counterMaxLength="30"
@@ -53,7 +51,7 @@
             android:drawablePadding="10dp"
             android:inputType="text"
             android:lines="2"
-            android:hint="Description"/>
+            android:hint="@string/description"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -64,9 +62,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:counterEnabled="true"
-
-        app:helperText="Required*"
-        app:helperTextTextColor="@color/red"
         app:counterMaxLength="3"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
@@ -81,7 +76,7 @@
             android:drawablePadding="10dp"
             android:inputType="time"
             android:lines="2"
-            android:hint="Duration"/>
+            android:hint="@string/duration"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
