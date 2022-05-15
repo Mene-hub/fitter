@@ -29,5 +29,6 @@
     <string name="facebook_client_token" translatable="false">ce506f4996b75705964ec3157dc966db</string>
 
     <string name="exercises" >exercises</string>
+    <string name="card_name">Card name</string>
 
 </resources>

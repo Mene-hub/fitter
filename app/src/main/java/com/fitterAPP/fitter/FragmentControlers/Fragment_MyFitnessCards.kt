@@ -20,7 +20,13 @@ import com.fitterAPP.fitter.ItemsAdapter.FitnessCardAdapter
 import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.RealTimeDBHelper
 import com.fitterAPP.fitter.databinding.FragmentMyFitnessCardsBinding
+import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.database.*
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MyFitnessCards : Fragment() {
@@ -53,7 +59,7 @@ class MyFitnessCards : Fragment() {
         return binding.root
     }
 
-    private fun createNewCard(): View.OnClickListener? {
+    private fun createNewCard(): View.OnClickListener {
         val listener = View.OnClickListener {
             showAlertDialogFitnessCard()
         }
@@ -62,21 +68,20 @@ class MyFitnessCards : Fragment() {
 
     private fun transaction(newFitnessCard : FitnessCard) {
 
-        if (newFitnessCard != null) {
-            val fragmentManager = parentFragmentManager
-            val newFragment = Fragment_createCardDialog(newFitnessCard)
+        val fragmentManager = parentFragmentManager
+        val newFragment = Fragment_createCardDialog(newFitnessCard)
 
-            // The device is smaller, so show the fragment fullscreen
-            val transaction = fragmentManager.beginTransaction()
-            // For a little polish, specify a transition animation
-            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-            // To make it fullscreen, use the 'content' root view as the container
-            // for the fragment, which is always the root view for the activity
-            transaction
-                .replace(android.R.id.content, newFragment)
-                .addToBackStack(null)
-                .commit()
-        }
+        // The device is smaller, so show the fragment fullscreen
+        val transaction = fragmentManager.beginTransaction()
+        // For a little polish, specify a transition animation
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+        // To make it fullscreen, use the 'content' root view as the container
+        // for the fragment, which is always the root view for the activity
+        transaction
+            .replace(android.R.id.content, newFragment)
+            .addToBackStack(null)
+            .commit()
+
     }
 
     /**
@@ -86,11 +91,8 @@ class MyFitnessCards : Fragment() {
      * @see Athlete
      * @see FitnessCard
      */
-    fun addFitnessCard(UID : String, card : MutableList<FitnessCard>){
-        databaseHelper.setFitnessCardItem(UID, card)
-    }
 
-    fun addFitnessCard(UID : String, card : FitnessCard){
+    fun addFitnessCard(card : FitnessCard){
         databaseHelper.setFitnessCardItem(card)
     }
 
@@ -98,9 +100,6 @@ class MyFitnessCards : Fragment() {
         val childEventListener = object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val item = snapshot.getValue(FitnessCard::class.java)
-                Log.d("Mmmm", item?.key.toString())
-                Log.d("Mmmm", item?.description.toString())
-                Log.d("Mmmm", item?.name.toString())
                 //aggiungo nuova fitness card
                 fitnessCads.add((item!!))
                 adapter.notifyItemInserted(fitnessCads.indexOf(item))
@@ -135,15 +134,13 @@ class MyFitnessCards : Fragment() {
         return childEventListener
     }
 
-
-
     fun showAlertDialogFitnessCard(){
 
-        var newFitnessCard : FitnessCard = FitnessCard()
+        var newFitnessCard = FitnessCard()
 
         // Create an alert builder
         val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
-        builder.setTitle("Card Name")
+        builder.setTitle("Create new fitness card")
 
         // set the custom layout
         val customLayout: View = layoutInflater.inflate( com.fitterAPP.fitter.R.layout.dialog_input_text, null)
@@ -151,34 +148,33 @@ class MyFitnessCards : Fragment() {
 
         // add a button
         builder
-            .setPositiveButton(
-                "OK",
-                DialogInterface.OnClickListener { dialog, which -> // send data from the
-                    // AlertDialog to the Activity
-                    val name = customLayout.findViewById<EditText>(com.fitterAPP.fitter.R.id.cardName_ET)
-                    val description = customLayout.findViewById<EditText>(com.fitterAPP.fitter.R.id.CardDescritpion_ET)
-                    newFitnessCard?.name = name.text.toString()
-                    newFitnessCard?.description = description.text.toString()
+            .setPositiveButton("OK") { dialog, which -> // send data from the
+                // AlertDialog to the Activity
+                val name = customLayout.findViewById<EditText>(com.fitterAPP.fitter.R.id.et_cardName).text.toString()
+                val description = customLayout.findViewById<EditText>(com.fitterAPP.fitter.R.id.et_description).text.toString()
+                val duration = customLayout.findViewById<EditText>(com.fitterAPP.fitter.R.id.et_duration).text.toString()
+
+                if((!name.isNullOrBlank() && name != "") || (!duration.isNullOrBlank() && duration != "")){
+                    newFitnessCard.name = name
+                    newFitnessCard.description = description
+                    newFitnessCard.key = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-M-yyyy hh:mm:ss"))
+                    newFitnessCard.timeDuration = duration.toInt()
+
+                    addFitnessCard(newFitnessCard)
 
                     transaction(newFitnessCard)
-                })
-
-            .setNegativeButton(
-                "BACK",
-                DialogInterface.OnClickListener{dialog, which ->
+                }else{
+                    Toast.makeText(requireContext(), "Missing name field on fitness card", Toast.LENGTH_LONG).show()
                 }
-            )
-
-            .setOnDismissListener {
-                if(newFitnessCard == null)
+            }.setNegativeButton("BACK") { dialog, which ->
+            }.setOnDismissListener {
+                if(newFitnessCard.name?.replace(" ","")?.length == 0)
+                {
+                    Toast.makeText(activity, "insert a valid name", Toast.LENGTH_SHORT).show()
                     activity?.onBackPressed()
-                else
-                    if(newFitnessCard?.name?.replace(" ","")?.length == 0)
-                    {
-                        Toast.makeText(activity, "insert a valid name", Toast.LENGTH_SHORT).show()
-                        activity?.onBackPressed()
-                    }
+                }
             }
+            .setIcon(requireContext().getDrawable(com.fitterAPP.fitter.R.drawable.fitness_24))
 
         // create and show
         // the alert dialog

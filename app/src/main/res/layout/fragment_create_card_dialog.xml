@@ -76,8 +76,5 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <!--EMAIL-->
-    <!--PASSWORD-->
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
