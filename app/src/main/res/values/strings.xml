@@ -21,11 +21,16 @@
     <string name="pass_dont_match">PASSWORDS DON\'T MATCH</string>
     <string name="fitter" translatable="false">Fitter</string>
 
-    <string name="web_client_id" translatable="false" >22435898778-iijcvpeiov0k2d9a6krs0ubiad5ukf8u.apps.googleusercontent.com</string>
+    <string name="web_client_id" translatable="false">22435898778-iijcvpeiov0k2d9a6krs0ubiad5ukf8u.apps.googleusercontent.com</string>
 
 
     <string name="facebook_app_id" translatable="false">732692751253423</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb732692751253423</string>
     <string name="facebook_client_token" translatable="false">ce506f4996b75705964ec3157dc966db</string>
+
+    <string name="exercises" >exercises</string>
+    <string name="card_name">Card name<font color="#FF0000">*</font></string>
+    <string name="duration">Duration<font color="#FF0000">*</font></string>
+    <string name="description">Description</string>
 
 </resources>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="30dp">
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/et_cardNameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:counterEnabled="true"
+        app:counterMaxLength="30"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_cardName"
+            android:autofillHints="emailAddress"
+            android:maxLength="30"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_email_24"
+            android:drawablePadding="10dp"
+            android:inputType="textNoSuggestions"
+            android:lines="1"
+            android:hint="@string/card_name"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/et_descriptionLayout"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:helperTextTextColor="@color/red"
+        app:counterEnabled="true"
+        app:counterMaxLength="100"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_description"
+            android:autofillHints="Description"
+            android:maxLength="100"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_pen"
+            android:drawablePadding="10dp"
+            android:inputType="text"
+            android:lines="2"
+            android:hint="@string/description"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:gravity="start"
+        android:id="@+id/et_durationLayout"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:counterEnabled="true"
+        app:counterMaxLength="3"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:gravity="start"
+            android:id="@+id/et_duration"
+            android:autofillHints="Pick duration"
+            android:maxLength="3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_hourglass"
+            android:drawablePadding="10dp"
+            android:inputType="time"
+            android:lines="2"
+            android:hint="@string/duration"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+</LinearLayout>
