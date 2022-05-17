@@ -70,6 +70,7 @@ class MainActivity : AppCompatActivity() {
             databaseHelper.readItem(getAthleteEventListener())                //Applying listener for the "on update" call
 
         }
+        findViewById<TextView>(R.id.TV_Username).text = user.username       //SET USERNAME IN TEXTVIEW
 
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.FragmentContainer, MyFitnessCards() )
