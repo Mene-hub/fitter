@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
+import com.squareup.picasso.Picasso
 
 /**
  * @author Daniel Satriano
@@ -144,7 +145,17 @@ class MainActivity : AppCompatActivity() {
         val childEventListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val item = snapshot.getValue(Athlete::class.java)                   //GRAB USER ITEM
-                user.SetNewValue(item!!)                                            //SET NEW USER ITEM
+                user.SetNewValue(item!!)
+
+                val imageProfile : ImageView = findViewById(R.id.profilepic_IV)
+                var imageURI: String = user.profilePic!!
+                Picasso.get()
+                    .load(imageURI)
+                    .resize(100, 100)
+                    .centerCrop()
+                    .into(imageProfile)
+
+                //SET NEW USER ITEM
                 findViewById<TextView>(R.id.TV_Username).text = user.username       //SET USERNAME IN TEXTVIEW
                 Athlete.setValues(user)         //SET NEW VALUES FOR THE STATIC USER PART, USED IN Fragment_MyFitnessCards.kt
             }
