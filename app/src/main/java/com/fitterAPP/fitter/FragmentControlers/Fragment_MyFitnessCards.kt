@@ -31,11 +31,11 @@ import kotlin.collections.ArrayList
 
 class MyFitnessCards : Fragment() {
     private val TAG : String = "FragmentFitnessCard-"
-    private lateinit var databaseHelper : RealTimeDBHelper
     private val _REFERENCE : String = "FITNESS_CARDS"
     private lateinit var binding : FragmentMyFitnessCardsBinding //Binding
     private lateinit var adapter : FitnessCardAdapter
     private var dbReference : DatabaseReference = FirebaseDatabase.getInstance(RealTimeDBHelper.getDbURL()).getReference(_REFERENCE).child("${Athlete.UID}-FITNESSCARD")
+    private var databaseHelper : RealTimeDBHelper = RealTimeDBHelper(dbReference) //USING DEFAULT VALUE
     //firebase database
     private val fitnessCads : MutableList<FitnessCard> = ArrayList()
 
@@ -44,7 +44,6 @@ class MyFitnessCards : Fragment() {
         binding = FragmentMyFitnessCardsBinding.inflate(inflater, container, false)
 
         //grab event from companion class RealTimeDBHelper
-        databaseHelper = RealTimeDBHelper(dbReference) //USING DEFAULT VALUE
         databaseHelper.readItems(getAthleteEventListener())
 
         val recycle : RecyclerView = binding.MyFitnessCardsRV
@@ -101,8 +100,10 @@ class MyFitnessCards : Fragment() {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val item = snapshot.getValue(FitnessCard::class.java)
                 //aggiungo nuova fitness card
-                fitnessCads.add((item!!))
-                adapter.notifyItemInserted(fitnessCads.indexOf(item))
+                if(!fitnessCads.contains(item)) {
+                    fitnessCads.add((item!!))
+                    adapter.notifyItemInserted(fitnessCads.indexOf(item))
+                }
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
