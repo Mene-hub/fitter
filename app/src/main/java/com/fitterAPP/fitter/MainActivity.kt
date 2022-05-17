@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
+import com.squareup.picasso.Picasso
 import java.io.File
 
 /**
@@ -60,22 +61,31 @@ class MainActivity : AppCompatActivity() {
 
         if(auth.currentUser != null){
             currentUser = auth.currentUser!!
-            user.SetNewValue(Athlete(currentUser.uid, currentUser.displayName, currentUser.photoUrl.toString()))
+
+            user.SetNewValue(Athlete(currentUser.uid, currentUser.displayName, currentUser.photoUrl.toString(), "", ""))
             Athlete.setValues(currentUser.uid, currentUser.displayName, currentUser.photoUrl.toString())
+
             Log.d("USERUIDFROMFIREBASE", Athlete.UID)
 
             //IF THE USER COMES FROM THE REGISTRATION FORM THEN IT HAS TO SAVE THE DATA TO THE DB, OOTHERWISE IF FROM LOGIN FORM  THE INFOS WILL GET GRABBED FROM
             if(intent.extras!!.getBoolean("HASTOSAVE")){
                 Log.d("MainWindow-Signout", "Entro")
                 databaseHelper.setAthleteItem(user.UID,user)
-                downloadImagesFromURL(user.profilePic)
-
+                //downloadImagesFromURL(user.profilePic)
             }
 
             databaseHelper = RealTimeDBHelper(dbReference.child(user.UID))      //Changing reference so that the db doesn't give me the whole node, but only the current logged user
             databaseHelper.readItems(getAthleteEventListener())                 //Applying listener for the "on update" call
             findViewById<TextView>(R.id.TV_Username).text = user.username       //Changing textview username text
         }
+
+        var imageprofile:ImageView = findViewById(R.id.profilepic_IV)
+        var imageURI: String = Athlete.profilePic
+        Picasso.get()
+            .load(imageURI)
+            .resize(40, 40)
+            .centerCrop()
+            .into(imageprofile)
 
         //default fragment is the fitness cards
         val transaction = supportFragmentManager.beginTransaction()

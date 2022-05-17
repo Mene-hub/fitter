@@ -5,8 +5,8 @@ import android.net.Uri
 /**
  * @author Daniel Satriano
  */
-data class Athlete(var UID : String , var username : String?, var profilePic : String?){
-    constructor() : this("", "", "")
+data class Athlete(var UID : String , var username : String?, var profilePic : String?, var profileBio:String?, var spotifyplayList:String){
+    constructor() : this("", "", "", "", "")
 
     fun SetNewValue(user : Athlete){
         this.UID = user.UID
