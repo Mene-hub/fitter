@@ -1,7 +1,11 @@
 package com.fitterAPP.fitter
 
+import android.app.DownloadManager
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
+import android.provider.ContactsContract
 import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +16,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
+import java.io.File
 
 /**
  * @author Daniel Satriano
@@ -63,6 +68,7 @@ class MainActivity : AppCompatActivity() {
             if(intent.extras!!.getBoolean("HASTOSAVE")){
                 Log.d("MainWindow-Signout", "Entro")
                 databaseHelper.setAthleteItem(user.UID,user)
+                downloadImagesFromURL(user.profilePic)
 
             }
 
@@ -76,6 +82,30 @@ class MainActivity : AppCompatActivity() {
         transaction.replace(R.id.FragmentContainer, MyFitnessCards() )
         transaction.commit()
     }
+
+/*
+    fun downloadImagesFromURL(url : String?){
+        //Download Script
+        val downloadManager: DownloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
+        val uri = Uri.parse(url)
+        if(uri.toString() != "") {
+            val request: DownloadManager.Request = DownloadManager.Request(uri)
+
+            Toast.makeText(
+                applicationContext,
+                uri.toString(),
+                Toast.LENGTH_LONG
+            ).show()
+
+            request.setDestinationInExternalPublicDir(
+                Environment.DIRECTORY_DOWNLOADS,
+                uri.lastPathSegment
+            )
+            downloadManager.enqueue(request)
+        }
+
+    }
+*/
 
     /**
      * @author Claudio Menegotto
