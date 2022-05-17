@@ -1,14 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FragmentControlers.profile">
+    tools:context=".FragmentControlers.Profile">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <View
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="400dp"
+        android:background="@drawable/signup_layered_waves"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+   <LinearLayout
+       android:gravity="center"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent"
+       android:layout_margin="20dp"
+       android:orientation="vertical"
+       >
+
+       <ImageView
+           android:layout_width="80dp"
+           android:layout_height="80dp"
+           android:background="@drawable/round_image"
+           android:src="@drawable/person_24"
+           android:contentDescription="User profile image" />
+
+       <TextView
+           android:layout_marginTop="10dp"
+           android:gravity="center"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="@string/Username"
+           android:textColor="@color/white"
+           android:fontFamily="@font/roboto_bold"
+           android:textSize="24sp" />
+
+   </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

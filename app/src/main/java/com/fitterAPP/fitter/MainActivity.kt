@@ -63,6 +63,7 @@ class MainActivity : AppCompatActivity() {
             if(intent.extras!!.getBoolean("HASTOSAVE")){
                 Log.d("MainWindow-Signout", "Entro")
                 databaseHelper.setAthleteItem(user.UID,user)
+
             }
 
             databaseHelper = RealTimeDBHelper(dbReference.child(user.UID))      //Changing reference so that the db doesn't give me the whole node, but only the current logged user
