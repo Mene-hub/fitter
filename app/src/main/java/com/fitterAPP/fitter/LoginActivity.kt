@@ -2,6 +2,7 @@ package com.fitterAPP.fitter
 
 import android.content.Intent
 import android.content.IntentSender
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
@@ -9,10 +10,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
-import com.facebook.AccessToken
-import com.facebook.CallbackManager
-import com.facebook.FacebookCallback
-import com.facebook.FacebookException
+import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.fitterAPP.fitter.databinding.ActivityLoginBinding
@@ -123,23 +121,30 @@ class LoginActivity : AppCompatActivity() {
                     Log.d(TAG_login, "signInWithCredential:success")
                     val user = auth.currentUser
 
-                    var updater = UserProfileChangeRequest.Builder().setDisplayName(user?.displayName.toString().replace("\\s".toRegex(),"")).build()
-                    auth.currentUser!!.updateProfile(updater).addOnCompleteListener{ task ->
-                        if(task.isSuccessful){
-                            Log.d(TAG_login, "User profile updated")
-                            auth.currentUser?.reload()
-                            Log.w(TAG_login,auth.currentUser?.displayName.toString())
+                    val request = GraphRequest.newGraphPathRequest(token, "/${token.userId}/picture") { response ->
+                        var uri = Uri.parse(response.connection?.url.toString())
 
-                            val intent = Intent(this, MainActivity::class.java)
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                            intent.putExtra("HASTOSAVE",true)
-                            startActivity(intent)
+                        var updater = UserProfileChangeRequest.Builder().setDisplayName(user?.displayName.toString().replace("\\s".toRegex(),"")).setPhotoUri(uri).build()
+                        auth.currentUser!!.updateProfile(updater).addOnCompleteListener{ task ->
+                            if(task.isSuccessful){
+                                Log.d(TAG_login, "User profile updated")
+                                auth.currentUser?.reload()
+                                Log.w(TAG_login,auth.currentUser?.displayName.toString())
 
-                        }else{
-                            Toast.makeText(this,"There was a problem during the registration, try again later", Toast.LENGTH_LONG).show()
+                                val intent = Intent(this, MainActivity::class.java)
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                intent.putExtra("HASTOSAVE",true)
+                                startActivity(intent)
+
+                            }else{
+                                Toast.makeText(this,"There was a problem during the registration, try again later", Toast.LENGTH_LONG).show()
+                            }
                         }
                     }
+                    request.executeAsync()
+
+
 
                 } else {
                     // If sign in fails, display a message to the user.

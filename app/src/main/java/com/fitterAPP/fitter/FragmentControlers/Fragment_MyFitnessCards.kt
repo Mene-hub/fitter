@@ -1,9 +1,5 @@
 package com.fitterAPP.fitter.FragmentControlers
 
-import android.R
-import com.fitterAPP.fitter.R.layout
-import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -21,9 +17,7 @@ import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.RealTimeDBHelper
 import com.fitterAPP.fitter.databinding.FragmentMyFitnessCardsBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.database.*
-import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -45,6 +39,8 @@ class MyFitnessCards : Fragment() {
 
         //grab event from companion class RealTimeDBHelper
         databaseHelper.readItems(getAthleteEventListener())
+
+
 
         val recycle : RecyclerView = binding.MyFitnessCardsRV
         adapter = context?.let { FitnessCardAdapter((activity as MainActivity), fitnessCads) }!!
@@ -85,12 +81,10 @@ class MyFitnessCards : Fragment() {
 
     /**
      * @author Daniel Satriano
-     * @param UID use Athlete.UID
      * @param card FitnessCard object
      * @see Athlete
      * @see FitnessCard
      */
-
     companion object fun addFitnessCard(card : FitnessCard){
         databaseHelper.setFitnessCardItem(card)
     }
@@ -176,13 +170,6 @@ class MyFitnessCards : Fragment() {
                 }
             }
             .setIcon(requireContext().getDrawable(com.fitterAPP.fitter.R.drawable.fitness_24)).show()
-
-        // create and show
-        // the alert dialog
-        /*
-        val dialog: AlertDialog = builder.create()
-        dialog.show()*/
-
     }
 
 }

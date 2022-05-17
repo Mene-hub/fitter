@@ -72,6 +72,7 @@ class MainActivity : AppCompatActivity() {
 
         }
         findViewById<TextView>(R.id.TV_Username).text = user.username       //SET USERNAME IN TEXTVIEW
+        Athlete.setValues(user)         //SET NEW VALUES FOR THE STATIC USER PART, USED IN Fragment_MyFitnessCards.kt
 
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.FragmentContainer, MyFitnessCards() )
