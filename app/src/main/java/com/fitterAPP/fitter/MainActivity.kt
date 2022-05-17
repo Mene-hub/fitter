@@ -1,11 +1,7 @@
 package com.fitterAPP.fitter
 
-import android.app.DownloadManager
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
-import android.provider.ContactsContract
 import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -16,8 +12,6 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
-import com.squareup.picasso.Picasso
-import java.io.File
 
 /**
  * @author Daniel Satriano
@@ -26,12 +20,12 @@ import java.io.File
  */
 class MainActivity : AppCompatActivity() {
 
-    private val _REFERENCE = "USERS"
+    private val _reference = "USERS"
     private val user = Athlete()
     private lateinit var auth : FirebaseAuth
     private lateinit var currentUser : FirebaseUser
     private lateinit var databaseHelper : RealTimeDBHelper
-    private var dbReference : DatabaseReference = FirebaseDatabase.getInstance(RealTimeDBHelper.getDbURL()).getReference(_REFERENCE)
+    private var dbReference : DatabaseReference = FirebaseDatabase.getInstance(RealTimeDBHelper.getDbURL()).getReference(_reference)
     //Bottom sheet dialog
     private lateinit var menuiv : ImageView
 
@@ -57,66 +51,32 @@ class MainActivity : AppCompatActivity() {
      */
     override fun onStart() {
         super.onStart()
-        auth.currentUser?.reload()
 
         if(auth.currentUser != null){
             currentUser = auth.currentUser!!
 
+            //INITIAL INIT, WILL BE CHANGED AS SOON AS THE VALUE LISTENER IS CALLED
             user.SetNewValue(Athlete(currentUser.uid, currentUser.displayName, currentUser.photoUrl.toString(), "", ""))
-            Athlete.setValues(currentUser.uid, currentUser.displayName, currentUser.photoUrl.toString())
 
-            Log.d("USERUIDFROMFIREBASE", Athlete.UID)
-
-            //IF THE USER COMES FROM THE REGISTRATION FORM THEN IT HAS TO SAVE THE DATA TO THE DB, OOTHERWISE IF FROM LOGIN FORM  THE INFOS WILL GET GRABBED FROM
+            //IF THE USER COMES FROM THE REGISTRATION FORM (and Google Login & Facebook Login) THEN IT HAS TO SAVE THE DATA TO THE DB,
+            // OTHERWISE IF FROM LOGIN FORM  THE INFO'S WILL GET GRABBED FROM
             if(intent.extras!!.getBoolean("HASTOSAVE")){
                 Log.d("MainWindow-Signout", "Entro")
                 databaseHelper.setAthleteItem(user.UID,user)
                 //downloadImagesFromURL(user.profilePic)
             }
 
-            databaseHelper = RealTimeDBHelper(dbReference.child(user.UID))      //Changing reference so that the db doesn't give me the whole node, but only the current logged user
-            databaseHelper.readItems(getAthleteEventListener())                 //Applying listener for the "on update" call
-            findViewById<TextView>(R.id.TV_Username).text = user.username       //Changing textview username text
+            databaseHelper = RealTimeDBHelper(dbReference.child(user.UID))    //Changing reference so that the db doesn't give me the whole node, but only the current logged user
+            databaseHelper.readItem(getAthleteEventListener())                //Applying listener for the "on update" call
+
         }
 
-        var imageprofile:ImageView = findViewById(R.id.profilepic_IV)
-        var imageURI: String = Athlete.profilePic
-        Picasso.get()
-            .load(imageURI)
-            .resize(40, 40)
-            .centerCrop()
-            .into(imageprofile)
-
-        //default fragment is the fitness cards
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.FragmentContainer, MyFitnessCards() )
         transaction.commit()
     }
 
-/*
-    fun downloadImagesFromURL(url : String?){
-        //Download Script
-        val downloadManager: DownloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
-        val uri = Uri.parse(url)
-        if(uri.toString() != "") {
-            val request: DownloadManager.Request = DownloadManager.Request(uri)
-
-            Toast.makeText(
-                applicationContext,
-                uri.toString(),
-                Toast.LENGTH_LONG
-            ).show()
-
-            request.setDestinationInExternalPublicDir(
-                Environment.DIRECTORY_DOWNLOADS,
-                uri.lastPathSegment
-            )
-            downloadManager.enqueue(request)
-        }
-
-    }
-*/
-
+    //region roba claudio
     /**
      * @author Claudio Menegotto
      * METODO PER LA VISUALIZZAZIONE DEL FRAGMENT DI RICERCA
@@ -162,48 +122,38 @@ class MainActivity : AppCompatActivity() {
      * @author Daniel Satriano
      * METODO PER LA DISCONNESSIONE DELL'ACCOUNT
      */
+    //endregion
+
     fun logout(){
         if(auth.currentUser != null){
             Log.d("MainWindow-Signout", "Sloggato")
             auth.signOut()
         }
 
-        val I : Intent =  Intent(this, LoginActivity::class.java)
-        I.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        I.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        startActivity(I)
+        val i =  Intent(this, LoginActivity::class.java)
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(i)
     }
 
     /**
      *  @author Daniel Satriano
      *  Used to update username from the database.
      */
-    private fun getAthleteEventListener(): ChildEventListener {
-        val childEventListener = object : ChildEventListener {
-            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                //NOT NEEDED FOR THE SCOPE OF THIS LISTENER
+    private fun getAthleteEventListener(): ValueEventListener {
+        val childEventListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val item = snapshot.getValue(Athlete::class.java)                   //GRAB USER ITEM
+                user.SetNewValue(item!!)                                            //SET NEW USER ITEM
+                findViewById<TextView>(R.id.TV_Username).text = user.username       //SET USERNAME IN TEXTVIEW
+                Athlete.setValues(user)         //SET NEW VALUES FOR THE STATIC USER PART, USED IN Fragment_MyFitnessCards.kt
             }
 
-            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                val item = snapshot.getValue(String::class.java)
-                user.changeUsername(item!!)
-                findViewById<TextView>(R.id.TV_Username).text = user.username
-                Athlete.setValues(user.UID,user.username,user.profilePic)
-            }
+            override fun onCancelled(error: DatabaseError) {                        //(THIS EVENT IS CALLED ONLY WHEN THE USER IS ONLINE AND ITS ACCOUNT GETS DELETED)
+                Log.w("MainActivity-Database-User",
+                    "postcomments:onCancelled", error.toException())
 
-            override fun onChildRemoved(snapshot: DataSnapshot) {
-                auth.signOut()
-                val intent = Intent(this@MainActivity,LoginActivity::class.java)
-                startActivity(intent)
-            }
-
-            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
-                //viene triggerato quando la locazione del child cambia
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.w("MainActivity-Database-User", "postcomments:onCancelled", error.toException())
-                Toast.makeText(this@MainActivity, "Failed to load comment.", Toast.LENGTH_SHORT).show()
+                logout()                                                            //LOGOUT
             }
         }
         return childEventListener

@@ -4,6 +4,7 @@ import com.fitterAPP.fitter.Classes.Athlete
 import com.fitterAPP.fitter.Classes.FitnessCard
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
 
 /**
  * @author Daniel Satriano
@@ -17,8 +18,13 @@ class RealTimeDBHelper(val database: DatabaseReference) {
     }
 
     //Reading from db
-    fun readItems(athleteEventListener: ChildEventListener){
-        database.addChildEventListener(athleteEventListener)
+    fun readItems(fitnessCardListener: ChildEventListener){
+        database.addChildEventListener(fitnessCardListener)
+    }
+
+    //Reading from db
+    fun readItem(athleteListener : ValueEventListener){
+        database.addValueEventListener(athleteListener)
     }
 
     //Writing
