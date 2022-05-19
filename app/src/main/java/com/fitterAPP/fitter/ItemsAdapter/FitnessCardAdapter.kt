@@ -10,7 +10,7 @@ import androidx.fragment.app.FragmentTransaction
 
 import androidx.recyclerview.widget.RecyclerView
 import com.fitterAPP.fitter.Classes.FitnessCard
-import com.fitterAPP.fitter.FragmentControlers.Fragment_createCardDialog
+import com.fitterAPP.fitter.FragmentControlers.Fragment_showCardDialog
 import com.fitterAPP.fitter.R
 
 class FitnessCardAdapter (val context2: Context, val Cards:MutableList<FitnessCard>) : RecyclerView.Adapter<FitnessCardAdapter.Holder>() {
@@ -18,13 +18,11 @@ class FitnessCardAdapter (val context2: Context, val Cards:MutableList<FitnessCa
     class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val CardName : TextView = itemView.findViewById(R.id.CardName_TV)
-        val CardDescription : TextView = itemView.findViewById(R.id.Description_TV)
         val CardDuration : TextView = itemView.findViewById(R.id.TimeDuration_TV)
         val CardExercises : TextView = itemView.findViewById(R.id.ExerciseCount_TV)
 
         fun setCard(Card:FitnessCard, context: Context){
             CardName.text = Card.name
-            CardDescription.text = Card.description
             CardDuration.text = "Duration: " + Card.timeDuration.toString() + " min"
             if(Card.exercises != null)
                 CardExercises.text = Card.exercises?.count().toString() + " exercise"
@@ -40,7 +38,7 @@ class FitnessCardAdapter (val context2: Context, val Cards:MutableList<FitnessCa
         private fun transaction(context2:Context, card : FitnessCard) {
 
             val fragmentManager = (context2 as AppCompatActivity).supportFragmentManager
-            val newFragment = Fragment_createCardDialog(card)
+            val newFragment = Fragment_showCardDialog(card)
 
             // The device is smaller, so show the fragment fullscreen
             val transaction = fragmentManager.beginTransaction()

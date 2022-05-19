@@ -32,5 +32,6 @@
     <string name="card_name">Card name<font color="#FF0000">*</font></string>
     <string name="duration">Duration<font color="#FF0000">*</font></string>
     <string name="description">Description</string>
+    <string name="minutes">Minutes</string>
 
 </resources>

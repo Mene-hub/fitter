@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import com.fitterAPP.fitter.Classes.Athlete
 import com.fitterAPP.fitter.FragmentControlers.*
 import com.google.firebase.auth.FirebaseAuth
@@ -28,7 +29,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var databaseHelper : RealTimeDBHelper
     private var dbReference : DatabaseReference = FirebaseDatabase.getInstance(RealTimeDBHelper.getDbURL()).getReference(_reference)
     //Bottom sheet dialog
-    private lateinit var menuiv : ImageView
+    private lateinit var menuiv : CardView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

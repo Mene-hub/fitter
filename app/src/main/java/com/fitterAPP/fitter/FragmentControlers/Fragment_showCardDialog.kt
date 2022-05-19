@@ -24,22 +24,23 @@ import com.fitterAPP.fitter.ItemsAdapter.FitnessCardAdapter
 import com.fitterAPP.fitter.ItemsAdapter.FitnessCardExercisesAdapter
 import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.RealTimeDBHelper
-import com.fitterAPP.fitter.databinding.FragmentCreateCardDialogBinding
 import com.fitterAPP.fitter.databinding.FragmentMyFitnessCardsBinding
+import com.fitterAPP.fitter.databinding.FragmentShowCardDialogBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import kotlin.time.Duration.Companion.minutes
 
 
-class Fragment_createCardDialog(var newFitnessCard: FitnessCard) : DialogFragment() {
+class Fragment_showCardDialog(var newFitnessCard: FitnessCard) : DialogFragment() {
 
     /** The system calls this to get the DialogFragment's layout, regardless
     of whether it's being displayed as a dialog or an embedded fragment. */
 
-    private lateinit var binding : FragmentCreateCardDialogBinding
+    private lateinit var binding : FragmentShowCardDialogBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentCreateCardDialogBinding.inflate(inflater, container, false)
+        binding = FragmentShowCardDialogBinding.inflate(inflater, container, false)
 
         binding.backBt.setOnClickListener {
             activity?.onBackPressed()
@@ -61,6 +62,14 @@ class Fragment_createCardDialog(var newFitnessCard: FitnessCard) : DialogFragmen
             var adapter = context?.let {FitnessCardExercisesAdapter((activity as MainActivity),newFitnessCard,newFitnessCard.exercises!!)}!!
             recycle.adapter = adapter
         }
+
+        val cardName : TextView = binding.CardNameTV
+        val cardDuration : TextView = binding.TimeDurationTV
+        val cardDescription: TextView = binding.DescriptionTV
+
+        cardName.text = newFitnessCard.name
+        cardDescription.text = newFitnessCard.description
+        cardDuration.text = newFitnessCard.timeDuration.toString() + " minutes"
 
         // Inflate the layout for this fragment
         return binding.root

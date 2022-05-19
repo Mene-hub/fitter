@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import com.fitterAPP.fitter.Classes.Athlete
+import com.fitterAPP.fitter.Classes.Exercise
 import com.fitterAPP.fitter.Classes.FitnessCard
 import com.fitterAPP.fitter.ItemsAdapter.FitnessCardAdapter
 import com.fitterAPP.fitter.MainActivity
@@ -64,7 +65,7 @@ class MyFitnessCards : Fragment() {
     private fun transaction(newFitnessCard : FitnessCard) {
 
         val fragmentManager = parentFragmentManager
-        val newFragment = Fragment_createCardDialog(newFitnessCard)
+        val newFragment = Fragment_showCardDialog(newFitnessCard)
 
         // The device is smaller, so show the fragment fullscreen
         val transaction = fragmentManager.beginTransaction()

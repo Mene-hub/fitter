@@ -5,24 +5,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentTransaction
 
 import androidx.recyclerview.widget.RecyclerView
 import com.fitterAPP.fitter.Classes.Exercise
 import com.fitterAPP.fitter.Classes.FitnessCard
-import com.fitterAPP.fitter.FragmentControlers.Fragment_createCardDialog
 import com.fitterAPP.fitter.R
 
 class FitnessCardExercisesAdapter (val context2: Context, val Card:FitnessCard, val exercises : MutableList<Exercise>) : RecyclerView.Adapter<FitnessCardExercisesAdapter.Holder>() {
 
     class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+        /*
         val CardName : TextView = itemView.findViewById(R.id.CardName_TV)
         val CardDescription : TextView = itemView.findViewById(R.id.Description_TV)
         val CardDuration : TextView = itemView.findViewById(R.id.TimeDuration_TV)
         val CardExercises : TextView = itemView.findViewById(R.id.ExerciseCount_TV)
+        */
 
         fun setCard(ex:Exercise, context: Context){
 
