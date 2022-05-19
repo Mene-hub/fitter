@@ -18,7 +18,7 @@
     <string name="ConfirmPassword">Conferma Password</string>
     <string name="email_already_registered">L\'email inserità è già stata usata</string>
     <string name="pass_dont_match">La password non combacia</string>
-    <string name="exercises" >esercizi</string>
+    <string name="exercises" >Esercizi</string>
     <string name="card_name">Nome scheda<font color="#FF0000">*</font></string>
     <string name="duration">Durata<font color="#FF0000">*</font></string>
     <string name="description">Descrizione</string>
