@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
@@ -45,6 +46,7 @@ class MyFitnessCards : Fragment() {
 
 
         val recycle : RecyclerView = binding.MyFitnessCardsRV
+
         adapter = context?.let { FitnessCardAdapter((activity as MainActivity), fitnessCads) }!!
         recycle.adapter = adapter
 
@@ -55,6 +57,7 @@ class MyFitnessCards : Fragment() {
         Log.w("Fragment", binding.MyFitnessCardsRV.id.toString())
         return binding.root
     }
+
 
     private fun createNewCard(): View.OnClickListener {
         val listener = View.OnClickListener {

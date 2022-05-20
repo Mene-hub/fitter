@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
@@ -15,11 +16,20 @@ import com.fitterAPP.fitter.R
 
 class FitnessCardAdapter (val context2: Context, val Cards:MutableList<FitnessCard>) : RecyclerView.Adapter<FitnessCardAdapter.Holder>() {
 
-    class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnLongClickListener{
 
         val CardName : TextView = itemView.findViewById(R.id.CardName_TV)
         val CardDuration : TextView = itemView.findViewById(R.id.TimeDuration_TV)
         val CardExercises : TextView = itemView.findViewById(R.id.ExerciseCount_TV)
+
+        init {
+            itemView.setOnLongClickListener(this)
+        }
+
+        override fun onLongClick(v: View?): Boolean {
+            v?.startAnimation(AnimationUtils.loadAnimation(context2, R.anim.wibble_animation))
+            return true
+        }
 
         fun setCard(Card:FitnessCard, context: Context){
             CardName.text = Card.name
@@ -52,6 +62,8 @@ class FitnessCardAdapter (val context2: Context, val Cards:MutableList<FitnessCa
                 .commit()
 
         }
+
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
