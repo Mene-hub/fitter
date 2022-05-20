@@ -87,6 +87,18 @@ class MyFitnessCards : Fragment() {
      * @see FitnessCard
      */
     companion object fun addFitnessCard(card : FitnessCard){
+
+        /*
+        var exercises : MutableList<Exercise> = ArrayList()
+        exercises.add(Exercise())
+        exercises.add(Exercise())
+        exercises.add(Exercise())
+        exercises.add(Exercise())
+        exercises.add(Exercise())
+
+        card.exercises = exercises
+        */
+
         databaseHelper.setFitnessCardItem(card)
     }
 

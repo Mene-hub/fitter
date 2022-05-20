@@ -1,10 +1,17 @@
 package com.fitterAPP.fitter.ItemsAdapter
 
 import android.content.Context
+import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
+import androidx.cardview.widget.CardView
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 
 import androidx.recyclerview.widget.RecyclerView
 import com.fitterAPP.fitter.Classes.Exercise
@@ -15,20 +22,52 @@ class FitnessCardExercisesAdapter (val context2: Context, val Card:FitnessCard, 
 
     class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        /*
-        val CardName : TextView = itemView.findViewById(R.id.CardName_TV)
-        val CardDescription : TextView = itemView.findViewById(R.id.Description_TV)
-        val CardDuration : TextView = itemView.findViewById(R.id.TimeDuration_TV)
-        val CardExercises : TextView = itemView.findViewById(R.id.ExerciseCount_TV)
-        */
+
+        val ExName : TextView = itemView.findViewById(R.id.ExName_TV)
+        val ExReps : TextView = itemView.findViewById(R.id.ExReps_TV)
+        val TimeIndictor : CardView = itemView.findViewById(R.id.TimeIndicator_CV)
+
 
         fun setCard(ex:Exercise, context: Context){
-
+            ExName.text = ex.exerciseName
+            ExReps.text = ex.exerciseSer.toString() + " x " + ex.exerciseRep.toString()
+            TimeIndictor.isGone = true
 
             itemView.setOnClickListener {
-                //transaction(context, ex)
+                if( TimeIndictor.isGone) {
+
+                    val params = FrameLayout.LayoutParams(
+                        itemView.width,
+                        RelativeLayout.LayoutParams.MATCH_PARENT
+                    )
+                    TimeIndictor.layoutParams = params
+
+                    TimeIndictor.isGone = false
+                    startTimer(ex, context)
+                }else
+                    TimeIndictor.isGone = true
             }
 
+        }
+
+        fun startTimer(ex : Exercise, context: Context){
+            var count : Int = 1 //itemView.width/ex.exerciseRep.toInt()
+            var countDownTimer = object : CountDownTimer(((ex.exerciseRest*1000).toLong()),100){
+                //end of timer
+                override fun onFinish() {
+                    TimeIndictor.isGone = true;
+                    TimeIndictor.isVisible = false;
+                }
+
+                override fun onTick(millisUntilFinished: Long) {
+                    val params = FrameLayout.LayoutParams(
+                        TimeIndictor.width - count,
+                        RelativeLayout.LayoutParams.MATCH_PARENT
+                    )
+                    TimeIndictor.layoutParams = params
+                }
+
+            }.start()
         }
 
         /*

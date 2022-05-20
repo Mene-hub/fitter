@@ -57,8 +57,6 @@ class Fragment_showCardDialog(var newFitnessCard: FitnessCard) : DialogFragment(
         databaseHelper.setFitnessCardItem(newFitnessCard)*/
 
         if(newFitnessCard.exercises != null && newFitnessCard.exercises?.size!! > 0){
-
-            Toast.makeText(activity, newFitnessCard.exercises?.count().toString(), Toast.LENGTH_SHORT).show()
             var adapter = context?.let {FitnessCardExercisesAdapter((activity as MainActivity),newFitnessCard,newFitnessCard.exercises!!)}!!
             recycle.adapter = adapter
         }
