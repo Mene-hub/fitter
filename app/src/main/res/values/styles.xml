@@ -1,19 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="ModalBottomSheet" parent="Widget.MaterialComponents.BottomSheet.Modal">
         <!-- Apply attributes here -->
         <item name="shapeAppearance">@style/ShapeAppearance.App.LargeComponent</item>
     </style>
 
-    <!--       CODICE ORIGINALE DI @CLAUDIO, NON SO A COSA TI SERVIVA, MA ANDAVA IN CONFLITTO CON QUELLO COPIATO DA MATERIAL DESIGN
-    <style name="ModalBottomSheetDialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/ModalBottomSheet</item>
-    </style>
--->
-
     <style name="AppTheme" parent="Theme.MaterialComponents">
         <item name="bottomSheetDialogTheme">@style/ModalBottomSheetDialog</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
     </style>
 
 

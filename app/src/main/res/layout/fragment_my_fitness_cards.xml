@@ -14,7 +14,9 @@
         android:fontFamily="@font/roboto_medium"
         android:text="Your Cards"
         android:textColor="@color/black"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/MyFitnessCards_RV"
@@ -39,7 +41,8 @@
         android:text="Your Weekly Recaps"
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@+id/MyFitnessCards_RV" />
+        app:layout_constraintTop_toBottomOf="@+id/MyFitnessCards_RV"
+        app:layout_constraintLeft_toLeftOf="parent"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/MyRecaps_RV"

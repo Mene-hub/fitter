@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
@@ -99,7 +100,7 @@ class MyFitnessCards : Fragment() {
         card.exercises = exercises
         */
 
-        databaseHelper.setFitnessCardItem(card)
+        //databaseHelper.setFitnessCardItem(card)
     }
 
     private fun getAthleteEventListener(): ChildEventListener {
@@ -156,7 +157,7 @@ class MyFitnessCards : Fragment() {
 
         // add a button
         builder
-            .setPositiveButton("OK") { dialog, which -> // send data from the
+            .setPositiveButton("OK") { _, _ -> // send data from the
                 // AlertDialog to the Activity
                 val name = customLayout.findViewById<EditText>(com.fitterAPP.fitter.R.id.et_cardName).text.toString()
                 val description = customLayout.findViewById<EditText>(com.fitterAPP.fitter.R.id.et_description).text.toString()
@@ -174,7 +175,7 @@ class MyFitnessCards : Fragment() {
                 }else{
                     Toast.makeText(requireContext(), "Missing name field on fitness card", Toast.LENGTH_LONG).show()
                 }
-            }.setNegativeButton("BACK") { dialog, which ->
+            }.setNegativeButton("BACK") { _, _ ->
             }.setOnDismissListener {
                 if(newFitnessCard.name?.replace(" ","")?.length == 0)
                 {
@@ -182,7 +183,7 @@ class MyFitnessCards : Fragment() {
                     activity?.onBackPressed()
                 }
             }
-            .setIcon(requireContext().getDrawable(com.fitterAPP.fitter.R.drawable.fitness_24)).show()
+            .setIcon(AppCompatResources.getDrawable(requireContext(),com.fitterAPP.fitter.R.drawable.fitness_24)).show()
     }
 
 }
