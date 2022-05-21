@@ -40,7 +40,7 @@ class LoginActivity : AppCompatActivity() {
     //region googleStuff
         private lateinit var oneTapClient: SignInClient
         private lateinit var signInRequest: BeginSignInRequest
-        private val REQ_ONE_TAP = 2
+        private val REQ_ONE_TAP : Int = 2
     //endregion
 
     //region facebookStuff
@@ -109,7 +109,7 @@ class LoginActivity : AppCompatActivity() {
 
         //region facebookStuff
         binding.IVLoginFacebook.setOnClickListener(loginFacebook())
-        callbackManager = CallbackManager.Factory.create();
+        callbackManager = CallbackManager.Factory.create()
         //endregion
 
         randomBgImages()
@@ -138,9 +138,9 @@ class LoginActivity : AppCompatActivity() {
                     val user = auth.currentUser
 
                     val request = GraphRequest.newGraphPathRequest(token, "/${token.userId}/picture") { response ->
-                        var uri = Uri.parse(response.connection?.url.toString())
+                        val uri = Uri.parse(response.connection?.url.toString())
 
-                        var updater = UserProfileChangeRequest.Builder().setDisplayName(user?.displayName.toString().replace("\\s".toRegex(),"")).setPhotoUri(uri).build()
+                        val updater = UserProfileChangeRequest.Builder().setDisplayName(user?.displayName.toString().replace("\\s".toRegex(),"")).setPhotoUri(uri).build()
                         auth.currentUser!!.updateProfile(updater).addOnCompleteListener{ task2 ->
                             if(task2.isSuccessful){
                                 Log.d(TAG_login, "User profile updated")
@@ -187,7 +187,7 @@ class LoginActivity : AppCompatActivity() {
                 .addOnFailureListener(this) { e ->
                     // No saved credentials found. Launch the One Tap sign-up flow, or
                     // do nothing and continue presenting the signed-out UI.
-                    Log.d(TAG_login, e.localizedMessage)
+                    e.localizedMessage?.let { it1 -> Log.d(TAG_login, it1) }
                 }
         }
         return listener
@@ -196,6 +196,7 @@ class LoginActivity : AppCompatActivity() {
     /**
      * @author Daniel Satriano
      */
+    @Deprecated("Ignore this deprecation")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         Log.d(TAG_login,requestCode.toString())
@@ -226,7 +227,7 @@ class LoginActivity : AppCompatActivity() {
                                         Log.d(TAG_login, "signInWithCredential:success")
                                         val user = auth.currentUser
 
-                                        var updater = UserProfileChangeRequest.Builder().setDisplayName(user?.displayName.toString().replace("\\s".toRegex(),"")).build()
+                                        val updater = UserProfileChangeRequest.Builder().setDisplayName(user?.displayName.toString().replace("\\s".toRegex(),"")).build()
                                         auth.currentUser!!.updateProfile(updater).addOnCompleteListener{ task2 ->
                                             if(task2.isSuccessful){
                                                 Log.d(TAG_login, "User profile updated")
@@ -284,17 +285,17 @@ class LoginActivity : AppCompatActivity() {
 
             LoginManager.getInstance().logInWithReadPermissions(this, listOf("public_profile","email"))
             LoginManager.getInstance().registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
-                override fun onSuccess(loginResult: LoginResult) {
-                    Log.d(TAG_login, "facebook:onSuccess:$loginResult")
-                    handleFacebookAccessToken(loginResult.accessToken)
+                override fun onSuccess(result: LoginResult) {
+                    Log.d(TAG_login, "facebook:onSuccess:$result")
+                    handleFacebookAccessToken(result.accessToken)
                 }
 
                 override fun onCancel() {
                     Log.d(TAG_login, "facebook:onCancel")
                 }
 
-                override fun onError(exception: FacebookException) {
-                    Log.d(TAG_login, "facebook:onError", exception)
+                override fun onError(error: FacebookException) {
+                    Log.d(TAG_login, "facebook:onError", error)
                 }
 
             })
@@ -349,7 +350,7 @@ class LoginActivity : AppCompatActivity() {
             val email : String = binding.etLoginEmail.text.toString()
             val password : String = binding.etLoginPassword.text.toString()
 
-            if(!email.isNullOrBlank() && !password.isNullOrBlank()) {
+            if(email.isNotBlank() && password.isNotBlank()) {
                 auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
@@ -378,7 +379,7 @@ class LoginActivity : AppCompatActivity() {
      * EVENTO PER CAMBIARE IL FRAGMENT DI LOGIN NEL FRAGMENT DI SIGN UP
      */
     fun showRegister(){
-        val i : Intent = Intent(this, RegisterActivity::class.java)
+        val i = Intent(this, RegisterActivity::class.java)
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)

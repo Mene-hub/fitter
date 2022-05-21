@@ -146,7 +146,7 @@ class RegisterActivity : AppCompatActivity() {
             val password : String = binding.etSignupPassword.text.toString()
             val username : String = binding.etSignupUsername.text.toString()
 
-            if(!email.isNullOrBlank() && !password.isNullOrBlank()
+            if(email.isNotBlank() && password.isNotBlank()
                 && checkPasswordConfirmation(password, binding.etSignupConfirmPassword.text.toString()) && checkPasswordLength(password)) {
 
                 auth.createUserWithEmailAndPassword(email, password)
@@ -155,13 +155,13 @@ class RegisterActivity : AppCompatActivity() {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG_register, "User creation: OK")
 
-                            var updater = UserProfileChangeRequest.Builder().setDisplayName(username).build()
+                            val updater = UserProfileChangeRequest.Builder().setDisplayName(username).build()
                             auth.currentUser!!.updateProfile(updater).addOnCompleteListener{ task2 ->
                                 if(task2.isSuccessful){
                                     Log.d(TAG_register, "User profile updated")
                                     auth.currentUser?.reload()
                                     Log.w(TAG_register,auth.currentUser?.displayName.toString())
-                                    val intent : Intent = Intent(this, MainActivity::class.java)
+                                    val intent = Intent(this, MainActivity::class.java)
                                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                                     intent.putExtra("HASTOSAVE",true)

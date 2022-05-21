@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical">
@@ -28,8 +28,7 @@
                 android:id="@+id/textView4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Welcome,"
+                android:text="@string/login_welcome_back"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -37,10 +36,9 @@
                 android:id="@+id/TV_Username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Username"
+                android:text="@string/Username"
                 android:textColor="@color/black"
-                android:textSize="24dp" />
+                android:textSize="24sp" />
         </LinearLayout>
 
         <androidx.cardview.widget.CardView
@@ -55,7 +53,8 @@
                 android:id="@+id/profilepic_IV"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                app:srcCompat="@drawable/person_24" />
+                app:srcCompat="@drawable/person_24"
+                android:contentDescription="@string/profile_image"/>
         </androidx.cardview.widget.CardView>
 
     </LinearLayout>

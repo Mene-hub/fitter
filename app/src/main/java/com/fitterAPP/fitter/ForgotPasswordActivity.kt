@@ -3,16 +3,13 @@ package com.fitterAPP.fitter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.util.Patterns
 import android.view.View
 import android.widget.Toast
 import com.fitterAPP.fitter.databinding.ActivityForgotPasswordBinding
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 
 class ForgotPasswordActivity : AppCompatActivity() {
-    private val TAG_ForgotPassword = "ForgotPasswordActivity: "
+    private val TAGForgotPassword : String = "ForgotPasswordActivity: "
     private lateinit var binding : ActivityForgotPasswordBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,12 +21,15 @@ class ForgotPasswordActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * Method to reset password, it checks if the email is correct, if it is, it then proceeds to send a reset email to the given address
+     * @author Daniel Satriano
+     */
     private fun resetPswListener(): View.OnClickListener {
         val listener = View.OnClickListener {
             val email : String = binding.etPswReset.text.toString().trim{it <= ' '}
-            Log.d(TAG_ForgotPassword,email)
-            if(!email.isNullOrBlank() && !email.isEmpty()){
-                //Roba
+            Log.d(TAGForgotPassword,email)
+            if(email.isNotBlank() && email.isNotEmpty()){
                 FirebaseAuth.getInstance().sendPasswordResetEmail(email).addOnCompleteListener{ task ->
                     if(task.isSuccessful){
                         Toast.makeText(this, getString(R.string.email_sent_successfully), Toast.LENGTH_LONG).show()

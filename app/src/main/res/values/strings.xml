@@ -39,5 +39,7 @@
     <string name="send_reset_email">Send reset email</string>
     <string name="email_sent_successfully">Email successfully sent  to reset your password</string>
     <string name="please_enter_valid_email">Enter a valid email</string>
+    <string name="background_image">Background image</string>
+    <string name="profile_image">Profile image</string>
 
 </resources>
