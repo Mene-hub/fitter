@@ -156,8 +156,8 @@ class RegisterActivity : AppCompatActivity() {
                             Log.d(TAG_register, "User creation: OK")
 
                             var updater = UserProfileChangeRequest.Builder().setDisplayName(username).build()
-                            auth.currentUser!!.updateProfile(updater).addOnCompleteListener{ task ->
-                                if(task.isSuccessful){
+                            auth.currentUser!!.updateProfile(updater).addOnCompleteListener{ task2 ->
+                                if(task2.isSuccessful){
                                     Log.d(TAG_register, "User profile updated")
                                     auth.currentUser?.reload()
                                     Log.w(TAG_register,auth.currentUser?.displayName.toString())
@@ -167,7 +167,7 @@ class RegisterActivity : AppCompatActivity() {
                                     intent.putExtra("HASTOSAVE",true)
                                     startActivity(intent)
                                 }else{
-                                    Toast.makeText(this,"There was a problem during the registration, try again later", Toast.LENGTH_LONG).show()
+                                    Toast.makeText(this,task2.exception!!.message.toString(), Toast.LENGTH_LONG).show()
                                 }
                             }
                         } else {
@@ -175,7 +175,7 @@ class RegisterActivity : AppCompatActivity() {
                             Log.w(TAG_register, "User creation: FAILED", task.exception)
 
                             binding.etSignupEmailLayout.helperText = getString(R.string.email_already_registered)
-                            Toast.makeText(this, getString(R.string.email_already_registered), Toast.LENGTH_LONG).show()
+                            Toast.makeText(this,task.exception!!.message.toString(), Toast.LENGTH_LONG).show()
                         }
                     }
             }

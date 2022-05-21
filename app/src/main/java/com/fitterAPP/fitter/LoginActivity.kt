@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
 import android.view.View
-import android.view.animation.Animation
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -142,8 +141,8 @@ class LoginActivity : AppCompatActivity() {
                         var uri = Uri.parse(response.connection?.url.toString())
 
                         var updater = UserProfileChangeRequest.Builder().setDisplayName(user?.displayName.toString().replace("\\s".toRegex(),"")).setPhotoUri(uri).build()
-                        auth.currentUser!!.updateProfile(updater).addOnCompleteListener{ task ->
-                            if(task.isSuccessful){
+                        auth.currentUser!!.updateProfile(updater).addOnCompleteListener{ task2 ->
+                            if(task2.isSuccessful){
                                 Log.d(TAG_login, "User profile updated")
                                 auth.currentUser?.reload()
                                 Log.w(TAG_login,auth.currentUser?.displayName.toString())
@@ -155,7 +154,7 @@ class LoginActivity : AppCompatActivity() {
                                 startActivity(intent)
 
                             }else{
-                                Toast.makeText(this,"There was a problem during the registration, try again later", Toast.LENGTH_LONG).show()
+                                Toast.makeText(this,task2.exception!!.message.toString(), Toast.LENGTH_LONG).show()
                             }
                         }
                     }
@@ -166,7 +165,7 @@ class LoginActivity : AppCompatActivity() {
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG_login, "signInWithCredential:failure", task.exception)
-                    Toast.makeText(baseContext, "Authentication failed.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(baseContext, task.exception!!.message.toString(), Toast.LENGTH_SHORT).show()
                 }
             }
     }
@@ -228,8 +227,8 @@ class LoginActivity : AppCompatActivity() {
                                         val user = auth.currentUser
 
                                         var updater = UserProfileChangeRequest.Builder().setDisplayName(user?.displayName.toString().replace("\\s".toRegex(),"")).build()
-                                        auth.currentUser!!.updateProfile(updater).addOnCompleteListener{ task ->
-                                            if(task.isSuccessful){
+                                        auth.currentUser!!.updateProfile(updater).addOnCompleteListener{ task2 ->
+                                            if(task2.isSuccessful){
                                                 Log.d(TAG_login, "User profile updated")
                                                 auth.currentUser?.reload()
                                                 Log.w(TAG_login,auth.currentUser?.displayName.toString())
@@ -241,16 +240,13 @@ class LoginActivity : AppCompatActivity() {
                                                 startActivity(intent)
 
                                             }else{
-                                                Toast.makeText(this,"There was a problem during the registration, try again later", Toast.LENGTH_LONG).show()
+                                                Toast.makeText(this,task2.exception!!.message.toString(), Toast.LENGTH_LONG).show()
                                             }
                                         }
-
                                         Log.d(TAG_login, auth.currentUser?.displayName.toString())
-                                        //updateUI(user)
                                     } else {
                                         // If sign in fails, display a message to the user.
-                                        Log.w(TAG_login, "signInWithCredential:failure", task.exception)
-                                        //updateUI(null)
+                                        Toast.makeText(this,task.exception!!.message.toString(), Toast.LENGTH_LONG).show()
                                     }
                                 }
                         }
@@ -267,11 +263,11 @@ class LoginActivity : AppCompatActivity() {
                         }
                         CommonStatusCodes.NETWORK_ERROR -> {
                             Log.d(TAG_login, "One-tap encountered a network error.")
+                            Toast.makeText(this,getString(R.string.network_error), Toast.LENGTH_LONG).show()
                             // Try again or just ignore.
                         }
                         else -> {
-                            Log.d(TAG_login, "Couldn't get credential from result." +
-                                    " (${e.localizedMessage})")
+                            Log.d(TAG_login, "Couldn't get credential from result." + " (${e.localizedMessage})")
                         }
                     }
                 }
@@ -369,7 +365,7 @@ class LoginActivity : AppCompatActivity() {
                             Log.w(TAG_login, "Login failed", task.exception)
 
                             binding.etLoginPasswordLayout.error = getString(R.string.password_incorrect)
-                            Toast.makeText(this, getString(R.string.password_incorrect), Toast.LENGTH_LONG).show()
+                            Toast.makeText(this, task.exception!!.message.toString(), Toast.LENGTH_LONG).show()
                         }
                     }
             }

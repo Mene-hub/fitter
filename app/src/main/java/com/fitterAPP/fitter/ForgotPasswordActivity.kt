@@ -32,14 +32,14 @@ class ForgotPasswordActivity : AppCompatActivity() {
                 //Roba
                 FirebaseAuth.getInstance().sendPasswordResetEmail(email).addOnCompleteListener{ task ->
                     if(task.isSuccessful){
-                        Toast.makeText(this, "Email sent successfully to reset your password", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this, getString(R.string.email_sent_successfully), Toast.LENGTH_LONG).show()
                         finish()
                     }else{
                         Toast.makeText(this, task.exception!!.message.toString(), Toast.LENGTH_LONG).show()
                     }
                 }
             }else{
-                Toast.makeText(this, "Please enter a valid email", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.please_enter_valid_email), Toast.LENGTH_LONG).show()
             }
         }
         return listener

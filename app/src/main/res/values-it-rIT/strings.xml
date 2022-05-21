@@ -24,4 +24,9 @@
     <string name="description">Descrizione</string>
     <string name="minutes">minuti</string>
     <string name="owner">Proprietario</string>
+    <string name="network_error">Errore di rete</string>
+    <string name="psw_forgot_text">Inserisci il tuo indirizzo e-mail. Ti invieremo un\'email per reimpostare la password</string>
+    <string name="send_reset_email">Invia email di reset</string>
+    <string name="email_sent_successfully">Email inviata con successo per reimpostare la password</string>
+    <string name="please_enter_valid_email">Inserisci un email valida</string>
 </resources>
