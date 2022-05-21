@@ -3,28 +3,24 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/drawable-mdpi/gradient_login_background.xml" value="0.332" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/drawable-v24/calendar_month-40px.xml" value="0.1945" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/drawable-v24/edit_24.xml" value="0.301" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/drawable-v24/fitness_center-40px.xml" value="0.1275" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/drawable-v24/ic_menu_slideshow.xml" value="0.301" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/drawable-v24/leaderboard-40px.xml" value="0.1945" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/drawable-v24/person_24.xml" value="0.2025" />
-        <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/drawable/blobtest.xml" value="0.26" />
-        <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/drawable/gradient_chart_background.xml" value="0.332" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/drawable/ic_email_24.xml" value="0.243" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/drawable/ic_wave.xml" value="0.243" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/drawable/onda.xml" value="0.243" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/drawable/recap_graph_placeholder.xml" value="0.2025" />
-        <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/drawable/round_border.xml" value="0.332" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/drawable/rounded_dialog.xml" value="0.301" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/drawable/signup_bottom_layered_wave.xml" value="0.239" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/drawable/signup_bottom_layered_waves.xml" value="0.229" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/drawable/signup_layered_wave.xml" value="0.239" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/drawable/signup_layered_waves.xml" value="0.239" />
-        <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/activity_login.xml" value="0.25" />
+        <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/activity_main.xml" value="0.33" />
-        <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/activity_register.xml" value="0.25" />
+        <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/activity_register.xml" value="0.3625" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/exercise_list.xml" value="0.3625" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/fragment_calendar.xml" value="0.3625" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/fragment_create_card_dialog.xml" value="0.25" />
@@ -50,7 +46,8 @@
         <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/drawable/ic_google.xml" value="0.3075" />
         <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/drawable/round_border.xml" value="0.335" />
         <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/drawable/round_image.xml" value="0.335" />
-        <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/layout/activity_login.xml" value="0.5" />
+        <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/drawable/signup_layered_waves.xml" value="0.289" />
+        <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/layout/activity_main.xml" value="0.32065217391304346" />
         <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/layout/activity_register.xml" value="0.1923899102180419" />
         <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/layout/dialog_input_text.xml" value="0.55" />
@@ -75,7 +72,7 @@
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
-        <option name="scale" value="0.1" />
+        <option name="scale" value="0.22" />
       </ProjectState>
     </option>
   </component>
