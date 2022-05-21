@@ -3,11 +3,13 @@ package com.fitterAPP.fitter
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.fitterAPP.fitter.Classes.Athlete
 import com.fitterAPP.fitter.FragmentControlers.*
+import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -46,6 +48,38 @@ class MainActivity : AppCompatActivity() {
             modalBottomSheet.show(supportFragmentManager, profileMenu.TAG)
         }
 
+        findViewById<BottomAppBar>(R.id.bottomappbar).setNavigationOnClickListener(bottomAppBarNavListener())
+        findViewById<BottomAppBar>(R.id.bottomappbar).setOnMenuItemClickListener(bottomAppBarMenuListener())
+
+    }
+
+    private fun bottomAppBarMenuListener(): androidx.appcompat.widget.Toolbar.OnMenuItemClickListener {
+        val listener = androidx.appcompat.widget.Toolbar.OnMenuItemClickListener { menuItem ->
+
+          when (menuItem.itemId) {
+              /*
+              R.id.search -> {
+                  // Handle search icon press
+                  true
+              }
+              R.id.tmp2 -> {
+                  // Handle more item (inside overflow menu) press
+                  true
+              } */
+              else -> false
+
+          }
+
+        }
+
+        return listener
+    }
+
+    private fun bottomAppBarNavListener(): View.OnClickListener? {
+        val listener = View.OnClickListener {
+
+        }
+        return listener
     }
 
     /**
