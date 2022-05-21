@@ -2,12 +2,12 @@ package com.fitterAPP.fitter
 
 import android.content.Intent
 import android.content.IntentSender
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
 import android.view.View
+import android.view.animation.Animation
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -54,7 +54,7 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //INTENT PER APRIRE MAIN WINDOW
+        //INTENT TO OPEN MAIN WINDOW
         intent = Intent(this, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
@@ -67,17 +67,19 @@ class LoginActivity : AppCompatActivity() {
             showRegister()
         }
 
+        binding.tvForgotPSW.setOnClickListener(forgotPasswordListener())
+
         //region Login Email
         binding.btnLogin.setOnClickListener(loginEmailPSW())  //BUTTONS for login/register
 
-        //ERRORE PER PASSWORD SBAGLIATA / EMAIL SBAGLIATA
+        //ERROR FOR WRONG PASSWORD / WRONG EMAIL
         val psw_text_layout : TextInputLayout = binding.etLoginPasswordLayout
         binding.etLoginPassword.doOnTextChanged { text, start, before, count ->
             if(psw_text_layout.error != null) {
                 psw_text_layout.error = null
             }
         }
-        //EVENTO PER CONTROLLARE SE L'EMAIL INSERITA E' CORRETTA
+        //EVENT TO CHECK IF THE EMAIL ENTERED IS CORRECT
         binding.etLoginEmail.setOnFocusChangeListener{ _, focused ->
             if(!focused){
                 binding.etLoginEmailLayout.helperText = validEmail()
@@ -112,6 +114,16 @@ class LoginActivity : AppCompatActivity() {
         //endregion
 
         randomBgImages()
+    }
+
+    private fun forgotPasswordListener(): View.OnClickListener {
+        val listener = View.OnClickListener {
+            //
+            val i = Intent(this, ForgotPasswordActivity::class.java)
+            i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+            startActivity(i)
+        }
+        return listener
     }
 
     /**
@@ -373,6 +385,7 @@ class LoginActivity : AppCompatActivity() {
         val i : Intent = Intent(this, RegisterActivity::class.java)
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
         startActivity(i)
     }
 

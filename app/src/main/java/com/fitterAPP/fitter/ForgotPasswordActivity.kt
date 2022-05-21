@@ -1,0 +1,48 @@
+package com.fitterAPP.fitter
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.util.Log
+import android.util.Patterns
+import android.view.View
+import android.widget.Toast
+import com.fitterAPP.fitter.databinding.ActivityForgotPasswordBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+
+class ForgotPasswordActivity : AppCompatActivity() {
+    private val TAG_ForgotPassword = "ForgotPasswordActivity: "
+    private lateinit var binding : ActivityForgotPasswordBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityForgotPasswordBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.btnLogin.setOnClickListener(resetPswListener())
+
+    }
+
+    private fun resetPswListener(): View.OnClickListener {
+        val listener = View.OnClickListener {
+            val email : String = binding.etPswReset.text.toString().trim{it <= ' '}
+            Log.d(TAG_ForgotPassword,email)
+            if(!email.isNullOrBlank() && !email.isEmpty()){
+                //Roba
+                FirebaseAuth.getInstance().sendPasswordResetEmail(email).addOnCompleteListener{ task ->
+                    if(task.isSuccessful){
+                        Toast.makeText(this, "Email sent successfully to reset your password", Toast.LENGTH_LONG).show()
+                        finish()
+                    }else{
+                        Toast.makeText(this, task.exception!!.message.toString(), Toast.LENGTH_LONG).show()
+                    }
+                }
+            }else{
+                Toast.makeText(this, "Please enter a valid email", Toast.LENGTH_LONG).show()
+            }
+        }
+        return listener
+    }
+
+}

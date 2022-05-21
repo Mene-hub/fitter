@@ -25,6 +25,7 @@ class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         //firebase auth
         auth = Firebase.auth
@@ -49,15 +50,14 @@ class RegisterActivity : AppCompatActivity() {
         binding.etSignupConfirmPassword.onFocusChangeListener = signUpConfPasswordEventListener()
         binding.etSignupPassword.onFocusChangeListener = signUpPasswordEventListener()
 
-        setContentView(binding.root)
-
         randomBgImages()
     }
 
     private fun showLogin() {
-        val i : Intent = Intent(this, LoginActivity::class.java)
+        val i = Intent(this, LoginActivity::class.java)
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
         startActivity(i)
     }
 

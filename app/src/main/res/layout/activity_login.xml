@@ -152,7 +152,7 @@
         android:layout_marginRight="16dp"
 
         android:layout_marginBottom="8dp"
-        android:width="100dp"
+        android:width="0dp"
         android:background="@drawable/round_border"
 
         android:fontFamily="@font/roboto_regular"

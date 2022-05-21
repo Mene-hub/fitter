@@ -28,7 +28,7 @@
     <string name="fb_login_protocol_scheme" translatable="false">fb732692751253423</string>
     <string name="facebook_client_token" translatable="false">ce506f4996b75705964ec3157dc966db</string>
 
-    <string name="exercises" >Exercises</string>
+    <string name="exercises">Exercises</string>
     <string name="card_name">Card name<font color="#FF0000">*</font></string>
     <string name="duration">Duration<font color="#FF0000">*</font></string>
     <string name="description">Description</string>
