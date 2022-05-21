@@ -33,8 +33,6 @@ class RegisterActivity : AppCompatActivity() {
 
         //BUTTONS for login/register
         binding.btnSignup.setOnClickListener(registerEmailPSW())
-        binding.IVLoginGoogle.setOnClickListener(loginGoogle())
-        binding.IVLoginFacebook.setOnClickListener(loginFacebook())
 
         //EVENTO PER CONTROLLARE SE L'EMAIL INSERITA E' CORRETTA
         binding.etSignupEmail.setOnFocusChangeListener{ _, focused ->
@@ -128,27 +126,6 @@ class RegisterActivity : AppCompatActivity() {
             return true
         }
         return false
-    }
-
-    /**
-     * @author Daniel Satriano
-     * @since 21/05/2022
-     */
-    private fun loginGoogle(): View.OnClickListener {
-        val listener = View.OnClickListener {
-
-        }
-        return listener
-    }
-    /**
-     * @author Daniel Satriano
-     * @since 21/05/2022
-     */
-    private fun loginFacebook(): View.OnClickListener {
-        val listener = View.OnClickListener {
-
-        }
-        return listener
     }
 
     /**
