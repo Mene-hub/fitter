@@ -7,7 +7,7 @@
     tools:context=".LoginActivity">
 
     <ImageView
-        android:id="@+id/imageView13"
+        android:id="@+id/LoginGB_IV"
         android:layout_width="match_parent"
         android:layout_height="0dp"
 
@@ -24,7 +24,7 @@
         android:id="@+id/imageView16"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView13"
+        app:layout_constraintBottom_toBottomOf="@+id/LoginGB_IV"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,7 +41,7 @@
         android:paddingStart="20dp"
 
         android:paddingEnd="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView13"
+        app:layout_constraintBottom_toBottomOf="@+id/LoginGB_IV"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
 

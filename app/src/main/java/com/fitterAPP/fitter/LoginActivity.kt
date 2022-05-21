@@ -2,11 +2,13 @@ package com.fitterAPP.fitter
 
 import android.content.Intent
 import android.content.IntentSender
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
 import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
@@ -26,6 +28,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlin.random.Random
 
 
 class LoginActivity : AppCompatActivity() {
@@ -33,6 +36,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding : ActivityLoginBinding
     private val TAG_login : String = "LoginActivity-Login"
     private lateinit var auth: FirebaseAuth
+    private var bgimage : ImageView ?=null
 
     //region googleStuff
         private lateinit var oneTapClient: SignInClient
@@ -107,6 +111,7 @@ class LoginActivity : AppCompatActivity() {
         callbackManager = CallbackManager.Factory.create();
         //endregion
 
+        randomBgImages()
     }
 
     /**
@@ -369,6 +374,27 @@ class LoginActivity : AppCompatActivity() {
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(i)
+    }
+
+    /**
+     * @author Claudio Menegotto
+     * EVENTO PER CAMBIARE L'IMMAGINE DI BACKGROUND
+     */
+    fun randomBgImages(){
+        bgimage = findViewById(R.id.LoginGB_IV)
+        val mybgs : MutableList<Int> = ArrayList()
+        mybgs.add(R.drawable.gigachad)
+        mybgs.add(R.drawable.gigachad2)
+        mybgs.add(R.drawable.man_bodybuilder)
+        mybgs.add(R.drawable.man_bodybuilder)
+        mybgs.add(R.drawable.man_bodybuilder2)
+        mybgs.add(R.drawable.man_bodybuilder2)
+        mybgs.add(R.drawable.woman_bodybuilder)
+        mybgs.add(R.drawable.woman_bodybuilder)
+        mybgs.add(R.drawable.woman_bodybuilder2)
+        mybgs.add(R.drawable.woman_bodybuilder2)
+
+        bgimage?.setImageResource(mybgs[Random.nextInt(0,mybgs.size)])
     }
 
 }

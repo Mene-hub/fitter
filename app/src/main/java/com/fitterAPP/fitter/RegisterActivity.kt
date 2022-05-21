@@ -6,18 +6,21 @@ import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
 import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
 import com.fitterAPP.fitter.databinding.ActivityRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlin.random.Random
 
 class RegisterActivity : AppCompatActivity() {
 
     private val TAG_register : String = "LoginActivity-Register"
     private lateinit var auth: FirebaseAuth
     private lateinit var binding : ActivityRegisterBinding
+    private var bgimage : ImageView ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +50,8 @@ class RegisterActivity : AppCompatActivity() {
         binding.etSignupPassword.onFocusChangeListener = signUpPasswordEventListener()
 
         setContentView(binding.root)
+
+        randomBgImages()
     }
 
     private fun showLogin() {
@@ -177,6 +182,27 @@ class RegisterActivity : AppCompatActivity() {
 
         }
         return listener
+    }
+
+    /**
+     * @author Claudio Menegotto
+     * EVENTO PER CAMBIARE L'IMMAGINE DI BACKGROUND
+     */
+    fun randomBgImages(){
+        bgimage = findViewById(R.id.SignupGB_IV)
+        val mybgs : MutableList<Int> = ArrayList()
+        mybgs.add(R.drawable.gigachad)
+        mybgs.add(R.drawable.gigachad2)
+        mybgs.add(R.drawable.man_bodybuilder)
+        mybgs.add(R.drawable.man_bodybuilder)
+        mybgs.add(R.drawable.man_bodybuilder2)
+        mybgs.add(R.drawable.man_bodybuilder2)
+        mybgs.add(R.drawable.woman_bodybuilder)
+        mybgs.add(R.drawable.woman_bodybuilder)
+        mybgs.add(R.drawable.woman_bodybuilder2)
+        mybgs.add(R.drawable.woman_bodybuilder2)
+
+        bgimage?.setImageResource(mybgs[Random.nextInt(0,mybgs.size)])
     }
 
 }
