@@ -150,13 +150,15 @@ class MainActivity : AppCompatActivity() {
                 val item = snapshot.getValue(Athlete::class.java)                   //GRAB USER ITEM
                 user.SetNewValue(item!!)
 
-                val imageProfile : ImageView = findViewById(R.id.profilepic_IV)
-                var imageURI: String = user.profilePic!!
-                Picasso.get()
-                    .load(imageURI)
-                    .resize(100, 100)
-                    .centerCrop()
-                    .into(imageProfile)
+                if(user.profilePic != "null") {
+                    val imageProfile: ImageView = findViewById(R.id.profilepic_IV)
+                    var imageURI: String = user.profilePic!!
+                    Picasso.get()
+                        .load(imageURI)
+                        .resize(100, 100)
+                        .centerCrop()
+                        .into(imageProfile)
+                }
 
                 //SET NEW USER ITEM
                 findViewById<TextView>(R.id.TV_Username).text = user.username       //SET USERNAME IN TEXTVIEW

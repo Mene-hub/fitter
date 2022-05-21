@@ -12,7 +12,7 @@
     <string name="login_text">Login</string>
     <string name="use_other_methods">---------- Use other methods ----------</string>
     <string name="create_account">---------- Create an account ----------</string>
-    <string name="signup">sign up</string>
+    <string name="signup">Sign up</string>
     <string name="new_user_register">New user? Register now!</string>
     <string name="already_exist_account">Already registered? Log In!</string>
     <string name="Username">Username</string>

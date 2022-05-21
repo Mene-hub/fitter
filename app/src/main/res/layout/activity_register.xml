@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,71 +7,61 @@
     tools:context=".RegisterActivity">
 
     <ImageView
-        android:id="@+id/imageView12"
+        android:id="@+id/imageView4"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:src="@drawable/side_nav_bar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="0dp"
+
+        android:scaleType="centerCrop"
+        android:src="@drawable/signup_layered_waves"
+
+        app:layout_constraintHeight_percent="0.55"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/primary_variant" />
+        tools:srcCompat="@drawable/bgworkoutfitnesscard" />
 
     <ImageView
-        android:id="@+id/imageView13"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/imageView12"
-        android:scaleType="fitStart"
-        android:src="@drawable/signup_layered_waves"
-        app:layout_constraintHorizontal_bias="0.0" />
+        android:id="@+id/imageView12"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/gradient_login_background" />
 
     <LinearLayout
-        android:id="@+id/topPanel_linear"
+        android:id="@+id/linearLayout3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="70dp"
+        android:layout_marginBottom="16dp"
+
         android:gravity="center"
         android:orientation="vertical"
+
         android:paddingStart="20dp"
-        android:paddingEnd="20dp">
+        android:paddingEnd="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/et_signupEmailLayout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/textView3"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/imageView4"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center"
-                android:src="@drawable/fitness_24"
-                app:tint="@color/white" />
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/roboto_regular"
-                android:text="@string/fitter"
-                android:textColor="@color/white"
-                android:textSize="20sp" />
-        </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/roboto_light"
+            android:text="Fitter"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="-10dp"
-            android:fontFamily="@font/roboto_regular"
+            android:fontFamily="@font/roboto_light"
             android:text="@string/signup"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="40sp" />
     </LinearLayout>
 
@@ -80,11 +70,11 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:layout_below="@id/topPanel_linear"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        app:helperTextTextColor="@color/red">
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="8dp"
+        app:helperTextTextColor="@color/red"
+        app:layout_constraintBottom_toTopOf="@+id/et_signupUsernameLayout"
+        tools:layout_editor_absoluteX="16dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_signupEmail"
@@ -106,9 +96,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/et_signupEmailLayout"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        app:helperTextTextColor="@color/red">
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="8dp"
+        app:helperTextTextColor="@color/red"
+        app:layout_constraintBottom_toTopOf="@+id/et_signupPasswordLayout"
+        tools:layout_editor_absoluteX="16dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_signupUsername"
@@ -129,10 +121,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/et_signupUsernameLayout"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="8dp"
         app:errorIconDrawable="@drawable/ic_error"
-        app:helperTextTextColor="@color/red">
+        app:helperTextTextColor="@color/red"
+        app:layout_constraintBottom_toTopOf="@+id/et_signupConfirmPasswordLayout"
+        tools:layout_editor_absoluteX="20dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_signupPassword"
@@ -144,7 +138,6 @@
             android:hint="@string/Password"
             android:inputType="textPassword"
             android:lines="1" />
-
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -153,11 +146,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/et_signupPasswordLayout"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginHorizontal="16dp"
         app:errorEnabled="true"
         app:errorIconDrawable="@drawable/ic_error"
-        app:passwordToggleEnabled="true">
+        app:layout_constraintBottom_toTopOf="@+id/btn_signup"
+        app:passwordToggleEnabled="true"
+        tools:layout_editor_absoluteX="20dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_signupConfirmPassword"
@@ -169,7 +163,6 @@
             android:hint="@string/ConfirmPassword"
             android:inputType="textPassword"
             android:lines="1" />
-
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -179,61 +172,29 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/et_signupConfirmPasswordLayout"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
         android:width="100dp"
         android:background="@drawable/round_border"
         android:focusable="true"
         android:fontFamily="@font/roboto_regular"
         android:text="@string/signup"
         android:textSize="17sp"
-        />
+        app:layout_constraintBottom_toTopOf="@+id/open_login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/open_login"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_below="@+id/btn_signup"
+        android:layout_marginBottom="32dp"
         android:fontFamily="@font/roboto_regular"
         android:gravity="center|center_vertical"
         android:text="@string/already_exist_account"
-        android:textColor="@color/blue_link" />
+        android:textColor="@color/blue_link"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
-    <TextView
-        android:id="@+id/tv_or"
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/open_login"
-        android:fontFamily="@font/roboto_regular"
-        android:gravity="center"
-        android:text="@string/use_other_methods"
-        android:textSize="15sp" />
-
-    <LinearLayout
-        android:id="@+id/OtherMethodLL"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_or"
-        android:layout_marginTop="15dp"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/IV_loginGoogle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="15dp"
-            android:src="@drawable/ic_google" />
-
-        <ImageView
-            android:id="@+id/IV_loginFacebook"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:src="@drawable/ic_facebook" />
-
-    </LinearLayout>
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
