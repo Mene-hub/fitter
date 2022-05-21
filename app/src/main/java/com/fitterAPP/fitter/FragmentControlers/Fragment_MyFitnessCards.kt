@@ -100,7 +100,7 @@ class MyFitnessCards : Fragment() {
         card.exercises = exercises
         */
 
-        //databaseHelper.setFitnessCardItem(card)
+        databaseHelper.setFitnessCardItem(card)
     }
 
     private fun getAthleteEventListener(): ChildEventListener {
