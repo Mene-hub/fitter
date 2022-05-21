@@ -48,20 +48,19 @@ class MyFitnessCards : Fragment() {
         adapter = context?.let { FitnessCardAdapter((activity as MainActivity), fitnessCads) }!!
         recycle.adapter = adapter
 
-        //create new fitnessCard
-        binding.FAPAddNewCard.setOnClickListener(createNewCard())
-
 
         Log.w("Fragment", binding.MyFitnessCardsRV.id.toString())
         return binding.root
     }
 
+    /*
     private fun createNewCard(): View.OnClickListener {
         val listener = View.OnClickListener {
             showAlertDialogFitnessCard()
         }
         return listener
     }
+     */
 
     private fun transaction(newFitnessCard : FitnessCard) {
 

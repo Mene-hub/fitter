@@ -12,14 +12,12 @@
         android:layout_height="0dp"
 
         android:scaleType="centerCrop"
-        android:src="@drawable/signup_layered_waves"
 
         app:layout_constraintHeight_percent="0.55"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/gigachad2"
-        android:contentDescription="@string/background_image" />
+        android:src="@drawable/gigachad2" />
 
     <ImageView
         android:id="@+id/imageView16"
@@ -36,6 +34,7 @@
         android:id="@+id/linearLayout3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:layout_marginBottom="16dp"
         android:gravity="center"
 
@@ -43,9 +42,9 @@
         android:paddingStart="20dp"
 
         android:paddingEnd="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/LoginGB_IV"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        app:layout_constraintBottom_toTopOf="@+id/et_loginEmailLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/textView3"
