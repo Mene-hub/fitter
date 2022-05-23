@@ -77,8 +77,8 @@ class MyFitnessCards : Fragment() {
                     val transaction = parentFragmentManager.beginTransaction()
                     transaction.addToBackStack("FindProfileFragment")
                     transaction.replace(R.id.FragmentContainer, findprofile())
-                    item.icon = AppCompatResources.getDrawable(requireContext(),R.drawable.ic_home_black_24dp)
-                    item.title = getString(R.string.home)
+                    bottomNavigation.menu.clear()
+                    bottomNavigation.inflateMenu(R.menu.bot_nav_fromsearch_to_home)
                     transaction.commit()
                     true
                 }

@@ -15,15 +15,15 @@ import com.google.android.material.navigation.NavigationBarView
 class findprofile : Fragment() {
 
     private lateinit var binding : FragmentFindprofileBinding
+    private lateinit var bottomNavigation :BottomNavigationView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
         binding = FragmentFindprofileBinding.inflate(inflater, container, false)
 
         binding.SVFindUsers.isIconified = false
-        val bottomNavigation = (requireContext() as MainActivity).findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNavigation = (requireContext() as MainActivity).findViewById(R.id.bottom_navigation)
         bottomNavigation.setOnItemSelectedListener(bottomNavigationListener())
-
 
         return binding.root
     }
@@ -35,19 +35,18 @@ class findprofile : Fragment() {
                     // Respond to navigation item 1 click
                     true
                 }
-                R.id.addCard -> {
+                R.id.home -> {
                     // Respond to navigation item 3 click
                     val transaction = parentFragmentManager.beginTransaction()
                     transaction.addToBackStack("MyFitnessCardsFragment")
                     transaction.replace(R.id.FragmentContainer, MyFitnessCards())
-                    item.icon = AppCompatResources.getDrawable(requireContext(),R.drawable.ic_plus)
-                    item.title = getString(R.string.AddCard)
+                    bottomNavigation.menu.clear()
+                    bottomNavigation.inflateMenu(R.menu.bottom_navigation_menu)
                     transaction.commit()
                     true
                 }
                 R.id.search -> {
                     // Respond to navigation item 3 click
-
                     true
                 }
                 else -> false
