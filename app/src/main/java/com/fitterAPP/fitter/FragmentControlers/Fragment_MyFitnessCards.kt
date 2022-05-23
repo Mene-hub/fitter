@@ -1,13 +1,13 @@
 package com.fitterAPP.fitter.FragmentControlers
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
@@ -18,12 +18,15 @@ import com.fitterAPP.fitter.ItemsAdapter.FitnessCardAdapter
 import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.RealTimeDBHelper
 import com.fitterAPP.fitter.databinding.FragmentMyFitnessCardsBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.navigation.NavigationBarView
 import com.google.firebase.database.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
+import com.fitterAPP.fitter.R
 
 class MyFitnessCards : Fragment() {
     private val TAG : String = "FragmentFitnessCard-"
@@ -34,6 +37,7 @@ class MyFitnessCards : Fragment() {
     private var databaseHelper : RealTimeDBHelper = RealTimeDBHelper(dbReference) //USING DEFAULT VALUE
     //firebase database
     private val fitnessCads : MutableList<FitnessCard> = ArrayList()
+    private lateinit var bottomNavigation : BottomNavigationView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
@@ -48,10 +52,42 @@ class MyFitnessCards : Fragment() {
         adapter = context?.let { FitnessCardAdapter((activity as MainActivity), fitnessCads) }!!
         recycle.adapter = adapter
 
+        bottomNavigation = (requireContext() as MainActivity).findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNavigation.setOnItemSelectedListener(bottomNavigationListener())
 
-        Log.w("Fragment", binding.MyFitnessCardsRV.id.toString())
+
+
         return binding.root
     }
+
+    private fun bottomNavigationListener(): NavigationBarView.OnItemSelectedListener {
+        val listener = NavigationBarView.OnItemSelectedListener { item ->
+            when(item.itemId) {
+                R.id.userProfile -> {
+                    // Respond to navigation item 1 click
+                    true
+                }
+                R.id.addCard -> {
+                    showAlertDialogFitnessCard()
+                    // Respond to navigation item 2 click
+                    true
+                }
+                R.id.search -> {
+                    // Respond to navigation item 3 click
+                    val transaction = parentFragmentManager.beginTransaction()
+                    transaction.addToBackStack("FindProfileFragment")
+                    transaction.replace(R.id.FragmentContainer, findprofile())
+                    item.icon = AppCompatResources.getDrawable(requireContext(),R.drawable.ic_home_black_24dp)
+                    item.title = getString(R.string.home)
+                    transaction.commit()
+                    true
+                }
+                else -> false
+            }
+        }
+        return listener
+    }
+
 
 
     private fun createNewCard(): View.OnClickListener {
@@ -85,18 +121,7 @@ class MyFitnessCards : Fragment() {
      * @see Athlete
      * @see FitnessCard
      */
-    companion object fun addFitnessCard(card : FitnessCard){
-
-        /*
-        var exercises : MutableList<Exercise> = ArrayList()
-        exercises.add(Exercise())
-        exercises.add(Exercise())
-        exercises.add(Exercise())
-        exercises.add(Exercise())
-        exercises.add(Exercise())
-
-        card.exercises = exercises
-        */
+    fun addFitnessCard(card : FitnessCard){
 
         databaseHelper.setFitnessCardItem(card)
     }

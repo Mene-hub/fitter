@@ -5,17 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
+import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.databinding.FragmentFindprofileBinding
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationBarView
 
 class findprofile : Fragment() {
-    private var param1: String? = null
-    private var param2: String? = null
 
     private lateinit var binding : FragmentFindprofileBinding
 
@@ -24,27 +21,39 @@ class findprofile : Fragment() {
         binding = FragmentFindprofileBinding.inflate(inflater, container, false)
 
         binding.SVFindUsers.isIconified = false
+        val bottomNavigation = (requireContext() as MainActivity).findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNavigation.setOnItemSelectedListener(bottomNavigationListener())
 
 
         return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment findprofile.
-         */
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            findprofile().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    private fun bottomNavigationListener(): NavigationBarView.OnItemSelectedListener {
+        val listener = NavigationBarView.OnItemSelectedListener { item ->
+            when(item.itemId) {
+                R.id.userProfile -> {
+                    // Respond to navigation item 1 click
+                    true
                 }
+                R.id.addCard -> {
+                    // Respond to navigation item 3 click
+                    val transaction = parentFragmentManager.beginTransaction()
+                    transaction.addToBackStack("MyFitnessCardsFragment")
+                    transaction.replace(R.id.FragmentContainer, MyFitnessCards())
+                    item.icon = AppCompatResources.getDrawable(requireContext(),R.drawable.ic_plus)
+                    item.title = getString(R.string.AddCard)
+                    transaction.commit()
+                    true
+                }
+                R.id.search -> {
+                    // Respond to navigation item 3 click
+
+                    true
+                }
+                else -> false
             }
+        }
+        return listener
     }
+
 }

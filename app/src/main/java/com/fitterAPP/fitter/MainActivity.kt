@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
+import androidx.fragment.app.Fragment
 import com.fitterAPP.fitter.Classes.Athlete
 import com.fitterAPP.fitter.FragmentControlers.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -49,7 +50,6 @@ class MainActivity : AppCompatActivity() {
             modalBottomSheet.show(supportFragmentManager, profileMenu.TAG)
         }
 
-        findViewById<BottomNavigationView>(R.id.bottom_navigation).setOnItemSelectedListener(bottomNavigationListener())
     }
 
     /**
@@ -83,34 +83,6 @@ class MainActivity : AppCompatActivity() {
         transaction.replace(R.id.FragmentContainer, MyFitnessCards() )
         transaction.commit()
 
-
-
-
-    }
-
-    private fun bottomNavigationListener(): NavigationBarView.OnItemSelectedListener {
-        val listener = NavigationBarView.OnItemSelectedListener { item ->
-            when(item.itemId) {
-                R.id.userProfile -> {
-                    // Respond to navigation item 1 click
-                    true
-                }
-                R.id.addCard -> {
-                    // Respond to navigation item 2 click
-                    true
-                }
-                R.id.search -> {
-                    // Respond to navigation item 3 click
-                    val transaction = supportFragmentManager.beginTransaction()
-                    transaction.addToBackStack("FindProfileFragment")
-                    transaction.replace(R.id.FragmentContainer, findprofile() )
-                    transaction.commit()
-                    true
-                }
-                else -> false
-            }
-        }
-        return listener
     }
 
     //region roba claudio

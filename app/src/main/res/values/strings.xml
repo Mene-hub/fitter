@@ -47,5 +47,6 @@
     <string name="YourCards">Your Cards</string>
     <string name="yourProfile">Your profile</string>
     <string name="findUsers">Find users</string>
+    <string name="home" translatable="false">Home</string>
 
 </resources>
