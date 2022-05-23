@@ -53,14 +53,13 @@ class MyFitnessCards : Fragment() {
         return binding.root
     }
 
-    /*
+
     private fun createNewCard(): View.OnClickListener {
         val listener = View.OnClickListener {
             showAlertDialogFitnessCard()
         }
         return listener
     }
-     */
 
     private fun transaction(newFitnessCard : FitnessCard) {
 

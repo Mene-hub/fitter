@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".FragmentControlers.Fragment_showCardDialog">
+    tools:context=".FragmentControlers.ModifyCard">
 
     <ScrollView
         android:id="@+id/scrollView2"
@@ -49,6 +49,16 @@
                     app:layout_constraintVertical_bias="0.0"
                     app:srcCompat="@drawable/gigachad2" />
 
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:srcCompat="@drawable/edit_24"
+                    app:tint="@color/darkgray" />
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView3"
                     android:layout_width="wrap_content"
@@ -82,57 +92,87 @@
                     app:layout_constraintStart_toStartOf="parent">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:orientation="vertical">
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/CardName_TV"
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginVertical="10dp"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_margin="5dp"
+                                app:srcCompat="@drawable/edit_24"
+                                app:tint="@color/darkgray" />
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_margin="5dp"
+                                app:srcCompat="@drawable/edit_24"
+                                app:tint="@color/darkgray" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/roboto_bold"
-                            android:text="Card name"
-                            android:textColor="@color/black"
-                            android:textSize="20sp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            android:layout_margin="10dp"
+                            android:orientation="vertical">
 
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            app:cardBackgroundColor="@color/lightgray"
-                            app:cardCornerRadius="10dp"
-                            app:cardElevation="0dp">
-
-                            <LinearLayout
+                            <TextView
+                                android:id="@+id/CardName_TV"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal">
+                                android:fontFamily="@font/roboto_bold"
+                                android:text="Card name"
+                                android:textColor="@color/black"
+                                android:textSize="20sp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
-                                <ImageView
-                                    android:id="@+id/imageView14"
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                app:cardBackgroundColor="@color/lightgray"
+                                app:cardCornerRadius="10dp"
+                                app:cardElevation="0dp">
+
+                                <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:src="@drawable/time_clock"
-                                    app:tint="@color/secondary" />
+                                    android:orientation="horizontal">
 
-                                <TextView
-                                    android:id="@+id/TimeDurationTV"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_vertical"
-                                    android:layout_marginStart="5dp"
-                                    android:layout_marginEnd="10dp"
-                                    android:layout_weight="1"
-                                    android:text="60 min"
-                                    android:textColor="@color/darkgray" />
-                            </LinearLayout>
-                        </androidx.cardview.widget.CardView>
+                                    <ImageView
+                                        android:id="@+id/imageView14"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:src="@drawable/time_clock"
+                                        app:tint="@color/secondary" />
+
+                                    <TextView
+                                        android:id="@+id/TimeDurationTV"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center_vertical"
+                                        android:layout_marginStart="5dp"
+                                        android:layout_marginEnd="10dp"
+                                        android:layout_weight="1"
+                                        android:text="60 min"
+                                        android:textColor="@color/darkgray" />
+                                </LinearLayout>
+                            </androidx.cardview.widget.CardView>
+
+                        </LinearLayout>
 
                     </LinearLayout>
+
                 </androidx.cardview.widget.CardView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -145,64 +185,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/Header">
-
-                <LinearLayout
-                    android:id="@+id/LL_Profile_menu"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/MenuBt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        app:cardBackgroundColor="@color/lightgray"
-                        app:cardCornerRadius="25dp">
-
-                        <ImageView
-                            android:id="@+id/profilepic_IV"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            app:srcCompat="@drawable/person_24" />
-                    </androidx.cardview.widget.CardView>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginHorizontal="8dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/textView4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="-10dp"
-                            android:layout_weight="1"
-                            android:text="@string/owner"
-                            android:textColor="@color/black"
-                            android:textSize="16sp" />
-
-                        <TextView
-                            android:id="@+id/TV_Username"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/Username"
-                            android:textColor="@color/black"
-                            android:textSize="24sp" />
-                    </LinearLayout>
-
-                </LinearLayout>
+                app:layout_constraintTop_toBottomOf="@id/Header">
 
                 <LinearLayout
                     android:id="@+id/linearLayout2"
@@ -214,16 +197,30 @@
                     android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/LL_Profile_menu">
+                    app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
-                        android:id="@+id/textView10"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_medium"
-                        android:text="@string/description"
-                        android:textColor="@color/black"
-                        android:textSize="20sp" />
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/imageView13"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_margin="5dp"
+                            app:srcCompat="@drawable/edit_24"
+                            app:tint="@color/darkgray" />
+
+                        <TextView
+                            android:id="@+id/textView10"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_medium"
+                            android:text="@string/description"
+                            android:textColor="@color/black"
+                            android:textSize="20sp" />
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/Description_TV"
@@ -258,6 +255,7 @@
                 android:layout_marginEnd="16dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/Body">
 
@@ -267,14 +265,13 @@
     </ScrollView>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/extended_fab2"
+        android:id="@+id/extended_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
-        android:text="PLAY"
-        app:backgroundTint="@color/primary"
-        app:icon="@drawable/play_icon"
+        android:text="@string/AddExercise"
+        app:icon="@drawable/ic_baseline_add_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

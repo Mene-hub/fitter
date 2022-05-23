@@ -31,4 +31,5 @@
     <string name="please_enter_valid_email">Inserisci un email valida</string>
     <string name="background_image">Immagine di background</string>
     <string name="profile_image">Immagine profilo</string>
+    <string name="AddExercise">Nuovo esercizio</string>
 </resources>

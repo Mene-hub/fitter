@@ -1,15 +1,19 @@
 package com.fitterAPP.fitter.ItemsAdapter
 
 import android.content.Context
+import android.graphics.Interpolator
+import android.icu.number.Scale
 import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.RelativeLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.view.ViewPropertyAnimator
+import android.view.animation.AccelerateInterpolator
+import android.webkit.WebChromeClient
+import android.webkit.WebView
+import android.widget.*
 import androidx.cardview.widget.CardView
+import androidx.core.view.ViewCompat.animate
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 
@@ -18,56 +22,23 @@ import com.fitterAPP.fitter.Classes.Exercise
 import com.fitterAPP.fitter.Classes.FitnessCard
 import com.fitterAPP.fitter.R
 
-class FitnessCardExercisesAdapter (val context2: Context, val Card:FitnessCard, val exercises : MutableList<Exercise>) : RecyclerView.Adapter<FitnessCardExercisesAdapter.Holder>() {
+class FitnessCardExercisesAdapter (val context2: Context, val Card:FitnessCard, val exercises : MutableList<Exercise>, val isEditable : Boolean) : RecyclerView.Adapter<FitnessCardExercisesAdapter.Holder>() {
 
     class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
 
         val ExName : TextView = itemView.findViewById(R.id.ExName_TV)
         val ExReps : TextView = itemView.findViewById(R.id.ExReps_TV)
-        val TimeIndictor : CardView = itemView.findViewById(R.id.TimeIndicator_CV)
+        val openMenu : ImageView = itemView.findViewById(R.id.openMenu_IV)
+        val exMenu : LinearLayout = itemView.findViewById(R.id.ExMenu_LL)
 
 
         fun setCard(ex:Exercise, context: Context){
             ExName.text = ex.exerciseName
             ExReps.text = ex.exerciseSer.toString() + " x " + ex.exerciseRep.toString()
-            TimeIndictor.isGone = true
-
-            itemView.setOnClickListener {
-                if( TimeIndictor.isGone) {
-
-                    val params = FrameLayout.LayoutParams(
-                        itemView.width,
-                        RelativeLayout.LayoutParams.MATCH_PARENT
-                    )
-                    TimeIndictor.layoutParams = params
-
-                    TimeIndictor.isGone = false
-                    startTimer(ex, context)
-                }else
-                    TimeIndictor.isGone = true
+            openMenu.setOnClickListener {
+                exMenu.isGone = !exMenu.isGone
             }
-
-        }
-
-        fun startTimer(ex : Exercise, context: Context){
-            var count : Int = 1 //itemView.width/ex.exerciseRep.toInt()
-            var countDownTimer = object : CountDownTimer(((ex.exerciseRest*1000).toLong()),100){
-                //end of timer
-                override fun onFinish() {
-                    TimeIndictor.isGone = true;
-                    TimeIndictor.isVisible = false;
-                }
-
-                override fun onTick(millisUntilFinished: Long) {
-                    val params = FrameLayout.LayoutParams(
-                        TimeIndictor.width - count,
-                        RelativeLayout.LayoutParams.MATCH_PARENT
-                    )
-                    TimeIndictor.layoutParams = params
-                }
-
-            }.start()
         }
 
         /*
@@ -92,8 +63,15 @@ class FitnessCardExercisesAdapter (val context2: Context, val Card:FitnessCard, 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val view: View = LayoutInflater.from(context2).inflate(R.layout.item_exercise, parent, false)
-        return Holder(view)
+        if(!isEditable) {
+            val view: View =
+                LayoutInflater.from(context2).inflate(R.layout.item_exercise, parent, false)
+            return Holder(view)
+        }else{
+            val view: View =
+                LayoutInflater.from(context2).inflate(R.layout.item_edit_exercise, parent, false)
+            return Holder(view)
+        }
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {

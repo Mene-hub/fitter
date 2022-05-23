@@ -41,5 +41,6 @@
     <string name="please_enter_valid_email">Enter a valid email</string>
     <string name="background_image">Background image</string>
     <string name="profile_image">Profile image</string>
+    <string name="AddExercise">New exercise</string>
 
 </resources>

@@ -5,13 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
+import androidx.core.view.isGone
 import androidx.fragment.app.FragmentTransaction
 
 import androidx.recyclerview.widget.RecyclerView
 import com.fitterAPP.fitter.Classes.FitnessCard
 import com.fitterAPP.fitter.FragmentControlers.Fragment_showCardDialog
+import com.fitterAPP.fitter.FragmentControlers.ModifyCard
 import com.fitterAPP.fitter.R
 
 class FitnessCardAdapter (val context2: Context, val Cards:MutableList<FitnessCard>) : RecyclerView.Adapter<FitnessCardAdapter.Holder>() {
@@ -27,9 +31,12 @@ class FitnessCardAdapter (val context2: Context, val Cards:MutableList<FitnessCa
         }
 
         override fun onLongClick(v: View?): Boolean {
+            showControl(v!!, false)
             v?.startAnimation(AnimationUtils.loadAnimation(context2, R.anim.wibble_animation))
             return true
         }
+
+
 
         fun setCard(Card:FitnessCard, context: Context){
             CardName.text = Card.name
@@ -40,12 +47,18 @@ class FitnessCardAdapter (val context2: Context, val Cards:MutableList<FitnessCa
                 CardExercises.text = "0 exercise"
 
             itemView.setOnClickListener {
-                transaction(context, Card)
+                showCard(context, Card)
+                showControl(itemView, true)
+            }
+
+            itemView.findViewById<CardView>(R.id.EditCardButton_CV).setOnClickListener {
+                modifyCard(context, Card)
+                showControl(itemView, true)
             }
 
         }
 
-        private fun transaction(context2:Context, card : FitnessCard) {
+        private fun showCard(context2:Context, card : FitnessCard) {
 
             val fragmentManager = (context2 as AppCompatActivity).supportFragmentManager
             val newFragment = Fragment_showCardDialog(card)
@@ -61,6 +74,28 @@ class FitnessCardAdapter (val context2: Context, val Cards:MutableList<FitnessCa
                 .addToBackStack(null)
                 .commit()
 
+        }
+
+        private fun modifyCard(context2:Context, card : FitnessCard) {
+
+            val fragmentManager = (context2 as AppCompatActivity).supportFragmentManager
+            val newFragment = ModifyCard(card)
+
+            // The device is smaller, so show the fragment fullscreen
+            val transaction = fragmentManager.beginTransaction()
+            // For a little polish, specify a transition animation
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            // To make it fullscreen, use the 'content' root view as the container
+            // for the fragment, which is always the root view for the activity
+            transaction
+                .replace(android.R.id.content, newFragment)
+                .addToBackStack(null)
+                .commit()
+
+        }
+
+        fun showControl(v: View, isGone : Boolean){
+            v?.findViewById<LinearLayout>(R.id.modifyMenu_LL)?.isGone = isGone
         }
 
 

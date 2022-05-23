@@ -23,12 +23,12 @@
         android:id="@+id/imageView16"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:contentDescription="@string/background_image"
         app:layout_constraintBottom_toBottomOf="@+id/LoginGB_IV"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/gradient_login_background"
-        android:contentDescription="@string/background_image"/>
+        app:srcCompat="@drawable/gradient_login_background" />
 
     <LinearLayout
         android:id="@+id/linearLayout3"
