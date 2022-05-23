@@ -17,7 +17,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/gigachad2" />
+        android:src="@drawable/gigachad2"
+        android:contentDescription="@string/background_image"/>
 
     <ImageView
         android:id="@+id/imageView16"
@@ -110,6 +111,8 @@
         app:boxCornerRadiusTopEnd="10dp"
         app:boxCornerRadiusTopStart="10dp"
         app:errorEnabled="true"
+
+
         app:errorIconDrawable="@drawable/ic_error"
         app:layout_constraintBottom_toTopOf="@+id/tv_forgotPSW"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -125,6 +128,7 @@
             android:drawablePadding="10dp"
             android:hint="@string/Password"
             android:inputType="textPassword"
+
             android:lines="1" />
 
     </com.google.android.material.textfield.TextInputLayout>

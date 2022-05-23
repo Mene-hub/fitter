@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="AppTheme" parent="Theme.MaterialComponents">
         <item name="bottomSheetDialogTheme">@style/ModalBottomSheetDialog</item>
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
     </style>
 
-    <!--  [START OF]  MATERIAL DESIGN THEME FOR BOTTOM SHEET DIALOG     -->
 
+
+    <!--region  MATERIAL DESIGN THEME FOR BOTTOM SHEET DIALOG     -->
     <style name="ModalBottomSheet" parent="Widget.MaterialComponents.BottomSheet.Modal">
         <!-- Apply attributes here -->
         <item name="shapeAppearance">@style/ShapeAppearance.App.LargeComponent</item>
@@ -28,7 +29,22 @@
     <style name="Widget.Theme.Fitter.MyView" parent="">
         <item name="android:background">@color/gray_400</item>
     </style>
-    <!--  [END OF]  MATERIAL DESIGN THEME FOR BOTTOM SHEET DIALOG     -->
+    <!--endregion MATERIAL DESIGN THEME FOR BOTTOM SHEET DIALOG     -->
+
+
+
+    <!--region  MATERIAL DESIGN BOTTOM NAVIGATOR    -->
+
+    <style name="Widget.App.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationView</item>
+        <item name="itemTextColor">@color/black</item>
+    </style>
+
+    <style name="ThemeOverlay.App.BottomNavigationView" parent="">
+        <item name="colorPrimary">@color/white</item>
+    </style>
+
+    <!--endregion  MATERIAL DESIGN BOTTOM NAVIGATOR    -->
 
 
 </resources>

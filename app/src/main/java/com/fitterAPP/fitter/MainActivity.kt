@@ -3,11 +3,13 @@ package com.fitterAPP.fitter
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.fitterAPP.fitter.Classes.Athlete
 import com.fitterAPP.fitter.FragmentControlers.*
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -46,6 +48,7 @@ class MainActivity : AppCompatActivity() {
             modalBottomSheet.show(supportFragmentManager, profileMenu.TAG)
         }
 
+        findViewById<BottomNavigationView>(R.id.bottom_navigation).setOnClickListener(bottomNavigationListener())
     }
 
     /**
@@ -78,6 +81,31 @@ class MainActivity : AppCompatActivity() {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.FragmentContainer, MyFitnessCards() )
         transaction.commit()
+
+
+
+
+    }
+
+    private fun bottomNavigationListener(): View.OnClickListener {
+        val listener = View.OnClickListener { item ->
+            when(item.id) {
+                R.id.page_1 -> {
+                    // Respond to navigation item 1 click
+                    true
+                }
+                R.id.page_2 -> {
+                    // Respond to navigation item 2 click
+                    true
+                }
+                R.id.page_3 -> {
+                    // Respond to navigation item 3 click
+                    true
+                }
+                else -> false
+            }
+        }
+        return listener
     }
 
     //region roba claudio
@@ -152,7 +180,7 @@ class MainActivity : AppCompatActivity() {
 
                 if(user.profilePic != "null") {
                     val imageProfile: ImageView = findViewById(R.id.profilepic_IV)
-                    var imageURI: String = user.profilePic!!
+                    val imageURI: String = user.profilePic!!
                     Picasso.get()
                         .load(imageURI)
                         .resize(100, 100)
