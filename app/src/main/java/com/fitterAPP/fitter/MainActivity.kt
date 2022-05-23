@@ -10,6 +10,7 @@ import androidx.cardview.widget.CardView
 import com.fitterAPP.fitter.Classes.Athlete
 import com.fitterAPP.fitter.FragmentControlers.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationBarView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -48,7 +49,7 @@ class MainActivity : AppCompatActivity() {
             modalBottomSheet.show(supportFragmentManager, profileMenu.TAG)
         }
 
-        findViewById<BottomNavigationView>(R.id.bottom_navigation).setOnClickListener(bottomNavigationListener())
+        findViewById<BottomNavigationView>(R.id.bottom_navigation).setOnItemSelectedListener(bottomNavigationListener())
     }
 
     /**
@@ -87,19 +88,23 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun bottomNavigationListener(): View.OnClickListener {
-        val listener = View.OnClickListener { item ->
-            when(item.id) {
-                R.id.page_1 -> {
+    private fun bottomNavigationListener(): NavigationBarView.OnItemSelectedListener {
+        val listener = NavigationBarView.OnItemSelectedListener { item ->
+            when(item.itemId) {
+                R.id.userProfile -> {
                     // Respond to navigation item 1 click
                     true
                 }
-                R.id.page_2 -> {
+                R.id.addCard -> {
                     // Respond to navigation item 2 click
                     true
                 }
-                R.id.page_3 -> {
+                R.id.search -> {
                     // Respond to navigation item 3 click
+                    val transaction = supportFragmentManager.beginTransaction()
+                    transaction.addToBackStack("FindProfileFragment")
+                    transaction.replace(R.id.FragmentContainer, findprofile() )
+                    transaction.commit()
                     true
                 }
                 else -> false
