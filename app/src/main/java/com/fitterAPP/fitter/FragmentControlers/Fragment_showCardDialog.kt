@@ -5,15 +5,17 @@ import com.fitterAPP.fitter.R.layout
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.DialogInterface
+import android.graphics.Point
+import android.graphics.Rect
+import android.os.Build
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.view.animation.Animation
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
@@ -71,6 +73,27 @@ class Fragment_showCardDialog(var newFitnessCard: FitnessCard) : DialogFragment(
         cardName.text = newFitnessCard.name
         cardDescription.text = newFitnessCard.description
         cardDuration.text = newFitnessCard.timeDuration.toString() + " minutes"
+
+        var screenHeight : Int = 0
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+
+            val size = Point()
+            try {
+                val windowMetrics = activity?.windowManager?.currentWindowMetrics
+                val display: Rect = windowMetrics?.bounds!!
+                screenHeight = display.height()/3
+            } catch (e: NoSuchMethodError) {}
+
+        } else {
+            val metrics = DisplayMetrics()
+            activity?.getWindowManager()?.getDefaultDisplay()?.getMetrics(metrics)
+            screenHeight = metrics.heightPixels/3
+        }
+
+        val params = FrameLayout.LayoutParams( RelativeLayout.LayoutParams.MATCH_PARENT, screenHeight)
+
+        binding.Header.layoutParams = params
 
         // Inflate the layout for this fragment
         return binding.root
