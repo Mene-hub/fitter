@@ -6,8 +6,8 @@ import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
-import com.fitterAPP.fitter.Classes.Athlete
-import com.fitterAPP.fitter.FragmentControlers.*
+import com.fitterAPP.fitter.classes.Athlete
+import com.fitterAPP.fitter.fragmentControllers.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -99,16 +99,6 @@ class MainActivity : AppCompatActivity() {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.addToBackStack("TimeRacapFragment")
         transaction.replace(R.id.FragmentContainer, TimeRacap() )
-        transaction.commit()
-    }
-    /**
-     * @author Claudio Menegotto
-     * METODO PER LA VISUALIZZAZIONE DEL FRAGMENT DEL CALENDARIO
-     */
-    fun showCalendar(){
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.addToBackStack("CalendarFragment")
-        transaction.replace(R.id.FragmentContainer, Calendar() )
         transaction.commit()
     }
     /**

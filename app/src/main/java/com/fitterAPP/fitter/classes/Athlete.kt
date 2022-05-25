@@ -1,4 +1,4 @@
-package com.fitterAPP.fitter.Classes
+package com.fitterAPP.fitter.classes
 
 /**
  * @author Daniel Satriano

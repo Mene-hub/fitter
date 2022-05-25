@@ -1,4 +1,4 @@
-package com.fitterAPP.fitter.FragmentControlers
+package com.fitterAPP.fitter.fragmentControllers
 
 import android.os.Bundle
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -33,11 +33,6 @@ class profileMenu : BottomSheetDialogFragment() {
 
         recapbt.setOnClickListener( View.OnClickListener {
             (activity as MainActivity).showRecap()
-            dismiss()
-        })
-
-        calendarbt.setOnClickListener( View.OnClickListener {
-            (activity as MainActivity).showCalendar()
             dismiss()
         })
 

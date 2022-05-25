@@ -1,35 +1,19 @@
-package com.fitterAPP.fitter.FragmentControlers
+package com.fitterAPP.fitter.fragmentControllers
 
-import android.R
-import com.fitterAPP.fitter.R.layout
-import android.app.AlertDialog
 import android.app.Dialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.view.animation.Animation
-import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.fitterAPP.fitter.Classes.Athlete
-import com.fitterAPP.fitter.Classes.Exercise
-import com.fitterAPP.fitter.Classes.FitnessCard
-import com.fitterAPP.fitter.ItemsAdapter.FitnessCardAdapter
-import com.fitterAPP.fitter.ItemsAdapter.FitnessCardExercisesAdapter
+import com.fitterAPP.fitter.classes.FitnessCard
+import com.fitterAPP.fitter.itemsAdapter.FitnessCardExercisesAdapter
 import com.fitterAPP.fitter.MainActivity
-import com.fitterAPP.fitter.RealTimeDBHelper
-import com.fitterAPP.fitter.databinding.FragmentMyFitnessCardsBinding
 import com.fitterAPP.fitter.databinding.FragmentShowCardDialogBinding
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import kotlin.time.Duration.Companion.minutes
 
 
 class Fragment_showCardDialog(var newFitnessCard: FitnessCard) : DialogFragment() {

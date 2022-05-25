@@ -1,4 +1,4 @@
-package com.fitterAPP.fitter.Classes
+package com.fitterAPP.fitter.classes
 
 
 data class FitnessCard(var name:String?, var description: String?, var timeDuration: Int?, var exercises: MutableList<Exercise>?, var key : String) {

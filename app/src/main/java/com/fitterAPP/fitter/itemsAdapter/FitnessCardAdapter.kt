@@ -1,4 +1,4 @@
-package com.fitterAPP.fitter.ItemsAdapter
+package com.fitterAPP.fitter.itemsAdapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,8 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 
 import androidx.recyclerview.widget.RecyclerView
-import com.fitterAPP.fitter.Classes.FitnessCard
-import com.fitterAPP.fitter.FragmentControlers.Fragment_showCardDialog
+import com.fitterAPP.fitter.classes.FitnessCard
+import com.fitterAPP.fitter.fragmentControllers.Fragment_showCardDialog
 import com.fitterAPP.fitter.R
 
 class FitnessCardAdapter (val context2: Context, val Cards:MutableList<FitnessCard>) : RecyclerView.Adapter<FitnessCardAdapter.Holder>() {

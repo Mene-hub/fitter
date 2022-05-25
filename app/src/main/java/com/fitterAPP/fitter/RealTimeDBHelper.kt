@@ -1,7 +1,7 @@
 package com.fitterAPP.fitter
 
-import com.fitterAPP.fitter.Classes.Athlete
-import com.fitterAPP.fitter.Classes.FitnessCard
+import com.fitterAPP.fitter.classes.Athlete
+import com.fitterAPP.fitter.classes.FitnessCard
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener

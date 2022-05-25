@@ -1,4 +1,4 @@
-package com.fitterAPP.fitter.FragmentControlers
+package com.fitterAPP.fitter.fragmentControllers
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

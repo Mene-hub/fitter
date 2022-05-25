@@ -1,18 +1,14 @@
-package com.fitterAPP.fitter.FragmentControlers
+package com.fitterAPP.fitter.fragmentControllers
 
-import android.graphics.Color
-import android.graphics.LinearGradient
 import android.graphics.Paint
-import android.graphics.Shader
 import android.graphics.drawable.Drawable
-import android.graphics.drawable.Icon
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.fitterAPP.fitter.Classes.DayRecap
+import com.fitterAPP.fitter.classes.DayRecap
 import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.R
 import com.github.mikephil.charting.charts.LineChart

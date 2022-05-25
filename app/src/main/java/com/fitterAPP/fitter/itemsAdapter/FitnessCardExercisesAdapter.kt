@@ -1,4 +1,4 @@
-package com.fitterAPP.fitter.ItemsAdapter
+package com.fitterAPP.fitter.itemsAdapter
 
 import android.content.Context
 import android.os.CountDownTimer
@@ -8,14 +8,13 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 
 import androidx.recyclerview.widget.RecyclerView
-import com.fitterAPP.fitter.Classes.Exercise
-import com.fitterAPP.fitter.Classes.FitnessCard
+import com.fitterAPP.fitter.classes.Exercise
+import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.R
 
 class FitnessCardExercisesAdapter (val context2: Context, val Card:FitnessCard, val exercises : MutableList<Exercise>) : RecyclerView.Adapter<FitnessCardExercisesAdapter.Holder>() {

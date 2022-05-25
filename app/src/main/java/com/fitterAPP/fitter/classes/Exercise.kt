@@ -1,4 +1,4 @@
-package com.fitterAPP.fitter.Classes
+package com.fitterAPP.fitter.classes
 
 data class Exercise(var exerciseName : String, var exerciseRep : Int, var exerciseSer : Int, var exerciseRest : Double) {
 

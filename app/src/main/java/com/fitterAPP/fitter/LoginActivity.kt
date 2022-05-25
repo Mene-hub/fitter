@@ -29,7 +29,6 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlin.random.Random
 
-
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityLoginBinding

@@ -1,9 +1,5 @@
-package com.fitterAPP.fitter.Classes
+package com.fitterAPP.fitter.classes
 
-import android.net.Uri
-import com.google.android.gms.tasks.OnFailureListener
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 /*
 class StorageHelper(private val storage : FirebaseStorage) {
     private val storageRef : StorageReference = storage.reference

@@ -1,4 +1,4 @@
-package com.fitterAPP.fitter.FragmentControlers
+package com.fitterAPP.fitter.fragmentControllers
 
 import android.os.Bundle
 import android.util.Log
@@ -11,9 +11,9 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
-import com.fitterAPP.fitter.Classes.Athlete
-import com.fitterAPP.fitter.Classes.FitnessCard
-import com.fitterAPP.fitter.ItemsAdapter.FitnessCardAdapter
+import com.fitterAPP.fitter.classes.Athlete
+import com.fitterAPP.fitter.classes.FitnessCard
+import com.fitterAPP.fitter.itemsAdapter.FitnessCardAdapter
 import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.RealTimeDBHelper
 import com.fitterAPP.fitter.databinding.FragmentMyFitnessCardsBinding
