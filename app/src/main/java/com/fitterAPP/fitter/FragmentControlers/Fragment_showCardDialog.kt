@@ -69,6 +69,16 @@ class Fragment_showCardDialog(var newFitnessCard: FitnessCard) : DialogFragment(
         val cardName : TextView = binding.CardNameTV
         val cardDuration : TextView = binding.TimeDurationTV
         val cardDescription: TextView = binding.DescriptionTV
+        val bgimage : ImageView = binding.CardBgImageIV
+
+        val id: Int? = context?.getResources()?.getIdentifier(
+            "com.fitterAPP.fitter:drawable/" + newFitnessCard.imageCover.toString(),
+            null,
+            null
+        )
+
+        bgimage.setImageResource(id!!)
+
 
         cardName.text = newFitnessCard.name
         cardDescription.text = newFitnessCard.description

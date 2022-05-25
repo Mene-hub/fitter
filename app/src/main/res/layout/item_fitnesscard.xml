@@ -9,7 +9,7 @@
     app:cardElevation="5dp">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/CardBgImage_IV"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"

@@ -18,15 +18,16 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_cardName"
-            android:autofillHints="emailAddress"
-            android:maxLength="30"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_email_24"
+            android:autofillHints="emailAddress"
+            android:drawableStart="@drawable/edit_24"
             android:drawablePadding="10dp"
+            android:drawableTint="@color/gray_600"
+            android:hint="@string/card_name"
             android:inputType="textNoSuggestions"
             android:lines="1"
-            android:hint="@string/card_name"/>
+            android:maxLength="30" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -43,15 +44,16 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_description"
-            android:autofillHints="Description"
-            android:maxLength="100"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_pen"
+            android:autofillHints="Description"
+            android:drawableStart="@drawable/edit_24"
             android:drawablePadding="10dp"
+            android:drawableTint="@color/gray_600"
+            android:hint="@string/description"
             android:inputType="text"
             android:lines="2"
-            android:hint="@string/description"/>
+            android:maxLength="100" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

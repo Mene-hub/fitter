@@ -36,7 +36,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
-                    android:id="@+id/imageView2"
+                    android:id="@+id/CardBgImage_IV"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:contentDescription="Background image"
@@ -49,26 +49,18 @@
                     app:layout_constraintVertical_bias="0.0"
                     app:srcCompat="@drawable/gigachad2" />
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cardView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <ImageView
+                    android:id="@+id/backBt"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    app:cardBackgroundColor="@color/white"
-                    app:cardCornerRadius="10dp"
+                    android:contentDescription="Back arrow"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <ImageView
-                        android:id="@+id/backBt"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="center"
-                        android:contentDescription="Back arrow"
-                        app:srcCompat="@drawable/arrow_back"
-                        app:tint="@color/darkgray" />
-                </androidx.cardview.widget.CardView>
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/arrow_back"
+                    app:tint="@color/darkgray" />
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView2"
@@ -78,7 +70,7 @@
                     android:layout_marginBottom="16dp"
                     app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="10dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+                    app:layout_constraintBottom_toBottomOf="@+id/CardBgImage_IV"
                     app:layout_constraintStart_toStartOf="parent">
 
                     <LinearLayout

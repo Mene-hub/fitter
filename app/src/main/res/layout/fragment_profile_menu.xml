@@ -39,7 +39,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:tint="@color/black"
+                    app:tint="@color/black"
                     app:srcCompat="@drawable/search" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -65,7 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:tint="@color/black"
+                    app:tint="@color/black"
                     app:srcCompat="@drawable/fitness_item" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -92,7 +92,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:tint="@color/black"
+                    app:tint="@color/black"
                     app:srcCompat="@drawable/calendar" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -119,7 +119,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:tint="@color/black"
+                    app:tint="@color/black"
                     app:srcCompat="@drawable/graph" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -145,7 +145,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:tint="@color/black"
+                    app:tint="@color/black"
                     app:srcCompat="@drawable/logout" />
 
                 <androidx.appcompat.widget.AppCompatTextView

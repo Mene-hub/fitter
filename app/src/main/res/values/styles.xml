@@ -4,6 +4,7 @@
     <style name="AppTheme" parent="Theme.MaterialComponents">
         <item name="bottomSheetDialogTheme">@style/ModalBottomSheetDialog</item>
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+        <item name="android:background">#FFFFFF</item>
     </style>
 
     <!--  [START OF]  MATERIAL DESIGN THEME FOR BOTTOM SHEET DIALOG     -->
@@ -29,6 +30,4 @@
         <item name="android:background">@color/gray_400</item>
     </style>
     <!--  [END OF]  MATERIAL DESIGN THEME FOR BOTTOM SHEET DIALOG     -->
-
-
 </resources>

@@ -5,22 +5,25 @@ import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
-import android.widget.FrameLayout
-import android.widget.RelativeLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fitterAPP.fitter.Classes.Exercise
 import com.fitterAPP.fitter.Classes.FitnessCard
 import com.fitterAPP.fitter.ItemsAdapter.FitnessCardExercisesAdapter
 import com.fitterAPP.fitter.MainActivity
+import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.databinding.FragmentModifyCardBinding
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 
 
 class ModifyCard(var fitnessCard: FitnessCard) : DialogFragment() {
@@ -66,6 +69,18 @@ class ModifyCard(var fitnessCard: FitnessCard) : DialogFragment() {
         val cardDuration : TextView = binding.TimeDurationTV
         val cardDescription: TextView = binding.DescriptionTV
 
+        val editCover : ImageView = binding.EditCoverIV
+        editCover.setOnClickListener {
+            val modalBottomSheet = ComboBoxSelectItemMenu("Card name", fitnessCard)
+            modalBottomSheet.show(activity?.supportFragmentManager!!, profileMenu.TAG)
+        }
+
+        val bgimage : ImageView = binding.CardBgImageIV
+
+        val id: Int? = context?.getResources()?.getIdentifier("com.fitterAPP.fitter:drawable/" + fitnessCard.imageCover.toString(), null, null )
+
+        bgimage.setImageResource(id!!)
+
         cardName.text = fitnessCard.name
         cardDescription.text = fitnessCard.description
         cardDuration.text = fitnessCard.timeDuration.toString() + " minutes"
@@ -85,6 +100,18 @@ class ModifyCard(var fitnessCard: FitnessCard) : DialogFragment() {
 
         }
 
+        binding.editCardName.setOnClickListener {
+            val modalBottomSheet = StringEditMenu("Card name", fitnessCard.name!!, fitnessCard)
+            modalBottomSheet.show(activity?.supportFragmentManager!!, profileMenu.TAG)
+        }
+
+        binding.editCardDescription.setOnClickListener {
+            val modalBottomSheet = StringEditMenu("Card description", fitnessCard.description!!, fitnessCard)
+            modalBottomSheet.show(activity?.supportFragmentManager!!, profileMenu.TAG)
+        }
+
+
+
         return binding.root
     }
 
@@ -93,5 +120,4 @@ class ModifyCard(var fitnessCard: FitnessCard) : DialogFragment() {
         a.duration = 0
         return a
     }
-
 }

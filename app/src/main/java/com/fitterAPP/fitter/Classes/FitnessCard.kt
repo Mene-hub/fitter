@@ -1,9 +1,9 @@
 package com.fitterAPP.fitter.Classes
 
 
-data class FitnessCard(var name:String?, var description: String?, var timeDuration: Int?, var exercises: MutableList<Exercise>?, var key : String) {
+data class FitnessCard(var name:String?, var description: String?, var timeDuration: Int?, var exercises: MutableList<Exercise>?, var key : String, var imageCover:CardsCover) {
 
-    constructor() : this ("Scheda", "Default description",60, null, "")
+    constructor() : this ("Scheda", "Default description",60, null, "", CardsCover.woman)
 
     override fun toString() : String{
         return description.toString()
@@ -16,6 +16,7 @@ data class FitnessCard(var name:String?, var description: String?, var timeDurat
         this.exercises = fitnessCard?.exercises
         this.timeDuration = fitnessCard?.timeDuration
         this.key = fitnessCard!!.key
+        this.imageCover = fitnessCard.imageCover
     }
 }
 

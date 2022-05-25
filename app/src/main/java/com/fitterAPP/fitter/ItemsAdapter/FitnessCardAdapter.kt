@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -25,6 +26,7 @@ class FitnessCardAdapter (val context2: Context, val Cards:MutableList<FitnessCa
         val CardName : TextView = itemView.findViewById(R.id.CardName_TV)
         val CardDuration : TextView = itemView.findViewById(R.id.TimeDuration_TV)
         val CardExercises : TextView = itemView.findViewById(R.id.ExerciseCount_TV)
+        val bgimage : ImageView = itemView.findViewById(R.id.CardBgImage_IV)
 
         init {
             itemView.setOnLongClickListener(this)
@@ -41,6 +43,7 @@ class FitnessCardAdapter (val context2: Context, val Cards:MutableList<FitnessCa
         fun setCard(Card:FitnessCard, context: Context){
             CardName.text = Card.name
             CardDuration.text = "Duration: " + Card.timeDuration.toString() + " min"
+
             if(Card.exercises != null)
                 CardExercises.text = Card.exercises?.count().toString() + " exercise"
             else
@@ -55,6 +58,14 @@ class FitnessCardAdapter (val context2: Context, val Cards:MutableList<FitnessCa
                 modifyCard(context, Card)
                 showControl(itemView, true)
             }
+
+            val id: Int = context.getResources().getIdentifier(
+                "com.fitterAPP.fitter:drawable/" + Card.imageCover.toString(),
+                null,
+                null
+            )
+
+            bgimage.setImageResource(id)
 
         }
 
