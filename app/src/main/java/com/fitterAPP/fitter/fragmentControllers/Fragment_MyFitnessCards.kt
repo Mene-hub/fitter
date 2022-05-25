@@ -1,5 +1,6 @@
 package com.fitterAPP.fitter.fragmentControllers
 
+import com.fitterAPP.fitter.R
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.fitterAPP.fitter.classes.Athlete
 import com.fitterAPP.fitter.classes.FitnessCard
@@ -18,6 +20,7 @@ import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.databases.RealTimeDBHelper
 import com.fitterAPP.fitter.databinding.FragmentMyFitnessCardsBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.navigation.NavigationBarView
 import com.google.firebase.database.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -40,6 +43,8 @@ class MyFitnessCards : Fragment() {
         //grab event from companion class RealTimeDBHelper
         databaseHelper.readItems(getAthleteEventListener())
 
+        val bottomNav = binding.bottomNavigation
+        bottomNav.setOnItemSelectedListener(bottomNavItemSelected())
 
         val recycle : RecyclerView = binding.MyFitnessCardsRV
         adapter = context?.let { FitnessCardAdapter((activity as MainActivity), fitnessCads) }!!
@@ -50,12 +55,28 @@ class MyFitnessCards : Fragment() {
         return binding.root
     }
 
+    private fun bottomNavItemSelected(): NavigationBarView.OnItemSelectedListener {
+        val listener = NavigationBarView.OnItemSelectedListener{ item ->
+            when (item.itemId){
+                R.id.home ->{
 
-    private fun createNewCard(): View.OnClickListener {
-        val listener = View.OnClickListener {
-            showAlertDialogFitnessCard()
+                    true
+                }
+                R.id.addCard ->{
+                    showAlertDialogFitnessCard()
+                    true
+                }
+                R.id.findprofile ->{
+                    findNavController().navigate(R.id.action_myFitnessCards_to_findprofile)
+                    true
+                }
+                else ->{
+                    false
+                }
+            }
         }
         return listener
+
     }
 
     private fun transaction(newFitnessCard : FitnessCard) {
@@ -134,16 +155,16 @@ class MyFitnessCards : Fragment() {
         builder.setTitle("Create new fitness card")
 
         // set the custom layout
-        val customLayout: View = layoutInflater.inflate( com.fitterAPP.fitter.R.layout.dialog_input_text, null)
+        val customLayout: View = layoutInflater.inflate(R.layout.dialog_input_text, null)
         builder.setView(customLayout)
 
         // add a button
         builder
             .setPositiveButton("OK") { _, _ -> // send data from the
                 // AlertDialog to the Activity
-                val name = customLayout.findViewById<EditText>(com.fitterAPP.fitter.R.id.et_cardName).text.toString()
-                val description = customLayout.findViewById<EditText>(com.fitterAPP.fitter.R.id.et_description).text.toString()
-                val duration = customLayout.findViewById<EditText>(com.fitterAPP.fitter.R.id.et_duration).text.toString()
+                val name = customLayout.findViewById<EditText>(R.id.et_cardName).text.toString()
+                val description = customLayout.findViewById<EditText>(R.id.et_description).text.toString()
+                val duration = customLayout.findViewById<EditText>(R.id.et_duration).text.toString()
 
                 if((name.isNotBlank() && name != "") || (duration.isNotBlank() && duration != "")){
                     newFitnessCard.name = name
@@ -165,7 +186,7 @@ class MyFitnessCards : Fragment() {
                     activity?.onBackPressed()
                 }
             }
-            .setIcon(AppCompatResources.getDrawable(requireContext(),com.fitterAPP.fitter.R.drawable.fitness_24)).show()
+            .setIcon(AppCompatResources.getDrawable(requireContext(),R.drawable.fitness_24)).show()
     }
 
 }

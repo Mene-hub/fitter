@@ -6,6 +6,8 @@ import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import com.fitterAPP.fitter.classes.Athlete
 import com.fitterAPP.fitter.databases.RealTimeDBHelper
 import com.fitterAPP.fitter.fragmentControllers.*
@@ -29,12 +31,18 @@ class MainActivity : AppCompatActivity() {
     private lateinit var currentUser : FirebaseUser
     private lateinit var databaseHelper : RealTimeDBHelper
     private var dbReference : DatabaseReference = FirebaseDatabase.getInstance(RealTimeDBHelper.getDbURL()).getReference(_reference)
+    //navController
+    private lateinit var navController: NavController
     //Bottom sheet dialog
     private lateinit var menuiv : CardView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.FragmentContainer) as NavHostFragment
+        navController = navHostFragment.navController
+
 
         //FIREBASE ACCOUNT
         auth = Firebase.auth

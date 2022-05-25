@@ -1,9 +1,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/userProfile"
+        android:id="@+id/home"
         android:enabled="true"
-        android:icon="@drawable/person_24"
-        android:title="@string/yourProfile"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/home"
         />
 
     <item
