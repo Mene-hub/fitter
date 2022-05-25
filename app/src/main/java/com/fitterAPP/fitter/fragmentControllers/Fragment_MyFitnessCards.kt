@@ -4,13 +4,19 @@ import com.fitterAPP.fitter.R
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.NavController
+import androidx.navigation.NavDirections
+import androidx.navigation.NavOptions
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.fitterAPP.fitter.classes.Athlete
@@ -19,16 +25,16 @@ import com.fitterAPP.fitter.itemsAdapter.FitnessCardAdapter
 import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.databases.RealTimeDBHelper
 import com.fitterAPP.fitter.databinding.FragmentMyFitnessCardsBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.navigation.NavigationBarView
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.database.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import kotlin.collections.ArrayList
 
 class MyFitnessCards : Fragment() {
-    private val TAG : String = "FragmentFitnessCard-"
-    private val _REFERENCE : String = "FITNESS_CARDS"
     private lateinit var binding : FragmentMyFitnessCardsBinding //Binding
     private lateinit var adapter : FitnessCardAdapter
     private lateinit var dbReference : DatabaseReference
@@ -40,14 +46,14 @@ class MyFitnessCards : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentMyFitnessCardsBinding.inflate(inflater, container, false)
 
-        dbReference = FirebaseDatabase.getInstance(RealTimeDBHelper.getDbURL()).getReference(_REFERENCE).child("${Athlete.UID}-FITNESSCARD")
+        dbReference = FirebaseDatabase.getInstance(RealTimeDBHelper.getDbURL()).getReference("FITNESS_CARDS").child("${Athlete.UID}-FITNESSCARD")
         databaseHelper = RealTimeDBHelper(dbReference)
 
         //grab event from companion class RealTimeDBHelper
         databaseHelper.readItems(getAthleteEventListener())
 
-        val bottomNav = binding.bottomNavigation
-        bottomNav.setOnItemSelectedListener(bottomNavItemSelected())
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).setOnItemSelectedListener(bottomNavItemSelected())
+
 
         val recycle : RecyclerView = binding.MyFitnessCardsRV
         adapter = context?.let { FitnessCardAdapter((activity as MainActivity), fitnessCads) }!!
@@ -62,16 +68,13 @@ class MyFitnessCards : Fragment() {
         val listener = NavigationBarView.OnItemSelectedListener{ item ->
             when (item.itemId){
                 R.id.home ->{
-                    Log.d("DDD", "entro")
                     true
                 }
                 R.id.addCard ->{
-                    Log.d("DDD", "entro")
                     showAlertDialogFitnessCard()
                     true
                 }
                 R.id.search ->{
-                    Log.d("DDD", "entro")
                     findNavController().navigate(R.id.action_myFitnessCards_to_findprofile)
                     true
                 }
@@ -81,24 +84,13 @@ class MyFitnessCards : Fragment() {
             }
         }
         return listener
-
     }
 
+
     private fun transaction(newFitnessCard : FitnessCard) {
+        val action : NavDirections = MyFitnessCardsDirections.actionMyFitnessCardsToFragmentShowCardDialog(newFitnessCard)
 
-        val fragmentManager = parentFragmentManager
-        val newFragment = Fragment_showCardDialog(newFitnessCard)
-
-        // The device is smaller, so show the fragment fullscreen
-        val transaction = fragmentManager.beginTransaction()
-        // For a little polish, specify a transition animation
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-        // To make it fullscreen, use the 'content' root view as the container
-        // for the fragment, which is always the root view for the activity
-        transaction
-            .replace(android.R.id.content, newFragment)
-            .addToBackStack(null)
-            .commit()
+        findNavController().navigate(action, )
     }
 
     /**
@@ -144,7 +136,7 @@ class MyFitnessCards : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Log.w(TAG, "postcomments:onCancelled", error.toException())
+                Log.w("Fragment_MyFitnessCards: ", "postcomments:onCancelled", error.toException())
                 Toast.makeText(activity?.baseContext, "Failed to load comment.", Toast.LENGTH_SHORT).show()
             }
         }
@@ -152,7 +144,6 @@ class MyFitnessCards : Fragment() {
     }
 
     private fun showAlertDialogFitnessCard(){
-
         val newFitnessCard = FitnessCard()
 
         // Create an alert builder
@@ -178,12 +169,13 @@ class MyFitnessCards : Fragment() {
                     newFitnessCard.timeDuration = duration.toInt()
 
                     addFitnessCard(newFitnessCard)
-
                     transaction(newFitnessCard)
+
                 }else{
                     Toast.makeText(requireContext(), "Missing name field on fitness card", Toast.LENGTH_LONG).show()
                 }
             }.setNegativeButton("BACK") { _, _ ->
+
             }.setOnDismissListener {
                 if(newFitnessCard.name?.replace(" ","")?.length == 0)
                 {

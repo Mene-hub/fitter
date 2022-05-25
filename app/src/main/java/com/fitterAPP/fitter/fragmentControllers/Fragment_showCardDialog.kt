@@ -1,5 +1,6 @@
 package com.fitterAPP.fitter.fragmentControllers
 
+import android.R
 import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,36 +10,39 @@ import android.view.Window
 import android.view.animation.Animation
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
-import com.fitterAPP.fitter.classes.FitnessCard
-import com.fitterAPP.fitter.itemsAdapter.FitnessCardExercisesAdapter
 import com.fitterAPP.fitter.MainActivity
+import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.databinding.FragmentShowCardDialogBinding
+import com.fitterAPP.fitter.itemsAdapter.FitnessCardExercisesAdapter
 
 
-class Fragment_showCardDialog(var newFitnessCard: FitnessCard) : DialogFragment() {
+class Fragment_showCardDialog() : DialogFragment() {
 
     /** The system calls this to get the DialogFragment's layout, regardless
     of whether it's being displayed as a dialog or an embedded fragment. */
 
     private lateinit var binding : FragmentShowCardDialogBinding
+    private val args by navArgs<Fragment_showCardDialogArgs>()
+    private lateinit var newFitnessCard : FitnessCard
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(STYLE_NORMAL, R.style.Theme_DeviceDefault_DialogWhenLarge)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentShowCardDialogBinding.inflate(inflater, container, false)
 
+        newFitnessCard = args.cardBundle
+
         binding.backBt.setOnClickListener {
-            activity?.onBackPressed()
+            findNavController().navigateUp()
         }
 
         val recycle : RecyclerView = binding.exercisesListRV
-
-        /*
-        var databaseHelper : RealTimeDBHelper
-        val _REFERENCE : String = "FITNESS_CARDS"
-        var dbReference : DatabaseReference = FirebaseDatabase.getInstance(RealTimeDBHelper.getDbURL()).getReference(_REFERENCE).child("${Athlete.UID}-FITNESSCARD")
-        databaseHelper = RealTimeDBHelper(dbReference) //USING DEFAULT VALUE
-
-        databaseHelper.setFitnessCardItem(newFitnessCard)*/
 
         if(newFitnessCard.exercises != null && newFitnessCard.exercises?.size!! > 0){
 
@@ -69,13 +73,14 @@ class Fragment_showCardDialog(var newFitnessCard: FitnessCard) : DialogFragment(
         // title by default, but your custom layout might not need it. So here you can
         // remove the dialog title, but you must call the superclass to get the Dialog.
 
-
         val dialog = super.onCreateDialog(savedInstanceState)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         return dialog
     }
 
-    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
+
+
+    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation {
         val a: Animation = object : Animation() {}
         a.duration = 0
         return a

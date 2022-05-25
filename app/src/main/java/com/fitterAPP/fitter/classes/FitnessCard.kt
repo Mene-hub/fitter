@@ -1,7 +1,11 @@
 package com.fitterAPP.fitter.classes
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+import kotlinx.android.parcel.RawValue
 
-data class FitnessCard(var name:String?, var description: String?, var timeDuration: Int?, var exercises: MutableList<Exercise>?, var key : String) {
+@Parcelize
+data class FitnessCard(var name:String?, var description: String?, var timeDuration: Int?, var exercises: @RawValue MutableList<Exercise>?, var key : String) : Parcelable {
 
     constructor() : this ("Scheda", "Default description",60, null, "")
 
@@ -17,5 +21,6 @@ data class FitnessCard(var name:String?, var description: String?, var timeDurat
         this.timeDuration = fitnessCard?.timeDuration
         this.key = fitnessCard!!.key
     }
+
 }
 

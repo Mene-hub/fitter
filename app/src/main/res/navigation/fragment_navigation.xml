@@ -12,7 +12,14 @@
         tools:layout="@layout/fragment_my_fitness_cards" >
         <action
             android:id="@+id/action_myFitnessCards_to_findprofile"
-            app:destination="@id/findprofile" />
+            app:destination="@id/findprofile"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_myFitnessCards_to_fragment_showCardDialog"
+            app:destination="@id/fragment_showCardDialog" />
     </fragment>
     <fragment
         android:id="@+id/findprofile"
@@ -21,6 +28,22 @@
         tools:layout="@layout/fragment_findprofile" >
         <action
             android:id="@+id/action_findprofile_to_myFitnessCards"
-            app:destination="@id/myFitnessCards" />
+            app:destination="@id/myFitnessCards"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
+    <dialog
+        android:id="@+id/fragment_showCardDialog"
+        android:name="com.fitterAPP.fitter.fragmentControllers.Fragment_showCardDialog"
+        android:label="fragment_show_card_dialog"
+        tools:layout="@layout/fragment_show_card_dialog" >
+        <action
+            android:id="@+id/action_fragment_showCardDialog_to_myFitnessCards"
+            app:destination="@id/myFitnessCards" />
+        <argument
+            android:name="cardBundle"
+            app:argType="com.fitterAPP.fitter.classes.FitnessCard" />
+    </dialog>
 </navigation>

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.fitterAPP.fitter.databinding.FragmentFindprofileBinding
 import com.fitterAPP.fitter.databinding.FragmentProfileBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
 
 class FindProfile : Fragment() {
@@ -17,7 +18,7 @@ class FindProfile : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentFindprofileBinding.inflate(inflater,container,false)
 
-        binding.bottomNavigation.setOnItemSelectedListener(bottomNavItemSelected())
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).setOnItemSelectedListener(bottomNavItemSelected())
 
         return binding.root
     }
@@ -46,4 +47,6 @@ class FindProfile : Fragment() {
         return listener
 
     }
+
+
 }
