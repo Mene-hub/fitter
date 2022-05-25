@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity() {
     fun showSearch(){
         val transaction = supportFragmentManager.beginTransaction()
         transaction.addToBackStack("FindProfileFragment")
-        transaction.replace(R.id.FragmentContainer, findprofile() )
+        transaction.replace(R.id.FragmentContainer, FindProfile() )
         transaction.commit()
     }
     /**

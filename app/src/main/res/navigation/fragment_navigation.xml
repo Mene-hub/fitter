@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/fragment_navigation">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_navigation"
+    app:startDestination="@id/myFitnessCards">
 
+    <fragment
+        android:id="@+id/myFitnessCards"
+        android:name="com.fitterAPP.fitter.fragmentControllers.MyFitnessCards"
+        android:label="fragment_my_fitness_cards"
+        tools:layout="@layout/fragment_my_fitness_cards" >
+        <action
+            android:id="@+id/action_myFitnessCards_to_findprofile"
+            app:destination="@id/findprofile" />
+    </fragment>
+    <fragment
+        android:id="@+id/findprofile"
+        android:name="com.fitterAPP.fitter.fragmentControllers.FindProfile"
+        android:label="fragment_findprofile"
+        tools:layout="@layout/fragment_findprofile" >
+        <action
+            android:id="@+id/action_findprofile_to_myFitnessCards"
+            app:destination="@id/myFitnessCards" />
+    </fragment>
 </navigation>
