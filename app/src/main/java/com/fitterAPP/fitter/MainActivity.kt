@@ -3,15 +3,11 @@ package com.fitterAPP.fitter
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
-import androidx.fragment.app.Fragment
 import com.fitterAPP.fitter.Classes.Athlete
 import com.fitterAPP.fitter.FragmentControlers.*
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationBarView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -26,12 +22,11 @@ import com.squareup.picasso.Picasso
  */
 class MainActivity : AppCompatActivity() {
 
-    private val _reference = "USERS"
     private val user = Athlete()
     private lateinit var auth : FirebaseAuth
     private lateinit var currentUser : FirebaseUser
     private lateinit var databaseHelper : RealTimeDBHelper
-    private var dbReference : DatabaseReference = FirebaseDatabase.getInstance(RealTimeDBHelper.getDbURL()).getReference(_reference)
+    private var dbReference : DatabaseReference = FirebaseDatabase.getInstance(RealTimeDBHelper.getDbURL()).getReference("USERS")
     //Bottom sheet dialog
     private lateinit var menuiv : CardView
 
