@@ -15,7 +15,7 @@ import com.fitterAPP.fitter.classes.Athlete
 import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.itemsAdapter.FitnessCardAdapter
 import com.fitterAPP.fitter.MainActivity
-import com.fitterAPP.fitter.RealTimeDBHelper
+import com.fitterAPP.fitter.databases.RealTimeDBHelper
 import com.fitterAPP.fitter.databinding.FragmentMyFitnessCardsBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.database.*

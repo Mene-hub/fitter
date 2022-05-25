@@ -7,6 +7,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.fitterAPP.fitter.classes.Athlete
+import com.fitterAPP.fitter.databases.RealTimeDBHelper
 import com.fitterAPP.fitter.fragmentControllers.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -142,7 +143,7 @@ class MainActivity : AppCompatActivity() {
 
                 if(user.profilePic != "null") {
                     val imageProfile: ImageView = findViewById(R.id.profilepic_IV)
-                    var imageURI: String = user.profilePic!!
+                    val imageURI: String = user.profilePic!!
                     Picasso.get()
                         .load(imageURI)
                         .resize(100, 100)

@@ -1,4 +1,4 @@
-package com.fitterAPP.fitter
+package com.fitterAPP.fitter.databases
 
 import com.fitterAPP.fitter.classes.Athlete
 import com.fitterAPP.fitter.classes.FitnessCard
@@ -37,7 +37,7 @@ class RealTimeDBHelper(val database: DatabaseReference) {
         database.child(currentDate).setValue(card)
     }
 
-    fun setFitnessCardItem(UID : String, card : MutableList<FitnessCard>){
+    fun setFitnessCardItem(card : MutableList<FitnessCard>){
         database.setValue(card)
     }
 
