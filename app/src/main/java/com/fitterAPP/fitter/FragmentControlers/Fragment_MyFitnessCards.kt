@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import com.fitterAPP.fitter.Classes.Athlete
-import com.fitterAPP.fitter.Classes.Exercise
 import com.fitterAPP.fitter.Classes.FitnessCard
 import com.fitterAPP.fitter.ItemsAdapter.FitnessCardAdapter
 import com.fitterAPP.fitter.MainActivity
@@ -22,7 +21,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.database.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.*
 import kotlin.collections.ArrayList
 
 class MyFitnessCards : Fragment() {
@@ -43,7 +41,6 @@ class MyFitnessCards : Fragment() {
         databaseHelper.readItems(getAthleteEventListener())
 
 
-
         val recycle : RecyclerView = binding.MyFitnessCardsRV
         adapter = context?.let { FitnessCardAdapter((activity as MainActivity), fitnessCads) }!!
         recycle.adapter = adapter
@@ -53,14 +50,13 @@ class MyFitnessCards : Fragment() {
         return binding.root
     }
 
-    /*
+
     private fun createNewCard(): View.OnClickListener {
         val listener = View.OnClickListener {
             showAlertDialogFitnessCard()
         }
         return listener
     }
-     */
 
     private fun transaction(newFitnessCard : FitnessCard) {
 
@@ -77,7 +73,6 @@ class MyFitnessCards : Fragment() {
             .replace(android.R.id.content, newFragment)
             .addToBackStack(null)
             .commit()
-
     }
 
     /**
@@ -86,19 +81,7 @@ class MyFitnessCards : Fragment() {
      * @see Athlete
      * @see FitnessCard
      */
-    companion object fun addFitnessCard(card : FitnessCard){
-
-        /*
-        var exercises : MutableList<Exercise> = ArrayList()
-        exercises.add(Exercise())
-        exercises.add(Exercise())
-        exercises.add(Exercise())
-        exercises.add(Exercise())
-        exercises.add(Exercise())
-
-        card.exercises = exercises
-        */
-
+    private fun addFitnessCard(card : FitnessCard){
         databaseHelper.setFitnessCardItem(card)
     }
 
@@ -142,9 +125,9 @@ class MyFitnessCards : Fragment() {
         return childEventListener
     }
 
-    fun showAlertDialogFitnessCard(){
+    private fun showAlertDialogFitnessCard(){
 
-        var newFitnessCard = FitnessCard()
+        val newFitnessCard = FitnessCard()
 
         // Create an alert builder
         val builder = MaterialAlertDialogBuilder(requireContext())
@@ -162,7 +145,7 @@ class MyFitnessCards : Fragment() {
                 val description = customLayout.findViewById<EditText>(com.fitterAPP.fitter.R.id.et_description).text.toString()
                 val duration = customLayout.findViewById<EditText>(com.fitterAPP.fitter.R.id.et_duration).text.toString()
 
-                if((!name.isNullOrBlank() && name != "") || (!duration.isNullOrBlank() && duration != "")){
+                if((name.isNotBlank() && name != "") || (duration.isNotBlank() && duration != "")){
                     newFitnessCard.name = name
                     newFitnessCard.description = description
                     newFitnessCard.key = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-M-yyyy hh:mm:ss"))
