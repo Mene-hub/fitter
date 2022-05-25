@@ -1,4 +1,4 @@
-package com.fitterAPP.fitter
+package com.fitterAPP.fitter.fragmentControllers
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -17,7 +17,7 @@ class Profile : Fragment() {
     private val REQUEST_CODE = 121
     private lateinit var binding : FragmentProfileBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
         binding = FragmentProfileBinding.inflate(inflater, container, false)
 
