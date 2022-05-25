@@ -21,7 +21,6 @@ import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
 
-
 /**
  * @author Daniel Satriano
  * @author Claudio Menegotto
