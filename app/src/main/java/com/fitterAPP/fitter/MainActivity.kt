@@ -101,44 +101,12 @@ class MainActivity : AppCompatActivity() {
         transaction.commit()*/
     }
 
-    //region roba claudio
-    /**
-     * @author Claudio Menegotto
-     * METODO PER LA VISUALIZZAZIONE DEL FRAGMENT DI RICERCA
-     */
-    fun showSearch(){
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.addToBackStack("FindProfileFragment")
-        transaction.replace(R.id.FragmentContainer, FindProfile() )
-        transaction.commit()
-    }
-    /**
-     * @author Claudio Menegotto
-     * METODO PER LA VISUALIZZAZIONE DEL FRAGMENT DI RECAP
-     */
-    fun showRecap(){
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.addToBackStack("TimeRacapFragment")
-        transaction.replace(R.id.FragmentContainer, TimeRacap() )
-        transaction.commit()
-    }
-    /**
-     * @author Claudio Menegotto
-     * METODO PER LA VISUALIZZAZIONE DEL FRAGMENT CON LA LISTA DI SCHEDE SALVATE
-     */
-    fun showMyFitnessCards(){
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.addToBackStack("MyFitnessCardsFragment")
-        transaction.replace(R.id.FragmentContainer, MyFitnessCards() )
-        transaction.commit()
-    }
+
     /**
      * @author Claudio Menegotto
      * @author Daniel Satriano
      * METODO PER LA DISCONNESSIONE DELL'ACCOUNT
      */
-    //endregion
-
     fun logout(){
         if(auth.currentUser != null){
             Log.d("MainWindow-Signout", "Sloggato")

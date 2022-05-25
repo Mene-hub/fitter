@@ -20,6 +20,9 @@
         <action
             android:id="@+id/action_myFitnessCards_to_fragment_showCardDialog"
             app:destination="@id/fragment_showCardDialog" />
+        <action
+            android:id="@+id/action_myFitnessCards_to_timeRacap"
+            app:destination="@id/timeRacap" />
     </fragment>
     <fragment
         android:id="@+id/findprofile"
@@ -46,4 +49,13 @@
             android:name="cardBundle"
             app:argType="com.fitterAPP.fitter.classes.FitnessCard" />
     </dialog>
+    <fragment
+        android:id="@+id/timeRacap"
+        android:name="com.fitterAPP.fitter.fragmentControllers.TimeRacap"
+        android:label="fragment_time_racap"
+        tools:layout="@layout/fragment_time_racap" >
+        <action
+            android:id="@+id/action_timeRacap_to_myFitnessCards"
+            app:destination="@id/myFitnessCards" />
+    </fragment>
 </navigation>
