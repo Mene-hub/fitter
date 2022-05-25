@@ -31,14 +31,17 @@ class MyFitnessCards : Fragment() {
     private val _REFERENCE : String = "FITNESS_CARDS"
     private lateinit var binding : FragmentMyFitnessCardsBinding //Binding
     private lateinit var adapter : FitnessCardAdapter
-    private var dbReference : DatabaseReference = FirebaseDatabase.getInstance(RealTimeDBHelper.getDbURL()).getReference(_REFERENCE).child("${Athlete.UID}-FITNESSCARD")
-    private var databaseHelper : RealTimeDBHelper = RealTimeDBHelper(dbReference) //USING DEFAULT VALUE
+    private lateinit var dbReference : DatabaseReference
+    private lateinit var databaseHelper : RealTimeDBHelper
     //firebase database
     private val fitnessCads : MutableList<FitnessCard> = ArrayList()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
         binding = FragmentMyFitnessCardsBinding.inflate(inflater, container, false)
+
+        dbReference = FirebaseDatabase.getInstance(RealTimeDBHelper.getDbURL()).getReference(_REFERENCE).child("${Athlete.UID}-FITNESSCARD")
+        databaseHelper = RealTimeDBHelper(dbReference)
 
         //grab event from companion class RealTimeDBHelper
         databaseHelper.readItems(getAthleteEventListener())
@@ -59,14 +62,16 @@ class MyFitnessCards : Fragment() {
         val listener = NavigationBarView.OnItemSelectedListener{ item ->
             when (item.itemId){
                 R.id.home ->{
-
+                    Log.d("DDD", "entro")
                     true
                 }
                 R.id.addCard ->{
+                    Log.d("DDD", "entro")
                     showAlertDialogFitnessCard()
                     true
                 }
-                R.id.findprofile ->{
+                R.id.search ->{
+                    Log.d("DDD", "entro")
                     findNavController().navigate(R.id.action_myFitnessCards_to_findprofile)
                     true
                 }

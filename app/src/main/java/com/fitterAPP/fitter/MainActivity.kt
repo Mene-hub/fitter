@@ -18,6 +18,7 @@ import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
 
+
 /**
  * @author Daniel Satriano
  * @author Claudio Menegotto
@@ -48,12 +49,20 @@ class MainActivity : AppCompatActivity() {
         auth = Firebase.auth
         databaseHelper = RealTimeDBHelper(dbReference)
 
+        if(auth.currentUser != null){
+            currentUser = auth.currentUser!!
+            user.SetNewValue(Athlete(currentUser.uid, currentUser.displayName, currentUser.photoUrl.toString(), "", ""))
+            Athlete.setValues(user)
+        }
+
+
         //Bottom sheet dialog
         menuiv = findViewById(R.id.MenuBt)
         menuiv.setOnClickListener {
             val modalBottomSheet = profileMenu()
             modalBottomSheet.show(supportFragmentManager, profileMenu.TAG)
         }
+
 
     }
 
@@ -68,7 +77,6 @@ class MainActivity : AppCompatActivity() {
 
             //INITIAL INIT, WILL BE CHANGED AS SOON AS THE VALUE LISTENER IS CALLED
             user.SetNewValue(Athlete(currentUser.uid, currentUser.displayName, currentUser.photoUrl.toString(), "", ""))
-
             //IF THE USER COMES FROM THE REGISTRATION FORM (and Google Login & Facebook Login) THEN IT HAS TO SAVE THE DATA TO THE DB,
             // OTHERWISE IF FROM LOGIN FORM  THE INFO'S WILL GET GRABBED FROM
             if(intent.extras!!.getBoolean("HASTOSAVE")){
@@ -84,9 +92,10 @@ class MainActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.TV_Username).text = user.username       //SET USERNAME IN TEXTVIEW
         Athlete.setValues(user)         //SET NEW VALUES FOR THE STATIC USER PART, USED IN Fragment_MyFitnessCards.kt
 
+        /*
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.FragmentContainer, MyFitnessCards() )
-        transaction.commit()
+        transaction.commit()*/
     }
 
     //region roba claudio
