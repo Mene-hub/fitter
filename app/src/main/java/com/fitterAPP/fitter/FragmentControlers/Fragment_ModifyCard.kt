@@ -50,7 +50,7 @@ class ModifyCard(var fitnessCard: FitnessCard) : DialogFragment() {
 
         } else {
             val metrics = DisplayMetrics()
-            activity?.getWindowManager()?.getDefaultDisplay()?.getMetrics(metrics)
+            activity?.windowManager?.defaultDisplay?.getMetrics(metrics)
             screenHeight = metrics.heightPixels/3
         }
 
@@ -77,7 +77,7 @@ class ModifyCard(var fitnessCard: FitnessCard) : DialogFragment() {
 
         val bgimage : ImageView = binding.CardBgImageIV
 
-        val id: Int? = context?.getResources()?.getIdentifier("com.fitterAPP.fitter:drawable/" + fitnessCard.imageCover.toString(), null, null )
+        val id: Int? = context?.resources?.getIdentifier("com.fitterAPP.fitter:drawable/" + fitnessCard.imageCover.toString(), null, null )
 
         bgimage.setImageResource(id!!)
 

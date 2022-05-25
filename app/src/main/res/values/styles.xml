@@ -29,5 +29,11 @@
     <style name="Widget.Theme.Fitter.MyView" parent="">
         <item name="android:background">@color/gray_400</item>
     </style>
+
+    <style name="DialogStyle" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+    </style>
     <!--  [END OF]  MATERIAL DESIGN THEME FOR BOTTOM SHEET DIALOG     -->
 </resources>

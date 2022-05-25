@@ -71,7 +71,7 @@ class Fragment_showCardDialog(var newFitnessCard: FitnessCard) : DialogFragment(
         val cardDescription: TextView = binding.DescriptionTV
         val bgimage : ImageView = binding.CardBgImageIV
 
-        val id: Int? = context?.getResources()?.getIdentifier(
+        val id: Int? = context?.resources?.getIdentifier(
             "com.fitterAPP.fitter:drawable/" + newFitnessCard.imageCover.toString(),
             null,
             null
@@ -97,7 +97,7 @@ class Fragment_showCardDialog(var newFitnessCard: FitnessCard) : DialogFragment(
 
         } else {
             val metrics = DisplayMetrics()
-            activity?.getWindowManager()?.getDefaultDisplay()?.getMetrics(metrics)
+            activity?.windowManager?.defaultDisplay?.getMetrics(metrics)
             screenHeight = metrics.heightPixels/3
         }
 

@@ -59,7 +59,7 @@ class FitnessCardAdapter (val context2: Context, val Cards:MutableList<FitnessCa
                 showControl(itemView, true)
             }
 
-            val id: Int = context.getResources().getIdentifier(
+            val id: Int = context.resources.getIdentifier(
                 "com.fitterAPP.fitter:drawable/" + Card.imageCover.toString(),
                 null,
                 null

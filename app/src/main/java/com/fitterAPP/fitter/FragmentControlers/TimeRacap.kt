@@ -62,11 +62,11 @@ class TimeRacap : Fragment() {
 
         var weightRecap : ArrayList<Entry> = ArrayList()
 
-        for (i in 0..recap.size-1)
+        for (i in 0 until recap.size)
             weightRecap.add(Entry(recap[i].dayOfMonth.toFloat(), recap[i].currentWeight))
 
         var line : LineDataSet = LineDataSet(weightRecap, "Weight")
-        line.setAxisDependency(YAxis.AxisDependency.LEFT)
+        line.axisDependency = YAxis.AxisDependency.LEFT
         line.setDrawCircles(true)
         line.setCircleColor(ContextCompat.getColor(requireActivity(), R.color.primary))
         line.color = ContextCompat.getColor(requireActivity(), R.color.primary)
@@ -77,9 +77,9 @@ class TimeRacap : Fragment() {
         val bgDrawable : Drawable = ContextCompat.getDrawable(view.context, R.drawable.gradient_chart_background)!!
 
         line.cubicIntensity = 0f
-        line.setMode(LineDataSet.Mode.CUBIC_BEZIER)
+        line.mode = LineDataSet.Mode.CUBIC_BEZIER
 
-        line.setFillDrawable(bgDrawable)
+        line.fillDrawable = bgDrawable
         var paint : Paint = Paint()
         line.lineWidth = 3f
 
