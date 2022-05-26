@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:fillViewport="true"
-    tools:context=".fragmentControllers.Fragment_showCardDialog">
+    tools:context=".fragmentControllers.Fragment_showCardDialog"
+    android:fitsSystemWindows="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -44,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="?actionBarSize"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="10dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -55,7 +56,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
-                    android:contentDescription="Back arrow"
+                    android:contentDescription="@string/backArrow"
                     app:srcCompat="@drawable/arrow_back"
                     app:tint="@color/darkgray" />
             </androidx.cardview.widget.CardView>
@@ -82,7 +83,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto_bold"
-                        android:text="Card name"
+                        android:text="@string/card_name"
                         android:textColor="@color/black"
                         android:textSize="20sp"
                         app:layout_constraintStart_toStartOf="parent"
@@ -107,7 +108,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:src="@drawable/time_clock"
-                                app:tint="@color/secondary" />
+                                app:tint="@color/secondary"
+                                android:contentDescription="@string/clock"/>
 
                             <TextView
                                 android:id="@+id/TimeDurationTV"
@@ -118,7 +120,8 @@
                                 android:layout_marginEnd="10dp"
                                 android:layout_weight="1"
                                 android:text="60 min"
-                                android:textColor="@color/darkgray" />
+                                android:textColor="@color/darkgray"
+                                tools:ignore="HardcodedText" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
@@ -158,6 +161,7 @@
                     app:cardCornerRadius="25dp">
 
                     <ImageView
+                        android:contentDescription="@string/profile_image"
                         android:id="@+id/profilepic_IV"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
@@ -177,7 +181,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="-10dp"
-                        android:layout_weight="1"
                         android:text="@string/owner"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
@@ -186,7 +189,6 @@
                         android:id="@+id/TV_Username"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:text="@string/Username"
                         android:textColor="@color/black"
                         android:textSize="24sp" />

@@ -24,6 +24,15 @@
 
     </style>
 
+    <style name="Theme.Fitter.FullScreenDialog" parent="Theme.Fitter">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+    </style>
+
+
+
     <style name="BottomSheetItem">
         <item name="android:textSize">20sp</item>
         <item name="android:drawablePadding">20dp</item>

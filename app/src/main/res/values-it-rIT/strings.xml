@@ -37,4 +37,6 @@
     <string name="YourCards">Le tue schede</string>
     <string name="yourProfile">Il tuo profilo</string>
     <string name="findUsers">Cerca utenti</string>
+    <string name="backArrow">Freccia per tornare indietro</string>
+    <string name="clock">Orologio</string>
 </resources>

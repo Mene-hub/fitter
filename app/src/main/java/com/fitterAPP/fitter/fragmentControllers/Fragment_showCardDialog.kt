@@ -29,12 +29,15 @@ class Fragment_showCardDialog() : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NORMAL, R.style.Theme_Fitter)
+        setStyle(STYLE_NORMAL, R.style.Theme_Fitter_FullScreenDialog)
 
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentShowCardDialogBinding.inflate(inflater, container, false)
+
+        //Set transparent status bar
+        dialog?.window?.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
 
         newFitnessCard = args.cardBundle
 
@@ -50,7 +53,7 @@ class Fragment_showCardDialog() : DialogFragment() {
             newFitnessCard.exercises?.addAll(newFitnessCard.exercises!!)
             newFitnessCard.exercises?.addAll(newFitnessCard.exercises!!)
 
-            var adapter = context?.let {FitnessCardExercisesAdapter((activity as MainActivity),newFitnessCard,newFitnessCard.exercises!!)}!!
+            val adapter = context?.let {FitnessCardExercisesAdapter((activity as MainActivity),newFitnessCard,newFitnessCard.exercises!!)}!!
             recycle.adapter = adapter
         }
 
@@ -60,7 +63,8 @@ class Fragment_showCardDialog() : DialogFragment() {
 
         cardName.text = newFitnessCard.name
         cardDescription.text = newFitnessCard.description
-        cardDuration.text = newFitnessCard.timeDuration.toString() + " minutes"
+        val text = newFitnessCard.timeDuration.toString() +" "+ getString(R.string.minutes)
+        cardDuration.text = text
 
         // Inflate the layout for this fragment
         return binding.root
