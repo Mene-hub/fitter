@@ -39,7 +39,7 @@ class MyFitnessCards : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentMyFitnessCardsBinding.inflate(inflater, container, false)
 
-        dbReference = FirebaseDatabase.getInstance(RealTimeDBHelper.getDbURL()).getReference("FITNESS_CARDS").child("${Athlete.UID}-FITNESSCARD")
+        dbReference = FirebaseDatabase.getInstance(RealTimeDBHelper.getDbURL()).getReference("FITNESS_CARDS").child(Athlete.UID)
         databaseHelper = RealTimeDBHelper(dbReference)
 
         //grab event from companion class RealTimeDBHelper

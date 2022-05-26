@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
 import android.view.View
+import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -52,11 +53,8 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //INTENT TO OPEN MAIN WINDOW
-        intent = Intent(this, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        intent.putExtra("HASTOSAVE",false)
+        //Set transparent status bar
+        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
 
         auth = Firebase.auth    //istantiate auth variable
 
@@ -331,7 +329,11 @@ class LoginActivity : AppCompatActivity() {
         if(currentUser != null) {
             //START MAIN ACTIVITY
             Log.d(TAG_login,"LOGGED")
-            startActivity(intent)
+            val i = Intent(this, MainActivity::class.java)
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            i.putExtra("HASTOSAVE",false)
+            startActivity(i)
         }else{
             //USER NOT LOGGED IN - needs to login
             Log.d(TAG_login,"NOT LOGGED")
@@ -358,8 +360,11 @@ class LoginActivity : AppCompatActivity() {
 
                             //val user = auth.currentUser
                             //updateUI(user) UPDATE UI ACCORDINGLY
-                            startActivity(intent)
-
+                            val i = Intent(this, MainActivity::class.java)
+                            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                            i.putExtra("HASTOSAVE",false)
+                            startActivity(i)
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG_login, "Login failed", task.exception)

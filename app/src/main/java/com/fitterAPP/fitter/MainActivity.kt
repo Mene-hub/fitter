@@ -29,12 +29,11 @@ import com.squareup.picasso.Picasso
  */
 class MainActivity : AppCompatActivity() {
 
-    private val _reference = "USERS"
     private val user = Athlete()
     private lateinit var auth : FirebaseAuth
     private lateinit var currentUser : FirebaseUser
     private lateinit var databaseHelper : RealTimeDBHelper
-    private var dbReference : DatabaseReference = FirebaseDatabase.getInstance(RealTimeDBHelper.getDbURL()).getReference(_reference)
+    private var dbReference : DatabaseReference = FirebaseDatabase.getInstance(RealTimeDBHelper.getDbURL()).getReference("USERS")
     //navController
     private lateinit var navController: NavController
     //Bottom sheet dialog
@@ -95,11 +94,6 @@ class MainActivity : AppCompatActivity() {
         }
         findViewById<TextView>(R.id.TV_Username).text = user.username       //SET USERNAME IN TEXTVIEW
         Athlete.setValues(user)         //SET NEW VALUES FOR THE STATIC USER PART, USED IN Fragment_MyFitnessCards.kt
-
-        /*
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.FragmentContainer, MyFitnessCards() )
-        transaction.commit()*/
     }
 
 
@@ -127,7 +121,7 @@ class MainActivity : AppCompatActivity() {
     private fun getAthleteEventListener(): ValueEventListener {
         val childEventListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val item = snapshot.getValue(Athlete::class.java)                   //GRAB USER ITEM
+                val item = snapshot.getValue(Athlete::class.java) //GRAB USER ITEM
                 user.SetNewValue(item!!)
 
                 if(user.profilePic != "null") {
