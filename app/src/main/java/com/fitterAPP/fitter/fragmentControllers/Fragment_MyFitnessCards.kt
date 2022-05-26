@@ -72,6 +72,7 @@ class MyFitnessCards : Fragment() {
                 }
                 R.id.addCard ->{
                     showAlertDialogFitnessCard()
+                    item.isChecked = false
                     true
                 }
                 R.id.search ->{
@@ -89,8 +90,7 @@ class MyFitnessCards : Fragment() {
 
     private fun transaction(newFitnessCard : FitnessCard) {
         val action : NavDirections = MyFitnessCardsDirections.actionMyFitnessCardsToFragmentShowCardDialog(newFitnessCard)
-
-        findNavController().navigate(action, )
+        findNavController().navigate(action)
     }
 
     /**

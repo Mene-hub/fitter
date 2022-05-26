@@ -1,6 +1,6 @@
 package com.fitterAPP.fitter.fragmentControllers
 
-import android.R
+import com.fitterAPP.fitter.R
 import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -30,7 +30,8 @@ class Fragment_showCardDialog() : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NORMAL, R.style.Theme_DeviceDefault_DialogWhenLarge)
+        setStyle(STYLE_NORMAL, android.R.style.Theme_Material_Light_NoActionBar_Fullscreen)
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
