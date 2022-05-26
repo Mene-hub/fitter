@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:fillViewport="true"
-    tools:context=".fragmentControllers.Fragment_showCardDialog"
-    android:fitsSystemWindows="true">
+    tools:context=".fragmentControllers.Fragment_showCardDialog">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
