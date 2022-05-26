@@ -79,9 +79,9 @@
 
     </androidx.fragment.app.FragmentContainerView>
 
-
     <LinearLayout
-        android:elevation="1dp"
+        android:elevation="10dp"
+        android:background="@android:color/white"
         android:id="@+id/LL_bottomNav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

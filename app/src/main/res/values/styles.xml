@@ -31,8 +31,6 @@
     </style>
     <!--endregion MATERIAL DESIGN THEME FOR BOTTOM SHEET DIALOG     -->
 
-
-
     <!--region  MATERIAL DESIGN BOTTOM NAVIGATOR    -->
 
     <style name="Widget.App.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
