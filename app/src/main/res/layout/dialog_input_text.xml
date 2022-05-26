@@ -18,7 +18,6 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_cardName"
-            android:autofillHints="emailAddress"
             android:maxLength="30"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
