@@ -8,10 +8,13 @@
 
     <SearchView
         android:id="@+id/SV_findUsers"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginVertical="10dp"
+        android:queryHint="Search here ..."
+        android:iconifiedByDefault="false"
+
         android:background="@drawable/round_border"
 
         app:layout_constraintBottom_toTopOf="@+id/recyclerView"
