@@ -63,7 +63,7 @@ class profileMenu : BottomSheetDialogFragment() {
 
     fun checkIfShouldDisplay() : Boolean?{
         Firebase.auth.currentUser?.reload()
-        if(Firebase.auth.currentUser?.providerId == "Facebook"){
+        if(Firebase.auth.currentUser?.providerId == "facebook.com"){
             return true
         }
         return Firebase.auth.currentUser?.isEmailVerified
