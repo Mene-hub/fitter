@@ -1,5 +1,6 @@
 package com.fitterAPP.fitter.fragmentControllers
 
+import android.annotation.SuppressLint
 import android.app.SearchManager
 import com.fitterAPP.fitter.R
 import android.os.Bundle
@@ -79,23 +80,19 @@ class FindProfile : Fragment() {
      * @see queryTextListener for more information about that function
      * @author Daniel Satriano
      */
+    @SuppressLint("NotifyDataSetChanged")
     fun databaseQuery(text : String?){
-        val usernameOrdered : Query  = databaseReference.orderByChild("username").startAt(text).endAt("$text\uF7FF") .limitToFirst(10)
-        Log.d("FindProfile", "---------------------")
+        val usernameOrdered : Query  = databaseReference.orderByChild("username").startAt(text).endAt("$text\uF7FF").limitToFirst(10)
+        //.get().addOnSuccessListener
         suggestedUsers.clear()
         adapter.notifyDataSetChanged()
         usernameOrdered.addChildEventListener(object : ChildEventListener{
 
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val item = snapshot.getValue(Athlete::class.java)
-
                 suggestedUsers.add(item!!)
-
                 adapter.notifyItemChanged(suggestedUsers.indexOf(item))
-                Log.d("FindProfile", item.username.toString())
-                Log.d("FindProfile", suggestedUsers.count().toString())
             }
-
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
                 Log.d("FindProfile", "entro changed")
             }
@@ -109,7 +106,6 @@ class FindProfile : Fragment() {
             }
 
         })
-
     }
 
     private fun bottomNavItemSelected(): NavigationBarView.OnItemSelectedListener {
