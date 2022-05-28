@@ -10,6 +10,7 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/IV_profileImage"
             android:contentDescription="@string/profile_image"
             android:layout_width="25dp"
             android:layout_height="25dp"
