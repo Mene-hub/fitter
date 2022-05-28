@@ -24,10 +24,8 @@ class SuggestionAdapter(val context2: Context, val users:MutableList<Athlete>) :
 
         fun setCard(user:Athlete){
             username.text = user.username
-            if(user.profilePic != null || user.profilePic != "")
+            if(user.profilePic != null && user.profilePic != "")
                 Picasso.get().load(user.profilePic).resize(100, 100).centerCrop().into(image)
-            else
-                image.setBackgroundResource(R.drawable.person_24)
 
             itemView.setOnClickListener {
                 Toast.makeText(itemView.context, username.text.toString(), Toast.LENGTH_LONG).show()
