@@ -15,6 +15,7 @@ import androidx.core.widget.doOnTextChanged
 import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
+import com.fitterAPP.fitter.classes.LoadingDialog
 import com.fitterAPP.fitter.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
@@ -36,6 +37,7 @@ class LoginActivity : AppCompatActivity() {
     private val TAG_login : String = "LoginActivity-Login"
     private lateinit var auth: FirebaseAuth
     private var bgimage : ImageView ?=null
+    private lateinit var loadingDialog : LoadingDialog
 
     //region googleStuff
         private lateinit var oneTapClient: SignInClient
@@ -55,6 +57,9 @@ class LoginActivity : AppCompatActivity() {
 
         //Set transparent status bar
         window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+
+        loadingDialog = LoadingDialog(this@LoginActivity)
+
 
         auth = Firebase.auth    //istantiate auth variable
 
