@@ -52,11 +52,12 @@ class profileMenu : BottomSheetDialogFragment() {
             Firebase.auth.currentUser?.sendEmailVerification()?.addOnCompleteListener{ task ->
                 if(task.isSuccessful){
                     Toast.makeText(requireContext(),"Email sent successfully", Toast.LENGTH_LONG).show()
+                    dismiss()
                 }else{
                     Toast.makeText(requireContext(),task.exception?.message.toString(), Toast.LENGTH_LONG).show()
+                    dismiss()
                 }
             }
-            dismiss()
         }
         return listener
     }
