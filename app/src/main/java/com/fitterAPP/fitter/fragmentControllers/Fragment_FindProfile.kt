@@ -1,7 +1,6 @@
 package com.fitterAPP.fitter.fragmentControllers
 
 import android.annotation.SuppressLint
-import android.app.SearchManager
 import com.fitterAPP.fitter.R
 import android.os.Bundle
 import android.util.Log
@@ -9,20 +8,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.SearchView
-import android.widget.SimpleCursorAdapter
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.lifecycleScope
-import androidx.loader.app.LoaderManager
-import androidx.loader.content.CursorLoader
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
 import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.classes.Athlete
 import com.fitterAPP.fitter.databases.RealTimeDBHelper
 import com.fitterAPP.fitter.databinding.FragmentFindprofileBinding
-import com.fitterAPP.fitter.itemsAdapter.FitnessCardAdapter
 import com.fitterAPP.fitter.itemsAdapter.SuggestionAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
