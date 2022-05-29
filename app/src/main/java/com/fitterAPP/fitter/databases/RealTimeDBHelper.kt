@@ -37,8 +37,8 @@ class RealTimeDBHelper(val database: DatabaseReference) {
         database.child(currentDate).setValue(card)
     }
 
-    fun setFitnessCardItem(card : MutableList<FitnessCard>){
-        database.setValue(card)
+    fun overrideCurrentUser(athlete: Athlete){
+        database.setValue(athlete)
     }
 
     //Deleting entire node

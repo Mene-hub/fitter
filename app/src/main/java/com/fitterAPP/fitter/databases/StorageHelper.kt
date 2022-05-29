@@ -1,4 +1,4 @@
-package com.fitterAPP.fitter.classes
+package com.fitterAPP.fitter.databases
 
 /*
 class StorageHelper(private val storage : FirebaseStorage) {
