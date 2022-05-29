@@ -25,6 +25,7 @@ import com.google.firebase.ktx.Firebase
 
 
 /**
+ * Fragment used to display user profile information and to allow him/her to modify it
  * @author Daniel Satriano
  * @since 30/05/2022
  */

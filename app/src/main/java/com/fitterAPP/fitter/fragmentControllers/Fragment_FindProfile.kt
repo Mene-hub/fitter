@@ -19,6 +19,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
 import com.google.firebase.database.*
 
+/**
+ * Fragment used to implement "find other users" feature
+ * @author Daniel Satriano
+ * @since 28/05/2022
+ */
 class FindProfile : Fragment() {
     private lateinit var binding : FragmentFindprofileBinding
     private var databaseReference: DatabaseReference = FirebaseDatabase.getInstance(RealTimeDBHelper.getDbURL()).getReference("USERS")
