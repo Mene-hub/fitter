@@ -23,6 +23,11 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 
+
+/**
+ * @author Daniel Satriano
+ * @since 30/05/2022
+ */
 class Profile : Fragment() {
 
     private val REQUEST_CODE = 121
@@ -35,6 +40,10 @@ class Profile : Fragment() {
     private lateinit var etBio : EditText
     private lateinit var etEmail : EditText
 
+    /**
+     * @author Daniel Satriano
+     * @since 30/05/2022
+     */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
         binding = FragmentProfileBinding.inflate(inflater, container, false)
@@ -56,6 +65,11 @@ class Profile : Fragment() {
         return binding.root
     }
 
+    /**
+     * Simple item listener for the bottom navigation view, which is used to move through views
+     * @author Daniel Satriano
+     * @since 30/05/2022
+     */
     private fun bottomNavItemSelected(): NavigationBarView.OnItemSelectedListener {
         val listener = NavigationBarView.OnItemSelectedListener{ item ->
             when (item.itemId){
@@ -78,6 +92,12 @@ class Profile : Fragment() {
         return listener
     }
 
+    /**
+     * Update button listener, used to update data in the Realtime Database, it also closes the window once the update has been done and gives a Toast message to the user
+     * as a feedback
+     * @author Daniel Satriano
+     * @since 30/05/2022
+     */
     private fun updateProfileListener(): View.OnClickListener {
         val listener = View.OnClickListener {
 
@@ -96,11 +116,19 @@ class Profile : Fragment() {
         return listener
     }
 
+
+    /**
+     * Method used to update all the EditTexts in the UI with the current data stored in [Athlete] companion class
+     * @author Daniel Satriano
+     * @since 30/05/2022
+     */
     private fun updateVariableInfo(username : EditText, bio : EditText, email : EditText){
         username.setText(Athlete.username)
         bio.setText(Athlete.profileBio)
         email.setText(auth.currentUser?.email)
     }
+
+
 
 
     private fun grabImageFromDisk(){
