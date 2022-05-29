@@ -35,8 +35,6 @@ class Profile : Fragment() {
     private lateinit var etBio : EditText
     private lateinit var etEmail : EditText
 
-    //SPOSTARE VERIFICA EMAIL NELLA REGISTRAZIONE
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
         binding = FragmentProfileBinding.inflate(inflater, container, false)
@@ -50,12 +48,6 @@ class Profile : Fragment() {
         etEmail = binding.etEmail
 
         val btnUpdate = binding.btnUpdate
-
-
-        if(checkIfShouldDisplay() != true){
-            binding.etEmailLayout.error = "Email verification needed. Click above to verify it"
-            etEmail.setOnClickListener(verificationProcess())
-        }
 
         updateVariableInfo(etUsername,etBio,etEmail)
 
@@ -86,29 +78,6 @@ class Profile : Fragment() {
         return listener
     }
 
-    private fun verificationProcess(): View.OnClickListener {
-        val listener = View.OnClickListener {
-            Firebase.auth.currentUser?.sendEmailVerification()?.addOnCompleteListener{ task ->
-                if(task.isSuccessful){
-                    Toast.makeText(requireContext(),"Email sent successfully", Toast.LENGTH_LONG).show()
-                    binding.etEmailLayout.error = "Verify link sent to your email address"
-                }else{
-                    Toast.makeText(requireContext(),task.exception?.message.toString(), Toast.LENGTH_LONG).show()
-                }
-            }
-            binding.etEmail.setOnClickListener(null)
-        }
-        return listener
-    }
-
-    private fun checkIfShouldDisplay() : Boolean?{
-        Firebase.auth.currentUser?.reload()
-        if (Firebase.auth.currentUser?.providerId == "facebook.com") {
-            return true
-        }
-        return Firebase.auth.currentUser?.isEmailVerified
-    }
-
     private fun updateProfileListener(): View.OnClickListener {
         val listener = View.OnClickListener {
 
@@ -121,6 +90,8 @@ class Profile : Fragment() {
                 dbReference.setValue(athlete)
             }
 
+            Toast.makeText(requireContext(),"Profile updated", Toast.LENGTH_LONG).show()
+            findNavController().navigate(R.id.action_profile_to_myFitnessCards)
         }
         return listener
     }
@@ -132,7 +103,7 @@ class Profile : Fragment() {
     }
 
 
-    private fun GrabImageFromDisk(){
+    private fun grabImageFromDisk(){
         if(ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
             //SELEZIONA IMMAGINE
 
@@ -148,7 +119,7 @@ class Profile : Fragment() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         if(requestCode == REQUEST_CODE){
-            GrabImageFromDisk()
+            grabImageFromDisk()
         }else{
             Toast.makeText(requireContext(), "Oops, you just denied the permission for storage. You can also allow it from settings.", Toast.LENGTH_LONG).show()
         }

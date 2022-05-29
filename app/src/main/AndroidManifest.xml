@@ -12,16 +12,6 @@
         android:theme="@style/Theme.Fitter">
 
         <activity
-            android:name=".ForgotPasswordActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Fitter.FullScreenDialog"/>
-
-        <activity
-            android:name=".RegisterActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Fitter.FullScreenDialog"/>
-
-        <activity
             android:name=".LoginActivity"
             android:exported="true"
             android:theme="@style/Theme.Fitter.FullScreenDialog">

@@ -15,6 +15,8 @@ import androidx.core.widget.doOnTextChanged
 import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
+import com.fitterAPP.fitter.classes.Athlete
+import com.fitterAPP.fitter.databases.RealTimeDBHelper
 import com.fitterAPP.fitter.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
@@ -22,14 +24,21 @@ import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.android.material.textfield.TextInputLayout
-import com.google.firebase.auth.FacebookAuthProvider
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.Query
 import com.google.firebase.ktx.Firebase
 import kotlin.random.Random
 
+/**
+ * First activity that the user see when opening the app. This activity provides methods to login via google and facebook.
+ * @see loginGoogle for more clarifications
+ * @see loginFacebook for more clarifications
+ * @author Daniel Satriano
+ * @since 10/05/2022
+ */
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityLoginBinding
@@ -42,7 +51,6 @@ class LoginActivity : AppCompatActivity() {
         private lateinit var signInRequest: BeginSignInRequest
         private val REQ_ONE_TAP : Int = 2
     //endregion
-
     //region facebookStuff
         private lateinit var callbackManager : CallbackManager
         private var FB_ONE_TAP : Int = 64206
@@ -55,39 +63,7 @@ class LoginActivity : AppCompatActivity() {
 
         //Set transparent status bar
         window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
-
         auth = Firebase.auth    //istantiate auth variable
-
-        //Event for switching to signUp activity
-        binding.btnSignup.setOnClickListener {
-            showRegister()
-        }
-
-        binding.tvForgotPSW.setOnClickListener(forgotPasswordListener())
-
-        //region Login Email
-        binding.btnLogin.setOnClickListener(loginEmailPSW())  //BUTTONS for login/register
-
-        //ERROR FOR WRONG PASSWORD / WRONG EMAIL
-        val psw_text_layout : TextInputLayout = binding.etLoginPasswordLayout
-        binding.etLoginPassword.doOnTextChanged { text, start, before, count ->
-            if(psw_text_layout.error != null) {
-                psw_text_layout.error = null
-            }
-        }
-        //EVENT TO CHECK IF THE EMAIL ENTERED IS CORRECT
-        binding.etLoginEmail.setOnFocusChangeListener{ _, focused ->
-            if(!focused){
-                binding.etLoginEmailLayout.helperText = validEmail()
-            }
-        }
-
-        binding.etLoginPassword.setOnFocusChangeListener{_, focused ->
-            if(focused){
-                binding.etLoginPasswordLayout.error = null
-            }
-        }
-        //endregion
 
         //region googleStuff
         binding.IVLoginGoogle.setOnClickListener(loginGoogle())
@@ -112,62 +88,147 @@ class LoginActivity : AppCompatActivity() {
         randomBgImages()
     }
 
-    private fun forgotPasswordListener(): View.OnClickListener {
-        val listener = View.OnClickListener {
-            //
-            val i = Intent(this, ForgotPasswordActivity::class.java)
-            i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+    /**
+     * Checks if the user is currently signed in or not. If it is then it launches [MainActivity] with bundle("HASTOSAVE", false)
+     * @see MainActivity for more information about it
+     * @author Daniel Satriano
+     * @since 10/05/2022
+     */
+    override fun onStart() {
+        super.onStart()
+        if(auth.currentUser != null) {
+            //START MAIN ACTIVITY
+            val i = Intent(this, MainActivity::class.java)
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            i.putExtra("HASTOSAVE",false)
             startActivity(i)
+        }
+    }
+
+    /**
+     * Method that is called in [handleFacebookAccessToken] whenever the operation succeeded, this method simply queries the database and checks if there is already a user
+     * with the same UID registered. If so it tells [MainActivity] to not overwrite the existing data in the RealTimeDatabase with this ones.
+     * @see handleFacebookAccessToken for more information about it
+     * @author Daniel Satriano
+     * @since 30/05/2022
+     */
+    private fun startActivityByFacebook(uid : String, token : AccessToken, user : FirebaseUser){
+        val databaseReference: DatabaseReference = FirebaseDatabase.getInstance(RealTimeDBHelper.getDbURL()).getReference("USERS")
+        databaseReference.orderByKey().equalTo(uid).get().addOnSuccessListener{
+                item ->
+            item.getValue(Athlete::class.java)
+            if(item!=null){
+                //ESISTE
+                val intent = Intent(this, MainActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                intent.putExtra("HASTOSAVE",false)
+                startActivity(intent)
+            }else{
+
+                val request = GraphRequest.newGraphPathRequest(token, "/${token.userId}/picture") { response ->
+                    val uri = Uri.parse(response.connection?.url.toString())
+
+                    val updater = UserProfileChangeRequest.Builder().setDisplayName(user.displayName.toString().replace("\\s".toRegex(),"")).setPhotoUri(uri).build()
+                    auth.currentUser!!.updateProfile(updater).addOnCompleteListener{ task2 ->
+                        if(task2.isSuccessful){
+                            Log.d(TAG_login, "User profile updated")
+                            auth.currentUser?.reload()
+                            Log.w(TAG_login,user.displayName.toString())
+
+                            val intent = Intent(this, MainActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                            intent.putExtra("HASTOSAVE",true)
+                            startActivity(intent)
+
+                        }else{
+                            Toast.makeText(this,task2.exception!!.message.toString(), Toast.LENGTH_LONG).show()
+                        }
+                    }
+                }
+                request.executeAsync()
+
+            }
+        }
+    }
+
+    /**
+     * Method that is called in [onActivityResult] whenever the operation succeeded, this method simply queries the database and checks if there is already a user
+     * with the same UID registered. If so it tells [MainActivity] to not overwrite the existing data in the RealTimeDatabase with this ones.
+     * @see onActivityResult for more information about it
+     * @author Daniel Satriano
+     * @since 30/05/2022
+     */
+    private fun startActivityByGoogle(uid : String){
+        val databaseReference: DatabaseReference = FirebaseDatabase.getInstance(RealTimeDBHelper.getDbURL()).getReference("USERS")
+        databaseReference.orderByKey().equalTo(uid).get().addOnSuccessListener{
+                item ->
+            item.getValue(Athlete::class.java)
+            if(item!=null){
+                //ESISTE
+                val intent = Intent(this, MainActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                intent.putExtra("HASTOSAVE",false)
+                startActivity(intent)
+            }else{
+                //NON ESISTE
+                val user = auth.currentUser
+                val updater = UserProfileChangeRequest.Builder().setDisplayName(user?.displayName.toString().replace("\\s".toRegex(),"")).build()
+                auth.currentUser!!.updateProfile(updater).addOnCompleteListener{ task2 ->
+                    if(task2.isSuccessful){
+                        Log.d(TAG_login, "User profile updated")
+                        auth.currentUser?.reload()
+                        Log.w(TAG_login,auth.currentUser?.displayName.toString())
+
+                        val intent = Intent(this, MainActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        intent.putExtra("HASTOSAVE",true)
+                        startActivity(intent)
+
+                    }else{
+                        Toast.makeText(this,task2.exception!!.message.toString(), Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * This method is the OnClickListener of the facebook button in the UI. Its job is to start the oneTapUI which will be then processed by [onActivityResult]
+     * @see onActivityResult for more information about it
+     * @author Daniel Satriano
+     * @since 10/05/2022
+     */
+    private fun loginFacebook(): View.OnClickListener {
+        val listener = View.OnClickListener {
+
+            LoginManager.getInstance().logInWithReadPermissions(this, listOf("public_profile","email"))
+            LoginManager.getInstance().registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
+                override fun onSuccess(result: LoginResult) {
+                    Log.d(TAG_login, "facebook:onSuccess:$result")
+                    handleFacebookAccessToken(result.accessToken)
+                }
+
+                override fun onCancel() {
+                    Log.d(TAG_login, "facebook:onCancel")
+                }
+
+                override fun onError(error: FacebookException) {
+                    Log.d(TAG_login, "facebook:onError", error)
+                }
+
+            })
         }
         return listener
     }
 
     /**
-     * @author Daniel Satriano
-     */
-    private fun handleFacebookAccessToken(token: AccessToken) {
-        val credential = FacebookAuthProvider.getCredential(token.token)
-        auth.signInWithCredential(credential)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG_login, "signInWithCredential:success")
-                    val user = auth.currentUser
-
-                    val request = GraphRequest.newGraphPathRequest(token, "/${token.userId}/picture") { response ->
-                        val uri = Uri.parse(response.connection?.url.toString())
-
-                        val updater = UserProfileChangeRequest.Builder().setDisplayName(user?.displayName.toString().replace("\\s".toRegex(),"")).setPhotoUri(uri).build()
-                        auth.currentUser!!.updateProfile(updater).addOnCompleteListener{ task2 ->
-                            if(task2.isSuccessful){
-                                Log.d(TAG_login, "User profile updated")
-                                auth.currentUser?.reload()
-                                Log.w(TAG_login,auth.currentUser?.displayName.toString())
-
-                                val intent = Intent(this, MainActivity::class.java)
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                                intent.putExtra("HASTOSAVE",true)
-                                startActivity(intent)
-
-                            }else{
-                                Toast.makeText(this,task2.exception!!.message.toString(), Toast.LENGTH_LONG).show()
-                            }
-                        }
-                    }
-                    request.executeAsync()
-
-
-
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w(TAG_login, "signInWithCredential:failure", task.exception)
-                    Toast.makeText(baseContext, task.exception!!.message.toString(), Toast.LENGTH_SHORT).show()
-                }
-            }
-    }
-
-    /**
+     * This method is the OnClickListener of the google button in the UI. Its job is to start the oneTapUI which will be then processed by [onActivityResult]
+     * @see onActivityResult for more information about it
      * @author Daniel Satriano
      * @since 10/05/2022
      */
@@ -191,7 +252,9 @@ class LoginActivity : AppCompatActivity() {
     }
 
     /**
+     * This method is used by [loginFacebook] and [loginGoogle] to handle the API callbacks
      * @author Daniel Satriano
+     * @since 10/05/2022
      */
     @Deprecated("Ignore this deprecation")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -222,25 +285,9 @@ class LoginActivity : AppCompatActivity() {
                                     if (task.isSuccessful) {
                                         // Sign in success, update UI with the signed-in user's information
                                         Log.d(TAG_login, "signInWithCredential:success")
-                                        val user = auth.currentUser
 
-                                        val updater = UserProfileChangeRequest.Builder().setDisplayName(user?.displayName.toString().replace("\\s".toRegex(),"")).build()
-                                        auth.currentUser!!.updateProfile(updater).addOnCompleteListener{ task2 ->
-                                            if(task2.isSuccessful){
-                                                Log.d(TAG_login, "User profile updated")
-                                                auth.currentUser?.reload()
-                                                Log.w(TAG_login,auth.currentUser?.displayName.toString())
+                                        startActivityByGoogle(auth.currentUser?.uid!!)
 
-                                                val intent = Intent(this, MainActivity::class.java)
-                                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                                                intent.putExtra("HASTOSAVE",true)
-                                                startActivity(intent)
-
-                                            }else{
-                                                Toast.makeText(this,task2.exception!!.message.toString(), Toast.LENGTH_LONG).show()
-                                            }
-                                        }
                                         Log.d(TAG_login, auth.currentUser?.displayName.toString())
                                     } else {
                                         // If sign in fails, display a message to the user.
@@ -274,120 +321,29 @@ class LoginActivity : AppCompatActivity() {
     }
 
     /**
+     * * Method that handle the token given by facebook API and uses it to register onto Firebase.
+     * * This method is paired with three more methods listed below
+     * @see loginFacebook which is the onClick listener of the button that you can press on the UI
+     * @see onActivityResult which is the method that retrieves calls the facebook API
+     * @see startActivityByFacebook which is used to check if the user is already registered with that particular account
      * @author Daniel Satriano
      * @since 10/05/2022
      */
-    private fun loginFacebook(): View.OnClickListener {
-        val listener = View.OnClickListener {
+    private fun handleFacebookAccessToken(token: AccessToken) {
+        val credential = FacebookAuthProvider.getCredential(token.token)
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG_login, "signInWithCredential:success")
+                    startActivityByFacebook(auth.currentUser?.uid!!, token, auth.currentUser!!)
 
-            LoginManager.getInstance().logInWithReadPermissions(this, listOf("public_profile","email"))
-            LoginManager.getInstance().registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
-                override fun onSuccess(result: LoginResult) {
-                    Log.d(TAG_login, "facebook:onSuccess:$result")
-                    handleFacebookAccessToken(result.accessToken)
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG_login, "signInWithCredential:failure", task.exception)
+                    Toast.makeText(baseContext, task.exception!!.message.toString(), Toast.LENGTH_SHORT).show()
                 }
-
-                override fun onCancel() {
-                    Log.d(TAG_login, "facebook:onCancel")
-                }
-
-                override fun onError(error: FacebookException) {
-                    Log.d(TAG_login, "facebook:onError", error)
-                }
-
-            })
-        }
-        return listener
-    }
-
-    /**
-     * @author Daniel Satriano
-     * @since 10/05/2022
-     * Checks if the inserted email is valid or not
-     */
-    private fun validEmail(): String? {
-        val emailText = binding.etLoginEmail.text.toString()
-        if(!Patterns.EMAIL_ADDRESS.matcher(emailText).matches()){
-            return getString(R.string.invalid_email)
-        }
-        return null
-    }
-
-    /**
-     * @author Daniel Satriano
-     * @since 10/05/2022
-     * Checks if the user is currently signed in or not. If it is then it launches MainActivity
-     * @see MainActivity for more information about it
-     */
-    override fun onStart() {
-        super.onStart()
-        //GRAB CURRENT USER IF ALREADY LOGGED-IN IN THE PAST
-        val currentUser = auth.currentUser
-
-        Log.d(TAG_login, currentUser.toString())
-
-        if(currentUser != null) {
-            //START MAIN ACTIVITY
-            Log.d(TAG_login,"LOGGED")
-            val i = Intent(this, MainActivity::class.java)
-            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            i.putExtra("HASTOSAVE",false)
-            startActivity(i)
-        }else{
-            //USER NOT LOGGED IN - needs to login
-            Log.d(TAG_login,"NOT LOGGED")
-        }
-    }
-
-    /**
-     * @author Daniel Satriano
-     * @since 10/05/2022
-     * Login via password and email, if it finds an account it Log In and start MainActivity, if it doesn't it'll throw an error at the UI for the user
-     * @see MainActivity for more information about it
-     */
-    fun loginEmailPSW(): View.OnClickListener {
-        val listener = View.OnClickListener {
-            val email : String = binding.etLoginEmail.text.toString()
-            val password : String = binding.etLoginPassword.text.toString()
-
-            if(email.isNotBlank() && password.isNotBlank()) {
-                auth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG_login, "Login success")
-
-                            //val user = auth.currentUser
-                            //updateUI(user) UPDATE UI ACCORDINGLY
-                            val i = Intent(this, MainActivity::class.java)
-                            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                            i.putExtra("HASTOSAVE",false)
-                            startActivity(i)
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG_login, "Login failed", task.exception)
-
-                            binding.etLoginPasswordLayout.error = getString(R.string.password_incorrect)
-                            Toast.makeText(this, task.exception!!.message.toString(), Toast.LENGTH_LONG).show()
-                        }
-                    }
             }
-        }
-        return listener
-    }
-
-    /**
-     * @author Claudio Menegotto
-     * EVENTO PER CAMBIARE IL FRAGMENT DI LOGIN NEL FRAGMENT DI SIGN UP
-     */
-    fun showRegister(){
-        val i = Intent(this, RegisterActivity::class.java)
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-        startActivity(i)
     }
 
     /**
