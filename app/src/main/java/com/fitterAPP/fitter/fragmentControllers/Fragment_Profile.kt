@@ -3,22 +3,21 @@ package com.fitterAPP.fitter.fragmentControllers
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.renderscript.Sampler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.fitterAPP.fitter.MainActivity
+import androidx.navigation.fragment.findNavController
 import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.classes.Athlete
 import com.fitterAPP.fitter.databases.RealTimeDBHelper
 import com.fitterAPP.fitter.databinding.FragmentProfileBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationBarView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
@@ -31,7 +30,6 @@ class Profile : Fragment() {
 
     private lateinit var auth : FirebaseAuth
     private val dbReference : DatabaseReference = FirebaseDatabase.getInstance(RealTimeDBHelper.getDbURL()).getReference("USERS").child(Athlete.UID)
-    private lateinit var user : Athlete
 
     private lateinit var etUsername : EditText
     private lateinit var etBio : EditText
@@ -43,11 +41,9 @@ class Profile : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentProfileBinding.inflate(inflater, container, false)
 
-        auth = Firebase.auth
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).setOnItemSelectedListener(bottomNavItemSelected())
 
-        val image = binding.imgProfile
-        val username = binding.tvUsername
-        val bio = binding.tvBio
+        auth = Firebase.auth
 
         etUsername = binding.etUsername
         etBio = binding.etBio
@@ -57,11 +53,10 @@ class Profile : Fragment() {
 
 
         if(checkIfShouldDisplay() != true){
-            etEmail.error = "Email verification needed"
+            binding.etEmailLayout.error = "Email verification needed. Click above to verify it"
             etEmail.setOnClickListener(verificationProcess())
         }
 
-        updateStaticInfo(image,username,bio)
         updateVariableInfo(etUsername,etBio,etEmail)
 
         btnUpdate.setOnClickListener(updateProfileListener())
@@ -69,26 +64,49 @@ class Profile : Fragment() {
         return binding.root
     }
 
-    private fun verificationProcess(): View.OnClickListener {
-        val listener = View.OnClickListener {
-            Firebase.auth.currentUser?.sendEmailVerification()?.addOnCompleteListener{ task ->
-                if(task.isSuccessful){
-                    Toast.makeText(requireContext(),"Email sent successfully", Toast.LENGTH_LONG).show()
-                }else{
-                    Toast.makeText(requireContext(),task.exception?.message.toString(), Toast.LENGTH_LONG).show()
+    private fun bottomNavItemSelected(): NavigationBarView.OnItemSelectedListener {
+        val listener = NavigationBarView.OnItemSelectedListener{ item ->
+            when (item.itemId){
+                R.id.home ->{
+                    findNavController().navigate(R.id.action_profile_to_myFitnessCards)
+                    true
+                }
+                R.id.addCard ->{
+                    true
+                }
+                R.id.search ->{
+                    findNavController().navigate(R.id.action_profile_to_findprofile)
+                    true
+                }
+                else ->{
+                    false
                 }
             }
         }
         return listener
     }
-    private fun checkIfShouldDisplay() : Boolean?{
-        if(Firebase.auth.currentUser?.reload()?.isSuccessful == true) {
-            if (Firebase.auth.currentUser?.providerId == "facebook.com") {
-                return true
+
+    private fun verificationProcess(): View.OnClickListener {
+        val listener = View.OnClickListener {
+            Firebase.auth.currentUser?.sendEmailVerification()?.addOnCompleteListener{ task ->
+                if(task.isSuccessful){
+                    Toast.makeText(requireContext(),"Email sent successfully", Toast.LENGTH_LONG).show()
+                    binding.etEmailLayout.error = "Verify link sent to your email address"
+                }else{
+                    Toast.makeText(requireContext(),task.exception?.message.toString(), Toast.LENGTH_LONG).show()
+                }
             }
-            return Firebase.auth.currentUser?.isEmailVerified
+            binding.etEmail.setOnClickListener(null)
         }
-        return false
+        return listener
+    }
+
+    private fun checkIfShouldDisplay() : Boolean?{
+        Firebase.auth.currentUser?.reload()
+        if (Firebase.auth.currentUser?.providerId == "facebook.com") {
+            return true
+        }
+        return Firebase.auth.currentUser?.isEmailVerified
     }
 
     private fun updateProfileListener(): View.OnClickListener {
@@ -107,28 +125,11 @@ class Profile : Fragment() {
         return listener
     }
 
-    private fun updateStaticInfo(image : ImageView,username : TextView, bio : TextView){
-        image.setImageDrawable(requireActivity().findViewById<ImageView>(R.id.profilepic_IV).drawable)
-        username.text = Athlete.username
-        bio.text = Athlete.profileBio
-    }
     private fun updateVariableInfo(username : EditText, bio : EditText, email : EditText){
         username.setText(Athlete.username)
         bio.setText(Athlete.profileBio)
         email.setText(auth.currentUser?.email)
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     private fun GrabImageFromDisk(){

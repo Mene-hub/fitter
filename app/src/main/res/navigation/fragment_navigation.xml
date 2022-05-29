@@ -23,6 +23,9 @@
         <action
             android:id="@+id/action_myFitnessCards_to_timeRacap"
             app:destination="@id/timeRacap" />
+        <action
+            android:id="@+id/action_myFitnessCards_to_profile"
+            app:destination="@id/profile" />
     </fragment>
     <fragment
         android:id="@+id/findprofile"
@@ -36,6 +39,12 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_findprofile_to_profile"
+            app:destination="@id/profile" />
+        <action
+            android:id="@+id/action_findprofile_to_timeRacap"
+            app:destination="@id/timeRacap" />
     </fragment>
     <dialog
         android:id="@+id/fragment_showCardDialog"
@@ -57,5 +66,20 @@
         <action
             android:id="@+id/action_timeRacap_to_myFitnessCards"
             app:destination="@id/myFitnessCards" />
+        <action
+            android:id="@+id/action_timeRacap_to_findprofile"
+            app:destination="@id/findprofile" />
+    </fragment>
+    <fragment
+        android:id="@+id/profile"
+        android:name="com.fitterAPP.fitter.fragmentControllers.Profile"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profile_to_myFitnessCards"
+            app:destination="@id/myFitnessCards" />
+        <action
+            android:id="@+id/action_profile_to_findprofile"
+            app:destination="@id/findprofile" />
     </fragment>
 </navigation>

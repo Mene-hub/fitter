@@ -6,113 +6,103 @@
     android:paddingBottom="8dp"
     app:cardBackgroundColor="@color/white">
 
-    <FrameLayout
-        android:id="@+id/standard_bottom_sheet"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+        <androidx.cardview.widget.CardView
+            android:layout_width="50dp"
+            android:layout_height="5dp"
+            android:layout_gravity="center"
+            app:cardBackgroundColor="#333333"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="0dp">
+
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/userprofileImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:tint="@color/black"
+                app:srcCompat="@drawable/person_24_40dp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+
+                android:id="@+id/txt_userProfile"
+                style="@style/BottomSheetItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:drawableTint="#000000"
+                android:text="User profile"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@+id/txt_calendar" />
+        </LinearLayout>
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="50dp"
-                android:layout_height="5dp"
+            <ImageView
+                android:id="@+id/imageView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                app:cardBackgroundColor="#333333"
-                app:cardCornerRadius="2dp"
-                app:cardElevation="0dp">
+                app:tint="@color/black"
+                app:srcCompat="@drawable/graph" />
 
-            </androidx.cardview.widget.CardView>
-
-
-            <LinearLayout
-                android:id="@+id/LL_verifyEmail"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_recap"
+                style="@style/BottomSheetItem"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/IV_verifyImage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    app:srcCompat="@drawable/ic_error"
-                    app:tint="@color/red"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/txt_verifyEmail"
-                    style="@style/BottomSheetItem"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="0dp"
-                    android:drawableTint="#000000"
-                    android:text="Verify email address"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_calendar" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/imageView10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    app:tint="@color/black"
-                    app:srcCompat="@drawable/graph" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/txt_recap"
-                    style="@style/BottomSheetItem"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="0dp"
-                    android:drawableTint="#000000"
-                    android:text="Weekly Recap"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_calendar" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/imageView11"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    app:tint="@color/black"
-                    app:srcCompat="@drawable/logout" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/txt_logout"
-                    style="@style/BottomSheetItem"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="0dp"
-                    android:drawableTint="#000000"
-                    android:text="Log out"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_search_profiles" />
-            </LinearLayout>
-
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:drawableTint="#000000"
+                android:text="Weekly Recap"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@+id/txt_calendar" />
         </LinearLayout>
 
-    </FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:tint="@color/black"
+                app:srcCompat="@drawable/logout" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_logout"
+                style="@style/BottomSheetItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:drawableTint="#000000"
+                android:text="Log out"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@+id/txt_search_profiles" />
+        </LinearLayout>
+
+    </LinearLayout>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

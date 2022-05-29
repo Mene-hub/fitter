@@ -24,14 +24,11 @@ class profileMenu : BottomSheetDialogFragment() {
         val logoutbt : AppCompatTextView = binding.txtLogout
         val recapbt : AppCompatTextView = binding.txtRecap
 
-        val verifyEmail : AppCompatTextView = binding.txtVerifyEmail
-        val linearLayoutVerifyEmail : LinearLayout = binding.LLVerifyEmail
+        val userprofile : AppCompatTextView = binding.txtUserProfile
 
-        if(checkIfShouldDisplay() != true){
-            linearLayoutVerifyEmail.visibility = View.VISIBLE
-            verifyEmail.setOnClickListener(verificationProcess())
-        }else{
-            linearLayoutVerifyEmail.visibility = View.GONE
+        userprofile.setOnClickListener{
+            findNavController().navigate(R.id.action_myFitnessCards_to_profile)
+            dismiss()
         }
 
         logoutbt.setOnClickListener {
@@ -46,30 +43,6 @@ class profileMenu : BottomSheetDialogFragment() {
 
         return binding.root
     }
-
-    private fun verificationProcess(): View.OnClickListener {
-        val listener = View.OnClickListener {
-            Firebase.auth.currentUser?.sendEmailVerification()?.addOnCompleteListener{ task ->
-                if(task.isSuccessful){
-                    Toast.makeText(requireContext(),"Email sent successfully", Toast.LENGTH_LONG).show()
-                    dismiss()
-                }else{
-                    Toast.makeText(requireContext(),task.exception?.message.toString(), Toast.LENGTH_LONG).show()
-                    dismiss()
-                }
-            }
-        }
-        return listener
-    }
-
-    fun checkIfShouldDisplay() : Boolean?{
-        Firebase.auth.currentUser?.reload()
-        if(Firebase.auth.currentUser?.providerId == "facebook.com"){
-            return true
-        }
-        return Firebase.auth.currentUser?.isEmailVerified
-    }
-
 
     companion object {
         const val TAG = "ModalBottomSheet"
