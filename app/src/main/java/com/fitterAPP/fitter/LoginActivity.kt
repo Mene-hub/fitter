@@ -73,7 +73,7 @@ class LoginActivity : AppCompatActivity() {
                 BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
                     .setSupported(true)
                     // Your server's client ID, not your Android client ID.
-                    .setServerClientId(getString(R.string.web_client_id))
+                    .setServerClientId(BuildConfig.google_token)
                     // Only show accounts previously used to sign in.
                     .setFilterByAuthorizedAccounts(false)
                     .build())
@@ -81,6 +81,8 @@ class LoginActivity : AppCompatActivity() {
         //endregion
 
         //region facebookStuff
+
+
         binding.IVLoginFacebook.setOnClickListener(loginFacebook())
         callbackManager = CallbackManager.Factory.create()
         //endregion
