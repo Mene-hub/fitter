@@ -1,4 +1,4 @@
-package com.fitterAPP.fitter.Classes
+package com.fitterAPP.fitter.classes
 
 /**
  * @author Daniel Satriano
@@ -31,6 +31,6 @@ data class Athlete(var UID : String, var username : String?, var profilePic : St
     }
 
     override fun toString(): String {
-        return "UID: ${this.UID.toString()}\nUSERNAME: ${this.username}"
+        return "UID: ${this.UID}\nUSERNAME: ${this.username}"
     }
 }
