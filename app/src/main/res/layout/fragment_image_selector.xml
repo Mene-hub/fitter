@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingBottom="8dp"
-    tools:context=".FragmentControlers.ComboBoxSelectItemMenu">
+    tools:context=".FragmentControlers.ImageSelector">
 
     <FrameLayout
         android:id="@+id/standard_bottom_sheet"
@@ -34,7 +34,8 @@
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false"
                 android:scrollbars="none"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                />
 
             <LinearLayout
                 android:layout_width="wrap_content"

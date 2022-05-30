@@ -73,6 +73,32 @@ enum class CardsCover:IImageName {
                 else -> {woman}
             }
         }
+
+        fun getFromName(value: String): CardsCover {
+            return when (value){
+                gigachad.toString() -> gigachad
+                gigachad2.toString() -> gigachad2
+                man.toString() -> man
+                man2.toString() -> man2
+                woman.toString() -> man
+                woman2.toString() -> man2
+
+                else -> {woman}
+            }
+        }
+
+        fun getFromFileName(value: String): CardsCover {
+            return when (value){
+                "$gigachad.png" -> gigachad
+                "$gigachad2.png" -> gigachad2
+                "$man.png" -> man
+                "$man2.png" -> man2
+                "$woman.png" -> man
+                "$woman2.png" -> man2
+
+                else -> {woman}
+            }
+        }
     }
 }
 

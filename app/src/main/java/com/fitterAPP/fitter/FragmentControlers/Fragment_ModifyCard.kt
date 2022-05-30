@@ -5,25 +5,19 @@ import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.widget.*
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fitterAPP.fitter.Classes.Exercise
 import com.fitterAPP.fitter.Classes.FitnessCard
 import com.fitterAPP.fitter.ItemsAdapter.FitnessCardExercisesAdapter
 import com.fitterAPP.fitter.MainActivity
-import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.databinding.FragmentModifyCardBinding
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 
 
 class ModifyCard(var fitnessCard: FitnessCard) : DialogFragment() {
@@ -71,7 +65,7 @@ class ModifyCard(var fitnessCard: FitnessCard) : DialogFragment() {
 
         val editCover : ImageView = binding.EditCoverIV
         editCover.setOnClickListener {
-            val modalBottomSheet = ComboBoxSelectItemMenu("Card name", fitnessCard)
+            val modalBottomSheet = ImageSelector("Card name", fitnessCard)
             modalBottomSheet.show(activity?.supportFragmentManager!!, profileMenu.TAG)
         }
 
