@@ -1,5 +1,6 @@
 package com.fitterAPP.fitter.databases
 
+import com.fitterAPP.fitter.BuildConfig
 import com.fitterAPP.fitter.classes.Athlete
 import com.fitterAPP.fitter.classes.FitnessCard
 import com.google.firebase.database.ChildEventListener
@@ -13,7 +14,7 @@ class RealTimeDBHelper(val database: DatabaseReference) {
 
     companion object {
         fun getDbURL() : String {
-            return "https://fitter-8363a-default-rtdb.europe-west1.firebasedatabase.app/"
+            return BuildConfig.database
         }
     }
 

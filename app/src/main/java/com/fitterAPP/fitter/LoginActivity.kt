@@ -61,6 +61,7 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         //Set transparent status bar
         window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         auth = Firebase.auth    //istantiate auth variable
@@ -118,9 +119,9 @@ class LoginActivity : AppCompatActivity() {
     private fun startActivityByFacebook(uid : String, token : AccessToken, user : FirebaseUser){
         val databaseReference: DatabaseReference = FirebaseDatabase.getInstance(RealTimeDBHelper.getDbURL()).getReference("USERS")
         databaseReference.orderByKey().equalTo(uid).get().addOnSuccessListener{
-                item ->
-            item.getValue(Athlete::class.java)
-            if(item!=null){
+                snapshot ->
+            val item = snapshot.getValue(Athlete::class.java)
+            if(item?.UID == auth.uid){
                 //ESISTE
                 val intent = Intent(this, MainActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -128,7 +129,6 @@ class LoginActivity : AppCompatActivity() {
                 intent.putExtra("HASTOSAVE",false)
                 startActivity(intent)
             }else{
-
                 val request = GraphRequest.newGraphPathRequest(token, "/${token.userId}/picture") { response ->
                     val uri = Uri.parse(response.connection?.url.toString())
 
@@ -166,9 +166,9 @@ class LoginActivity : AppCompatActivity() {
     private fun startActivityByGoogle(uid : String){
         val databaseReference: DatabaseReference = FirebaseDatabase.getInstance(RealTimeDBHelper.getDbURL()).getReference("USERS")
         databaseReference.orderByKey().equalTo(uid).get().addOnSuccessListener{
-                item ->
-            item.getValue(Athlete::class.java)
-            if(item!=null){
+                snapshot ->
+            val item = snapshot.getValue(Athlete::class.java)
+            if(item?.UID == auth.uid){
                 //ESISTE
                 val intent = Intent(this, MainActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
