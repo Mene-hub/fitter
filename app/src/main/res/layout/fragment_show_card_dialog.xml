@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:fillViewport="true"
     tools:context=".fragmentControllers.Fragment_showCardDialog">
 
     <ScrollView
@@ -35,19 +36,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <ImageView
-                    android:id="@+id/CardBgImage_IV"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:contentDescription="Background image"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0"
-                    app:srcCompat="@drawable/gigachad2" />
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:contentDescription="@string/background_image"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/gigachad2" />
 
                 <ImageView
                     android:id="@+id/backBt"
@@ -55,8 +56,8 @@
                     android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:contentDescription="Back arrow"
+                    android:layout_marginTop="?actionBarSize"
+                    android:contentDescription="@string/backArrow"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/arrow_back"
@@ -70,7 +71,7 @@
                     android:layout_marginBottom="16dp"
                     app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="10dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/CardBgImage_IV"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView2"
                     app:layout_constraintStart_toStartOf="parent">
 
                     <LinearLayout

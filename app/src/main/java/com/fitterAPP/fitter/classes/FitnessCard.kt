@@ -4,7 +4,8 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 import kotlinx.android.parcel.RawValue
 
-data class FitnessCard(var name:String?, var description: String?, var timeDuration: Int?, var exercises: MutableList<Exercise>?, var key : String, var imageCover:CardsCover) {
+@Parcelize
+data class FitnessCard(var name:String?, var description: String?, var timeDuration: Int?, var exercises: @RawValue MutableList<Exercise>?, var key : String, var imageCover : CardsCover) : Parcelable {
 
     constructor() : this ("Scheda", "Default description",60, null, "", CardsCover.woman)
 

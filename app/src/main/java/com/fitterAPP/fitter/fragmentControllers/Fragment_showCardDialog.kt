@@ -3,16 +3,10 @@ package com.fitterAPP.fitter.fragmentControllers
 import android.app.Activity
 import com.fitterAPP.fitter.R
 import android.app.Dialog
-import android.graphics.Point
-import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.view.*
 import android.view.animation.Animation
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
@@ -23,76 +17,54 @@ import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.databinding.FragmentShowCardDialogBinding
 import com.fitterAPP.fitter.itemsAdapter.FitnessCardExercisesAdapter
 
-class Fragment_showCardDialog(var newFitnessCard: FitnessCard) : DialogFragment() {
+
+class Fragment_showCardDialog() : DialogFragment() {
 
     /** The system calls this to get the DialogFragment's layout, regardless
     of whether it's being displayed as a dialog or an embedded fragment. */
 
     private lateinit var binding : FragmentShowCardDialogBinding
+    private val args by navArgs<Fragment_showCardDialogArgs>()
+    private lateinit var newFitnessCard : FitnessCard
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(STYLE_NORMAL, R.style.Theme_Fitter_FullScreenDialog)
+
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentShowCardDialogBinding.inflate(inflater, container, false)
 
+        //Set transparent status bar
+        dialog?.window?.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+
+        newFitnessCard = args.cardBundle
+
         binding.backBt.setOnClickListener {
-            activity?.onBackPressed()
+            findNavController().navigateUp()
         }
 
         val recycle : RecyclerView = binding.exercisesListRV
 
-        /*
-        var databaseHelper : RealTimeDBHelper
-        val _REFERENCE : String = "FITNESS_CARDS"
-        var dbReference : DatabaseReference = FirebaseDatabase.getInstance(RealTimeDBHelper.getDbURL()).getReference(_REFERENCE).child("${Athlete.UID}-FITNESSCARD")
-        databaseHelper = RealTimeDBHelper(dbReference) //USING DEFAULT VALUE
-
-        databaseHelper.setFitnessCardItem(newFitnessCard)*/
-
         if(newFitnessCard.exercises != null && newFitnessCard.exercises?.size!! > 0){
 
-            //newFitnessCard.exercises?.addAll(newFitnessCard.exercises!!)
+            newFitnessCard.exercises?.addAll(newFitnessCard.exercises!!)
+            newFitnessCard.exercises?.addAll(newFitnessCard.exercises!!)
+            newFitnessCard.exercises?.addAll(newFitnessCard.exercises!!)
 
-            var adapter = context?.let {FitnessCardExercisesAdapter((activity as MainActivity),newFitnessCard,newFitnessCard.exercises!!, false)}!!
+            val adapter = context?.let {FitnessCardExercisesAdapter((activity as MainActivity),newFitnessCard,newFitnessCard.exercises!!,false)}!!
             recycle.adapter = adapter
         }
 
         val cardName : TextView = binding.CardNameTV
         val cardDuration : TextView = binding.TimeDurationTV
         val cardDescription: TextView = binding.DescriptionTV
-        val bgimage : ImageView = binding.CardBgImageIV
-
-        val id: Int? = context?.resources?.getIdentifier(
-            "com.fitterAPP.fitter:drawable/" + newFitnessCard.imageCover.toString(),
-            null,
-            null
-        )
-
-        bgimage.setImageResource(id!!)
-
 
         cardName.text = newFitnessCard.name
         cardDescription.text = newFitnessCard.description
-        cardDuration.text = newFitnessCard.timeDuration.toString() + " minutes"
-
-        var screenHeight : Int = 0
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-
-            val size = Point()
-            try {
-                val windowMetrics = activity?.windowManager?.currentWindowMetrics
-                val display: Rect = windowMetrics?.bounds!!
-                screenHeight = display.height()/3
-            } catch (e: NoSuchMethodError) {}
-
-        } else {
-            val metrics = DisplayMetrics()
-            activity?.windowManager?.defaultDisplay?.getMetrics(metrics)
-            screenHeight = metrics.heightPixels/3
-        }
-
-        val params = FrameLayout.LayoutParams( RelativeLayout.LayoutParams.MATCH_PARENT, screenHeight)
-
-        binding.Header.layoutParams = params
+        val text = newFitnessCard.timeDuration.toString() +" "+ getString(R.string.minutes)
+        cardDuration.text = text
 
         // Inflate the layout for this fragment
         return binding.root
@@ -105,13 +77,14 @@ class Fragment_showCardDialog(var newFitnessCard: FitnessCard) : DialogFragment(
         // title by default, but your custom layout might not need it. So here you can
         // remove the dialog title, but you must call the superclass to get the Dialog.
 
-
         val dialog = super.onCreateDialog(savedInstanceState)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         return dialog
     }
 
-    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
+
+
+    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation {
         val a: Animation = object : Animation() {}
         a.duration = 0
         return a
