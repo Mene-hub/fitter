@@ -19,6 +19,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
 import com.google.firebase.database.*
 
+/**
+ * Fragment used to implement "find other users" feature
+ * @author Daniel Satriano
+ * @since 28/05/2022
+ */
 class FindProfile : Fragment() {
     private lateinit var binding : FragmentFindprofileBinding
     private var databaseReference: DatabaseReference = FirebaseDatabase.getInstance(RealTimeDBHelper.getDbURL()).getReference("USERS")
@@ -45,6 +50,7 @@ class FindProfile : Fragment() {
      * In particular onQUeryTextChange is the method used for the research in the database which sends an input to databaseQuery(textString) whenever textString is not Blank.<br />
      * @see databaseQuery for more information about that method
      * @author Daniel Satriano
+     * @since 28/05/2022
      */
     private fun queryTextListener(): SearchView.OnQueryTextListener {
         val listener = object : SearchView.OnQueryTextListener{
@@ -70,6 +76,7 @@ class FindProfile : Fragment() {
      * * This function also has inside a child listener which will get updates everytime it finds new child that have inside the given string
      * @see queryTextListener for more information about that function
      * @author Daniel Satriano
+     * @since 28/05/2022
      */
     @SuppressLint("NotifyDataSetChanged")
     fun databaseQuery(text : String?){
@@ -99,6 +106,12 @@ class FindProfile : Fragment() {
         })
     }
 
+
+    /**
+     * Simple item listener for the bottom navigation view, which is used to move through views
+     * @author Daniel Satriano
+     * @since 28/05/2022
+     */
     private fun bottomNavItemSelected(): NavigationBarView.OnItemSelectedListener {
         val listener = NavigationBarView.OnItemSelectedListener{ item ->
             when (item.itemId){

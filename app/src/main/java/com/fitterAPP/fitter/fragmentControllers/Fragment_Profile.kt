@@ -23,6 +23,12 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 
+
+/**
+ * Fragment used to display user profile information and to allow him/her to modify it
+ * @author Daniel Satriano
+ * @since 30/05/2022
+ */
 class Profile : Fragment() {
 
     private val REQUEST_CODE = 121
@@ -35,8 +41,10 @@ class Profile : Fragment() {
     private lateinit var etBio : EditText
     private lateinit var etEmail : EditText
 
-    //SPOSTARE VERIFICA EMAIL NELLA REGISTRAZIONE
-
+    /**
+     * @author Daniel Satriano
+     * @since 30/05/2022
+     */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
         binding = FragmentProfileBinding.inflate(inflater, container, false)
@@ -51,12 +59,6 @@ class Profile : Fragment() {
 
         val btnUpdate = binding.btnUpdate
 
-
-        if(checkIfShouldDisplay() != true){
-            binding.etEmailLayout.error = "Email verification needed. Click above to verify it"
-            etEmail.setOnClickListener(verificationProcess())
-        }
-
         updateVariableInfo(etUsername,etBio,etEmail)
 
         btnUpdate.setOnClickListener(updateProfileListener())
@@ -64,6 +66,11 @@ class Profile : Fragment() {
         return binding.root
     }
 
+    /**
+     * Simple item listener for the bottom navigation view, which is used to move through views
+     * @author Daniel Satriano
+     * @since 30/05/2022
+     */
     private fun bottomNavItemSelected(): NavigationBarView.OnItemSelectedListener {
         val listener = NavigationBarView.OnItemSelectedListener{ item ->
             when (item.itemId){
@@ -86,29 +93,12 @@ class Profile : Fragment() {
         return listener
     }
 
-    private fun verificationProcess(): View.OnClickListener {
-        val listener = View.OnClickListener {
-            Firebase.auth.currentUser?.sendEmailVerification()?.addOnCompleteListener{ task ->
-                if(task.isSuccessful){
-                    Toast.makeText(requireContext(),"Email sent successfully", Toast.LENGTH_LONG).show()
-                    binding.etEmailLayout.error = "Verify link sent to your email address"
-                }else{
-                    Toast.makeText(requireContext(),task.exception?.message.toString(), Toast.LENGTH_LONG).show()
-                }
-            }
-            binding.etEmail.setOnClickListener(null)
-        }
-        return listener
-    }
-
-    private fun checkIfShouldDisplay() : Boolean?{
-        Firebase.auth.currentUser?.reload()
-        if (Firebase.auth.currentUser?.providerId == "facebook.com") {
-            return true
-        }
-        return Firebase.auth.currentUser?.isEmailVerified
-    }
-
+    /**
+     * Update button listener, used to update data in the Realtime Database, it also closes the window once the update has been done and gives a Toast message to the user
+     * as a feedback
+     * @author Daniel Satriano
+     * @since 30/05/2022
+     */
     private fun updateProfileListener(): View.OnClickListener {
         val listener = View.OnClickListener {
 
@@ -121,10 +111,18 @@ class Profile : Fragment() {
                 dbReference.setValue(athlete)
             }
 
+            Toast.makeText(requireContext(),"Profile updated", Toast.LENGTH_LONG).show()
+            findNavController().navigate(R.id.action_profile_to_myFitnessCards)
         }
         return listener
     }
 
+
+    /**
+     * Method used to update all the EditTexts in the UI with the current data stored in [Athlete] companion class
+     * @author Daniel Satriano
+     * @since 30/05/2022
+     */
     private fun updateVariableInfo(username : EditText, bio : EditText, email : EditText){
         username.setText(Athlete.username)
         bio.setText(Athlete.profileBio)
@@ -132,7 +130,9 @@ class Profile : Fragment() {
     }
 
 
-    private fun GrabImageFromDisk(){
+
+
+    private fun grabImageFromDisk(){
         if(ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
             //SELEZIONA IMMAGINE
 
@@ -148,7 +148,7 @@ class Profile : Fragment() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         if(requestCode == REQUEST_CODE){
-            GrabImageFromDisk()
+            grabImageFromDisk()
         }else{
             Toast.makeText(requireContext(), "Oops, you just denied the permission for storage. You can also allow it from settings.", Toast.LENGTH_LONG).show()
         }
