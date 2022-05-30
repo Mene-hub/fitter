@@ -12,6 +12,7 @@
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/drawable-v24/person_24.xml" value="0.2025" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/drawable/blobtest.xml" value="0.26" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/drawable/gradient_chart_background.xml" value="0.332" />
+        <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/drawable/ic_bio.xml" value="0.2245" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/drawable/ic_email_24.xml" value="0.243" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/drawable/ic_wave.xml" value="0.243" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/drawable/onda.xml" value="0.243" />
@@ -26,22 +27,28 @@
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/activity_login.xml" value="0.29743589743589743" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/activity_register.xml" value="0.29743589743589743" />
+        <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/dialog_input_text.xml" value="0.29743589743589743" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/exercise_list.xml" value="0.3625" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/fragment_calendar.xml" value="0.3625" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/fragment_create_card_dialog.xml" value="0.25" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/fragment_exercise_list.xml" value="0.3484375" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/fragment_findprofile.xml" value="0.3625" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/fragment_home.xml" value="0.3625" />
+        <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/fragment_image_selector.xml" value="0.17863247863247864" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/fragment_login.xml" value="0.33" />
+        <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/fragment_modify_card.xml" value="0.29743589743589743" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/fragment_my_fitness_cards.xml" value="0.3625" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/fragment_profile.xml" value="0.3625" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/fragment_profile_menu.xml" value="0.33" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/fragment_profile_menu_item.xml" value="0.3625" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/fragment_show_card_dialog.xml" value="0.33" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/fragment_signup.xml" value="0.25" />
+        <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/fragment_string_edit_menu.xml" value="0.15213675213675212" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/fragment_time_racap.xml" value="0.3625" />
+        <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/item_edit_exercise.xml" value="0.15213675213675212" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/item_exercise.xml" value="0.3625" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/item_fitnesscard.xml" value="0.3625" />
+        <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/item_image_list.xml" value="0.15213675213675212" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/signup_layout.xml" value="0.3625" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/layout/templayout.xml" value="0.26721014492753625" />
         <entry key="..\:/Users/Claudio/IdeaProjects/Fitter/app/src/main/res/menu/bottom_app_bar.xml" value="0.29743589743589743" />
@@ -49,34 +56,27 @@
         <entry key="..\:/Users/satri/AndroidStudioProjects/fitter/app/src/main/res/layout/fragment_my_fitness_cards.xml" value="0.25" />
         <entry key="..\:/Users/satri/AndroidStudioProjects/fitter/app/src/main/res/layout/fragment_signup.xml" value="0.2848731884057971" />
         <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/drawable-v24/fitness_24.xml" value="0.3675" />
-        <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/drawable-v24/person_24.xml" value="0.356" />
-        <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/drawable-v24/person_24_40dp.xml" value="0.2125" />
         <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/drawable/bottom_navigation_view_selector.xml" value="0.2815" />
         <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/drawable/calendar.xml" value="0.297" />
-        <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/drawable/graph.xml" value="0.364" />
-        <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/drawable/ic_FitterAppLogo_background.xml" value="0.1785" />
-        <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/drawable/ic_check.xml" value="0.364" />
-        <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/drawable/ic_error.xml" value="0.364" />
         <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/drawable/ic_facebook.xml" value="0.3075" />
         <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/drawable/ic_google.xml" value="0.3075" />
         <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/drawable/round_border.xml" value="0.335" />
         <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/drawable/round_image.xml" value="0.335" />
-        <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/layout/activity_login.xml" value="0.33" />
+        <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/layout/activity_login.xml" value="0.5" />
         <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/layout/activity_main.xml" value="0.33" />
-        <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/layout/activity_register.xml" value="0.33" />
+        <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/layout/activity_register.xml" value="0.1923899102180419" />
         <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/layout/dialog_input_text.xml" value="0.55" />
         <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/layout/fragment_create_card_dialog.xml" value="0.55" />
         <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/layout/fragment_exercise_list.xml" value="0.55" />
-        <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/layout/fragment_findprofile.xml" value="0.33" />
+        <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/layout/fragment_findprofile.xml" value="0.25" />
         <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/layout/fragment_login.xml" value="0.33" />
         <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/layout/fragment_my_fitness_cards.xml" value="0.32019927536231885" />
-        <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/layout/fragment_profile.xml" value="0.33" />
+        <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/layout/fragment_profile.xml" value="0.22" />
         <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/layout/fragment_profile_menu.xml" value="0.30085470085470084" />
         <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/layout/fragment_show_card_dialog.xml" value="0.18" />
         <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/layout/fragment_signup.xml" value="0.26992753623188404" />
         <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/layout/item_exercise.xml" value="0.55" />
         <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/layout/item_fitnesscard.xml" value="0.55" />
-        <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/layout/suggestion_adapter_row.xml" value="0.3" />
         <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/layout/templayout.xml" value="0.30085470085470084" />
         <entry key="..\:/Users/satri/source/Android_Projects/fitter/app/src/main/res/menu/bottom_navigator_menu.xml" value="0.30085470085470084" />
       </map>
