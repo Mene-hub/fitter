@@ -74,8 +74,6 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
         if(auth.currentUser != null){
             currentUser = auth.currentUser!!
-
-
             //INITIAL INIT, WILL BE CHANGED AS SOON AS THE VALUE LISTENER IS CALLED
             user.SetNewValue(Athlete(currentUser.uid, currentUser.displayName, currentUser.photoUrl.toString(), "", ""))
             //IF THE USER COMES FROM THE REGISTRATION FORM (and Google Login & Facebook Login) THEN IT HAS TO SAVE THE DATA TO THE DB,
