@@ -29,6 +29,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.Query
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlin.random.Random
 
@@ -60,7 +61,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        Firebase.database.setPersistenceEnabled(true)
 
         //Set transparent status bar
         window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
@@ -153,6 +154,30 @@ class LoginActivity : AppCompatActivity() {
                 request.executeAsync()
 
             }
+        }.addOnFailureListener {
+            val request = GraphRequest.newGraphPathRequest(token, "/${token.userId}/picture") { response ->
+                val uri = Uri.parse(response.connection?.url.toString())
+
+                val updater = UserProfileChangeRequest.Builder().setDisplayName(user.displayName.toString().replace("\\s".toRegex(),"")).setPhotoUri(uri).build()
+                auth.currentUser!!.updateProfile(updater).addOnCompleteListener{ task2 ->
+                    if(task2.isSuccessful){
+                        Log.d(TAG_login, "User profile updated")
+                        auth.currentUser?.reload()
+                        Log.w(TAG_login,user.displayName.toString())
+
+                        val intent = Intent(this, MainActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        intent.putExtra("HASTOSAVE",true)
+                        startActivity(intent)
+
+                    }else{
+                        Toast.makeText(this,task2.exception!!.message.toString(), Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+            request.executeAsync()
+
         }
     }
 
@@ -194,6 +219,26 @@ class LoginActivity : AppCompatActivity() {
                     }else{
                         Toast.makeText(this,task2.exception!!.message.toString(), Toast.LENGTH_LONG).show()
                     }
+                }
+            }
+        }.addOnFailureListener {
+            //NON ESISTE
+            val user = auth.currentUser
+            val updater = UserProfileChangeRequest.Builder().setDisplayName(user?.displayName.toString().replace("\\s".toRegex(),"")).build()
+            auth.currentUser!!.updateProfile(updater).addOnCompleteListener{ task2 ->
+                if(task2.isSuccessful){
+                    Log.d(TAG_login, "User profile updated")
+                    auth.currentUser?.reload()
+                    Log.w(TAG_login,auth.currentUser?.displayName.toString())
+
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    intent.putExtra("HASTOSAVE",true)
+                    startActivity(intent)
+
+                }else{
+                    Toast.makeText(this,task2.exception!!.message.toString(), Toast.LENGTH_LONG).show()
                 }
             }
         }

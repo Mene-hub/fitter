@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        Firebase.database.setPersistenceEnabled(true)
+        //Firebase.database.setPersistenceEnabled(true)
 
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.FragmentContainer) as NavHostFragment
@@ -72,6 +72,7 @@ class MainActivity : AppCompatActivity() {
      */
     override fun onStart() {
         super.onStart()
+
         if(auth.currentUser != null){
             currentUser = auth.currentUser!!
             //INITIAL INIT, WILL BE CHANGED AS SOON AS THE VALUE LISTENER IS CALLED
