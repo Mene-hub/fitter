@@ -26,6 +26,9 @@
         <action
             android:id="@+id/action_myFitnessCards_to_profile"
             app:destination="@id/profile" />
+        <action
+            android:id="@+id/action_myFitnessCards_to_modifyCard"
+            app:destination="@id/modifyCard" />
     </fragment>
     <fragment
         android:id="@+id/findprofile"
@@ -82,4 +85,31 @@
             android:id="@+id/action_profile_to_findprofile"
             app:destination="@id/findprofile" />
     </fragment>
+    <fragment
+        android:id="@+id/exercise_list2"
+        android:name="com.fitterAPP.fitter.fragmentControllers.exercise_list"
+        android:label="fragment_exercise_list"
+        tools:layout="@layout/fragment_exercise_list" />
+    <dialog
+        android:id="@+id/imageSelector"
+        android:name="com.fitterAPP.fitter.fragmentControllers.ImageSelector"
+        android:label="fragment_image_selector"
+        tools:layout="@layout/fragment_image_selector" />
+    <dialog
+        android:id="@+id/modifyCard"
+        android:name="com.fitterAPP.fitter.fragmentControllers.ModifyCard"
+        android:label="fragment_modify_card"
+        tools:layout="@layout/fragment_modify_card" >
+        <action
+            android:id="@+id/action_modifyCard_to_myFitnessCards"
+            app:destination="@id/myFitnessCards" />
+        <argument
+            android:name="cardBundle"
+            app:argType="com.fitterAPP.fitter.classes.FitnessCard" />
+    </dialog>
+    <dialog
+        android:id="@+id/stringEditMenu"
+        android:name="com.fitterAPP.fitter.fragmentControllers.StringEditMenu"
+        android:label="fragment_string_edit_menu"
+        tools:layout="@layout/fragment_string_edit_menu" />
 </navigation>

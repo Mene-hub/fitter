@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:fillViewport="true"
     tools:context=".fragmentControllers.ModifyCard">
 
     <ScrollView
@@ -66,7 +67,7 @@
                     android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="?attr/actionBarSize"
                     android:contentDescription="Back arrow"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"

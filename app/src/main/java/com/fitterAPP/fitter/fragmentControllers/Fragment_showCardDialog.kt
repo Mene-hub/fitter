@@ -1,9 +1,7 @@
 package com.fitterAPP.fitter.fragmentControllers
 
-import android.app.Activity
 import com.fitterAPP.fitter.R
 import android.app.Dialog
-import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.view.animation.Animation
@@ -27,6 +25,11 @@ class Fragment_showCardDialog() : DialogFragment() {
     private val args by navArgs<Fragment_showCardDialogArgs>()
     private lateinit var newFitnessCard : FitnessCard
 
+    /**
+     * onCreate method which is used to set the dialog style. This mathod is paired with a WindowManager setting done in [onCreateView]
+     * @author Daniel Satriano
+     * @since 25/05/2022
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.Theme_Fitter_FullScreenDialog)
@@ -39,6 +42,7 @@ class Fragment_showCardDialog() : DialogFragment() {
         //Set transparent status bar
         dialog?.window?.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
 
+        //Get FitnessCard by bundle passed via navigation controller in [FitnessCardAdapter.kt] (the bundle is also set in fragment_navigation.xml
         newFitnessCard = args.cardBundle
 
         binding.backBt.setOnClickListener {

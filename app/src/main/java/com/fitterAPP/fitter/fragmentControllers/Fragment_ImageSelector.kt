@@ -20,7 +20,7 @@ class ImageSelector(val propertyname : String, var card: FitnessCard) : BottomSh
 
     var selectedImage:CardsCover = card.imageCover
 
-    override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View? {
+    override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View {
 
         val v : View = inflater.inflate(R.layout.fragment_image_selector, container, false)
 
@@ -44,18 +44,13 @@ class ImageSelector(val propertyname : String, var card: FitnessCard) : BottomSh
         mybgs.add(R.drawable.woman_bodybuilder)
         mybgs.add(R.drawable.woman_bodybuilder2)
 
-        var recycle = v.findViewById<RecyclerView>(R.id.imageGridList_RV)
-        recycle.setLayoutManager(GridLayoutManager(context, 2))
+        val recycle = v.findViewById<RecyclerView>(R.id.imageGridList_RV)
+        recycle.layoutManager = GridLayoutManager(context, 2)
 
-
-
-        var adapter = context?.let { imagerGridAdapter((activity as MainActivity),mybgs) }
+        val adapter = context?.let { imagerGridAdapter((activity as MainActivity),mybgs) }
         recycle.adapter = adapter
 
         return v
     }
 
-    override fun onDismiss(dialog: DialogInterface) {
-        super.onDismiss(dialog)
-    }
 }

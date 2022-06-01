@@ -8,34 +8,52 @@ import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.view.animation.Animation
 import android.widget.*
 import androidx.fragment.app.DialogFragment
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import com.fitterAPP.fitter.classes.Exercise
 import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.itemsAdapter.FitnessCardExercisesAdapter
 import com.fitterAPP.fitter.MainActivity
+import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.databinding.FragmentModifyCardBinding
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 
-
-class ModifyCard(var fitnessCard: FitnessCard) : DialogFragment() {
-
+class ModifyCard() : DialogFragment() {
+    private lateinit var fitnessCard: FitnessCard
+    private val args by navArgs<ModifyCardArgs>()
     private lateinit var binding : FragmentModifyCardBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
+    /**
+     * onCreate method which is used to set the dialog style. This mathod is paired with a WindowManager setting done in [onCreateView]
+     * @author Daniel Satriano
+     * @since 1/06/2022
+     */
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(STYLE_NORMAL, R.style.Theme_Fitter_FullScreenDialog)
+
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View {
         binding = FragmentModifyCardBinding.inflate(inflater, container, false)
+
+        //Set transparent status bar
+        dialog?.window?.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+
+        //Get FitnessCard by bundle passed via navigation controller in [FitnessCardAdapter.kt] (the bundle is also set in fragment_navigation.xml
+        fitnessCard = args.cardBundle
 
         binding.backBt.setOnClickListener {
             activity?.onBackPressed()
         }
 
-        var screenHeight : Int = 0
+        var screenHeight = 0
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-
-            val size = Point()
             try {
                 val windowMetrics = activity?.windowManager?.currentWindowMetrics
                 val display: Rect = windowMetrics?.bounds!!
@@ -55,7 +73,7 @@ class ModifyCard(var fitnessCard: FitnessCard) : DialogFragment() {
         val recycle : RecyclerView = binding.exercisesListRV
 
         if(fitnessCard.exercises != null && fitnessCard.exercises?.size!! > 0){
-            var adapter = context?.let { FitnessCardExercisesAdapter((activity as MainActivity),fitnessCard,fitnessCard.exercises!!, true) }!!
+            val adapter = context?.let { FitnessCardExercisesAdapter((activity as MainActivity),fitnessCard,fitnessCard.exercises!!, true) }!!
             recycle.adapter = adapter
         }
 

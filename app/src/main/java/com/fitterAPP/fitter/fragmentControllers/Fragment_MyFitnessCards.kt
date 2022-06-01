@@ -92,7 +92,7 @@ class MyFitnessCards : Fragment() {
      * @see Athlete
      * @see FitnessCard
      */
-    public fun addFitnessCard(card : FitnessCard){
+    fun addFitnessCard(card : FitnessCard){
         databaseHelper.setFitnessCardItem(card)
     }
 

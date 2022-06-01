@@ -1,17 +1,12 @@
 package com.fitterAPP.fitter.itemsAdapter
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.cardview.widget.CardView
-import androidx.core.view.isGone
 import androidx.recyclerview.widget.RecyclerView
-import com.fitterAPP.fitter.classes.Exercise
-import com.fitterAPP.fitter.classes.FitnessCard
-import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.R
 
 class imagerGridAdapter(val context2: Context, val images : MutableList<Int>) : RecyclerView.Adapter<imagerGridAdapter.Holder>() {
@@ -23,9 +18,9 @@ class imagerGridAdapter(val context2: Context, val images : MutableList<Int>) : 
         var sel : RadioButton = itemView.findViewById(R.id.selected_rb)
 
 
-        fun setCard(id: Int, context: Context){
+        fun setCard(id: Int){
 
-            bgImage.setImageResource(id!!)
+            bgImage.setImageResource(id)
             itemView.setOnClickListener {
                 sel.isChecked = true
             }
@@ -43,7 +38,7 @@ class imagerGridAdapter(val context2: Context, val images : MutableList<Int>) : 
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         val image: Int = images[position]
-        holder.setCard(image, context2)
+        holder.setCard(image)
     }
 
     override fun getItemCount(): Int {

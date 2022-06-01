@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.NavDirections
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.R
@@ -58,7 +59,8 @@ class FitnessCardAdapter (val context2: Context, val Cards:MutableList<FitnessCa
             }
 
             itemView.findViewById<CardView>(R.id.EditCardButton_CV).setOnClickListener {
-                modifyCard(context, Card)
+                val action : NavDirections = MyFitnessCardsDirections.actionMyFitnessCardsToModifyCard(Card)
+                it.findNavController().navigate(action)
                 showControl(itemView, true)
             }
 
@@ -69,24 +71,6 @@ class FitnessCardAdapter (val context2: Context, val Cards:MutableList<FitnessCa
             )
 
             bgimage.setImageResource(id)
-
-        }
-
-        private fun modifyCard(context2:Context, card : FitnessCard) {
-
-            val fragmentManager = (context2 as AppCompatActivity).supportFragmentManager
-            val newFragment = ModifyCard(card)
-
-            // The device is smaller, so show the fragment fullscreen
-            val transaction = fragmentManager.beginTransaction()
-            // For a little polish, specify a transition animation
-            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-            // To make it fullscreen, use the 'content' root view as the container
-            // for the fragment, which is always the root view for the activity
-            transaction
-                .replace(android.R.id.content, newFragment)
-                .addToBackStack(null)
-                .commit()
 
         }
 
