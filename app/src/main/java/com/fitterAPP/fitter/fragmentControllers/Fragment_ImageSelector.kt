@@ -1,6 +1,5 @@
 package com.fitterAPP.fitter.fragmentControllers
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +13,6 @@ import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.classes.FitnessCard
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-
 
 class ImageSelector(val propertyname : String, var card: FitnessCard) : BottomSheetDialogFragment() {
 
@@ -32,9 +30,10 @@ class ImageSelector(val propertyname : String, var card: FitnessCard) : BottomSh
 
         v.findViewById<TextView>(R.id.saveBt_TV).setOnClickListener {
             card.imageCover = selectedImage
-            MyFitnessCards().addFitnessCard(card)
+            //MyFitnessCards().addFitnessCard(card)
             dismiss()
         }
+
 
         val mybgs : MutableList<Int> = ArrayList()
         mybgs.add(R.drawable.gigachad)
