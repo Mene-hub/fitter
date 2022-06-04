@@ -35,7 +35,6 @@ class ModifyCard() : DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.Theme_Fitter_FullScreenDialog)
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View {
@@ -106,10 +105,9 @@ class ModifyCard() : DialogFragment() {
             fitnessCard.exercises?.add(Exercise())
 
             if(fitnessCard.exercises != null && fitnessCard.exercises?.size!! > 0){
-                var adapter = context?.let { FitnessCardExercisesAdapter((activity as MainActivity),fitnessCard,fitnessCard.exercises!!, true) }!!
+                val adapter = context?.let { FitnessCardExercisesAdapter((activity as MainActivity),fitnessCard,fitnessCard.exercises!!, true) }!!
                 recycle.adapter = adapter
             }
-
         }
 
         binding.editCardName.setOnClickListener {
@@ -121,8 +119,6 @@ class ModifyCard() : DialogFragment() {
             val modalBottomSheet = StringEditMenu("Card description", fitnessCard.description!!, fitnessCard)
             modalBottomSheet.show(activity?.supportFragmentManager!!, profileMenu.TAG)
         }
-
-
 
         return binding.root
     }

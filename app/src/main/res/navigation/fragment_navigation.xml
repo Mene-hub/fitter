@@ -85,11 +85,6 @@
             android:id="@+id/action_profile_to_findprofile"
             app:destination="@id/findprofile" />
     </fragment>
-    <fragment
-        android:id="@+id/exercise_list2"
-        android:name="com.fitterAPP.fitter.fragmentControllers.exercise_list"
-        android:label="fragment_exercise_list"
-        tools:layout="@layout/fragment_exercise_list" />
     <dialog
         android:id="@+id/imageSelector"
         android:name="com.fitterAPP.fitter.fragmentControllers.ImageSelector"

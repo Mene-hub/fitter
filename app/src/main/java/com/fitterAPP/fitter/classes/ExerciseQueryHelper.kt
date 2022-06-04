@@ -4,7 +4,6 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import okhttp3.*
 
-
 /**
  * Exercise query helper which utilizes REST API
  * * the REST API used is under licence GNU Affero General Public License v3.0.

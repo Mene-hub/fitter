@@ -41,11 +41,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //Firebase.database.setPersistenceEnabled(true)
+
+        /*
         thread(start = true){
             Log.d("MainWindow", ExerciseQueryHelper.getExercises("benchpress").toString())
         }
-
+        */
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.FragmentContainer) as NavHostFragment
         navController = navHostFragment.navController
