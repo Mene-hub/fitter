@@ -9,6 +9,7 @@ import androidx.cardview.widget.CardView
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.fitterAPP.fitter.classes.Athlete
+import com.fitterAPP.fitter.classes.ExerciseQueryHelper
 import com.fitterAPP.fitter.databases.RealTimeDBHelper
 import com.fitterAPP.fitter.fragmentControllers.*
 import com.google.firebase.auth.FirebaseAuth
@@ -18,6 +19,7 @@ import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
+import kotlin.concurrent.thread
 
 /**
  * @author Daniel Satriano
@@ -40,6 +42,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         //Firebase.database.setPersistenceEnabled(true)
+        thread(start = true){
+            Log.d("MainWindow", ExerciseQueryHelper.getExercises("benchpress").toString())
+        }
 
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.FragmentContainer) as NavHostFragment

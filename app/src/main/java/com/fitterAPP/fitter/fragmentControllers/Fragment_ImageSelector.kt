@@ -34,7 +34,6 @@ class ImageSelector(val propertyname : String, var card: FitnessCard) : BottomSh
             dismiss()
         }
 
-
         val mybgs : MutableList<Int> = ArrayList()
         mybgs.add(R.drawable.gigachad)
         mybgs.add(R.drawable.gigachad2)
