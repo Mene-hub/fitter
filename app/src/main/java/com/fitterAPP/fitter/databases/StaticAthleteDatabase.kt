@@ -16,7 +16,7 @@ class StaticAthleteDatabase{
     companion object : DatabaseAthleteInterface{
         override val database: FirebaseDatabase = FirebaseDatabase.getInstance(BuildConfig.database)
 
-        override fun getAthleteValueListener(databaseRef : DatabaseReference, userID : String , athleteListener : ValueEventListener){
+        override fun setAthleteValueListener(databaseRef : DatabaseReference, userID : String , athleteListener : ValueEventListener){
             databaseRef.child(userID).addValueEventListener(athleteListener)
         }
 

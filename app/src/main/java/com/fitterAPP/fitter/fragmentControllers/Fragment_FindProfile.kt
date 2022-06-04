@@ -1,5 +1,6 @@
 package com.fitterAPP.fitter.fragmentControllers
 
+import com.fitterAPP.fitter.databases.StaticAthleteDatabase
 import android.annotation.SuppressLint
 import com.fitterAPP.fitter.R
 import android.os.Bundle
@@ -12,7 +13,6 @@ import android.widget.SearchView
 import androidx.navigation.fragment.findNavController
 import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.classes.Athlete
-import com.fitterAPP.fitter.databases.RealTimeDBHelper
 import com.fitterAPP.fitter.databinding.FragmentFindprofileBinding
 import com.fitterAPP.fitter.itemsAdapter.SuggestionAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -26,13 +26,15 @@ import com.google.firebase.database.*
  */
 class FindProfile : Fragment() {
     private lateinit var binding : FragmentFindprofileBinding
-    private var databaseReference: DatabaseReference = FirebaseDatabase.getInstance(RealTimeDBHelper.getDbURL()).getReference("USERS")
+    private lateinit var databaseReference : DatabaseReference
     private var suggestedUsers : MutableList<Athlete> = ArrayList()
     private lateinit var adapter : SuggestionAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentFindprofileBinding.inflate(inflater,container,false)
         requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).setOnItemSelectedListener(bottomNavItemSelected())
+
+        databaseReference = StaticAthleteDatabase.database.getReference(getString(R.string.AthleteReference))
 
         binding.SVFindUsers.clearFocus()
         binding.SVFindUsers.setOnQueryTextListener(queryTextListener())
@@ -81,7 +83,6 @@ class FindProfile : Fragment() {
     @SuppressLint("NotifyDataSetChanged")
     fun databaseQuery(text : String?){
         val usernameOrdered : Query  = databaseReference.orderByChild("username").startAt(text).endAt("$text\uF7FF").limitToFirst(10)
-        //.get().addOnSuccessListener
         suggestedUsers.clear()
         adapter.notifyDataSetChanged()
         usernameOrdered.addChildEventListener(object : ChildEventListener{
@@ -105,7 +106,6 @@ class FindProfile : Fragment() {
 
         })
     }
-
 
     /**
      * Simple item listener for the bottom navigation view, which is used to move through views

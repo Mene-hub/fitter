@@ -5,15 +5,11 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.navigation.fragment.findNavController
 import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.databinding.FragmentProfileMenuBinding
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 
 class profileMenu : BottomSheetDialogFragment() {
     private lateinit var binding : FragmentProfileMenuBinding

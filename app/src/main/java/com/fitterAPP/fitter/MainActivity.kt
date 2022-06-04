@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
     private val user = Athlete()
     private lateinit var auth : FirebaseAuth
     private lateinit var currentUser : FirebaseUser
-    private var dbReference : DatabaseReference = StaticAthleteDatabase.database.getReference("USERS")
+    private lateinit var dbReference : DatabaseReference
     //navController
     private lateinit var navController: NavController
     //Bottom sheet dialog
@@ -37,6 +37,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        dbReference = StaticAthleteDatabase.database.getReference(getString(R.string.AthleteReference))
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.FragmentContainer) as NavHostFragment
         navController = navHostFragment.navController
@@ -76,7 +78,7 @@ class MainActivity : AppCompatActivity() {
                 //downloadImagesFromURL(user.profilePic)
             }
             //Applying listener for the "on update" call
-            StaticAthleteDatabase.getAthleteValueListener(dbReference, user.UID, getAthleteEventListener())
+            StaticAthleteDatabase.setAthleteValueListener(dbReference, user.UID, getAthleteEventListener())
 
         }
         findViewById<TextView>(R.id.TV_Username).text = user.username       //SET USERNAME IN TEXTVIEW

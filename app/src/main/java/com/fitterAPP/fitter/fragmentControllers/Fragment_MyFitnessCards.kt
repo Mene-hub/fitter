@@ -1,5 +1,6 @@
 package com.fitterAPP.fitter.fragmentControllers
 
+import com.fitterAPP.fitter.databases.StaticFitnessCardDatabase
 import com.fitterAPP.fitter.R
 import android.os.Bundle
 import android.util.Log
@@ -17,7 +18,6 @@ import com.fitterAPP.fitter.classes.Athlete
 import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.itemsAdapter.FitnessCardAdapter
 import com.fitterAPP.fitter.MainActivity
-import com.fitterAPP.fitter.databases.RealTimeDBHelper
 import com.fitterAPP.fitter.databinding.FragmentMyFitnessCardsBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -31,7 +31,6 @@ class MyFitnessCards : Fragment() {
     private lateinit var binding : FragmentMyFitnessCardsBinding //Binding
     private lateinit var adapter : FitnessCardAdapter
     private lateinit var dbReference : DatabaseReference
-    private lateinit var databaseHelper : RealTimeDBHelper
     //firebase database
     private val fitnessCads : MutableList<FitnessCard> = ArrayList()
 
@@ -39,19 +38,16 @@ class MyFitnessCards : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentMyFitnessCardsBinding.inflate(inflater, container, false)
 
-        dbReference = FirebaseDatabase.getInstance(RealTimeDBHelper.getDbURL()).getReference("FITNESS_CARDS").child(Athlete.UID)
-        databaseHelper = RealTimeDBHelper(dbReference)
+        dbReference = StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference))
 
         //grab event from companion class RealTimeDBHelper
-        databaseHelper.readItems(getAthleteEventListener())
+        StaticFitnessCardDatabase.setFitnessCardChildListener(dbReference, Athlete.UID, getFitnessCardEventListener())
 
         requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).setOnItemSelectedListener(bottomNavItemSelected())
-
 
         val recycle : RecyclerView = binding.MyFitnessCardsRV
         adapter = context?.let { FitnessCardAdapter((activity as MainActivity), fitnessCads) }!!
         recycle.adapter = adapter
-
 
         Log.w("Fragment", binding.MyFitnessCardsRV.id.toString())
         return binding.root
@@ -93,10 +89,10 @@ class MyFitnessCards : Fragment() {
      * @see FitnessCard
      */
     fun addFitnessCard(card : FitnessCard){
-        databaseHelper.setFitnessCardItem(card)
+        StaticFitnessCardDatabase.setFitnessCardItem(dbReference, Athlete.UID, card)
     }
 
-    private fun getAthleteEventListener(): ChildEventListener {
+    private fun getFitnessCardEventListener(): ChildEventListener {
         val childEventListener = object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val item = snapshot.getValue(FitnessCard::class.java)

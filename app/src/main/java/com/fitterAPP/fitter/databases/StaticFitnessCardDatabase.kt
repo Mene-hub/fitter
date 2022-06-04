@@ -16,7 +16,7 @@ class StaticFitnessCardDatabase {
     companion object : DatabaseFitnessCardsInterface{
         override val database: FirebaseDatabase = FirebaseDatabase.getInstance(BuildConfig.database)
 
-        override fun getFitnessCardChildListener(databaseRef : DatabaseReference, userID : String, fitnessCardListener: ChildEventListener){
+        override fun setFitnessCardChildListener(databaseRef : DatabaseReference, userID : String, fitnessCardListener: ChildEventListener){
             databaseRef.child(userID).addChildEventListener(fitnessCardListener)
         }
 

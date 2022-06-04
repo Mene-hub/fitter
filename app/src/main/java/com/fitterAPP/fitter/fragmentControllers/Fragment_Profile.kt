@@ -1,5 +1,6 @@
 package com.fitterAPP.fitter.fragmentControllers
 
+import com.fitterAPP.fitter.databases.StaticAthleteDatabase
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -14,7 +15,6 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.classes.Athlete
-import com.fitterAPP.fitter.databases.RealTimeDBHelper
 import com.fitterAPP.fitter.databinding.FragmentProfileBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
@@ -22,7 +22,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
-
 
 /**
  * Fragment used to display user profile information and to allow him/her to modify it
@@ -35,7 +34,7 @@ class Profile : Fragment() {
     private lateinit var binding : FragmentProfileBinding
 
     private lateinit var auth : FirebaseAuth
-    private val dbReference : DatabaseReference = FirebaseDatabase.getInstance(RealTimeDBHelper.getDbURL()).getReference("USERS").child(Athlete.UID)
+    private lateinit var dbReference : DatabaseReference
 
     private lateinit var etUsername : EditText
     private lateinit var etBio : EditText
@@ -49,6 +48,7 @@ class Profile : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentProfileBinding.inflate(inflater, container, false)
 
+        dbReference = StaticAthleteDatabase.database.getReference(getString(R.string.AthleteReference))
         requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).setOnItemSelectedListener(bottomNavItemSelected())
 
         auth = Firebase.auth
@@ -108,7 +108,7 @@ class Profile : Fragment() {
 
             if(etUsername.text.isNotBlank()){
                 val athlete = Athlete(Athlete.UID,Athlete.username,Athlete.profilePic,Athlete.profileBio,Athlete.spotifyplayList)
-                dbReference.setValue(athlete)
+                StaticAthleteDatabase.setAthleteItem(dbReference, Athlete.UID, athlete)
             }
 
             Toast.makeText(requireContext(),"Profile updated", Toast.LENGTH_LONG).show()

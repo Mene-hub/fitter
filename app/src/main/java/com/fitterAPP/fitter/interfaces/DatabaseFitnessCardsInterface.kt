@@ -24,7 +24,7 @@ interface DatabaseFitnessCardsInterface {
      * @author Daniel Satriano
      * @since 04/06/2022
      */
-    fun getFitnessCardChildListener(databaseRef : DatabaseReference, userID : String, fitnessCardListener: ChildEventListener)
+    fun setFitnessCardChildListener(databaseRef : DatabaseReference, userID : String, fitnessCardListener: ChildEventListener)
 
     /**
      * Method that will create or overwrite a FitnessCard stored in the database

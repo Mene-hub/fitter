@@ -42,7 +42,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private var bgimage : ImageView ?=null
     //Database
-    private var dbReference : DatabaseReference = StaticAthleteDatabase.database.getReference("USERS")
+    private lateinit var dbReference : DatabaseReference
 
     //region googleStuff
         private lateinit var oneTapClient: SignInClient
@@ -61,6 +61,7 @@ class LoginActivity : AppCompatActivity() {
 
         //Database persistance when offline
         Firebase.database.setPersistenceEnabled(true)
+        dbReference = StaticAthleteDatabase.database.getReference(getString(R.string.AthleteReference))
 
         //Set transparent status bar
         window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
@@ -117,9 +118,13 @@ class LoginActivity : AppCompatActivity() {
      * @since 30/05/2022
      */
     private fun startActivityByFacebook(uid : String, token : AccessToken, user : FirebaseUser){
-        dbReference.orderByKey().equalTo(uid).get().addOnSuccessListener{
+
+        dbReference.equalTo(uid).get().addOnSuccessListener{
                 snapshot ->
             val item = snapshot.getValue(Athlete::class.java)
+            Log.d("TEST",item?.UID.toString())
+            Log.d("TEST",auth.uid.toString())
+
             if(item?.UID == auth.uid){
                 //ESISTE
                 val intent = Intent(this, MainActivity::class.java)

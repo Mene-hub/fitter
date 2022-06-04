@@ -24,7 +24,7 @@ interface DatabaseAthleteInterface {
      * @author Daniel Satriano
      * @since 04/06/2022
      */
-    fun getAthleteValueListener(databaseRef : DatabaseReference, userID : String , athleteListener : ValueEventListener)
+    fun setAthleteValueListener(databaseRef : DatabaseReference, userID : String , athleteListener : ValueEventListener)
 
     /**
      * Method that will overwrite a current user data stored in the database, used to change information about him like profilePicture or so.
