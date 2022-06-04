@@ -10,6 +10,7 @@ import com.google.firebase.database.ValueEventListener
 /**
  * @author Daniel Satriano
  */
+/*
 class RealTimeDBHelper(val database: DatabaseReference) {
 
     companion object {
@@ -48,4 +49,4 @@ class RealTimeDBHelper(val database: DatabaseReference) {
     }
 
 }
-
+*/

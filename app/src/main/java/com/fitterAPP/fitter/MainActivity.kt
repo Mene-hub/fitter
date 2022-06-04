@@ -1,5 +1,6 @@
 package com.fitterAPP.fitter
 
+import com.fitterAPP.fitter.databases.StaticAthleteDatabase
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -9,17 +10,13 @@ import androidx.cardview.widget.CardView
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.fitterAPP.fitter.classes.Athlete
-import com.fitterAPP.fitter.classes.ExerciseQueryHelper
-import com.fitterAPP.fitter.databases.RealTimeDBHelper
 import com.fitterAPP.fitter.fragmentControllers.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
-import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
-import kotlin.concurrent.thread
 
 /**
  * @author Daniel Satriano
@@ -31,8 +28,7 @@ class MainActivity : AppCompatActivity() {
     private val user = Athlete()
     private lateinit var auth : FirebaseAuth
     private lateinit var currentUser : FirebaseUser
-    private lateinit var databaseHelper : RealTimeDBHelper
-    private var dbReference : DatabaseReference = FirebaseDatabase.getInstance(RealTimeDBHelper.getDbURL()).getReference("USERS")
+    private var dbReference : DatabaseReference = StaticAthleteDatabase.database.getReference("USERS")
     //navController
     private lateinit var navController: NavController
     //Bottom sheet dialog
@@ -42,19 +38,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        /*
-        thread(start = true){
-            Log.d("MainWindow", ExerciseQueryHelper.getExercises("benchpress").toString())
-        }
-        */
-
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.FragmentContainer) as NavHostFragment
         navController = navHostFragment.navController
 
-
         //FIREBASE ACCOUNT
         auth = Firebase.auth
-        databaseHelper = RealTimeDBHelper(dbReference)
 
         if(auth.currentUser != null){
             currentUser = auth.currentUser!!
@@ -62,15 +50,12 @@ class MainActivity : AppCompatActivity() {
             Athlete.setValues(user)
         }
 
-
         //Bottom sheet dialog
         menuiv = findViewById(R.id.MenuBt)
         menuiv.setOnClickListener {
             val modalBottomSheet = profileMenu()
             modalBottomSheet.show(supportFragmentManager, profileMenu.TAG)
         }
-
-
     }
 
     /**
@@ -87,12 +72,11 @@ class MainActivity : AppCompatActivity() {
             // OTHERWISE IF FROM LOGIN FORM  THE INFO'S WILL GET GRABBED FROM
             if(intent.extras!!.getBoolean("HASTOSAVE")){
                 Log.d("MainWindow-Signout", "Entro")
-                databaseHelper.setAthleteItem(user.UID,user)
+                StaticAthleteDatabase.setAthleteItem(dbReference, user.UID, user)
                 //downloadImagesFromURL(user.profilePic)
             }
-
-            databaseHelper = RealTimeDBHelper(dbReference.child(user.UID))    //Changing reference so that the db doesn't give me the whole node, but only the current logged user
-            databaseHelper.readItem(getAthleteEventListener())                //Applying listener for the "on update" call
+            //Applying listener for the "on update" call
+            StaticAthleteDatabase.getAthleteValueListener(dbReference, user.UID, getAthleteEventListener())
 
         }
         findViewById<TextView>(R.id.TV_Username).text = user.username       //SET USERNAME IN TEXTVIEW
@@ -118,8 +102,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     *  @author Daniel Satriano
      *  Used to update username from the database.
+     *  @author Daniel Satriano
      */
     private fun getAthleteEventListener(): ValueEventListener {
         val childEventListener = object : ValueEventListener {

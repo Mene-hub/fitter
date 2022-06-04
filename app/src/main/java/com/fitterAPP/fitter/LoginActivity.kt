@@ -1,5 +1,6 @@
 package com.fitterAPP.fitter
 
+import com.fitterAPP.fitter.databases.StaticAthleteDatabase
 import android.content.Intent
 import android.content.IntentSender
 import android.net.Uri
@@ -14,7 +15,6 @@ import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.fitterAPP.fitter.classes.Athlete
-import com.fitterAPP.fitter.databases.RealTimeDBHelper
 import com.fitterAPP.fitter.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
@@ -24,7 +24,6 @@ import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlin.random.Random
@@ -42,6 +41,8 @@ class LoginActivity : AppCompatActivity() {
     private val TAG_login : String = "LoginActivity-Login"
     private lateinit var auth: FirebaseAuth
     private var bgimage : ImageView ?=null
+    //Database
+    private var dbReference : DatabaseReference = StaticAthleteDatabase.database.getReference("USERS")
 
     //region googleStuff
         private lateinit var oneTapClient: SignInClient
@@ -57,6 +58,8 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //Database persistance when offline
         Firebase.database.setPersistenceEnabled(true)
 
         //Set transparent status bar
@@ -114,8 +117,7 @@ class LoginActivity : AppCompatActivity() {
      * @since 30/05/2022
      */
     private fun startActivityByFacebook(uid : String, token : AccessToken, user : FirebaseUser){
-        val databaseReference: DatabaseReference = FirebaseDatabase.getInstance(RealTimeDBHelper.getDbURL()).getReference("USERS")
-        databaseReference.orderByKey().equalTo(uid).get().addOnSuccessListener{
+        dbReference.orderByKey().equalTo(uid).get().addOnSuccessListener{
                 snapshot ->
             val item = snapshot.getValue(Athlete::class.java)
             if(item?.UID == auth.uid){
@@ -185,8 +187,7 @@ class LoginActivity : AppCompatActivity() {
      * @since 30/05/2022
      */
     private fun startActivityByGoogle(uid : String){
-        val databaseReference: DatabaseReference = FirebaseDatabase.getInstance(RealTimeDBHelper.getDbURL()).getReference("USERS")
-        databaseReference.orderByKey().equalTo(uid).get().addOnSuccessListener{
+        dbReference.orderByKey().equalTo(uid).get().addOnSuccessListener{
                 snapshot ->
             val item = snapshot.getValue(Athlete::class.java)
             if(item?.UID == auth.uid){
