@@ -6,11 +6,13 @@ import android.content.IntentSender
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.util.Patterns
 import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doOnTextChanged
 import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
@@ -20,6 +22,7 @@ import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.CommonStatusCodes
+import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
@@ -66,6 +69,37 @@ class LoginActivity : AppCompatActivity() {
         window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         auth = Firebase.auth    //istantiate auth variable
 
+
+        //Event for switching to signUp activity
+        binding.btnSignup.setOnClickListener { showRegister() }
+        //Forgot password event
+        binding.tvForgotPSW.setOnClickListener(forgotPasswordListener())
+
+
+        //region Login Email
+        binding.btnLogin.setOnClickListener(loginEmailPSW())  //BUTTONS for login/register
+
+        //ERROR FOR WRONG PASSWORD / WRONG EMAIL
+        val psw_text_layout : TextInputLayout = binding.etLoginPasswordLayout
+        binding.etLoginPassword.doOnTextChanged { text, start, before, count ->
+            if(psw_text_layout.error != null) {
+                psw_text_layout.error = null
+            }
+        }
+        //EVENT TO CHECK IF THE EMAIL ENTERED IS CORRECT
+        binding.etLoginEmail.setOnFocusChangeListener{ _, focused ->
+            if(!focused){
+                binding.etLoginEmailLayout.helperText = validEmail()
+            }
+        }
+
+        binding.etLoginPassword.setOnFocusChangeListener{_, focused ->
+            if(focused){
+                binding.etLoginPasswordLayout.error = null
+            }
+        }
+        //endregion
+
         //region googleStuff
         binding.IVLoginGoogle.setOnClickListener(loginGoogle())
         oneTapClient = Identity.getSignInClient(this)
@@ -82,14 +116,22 @@ class LoginActivity : AppCompatActivity() {
         //endregion
 
         //region facebookStuff
-
-
         binding.IVLoginFacebook.setOnClickListener(loginFacebook())
         callbackManager = CallbackManager.Factory.create()
         //endregion
 
         randomBgImages()
     }
+    private fun forgotPasswordListener(): View.OnClickListener {
+        val listener = View.OnClickListener {
+            //
+            val i = Intent(this, ForgotPasswordActivity::class.java)
+            i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+            startActivity(i)
+        }
+        return listener
+    }
+
 
     /**
      * Checks if the user is currently signed in or not. If it is then it launches [MainActivity] with bundle("HASTOSAVE", false)
@@ -341,10 +383,61 @@ class LoginActivity : AppCompatActivity() {
     }
 
     /**
-     * @author Claudio Menegotto
-     * EVENTO PER CAMBIARE L'IMMAGINE DI BACKGROUND
+     * Checks if the inserted email is valid or not
+     * @author Daniel Satriano
+     * @since 10/05/2022
      */
-    fun randomBgImages(){
+    private fun validEmail(): String? {
+        val emailText = binding.etLoginEmail.text.toString()
+        if(!Patterns.EMAIL_ADDRESS.matcher(emailText).matches()){
+            return getString(R.string.invalid_email)
+        }
+        return null
+    }
+
+    /**
+     * @author Daniel Satriano
+     * @since 10/05/2022
+     * Login via password and email, if it finds an account it Log In and start MainActivity, if it doesn't it'll throw an error at the UI for the user
+     * @see MainActivity for more information about it
+     */
+    private fun loginEmailPSW(): View.OnClickListener {
+        val listener = View.OnClickListener {
+            val email : String = binding.etLoginEmail.text.toString()
+            val password : String = binding.etLoginPassword.text.toString()
+
+            if(email.isNotBlank() && password.isNotBlank()) {
+                auth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG_login, "Login success")
+
+                            //val user = auth.currentUser
+                            //updateUI(user) UPDATE UI ACCORDINGLY
+                            val i = Intent(this, MainActivity::class.java)
+                            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                            i.putExtra("HASTOSAVE",false)
+                            startActivity(i)
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG_login, "Login failed", task.exception)
+
+                            binding.etLoginPasswordLayout.error = getString(R.string.password_incorrect)
+                            Toast.makeText(this, task.exception!!.message.toString(), Toast.LENGTH_LONG).show()
+                        }
+                    }
+            }
+        }
+        return listener
+    }
+
+    /**
+     * EVENTO PER CAMBIARE L'IMMAGINE DI BACKGROUND
+     * @author Claudio Menegotto
+     */
+    private fun randomBgImages(){
         bgimage = findViewById(R.id.LoginGB_IV)
         val mybgs : MutableList<Int> = ArrayList()
         mybgs.add(R.drawable.gigachad)
@@ -361,4 +454,15 @@ class LoginActivity : AppCompatActivity() {
         bgimage?.setImageResource(mybgs[Random.nextInt(0,mybgs.size)])
     }
 
+    /**
+     * @author Claudio Menegotto
+     * EVENTO PER CAMBIARE IL FRAGMENT DI LOGIN NEL FRAGMENT DI SIGN UP
+     */
+    private fun showRegister(){
+        val i = Intent(this, RegisterActivity::class.java)
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+        startActivity(i)
+    }
 }
