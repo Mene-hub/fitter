@@ -19,6 +19,7 @@ import com.fitterAPP.fitter.databinding.FragmentProfileBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
@@ -108,11 +109,17 @@ class Profile : Fragment() {
 
             if(etUsername.text.isNotBlank()){
                 val athlete = Athlete(Athlete.UID,Athlete.username,Athlete.profilePic,Athlete.profileBio,Athlete.spotifyplayList)
-                StaticAthleteDatabase.setAthleteItem(dbReference, Athlete.UID, athlete)
+                val updater = UserProfileChangeRequest.Builder().setDisplayName(athlete.username).build()
+                auth.currentUser!!.updateProfile(updater).addOnCompleteListener{ task2 ->
+                    if(task2.isSuccessful) {
+                        StaticAthleteDatabase.setAthleteItem(dbReference, Athlete.UID, athlete)
+                        Toast.makeText(requireContext(),"Profile updated", Toast.LENGTH_LONG).show()
+                        findNavController().navigate(R.id.action_profile_to_myFitnessCards)
+                    }else{
+                        Toast.makeText(requireContext(), "An error occurred while updating your profile", Toast.LENGTH_LONG).show()
+                    }
+                }
             }
-
-            Toast.makeText(requireContext(),"Profile updated", Toast.LENGTH_LONG).show()
-            findNavController().navigate(R.id.action_profile_to_myFitnessCards)
         }
         return listener
     }
