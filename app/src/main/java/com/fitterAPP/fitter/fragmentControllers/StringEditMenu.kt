@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.R
+import com.fitterAPP.fitter.classes.Athlete
+import com.fitterAPP.fitter.databases.StaticFitnessCardDatabase
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class StringEditMenu(val propertyname : String, var Value : String, var card: FitnessCard) : BottomSheetDialogFragment() {
@@ -32,8 +34,7 @@ class StringEditMenu(val propertyname : String, var Value : String, var card: Fi
                     card.description = v.findViewById<TextView>(R.id.et_editedString).text.toString()
 
 
-
-            MyFitnessCards().addFitnessCard(card)
+            StaticFitnessCardDatabase.setFitnessCardItem(StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference)), Athlete.UID, card)
             dismiss()
         }
 

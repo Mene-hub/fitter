@@ -31,6 +31,7 @@ class MyFitnessCards : Fragment() {
     private lateinit var binding : FragmentMyFitnessCardsBinding //Binding
     private lateinit var adapter : FitnessCardAdapter
     private lateinit var dbReference : DatabaseReference
+
     //firebase database
     private val fitnessCads : MutableList<FitnessCard> = ArrayList()
 

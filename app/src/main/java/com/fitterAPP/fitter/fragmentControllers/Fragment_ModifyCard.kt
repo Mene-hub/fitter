@@ -19,8 +19,13 @@ import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.itemsAdapter.FitnessCardExercisesAdapter
 import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.R
+import com.fitterAPP.fitter.classes.Athlete
+import com.fitterAPP.fitter.databases.StaticFitnessCardDatabase
 import com.fitterAPP.fitter.databinding.FragmentModifyCardBinding
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 
 class ModifyCard() : DialogFragment() {
     private lateinit var fitnessCard: FitnessCard
@@ -120,7 +125,29 @@ class ModifyCard() : DialogFragment() {
             modalBottomSheet.show(activity?.supportFragmentManager!!, profileMenu.TAG)
         }
 
+        StaticFitnessCardDatabase.setFitnessCardChildListener(StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference)), Athlete.UID, cardChildEventListener())
+
         return binding.root
+    }
+
+    private fun cardChildEventListener(): ChildEventListener {
+        return object : ChildEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+            }
+
+            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+            }
+
+            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+
+            }
+
+            override fun onChildRemoved(snapshot: DataSnapshot) {
+            }
+
+            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+            }
+        }
     }
 
     override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
@@ -128,4 +155,5 @@ class ModifyCard() : DialogFragment() {
         a.duration = 0
         return a
     }
+
 }
