@@ -6,6 +6,7 @@ import com.fitterAPP.fitter.interfaces.DatabaseFitnessCardsInterface
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 /**
  * Static database helper for managing fitnessCards, utilizing [DatabaseFitnessCardsInterface]
@@ -32,6 +33,11 @@ class StaticFitnessCardDatabase {
         override fun removeAllFitnessCard(databaseRef: DatabaseReference, userID: String){
             databaseRef.child(userID).removeValue()
         }
+
+        override fun setAthleteValueListener(databaseRef: DatabaseReference, userID: String, cardID: String, cardListener: ValueEventListener) {
+            databaseRef.child(userID).child(cardID).addValueEventListener(cardListener)
+        }
+
 
     }
 }
