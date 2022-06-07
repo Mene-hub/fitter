@@ -82,17 +82,16 @@
     <com.google.android.gms.common.SignInButton
         android:id="@+id/IV_loginGoogle"
         android:layout_width="wrap_content"
-        android:contentDescription="@string/background_image"
+        android:contentDescription="@string/common_signin_button_text"
         android:layout_height="wrap_content" />
+
 
     <com.google.android.gms.common.SignInButton
         android:layout_marginTop="20dp"
         android:id="@+id/IV_loginFacebook"
         android:layout_width="wrap_content"
-        android:contentDescription="@string/background_image"
-        android:layout_height="wrap_content"
-        />
-
+        android:contentDescription="@string/common_signin_button_text"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>
 
