@@ -25,6 +25,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import okhttp3.internal.cache.DiskLruCache
 import kotlin.random.Random
 
 /**
@@ -119,36 +120,40 @@ class LoginActivity : AppCompatActivity() {
     private fun startActivityByFacebook(uid : String, token : AccessToken, user : FirebaseUser){
         dbReference.child(uid).get().addOnSuccessListener{
             //Exists
-            val intent = Intent(this, MainActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            intent.putExtra("HASTOSAVE",false)
-            startActivity(intent)
+            snapshot ->
+            if(snapshot.exists()) {
+                //START MAIN ACTIVITY
+                val i = Intent(this, MainActivity::class.java)
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                i.putExtra("HASTOSAVE", false)
+                startActivity(i)
+            }else{
+                val request = GraphRequest.newGraphPathRequest(token, "/${token.userId}/picture") { response ->
+                    val uri = Uri.parse(response.connection?.url.toString())
 
-        }.addOnFailureListener {
-            //Doesn't exists
-            val request = GraphRequest.newGraphPathRequest(token, "/${token.userId}/picture") { response ->
-                val uri = Uri.parse(response.connection?.url.toString())
+                    val updater = UserProfileChangeRequest.Builder().setDisplayName(user.displayName.toString().replace("\\s".toRegex(),"")).setPhotoUri(uri).build()
+                    auth.currentUser!!.updateProfile(updater).addOnCompleteListener{ task2 ->
+                        if(task2.isSuccessful){
+                            Log.d(TAG_login, "User profile updated")
+                            auth.currentUser?.reload()
+                            Log.w(TAG_login,user.displayName.toString())
 
-                val updater = UserProfileChangeRequest.Builder().setDisplayName(user.displayName.toString().replace("\\s".toRegex(),"")).setPhotoUri(uri).build()
-                auth.currentUser!!.updateProfile(updater).addOnCompleteListener{ task2 ->
-                    if(task2.isSuccessful){
-                        Log.d(TAG_login, "User profile updated")
-                        auth.currentUser?.reload()
-                        Log.w(TAG_login,user.displayName.toString())
+                            val intent = Intent(this, MainActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                            intent.putExtra("HASTOSAVE",true)
+                            startActivity(intent)
 
-                        val intent = Intent(this, MainActivity::class.java)
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                        intent.putExtra("HASTOSAVE",true)
-                        startActivity(intent)
-
-                    }else{
-                        Toast.makeText(this,task2.exception!!.message.toString(), Toast.LENGTH_LONG).show()
+                        }else{
+                            Toast.makeText(this,task2.exception!!.message.toString(), Toast.LENGTH_LONG).show()
+                        }
                     }
                 }
+                request.executeAsync()
             }
-            request.executeAsync()
+        }.addOnFailureListener {
+            Toast.makeText(this, "Something went wrong with the connection to the database", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -162,32 +167,37 @@ class LoginActivity : AppCompatActivity() {
     private fun startActivityByGoogle(uid : String){
         dbReference.child(uid).get().addOnSuccessListener{
             //Exists
-            val intent = Intent(this, MainActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            intent.putExtra("HASTOSAVE",false)
-            startActivity(intent)
+            snapshot ->
+            if(snapshot.exists()) {
+                //START MAIN ACTIVITY
+                val i = Intent(this, MainActivity::class.java)
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                i.putExtra("HASTOSAVE", false)
+                startActivity(i)
+            }else{
+                //Doesn't exists
+                val user = auth.currentUser
+                val updater = UserProfileChangeRequest.Builder().setDisplayName(user?.displayName.toString().replace("\\s".toRegex(),"")).build()
+                auth.currentUser!!.updateProfile(updater).addOnCompleteListener{ task2 ->
+                    if(task2.isSuccessful){
+                        Log.d(TAG_login, "User profile updated")
+                        auth.currentUser?.reload()
+                        Log.w(TAG_login,auth.currentUser?.displayName.toString())
 
-        }.addOnFailureListener {
-            //Doesn't exists
-            val user = auth.currentUser
-            val updater = UserProfileChangeRequest.Builder().setDisplayName(user?.displayName.toString().replace("\\s".toRegex(),"")).build()
-            auth.currentUser!!.updateProfile(updater).addOnCompleteListener{ task2 ->
-                if(task2.isSuccessful){
-                    Log.d(TAG_login, "User profile updated")
-                    auth.currentUser?.reload()
-                    Log.w(TAG_login,auth.currentUser?.displayName.toString())
+                        val intent = Intent(this, MainActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        intent.putExtra("HASTOSAVE",true)
+                        startActivity(intent)
 
-                    val intent = Intent(this, MainActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    intent.putExtra("HASTOSAVE",true)
-                    startActivity(intent)
-
-                }else{
-                    Toast.makeText(this,task2.exception!!.message.toString(), Toast.LENGTH_LONG).show()
+                    }else{
+                        Toast.makeText(this,task2.exception!!.message.toString(), Toast.LENGTH_LONG).show()
+                    }
                 }
             }
+        }.addOnFailureListener {
+            Toast.makeText(this, "Something went wrong with the connection to the database", Toast.LENGTH_LONG).show()
         }
     }
 
