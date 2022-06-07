@@ -4,6 +4,7 @@ import com.fitterAPP.fitter.classes.FitnessCard
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 /**
  * Interface that defines the method that will be used to communicate with the FitnessCard section of the database
@@ -46,5 +47,13 @@ interface DatabaseFitnessCardsInterface {
      * @since 04/06/2022
      */
     fun removeAllFitnessCard(databaseRef: DatabaseReference, userID: String)
+
+    /**
+     * Method that will be used to get a specified card value listener
+     * @author Daniel Satriano
+     * @since 07/06/2022
+     */
+    fun setAthleteValueListener(databaseRef : DatabaseReference, userID : String , cardID : String, cardListener : ValueEventListener)
+
 
 }
