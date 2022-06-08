@@ -1,12 +1,17 @@
 package com.fitterAPP.fitter.fragmentControllers
 
 import android.app.Dialog
+import android.graphics.Rect
+import android.os.Build
 import android.os.Bundle
+import android.util.DisplayMetrics
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.FrameLayout
+import android.widget.RelativeLayout
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -45,6 +50,25 @@ class newExercieFormDialog : DialogFragment() {
 
         //Get FitnessCard by bundle passed via navigation controller in [FitnessCardAdapter.kt] (the bundle is also set in fragment_navigation.xml
         fitnessCard = args.fitnessCard
+
+        var screenHeight = 0
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            try {
+                val windowMetrics = activity?.windowManager?.currentWindowMetrics
+                val display: Rect = windowMetrics?.bounds!!
+                screenHeight = display.height()/3
+            } catch (e: NoSuchMethodError) {}
+
+        } else {
+            val metrics = DisplayMetrics()
+            activity?.windowManager?.defaultDisplay?.getMetrics(metrics)
+            screenHeight = metrics.heightPixels/3
+        }
+
+        val params = FrameLayout.LayoutParams( RelativeLayout.LayoutParams.MATCH_PARENT, screenHeight)
+
+        binding.Header.layoutParams = params
 
         binding.backBt.setOnClickListener {
             findNavController().navigateUp()
