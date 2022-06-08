@@ -20,6 +20,7 @@ import com.fitterAPP.fitter.itemsAdapter.FitnessCardExercisesAdapter
 import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.classes.Athlete
+import com.fitterAPP.fitter.classes.CardsCover
 import com.fitterAPP.fitter.databases.StaticFitnessCardDatabase
 import com.fitterAPP.fitter.databinding.FragmentModifyCardBinding
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -87,7 +88,7 @@ class ModifyCard() : DialogFragment() {
 
         val editCover : ImageView = binding.EditCoverIV
         editCover.setOnClickListener {
-            val modalBottomSheet = ImageSelector("Card name", fitnessCard)
+            val modalBottomSheet = ImageSelector("Card image cover", fitnessCard)
             modalBottomSheet.show(activity?.supportFragmentManager!!, profileMenu.TAG)
         }
 
@@ -139,6 +140,18 @@ class ModifyCard() : DialogFragment() {
             }
 
             override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                val cardName : TextView = binding.CardNameTV
+                val cardDuration : TextView = binding.TimeDurationTV
+                val cardDescription: TextView = binding.DescriptionTV
+                val bgimage : ImageView = binding.CardBgImageIV
+
+                val id: Int? = CardsCover.getResource(fitnessCard.imageCover)
+
+                bgimage.setImageResource(id!!)
+
+                cardName.text = fitnessCard.name
+                cardDescription.text = fitnessCard.description
+                cardDuration.text = fitnessCard.timeDuration.toString() + " s"
 
             }
 

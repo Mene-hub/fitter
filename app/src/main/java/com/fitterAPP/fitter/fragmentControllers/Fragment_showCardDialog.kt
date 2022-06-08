@@ -2,15 +2,20 @@ package com.fitterAPP.fitter.fragmentControllers
 
 import com.fitterAPP.fitter.R
 import android.app.Dialog
+import android.graphics.Rect
+import android.os.Build
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.*
 import android.view.animation.Animation
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import com.fitterAPP.fitter.MainActivity
+import com.fitterAPP.fitter.classes.CardsCover
 import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.databinding.FragmentShowCardDialogBinding
 import com.fitterAPP.fitter.itemsAdapter.FitnessCardExercisesAdapter
@@ -49,6 +54,21 @@ class Fragment_showCardDialog() : DialogFragment() {
             findNavController().navigateUp()
         }
 
+        var screenHeight = 0
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            try {
+                val windowMetrics = activity?.windowManager?.currentWindowMetrics
+                val display: Rect = windowMetrics?.bounds!!
+                screenHeight = display.height()/3
+            } catch (e: NoSuchMethodError) {}
+
+        } else {
+            val metrics = DisplayMetrics()
+            activity?.windowManager?.defaultDisplay?.getMetrics(metrics)
+            screenHeight = metrics.heightPixels/3
+        }
+
         val recycle : RecyclerView = binding.exercisesListRV
 
         if(newFitnessCard.exercises != null && newFitnessCard.exercises?.size!! > 0){
@@ -69,6 +89,11 @@ class Fragment_showCardDialog() : DialogFragment() {
         cardDescription.text = newFitnessCard.description
         val text = newFitnessCard.timeDuration.toString() +" "+ getString(R.string.minutes)
         cardDuration.text = text
+        val bgimage : ImageView = binding.CardBgImageIV
+
+        val id: Int? = CardsCover.getResource(newFitnessCard.imageCover)
+
+        bgimage.setImageResource(id!!)
 
         // Inflate the layout for this fragment
         return binding.root

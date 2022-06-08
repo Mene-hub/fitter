@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import com.facebook.login.LoginManager
 import com.fitterAPP.fitter.classes.Athlete
 import com.fitterAPP.fitter.fragmentControllers.*
 import com.google.firebase.auth.FirebaseAuth
@@ -95,6 +96,7 @@ class MainActivity : AppCompatActivity() {
         if(auth.currentUser != null){
             Log.d("MainWindow-Signout", "Sloggato")
             auth.signOut()
+            LoginManager.getInstance().logOut()
         }
 
         val i =  Intent(this, LoginActivity::class.java)

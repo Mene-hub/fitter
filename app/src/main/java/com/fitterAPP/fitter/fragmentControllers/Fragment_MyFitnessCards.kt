@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
@@ -18,6 +20,7 @@ import com.fitterAPP.fitter.classes.Athlete
 import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.itemsAdapter.FitnessCardAdapter
 import com.fitterAPP.fitter.MainActivity
+import com.fitterAPP.fitter.classes.CardsCover
 import com.fitterAPP.fitter.databinding.FragmentMyFitnessCardsBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -50,7 +53,6 @@ class MyFitnessCards : Fragment() {
         adapter = context?.let { FitnessCardAdapter((activity as MainActivity), fitnessCads) }!!
         recycle.adapter = adapter
 
-        Log.w("Fragment", binding.MyFitnessCardsRV.id.toString())
         return binding.root
     }
 

@@ -114,6 +114,19 @@ enum class CardsCover:IImageName {
                 else -> {woman}
             }
         }
+
+        fun getResource(img : CardsCover): Int {
+            return when (img){
+                gigachad -> R.drawable.gigachad
+                gigachad2 -> R.drawable.gigachad2
+                man -> R.drawable.man_bodybuilder
+                man2 -> R.drawable.man_bodybuilder2
+                woman -> R.drawable.woman_bodybuilder
+                woman2 -> R.drawable.woman_bodybuilder2
+
+                else -> {R.drawable.woman_bodybuilder}
+            }
+        }
     }
 }
 

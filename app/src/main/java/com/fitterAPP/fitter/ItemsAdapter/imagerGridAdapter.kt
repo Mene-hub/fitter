@@ -31,6 +31,9 @@ class imagerGridAdapter(val context2: Context, val images : MutableList<Int>, va
 
         fun setCard(id: Int, context: Context, card: FitnessCard, dialog: BottomSheetDialogFragment) {
             bgImage.setImageResource(id)
+            if(CardsCover.getResource(card.imageCover) == id)
+                radioButton.isChecked = true
+
             bgImage.setOnClickListener{
                 card.imageCover = CardsCover.getFromResource(id)
                 StaticFitnessCardDatabase.setFitnessCardItem(StaticFitnessCardDatabase.database.getReference(context.getString(R.string.FitnessCardsReference)), Athlete.UID, card)
