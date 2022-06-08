@@ -12,6 +12,9 @@ import android.view.WindowManager
 import android.view.animation.Animation
 import android.widget.*
 import androidx.fragment.app.DialogFragment
+import androidx.navigation.NavDirections
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import com.fitterAPP.fitter.classes.Exercise
@@ -107,6 +110,9 @@ class ModifyCard() : DialogFragment() {
 
             if(fitnessCard.exercises == null)
                 fitnessCard.exercises = ArrayList()
+
+            val action : NavDirections = ModifyCardDirections.actionModifyCardToNewExercieFormDialog(fitnessCard)
+            findNavController().navigate(action)
 
             fitnessCard.exercises?.add(Exercise())
 

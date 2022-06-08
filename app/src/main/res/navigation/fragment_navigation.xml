@@ -101,10 +101,24 @@
         <argument
             android:name="cardBundle"
             app:argType="com.fitterAPP.fitter.classes.FitnessCard" />
+        <action
+            android:id="@+id/action_modifyCard_to_newExercieFormDialog"
+            app:destination="@id/newExercieFormDialog" />
     </dialog>
     <dialog
         android:id="@+id/stringEditMenu"
         android:name="com.fitterAPP.fitter.fragmentControllers.StringEditMenu"
         android:label="fragment_string_edit_menu"
         tools:layout="@layout/fragment_string_edit_menu" />
+    <dialog
+        android:id="@+id/newExercieFormDialog"
+        android:name="com.fitterAPP.fitter.fragmentControllers.newExercieFormDialog"
+        android:label="newExercieFormDialog" >
+        <action
+            android:id="@+id/action_newExercieFormDialog_to_modifyCard"
+            app:destination="@id/modifyCard" />
+        <argument
+            android:name="fitnessCard"
+            app:argType="com.fitterAPP.fitter.classes.FitnessCard" />
+    </dialog>
 </navigation>

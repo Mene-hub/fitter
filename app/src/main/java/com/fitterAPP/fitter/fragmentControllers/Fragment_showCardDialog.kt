@@ -8,7 +8,9 @@ import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.*
 import android.view.animation.Animation
+import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
@@ -68,6 +70,10 @@ class Fragment_showCardDialog() : DialogFragment() {
             activity?.windowManager?.defaultDisplay?.getMetrics(metrics)
             screenHeight = metrics.heightPixels/3
         }
+
+        val params = FrameLayout.LayoutParams( RelativeLayout.LayoutParams.MATCH_PARENT, screenHeight)
+
+        binding.Header.layoutParams = params
 
         val recycle : RecyclerView = binding.exercisesListRV
 
