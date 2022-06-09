@@ -83,8 +83,6 @@ class LoginActivity : AppCompatActivity() {
         //endregion
 
         //region facebookStuff
-
-
         binding.IVLoginFacebook.setOnClickListener(loginFacebook())
         callbackManager = CallbackManager.Factory.create()
         //endregion
@@ -341,6 +339,7 @@ class LoginActivity : AppCompatActivity() {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG_login, "signInWithCredential:success")
                     startActivityByFacebook(auth.currentUser?.uid!!, token, auth.currentUser!!)
+
 
                 } else {
                     // If sign in fails, display a message to the user.
