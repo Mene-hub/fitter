@@ -76,7 +76,6 @@ class MainActivity : AppCompatActivity() {
             if(intent.extras!!.getBoolean("HASTOSAVE")){
                 Log.d("MainWindow-Signout", "Entro")
                 StaticAthleteDatabase.setAthleteItem(dbReference, user.UID, user)
-                //downloadImagesFromURL(user.profilePic)
             }
             //Applying listener for the "on update" call
             StaticAthleteDatabase.setAthleteValueListener(dbReference, user.UID, getAthleteEventListener())
