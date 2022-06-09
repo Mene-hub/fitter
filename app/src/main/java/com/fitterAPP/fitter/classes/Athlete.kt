@@ -1,7 +1,7 @@
 package com.fitterAPP.fitter.classes
 
 /**
- *
+ * Athlete data class for the database
  * @author Daniel Satriano
  */
 data class Athlete(var UID : String, var username : String?, var profilePic : String?, var profileBio : String?, var spotifyPlayList : String?){
