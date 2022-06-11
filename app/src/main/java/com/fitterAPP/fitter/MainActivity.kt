@@ -9,9 +9,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.facebook.login.LoginManager
 import com.fitterAPP.fitter.classes.Athlete
 import com.fitterAPP.fitter.fragmentControllers.*
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -43,6 +45,7 @@ class MainActivity : AppCompatActivity() {
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.FragmentContainer) as NavHostFragment
         navController = navHostFragment.navController
+        findViewById<BottomNavigationView>(R.id.bottom_navigation).setupWithNavController(navController)
 
         //FIREBASE ACCOUNT
         auth = Firebase.auth
@@ -59,6 +62,8 @@ class MainActivity : AppCompatActivity() {
             val modalBottomSheet = profileMenu()
             modalBottomSheet.show(supportFragmentManager, profileMenu.TAG)
         }
+
+
     }
 
     /**

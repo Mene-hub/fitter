@@ -44,8 +44,6 @@ class MyFitnessCards : Fragment() {
         //grab event from companion class RealTimeDBHelper
         StaticFitnessCardDatabase.setFitnessCardChildListener(dbReference, Athlete.UID, getFitnessCardEventListener())
 
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).setOnItemSelectedListener(bottomNavItemSelected())
-
         val recycle : RecyclerView = binding.MyFitnessCardsRV
         adapter = context?.let { FitnessCardAdapter((activity as MainActivity), fitnessCads, this) }!!
         fitnessCads.add(FitnessCard("","",null,null,"addCard",CardsCover.addCard))
@@ -54,29 +52,6 @@ class MyFitnessCards : Fragment() {
 
         Log.w("Fragment", binding.MyFitnessCardsRV.id.toString())
         return binding.root
-    }
-
-    private fun bottomNavItemSelected(): NavigationBarView.OnItemSelectedListener {
-        val listener = NavigationBarView.OnItemSelectedListener{ item ->
-            when (item.itemId){
-                R.id.home ->{
-                    true
-                }
-                R.id.addCard ->{
-                    showAlertDialogFitnessCard()
-                    item.isChecked = false
-                    true
-                }
-                R.id.search ->{
-                    findNavController().navigate(R.id.action_myFitnessCards_to_findprofile)
-                    true
-                }
-                else ->{
-                    false
-                }
-            }
-        }
-        return listener
     }
 
     /**

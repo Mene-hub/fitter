@@ -32,7 +32,6 @@ class FindProfile : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentFindprofileBinding.inflate(inflater,container,false)
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).setOnItemSelectedListener(bottomNavItemSelected())
 
         databaseReference = StaticAthleteDatabase.database.getReference(getString(R.string.AthleteReference))
 
@@ -106,32 +105,4 @@ class FindProfile : Fragment() {
 
         })
     }
-
-    /**
-     * Simple item listener for the bottom navigation view, which is used to move through views
-     * @author Daniel Satriano
-     * @since 28/05/2022
-     */
-    private fun bottomNavItemSelected(): NavigationBarView.OnItemSelectedListener {
-        val listener = NavigationBarView.OnItemSelectedListener{ item ->
-            when (item.itemId){
-                R.id.home ->{
-                    findNavController().navigate(R.id.action_findprofile_to_myFitnessCards)
-                    true
-                }
-                R.id.addCard ->{
-                    true
-                }
-                R.id.findprofile ->{
-                    item.isChecked = true
-                    true
-                }
-                else ->{
-                    false
-                }
-            }
-        }
-        return listener
-    }
-
 }
