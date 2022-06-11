@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ItemCard_CardView"
     android:layout_width="150dp"
     android:layout_height="250dp"
+
     android:layout_marginRight="10dp"
     app:cardCornerRadius="20dp"
     app:cardElevation="5dp">
@@ -28,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_bold"
-            android:text="Nome Scheda"
+            android:text=""
             android:textColor="@color/white"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -39,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_bold"
-            android:text="Time: 1h"
+            android:text=""
             android:textColor="@color/white"
             android:textSize="14sp"
             app:layout_constraintTop_toBottomOf="@+id/CardName_TV" />
@@ -49,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_bold"
-            android:text="10 Exercise"
+            android:text=""
             android:textColor="@color/white"
             android:textSize="14sp"
             app:layout_constraintTop_toBottomOf="@+id/TimeDuration_TV" />

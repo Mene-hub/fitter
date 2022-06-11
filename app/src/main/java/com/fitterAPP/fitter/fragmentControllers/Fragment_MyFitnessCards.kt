@@ -18,6 +18,7 @@ import com.fitterAPP.fitter.classes.Athlete
 import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.itemsAdapter.FitnessCardAdapter
 import com.fitterAPP.fitter.MainActivity
+import com.fitterAPP.fitter.classes.CardsCover
 import com.fitterAPP.fitter.databinding.FragmentMyFitnessCardsBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -46,8 +47,10 @@ class MyFitnessCards : Fragment() {
         requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).setOnItemSelectedListener(bottomNavItemSelected())
 
         val recycle : RecyclerView = binding.MyFitnessCardsRV
-        adapter = context?.let { FitnessCardAdapter((activity as MainActivity), fitnessCads) }!!
+        adapter = context?.let { FitnessCardAdapter((activity as MainActivity), fitnessCads, this) }!!
+        fitnessCads.add(FitnessCard("","",null,null,"addCard",CardsCover.addCard))
         recycle.adapter = adapter
+
 
         Log.w("Fragment", binding.MyFitnessCardsRV.id.toString())
         return binding.root
@@ -76,7 +79,10 @@ class MyFitnessCards : Fragment() {
         return listener
     }
 
-
+    /**
+     * @author Daniel Satriano
+     * @author Claudio Menegotto
+     */
     private fun transaction(newFitnessCard : FitnessCard) {
         val action : NavDirections = MyFitnessCardsDirections.actionMyFitnessCardsToFragmentShowCardDialog(newFitnessCard)
         findNavController().navigate(action)
@@ -92,47 +98,7 @@ class MyFitnessCards : Fragment() {
         StaticFitnessCardDatabase.setFitnessCardItem(dbReference, Athlete.UID, card)
     }
 
-    private fun getFitnessCardEventListener(): ChildEventListener {
-        val childEventListener = object : ChildEventListener {
-            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                val item = snapshot.getValue(FitnessCard::class.java)
-                //aggiungo nuova fitness card
-                if(!fitnessCads.contains(item)) {
-                    fitnessCads.add((item!!))
-                    adapter.notifyItemInserted(fitnessCads.indexOf(item))
-                }
-            }
-
-            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                val item = snapshot.getValue(FitnessCard::class.java)
-                //cerco fitness card modificata
-
-                val index = fitnessCads.indexOf(fitnessCads.find { it.key == item?.key })
-
-                fitnessCads[index].set(item)
-                adapter.notifyItemChanged(index)
-            }
-
-            override fun onChildRemoved(snapshot: DataSnapshot) {
-                val item = snapshot.getValue(FitnessCard::class.java)
-                val index = fitnessCads.indexOf(item)
-                fitnessCads.remove(item)
-                adapter.notifyItemRemoved(index)
-            }
-
-            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
-                //viene triggerato quando la locazione del child cambia
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.w("Fragment_MyFitnessCards: ", "postcomments:onCancelled", error.toException())
-                Toast.makeText(activity?.baseContext, "Failed to load comment.", Toast.LENGTH_SHORT).show()
-            }
-        }
-        return childEventListener
-    }
-
-    private fun showAlertDialogFitnessCard(){
+    fun showAlertDialogFitnessCard(){
         val newFitnessCard = FitnessCard()
 
         // Create an alert builder
@@ -173,6 +139,47 @@ class MyFitnessCards : Fragment() {
                 }
             }
             .setIcon(AppCompatResources.getDrawable(requireContext(),R.drawable.fitness_24)).show()
+    }
+
+
+    private fun getFitnessCardEventListener(): ChildEventListener {
+        val childEventListener = object : ChildEventListener {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                val item = snapshot.getValue(FitnessCard::class.java)
+                //aggiungo nuova fitness card
+                if(!fitnessCads.contains(item)) {
+                    fitnessCads.add((item!!))
+                    adapter.notifyItemInserted(fitnessCads.indexOf(item))
+                }
+            }
+
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                val item = snapshot.getValue(FitnessCard::class.java)
+                //cerco fitness card modificata
+
+                val index = fitnessCads.indexOf(fitnessCads.find { it.key == item?.key })
+
+                fitnessCads[index].set(item)
+                adapter.notifyItemChanged(index)
+            }
+
+            override fun onChildRemoved(snapshot: DataSnapshot) {
+                val item = snapshot.getValue(FitnessCard::class.java)
+                val index = fitnessCads.indexOf(item)
+                fitnessCads.remove(item)
+                adapter.notifyItemRemoved(index)
+            }
+
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+                //viene triggerato quando la locazione del child cambia
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.w("Fragment_MyFitnessCards: ", "postcomments:onCancelled", error.toException())
+                Toast.makeText(activity?.baseContext, "Failed to load comment.", Toast.LENGTH_SHORT).show()
+            }
+        }
+        return childEventListener
     }
 
 }
