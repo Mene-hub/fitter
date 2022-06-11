@@ -2,7 +2,7 @@
 
 ![Untitled](https://github.com/Mene-hub/fitter/blob/main/app/src/main/res/mipmap-hdpi/ic_fitter_logo_foreground.png)
 
-Fitter is an App developed by two university student: @Code-Dani, @Mene-Hub.
+Fitter is an App developed by two university student: [@Code-Dani](https://github.com/Code-Dani), [@Mene-Hub](https://github.com/Mene-hub).
 
 Fitter is an application for managing gym cards, but not only. It also presents the option to search for other users registered to the application and see their profile and if the latter is not private it will be possible to peek at the various tabs that the user presents.
 
