@@ -1,6 +1,6 @@
 # fitter
 
-![Untitled](readme%20md%2082a25de8b0394c0eb24c0fafb04163c6/Untitled.png)
+![Untitled](https://github.com/Mene-hub/fitter/blob/main/app/src/main/res/mipmap-hdpi/ic_fitter_logo_foreground.png)
 
 Fitter is an App developed by two university student: @Code-Dani, @Mene-Hub.
 
