@@ -34,6 +34,7 @@ class MyFitnessCards : Fragment() {
     private lateinit var dbReference : DatabaseReference
     //firebase database
     private val fitnessCads : MutableList<FitnessCard> = ArrayList()
+    private var dummyCard : FitnessCard = FitnessCard()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
@@ -41,12 +42,13 @@ class MyFitnessCards : Fragment() {
 
         dbReference = StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference))
 
+        dummyCard = FitnessCard("","",null,null,"addCard",CardsCover.addCard)
         //grab event from companion class RealTimeDBHelper
         StaticFitnessCardDatabase.setFitnessCardChildListener(dbReference, Athlete.UID, getFitnessCardEventListener())
 
         val recycle : RecyclerView = binding.MyFitnessCardsRV
         adapter = context?.let { FitnessCardAdapter((activity as MainActivity), fitnessCads, this) }!!
-        fitnessCads.add(FitnessCard("","",null,null,"addCard",CardsCover.addCard))
+        fitnessCads.add(dummyCard)
         recycle.adapter = adapter
 
 
@@ -123,7 +125,9 @@ class MyFitnessCards : Fragment() {
                 val item = snapshot.getValue(FitnessCard::class.java)
                 //aggiungo nuova fitness card
                 if(!fitnessCads.contains(item)) {
+                    fitnessCads.remove(dummyCard)
                     fitnessCads.add((item!!))
+                    fitnessCads.add(dummyCard)
                     adapter.notifyItemInserted(fitnessCads.indexOf(item))
                 }
             }

@@ -19,9 +19,6 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        app:stackFromEnd="true"
-        app:reverseLayout="true"
-
         android:layout_marginHorizontal="16dp"
         android:id="@+id/MyFitnessCards_RV"
         android:layout_width="match_parent"
