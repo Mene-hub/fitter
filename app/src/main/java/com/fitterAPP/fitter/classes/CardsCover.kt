@@ -57,6 +57,15 @@ enum class CardsCover:IImageName {
         override fun getname(): String{
             return "squat with gym barrel woman"
         }
+    },
+    addCard{
+        override fun toString(): String {
+            return "ic_add_placeholder"
+        }
+
+        override fun getname(): String {
+            return "add card placeholder"
+        }
     };
 
     companion object {
@@ -68,7 +77,7 @@ enum class CardsCover:IImageName {
                 man2.getname() -> man2
                 woman.getname() -> man
                 woman2.getname() -> man2
-
+                addCard.getname() -> addCard
 
                 else -> {woman}
             }
@@ -82,6 +91,7 @@ enum class CardsCover:IImageName {
                 man2.toString() -> man2
                 woman.toString() -> man
                 woman2.toString() -> man2
+                addCard.toString() -> addCard
 
                 else -> {woman}
             }
@@ -95,6 +105,7 @@ enum class CardsCover:IImageName {
                 "$man2.png" -> man2
                 "$woman.png" -> man
                 "$woman2.png" -> man2
+                "${addCard}.xml" -> addCard
 
                 else -> {woman}
             }

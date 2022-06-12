@@ -49,7 +49,6 @@ class Profile : Fragment() {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
 
         dbReference = StaticAthleteDatabase.database.getReference(getString(R.string.AthleteReference))
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).setOnItemSelectedListener(bottomNavItemSelected())
 
         auth = Firebase.auth
 
@@ -65,34 +64,6 @@ class Profile : Fragment() {
 
         return binding.root
     }
-
-    /**
-     * Simple item listener for the bottom navigation view, which is used to move through views
-     * @author Daniel Satriano
-     * @since 30/05/2022
-     */
-    private fun bottomNavItemSelected(): NavigationBarView.OnItemSelectedListener {
-        val listener = NavigationBarView.OnItemSelectedListener{ item ->
-            when (item.itemId){
-                R.id.home ->{
-                    findNavController().navigate(R.id.action_profile_to_myFitnessCards)
-                    true
-                }
-                R.id.addCard ->{
-                    true
-                }
-                R.id.search ->{
-                    findNavController().navigate(R.id.action_profile_to_findprofile)
-                    true
-                }
-                else ->{
-                    false
-                }
-            }
-        }
-        return listener
-    }
-
     /**
      * Update button listener, used to update data in the Realtime Database, it also closes the window once the update has been done and gives a Toast message to the user
      * as a feedback

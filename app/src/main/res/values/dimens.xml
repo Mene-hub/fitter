@@ -4,4 +4,5 @@
     <dimen name="list_item_spacing_half">8dp</dimen>
 
     <dimen name="HorizontalMargin_profile">15dp</dimen>
+    <dimen name="button_add_card_padding">20dp</dimen>
 </resources>
