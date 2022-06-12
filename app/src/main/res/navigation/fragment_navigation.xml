@@ -101,7 +101,7 @@
             android:name="cardBundle"
             app:argType="com.fitterAPP.fitter.classes.FitnessCard" />
     </dialog>
-    <fragment
+    <dialog
         android:id="@+id/fragment_ViewOthersProfile"
         android:name="com.fitterAPP.fitter.fragmentControllers.Fragment_ViewOthersProfile"
         android:label="fragment__view_others_profile"
@@ -113,8 +113,5 @@
         <argument
             android:name="bundleAthlete"
             app:argType="com.fitterAPP.fitter.classes.Athlete" />
-        <argument
-            android:name="bundleCard"
-            app:argType="com.fitterAPP.fitter.classes.FitnessCard" />
-    </fragment>
+    </dialog>
 </navigation>

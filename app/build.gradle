@@ -91,4 +91,7 @@ dependencies {
     //gson library
     implementation 'com.google.code.gson:gson:2.9.0'
 
+    //shimmer effect
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
 }

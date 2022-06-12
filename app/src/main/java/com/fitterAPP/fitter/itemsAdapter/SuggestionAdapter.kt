@@ -7,9 +7,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.navigation.NavDirections
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.classes.Athlete
+import com.fitterAPP.fitter.fragmentControllers.FindProfileDirections
 import com.squareup.picasso.Picasso
 
 /**
@@ -28,10 +31,8 @@ class SuggestionAdapter(val context2: Context, val users:MutableList<Athlete>) :
                 Picasso.get().load(user.profilePic).resize(100, 100).centerCrop().into(image)
 
             itemView.setOnClickListener {
-                Toast.makeText(itemView.context, username.text.toString(), Toast.LENGTH_LONG).show()
-
-                /*val action : NavDirections = MyFitnessCardsDirections.actionMyFitnessCardsToFragmentShowCardDialog(Card)
-                it.findNavController().navigate(action)*/
+                val action : NavDirections = FindProfileDirections.actionFindprofileToFragmentViewOthersProfile(user)
+                it.findNavController().navigate(action)
             }
 
         }
@@ -42,12 +43,10 @@ class SuggestionAdapter(val context2: Context, val users:MutableList<Athlete>) :
         val view: View = LayoutInflater.from(context2).inflate(R.layout.suggestion_adapter_row, parent, false)
         return Holder(view)
     }
-
     override fun onBindViewHolder(holder: Holder, position: Int) {
         val user: Athlete = users[position]
         holder.setCard(user)
     }
-
     override fun getItemCount(): Int {
         return users.size
     }

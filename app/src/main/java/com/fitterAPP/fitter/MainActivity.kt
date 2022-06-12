@@ -119,7 +119,7 @@ class MainActivity : AppCompatActivity() {
                 val item = snapshot.getValue(Athlete::class.java) //GRAB USER ITEM
                 user.SetNewValue(item!!)
 
-                if(user.profilePic != "null") {
+                if(user.profilePic != "") {
                     val imageProfile: ImageView = findViewById(R.id.profilepic_IV)
                     val imageURI: String = user.profilePic!!
                     Picasso.get()

@@ -24,6 +24,7 @@
     <color name="medium_purple">#9370DB</color>
     <color name="orange">#FF681F</color>
 
+    <color name="shimmer_color">#dddddd</color>
 
 
 </resources>
