@@ -1,7 +1,6 @@
 package com.fitterAPP.fitter.itemsAdapter
 
 import android.content.Context
-import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,24 +8,17 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.isGone
-import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.NavDirections
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.R
-import com.fitterAPP.fitter.fragmentControllers.Fragment_showCardDialog
-import com.fitterAPP.fitter.fragmentControllers.ModifyCard
 import com.fitterAPP.fitter.fragmentControllers.MyFitnessCards
 import com.fitterAPP.fitter.fragmentControllers.MyFitnessCardsDirections
 
-class FitnessCardAdapter (val context2: Context, private val Cards:MutableList<FitnessCard>, val fitnessCards: MyFitnessCards) : RecyclerView.Adapter<FitnessCardAdapter.Holder>() {
+class FitnessCardAdapter (val context2: Context, private val Cards:MutableList<FitnessCard>, val fitnessCards: MyFitnessCards?) : RecyclerView.Adapter<FitnessCardAdapter.Holder>() {
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnLongClickListener{
 
@@ -60,15 +52,17 @@ class FitnessCardAdapter (val context2: Context, private val Cards:MutableList<F
             }
 
             if(Card.key == "addCard"){
-                cardView.cardElevation = 0F
-                bgImage.scaleType = ImageView.ScaleType.CENTER_INSIDE
-                val padding = bgImage.resources.getDimensionPixelOffset(R.dimen.button_add_card_padding);
-                bgImage.setPadding(padding,padding,padding,padding)
-                cardExercises.text = ""
-                itemView.setOnClickListener{
-                    fitnessCards.showAlertDialogFitnessCard()
+                if(fitnessCards != null) {
+                    cardView.cardElevation = 0F
+                    bgImage.scaleType = ImageView.ScaleType.CENTER_INSIDE
+                    val padding =
+                        bgImage.resources.getDimensionPixelOffset(R.dimen.button_add_card_padding);
+                    bgImage.setPadding(padding, padding, padding, padding)
+                    cardExercises.text = ""
+                    itemView.setOnClickListener {
+                        fitnessCards.showAlertDialogFitnessCard()
+                    }
                 }
-
             }else{
                 itemView.setOnClickListener {
                     val action : NavDirections = MyFitnessCardsDirections.actionMyFitnessCardsToFragmentShowCardDialog(Card)
@@ -117,3 +111,5 @@ class FitnessCardAdapter (val context2: Context, private val Cards:MutableList<F
     }
 
 }
+
+

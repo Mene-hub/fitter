@@ -48,7 +48,7 @@ class FindProfile : Fragment() {
 
     /**
      * * Private listener for the SearchView which updates on every change in the textfield or when submit is pressed.
-     * In particular onQUeryTextChange is the method used for the research in the database which sends an input to databaseQuery(textString) whenever textString is not Blank.<br />
+     * In particular onQueryTextChange is the method used for the research in the database which sends an input to databaseQuery(textString) whenever textString is not Blank.<br />
      * @see databaseQuery for more information about that method
      * @author Daniel Satriano
      * @since 28/05/2022
