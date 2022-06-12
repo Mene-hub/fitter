@@ -120,5 +120,8 @@
         <argument
             android:name="fitnessCard"
             app:argType="com.fitterAPP.fitter.classes.FitnessCard" />
+        <argument
+            android:name="index"
+            app:argType="integer" />
     </dialog>
 </navigation>

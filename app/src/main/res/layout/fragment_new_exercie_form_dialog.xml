@@ -80,17 +80,31 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/Header">
+                app:layout_constraintTop_toBottomOf="@id/Header"
+                app:layout_constraintVertical_bias="1.0">
+
+                <TextView
+                    android:id="@+id/ExName_TV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="Exercise Name"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <LinearLayout
                     android:id="@+id/linearLayout6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="32dp"
                     android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toBottomOf="@+id/ExName_TV">
 
                     <TextView
                         android:id="@+id/textView2"
@@ -107,9 +121,13 @@
                         android:id="@+id/linearLayout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:background="@drawable/round_border"
+                        android:backgroundTint="#EDEDED"
+                        android:orientation="horizontal"
+                        android:padding="2.5dp">
 
                         <androidx.cardview.widget.CardView
+                            android:id="@+id/subSeries_CV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:cardBackgroundColor="@color/lightgray"
@@ -127,20 +145,21 @@
                         </androidx.cardview.widget.CardView>
 
                         <TextView
+                            android:id="@+id/Series_TV"
                             android:layout_width="150dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_weight="3"
                             android:fontFamily="@font/roboto_regular"
                             android:gravity="center"
-                            android:text="5"
+                            android:text="1"
                             android:textAlignment="center"
                             android:textColor="@color/black"
                             android:textSize="20sp"
                             android:textStyle="bold" />
 
                         <androidx.cardview.widget.CardView
-                            android:id="@+id/cardView2"
+                            android:id="@+id/addSeries_CV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:cardBackgroundColor="@color/lightgray"
@@ -163,7 +182,7 @@
                     android:id="@+id/linearLayout7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="32dp"
                     android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -182,9 +201,13 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:background="@drawable/round_border"
+                        android:backgroundTint="#EDEDED"
+                        android:orientation="horizontal"
+                        android:padding="2.5dp">
 
                         <androidx.cardview.widget.CardView
+                            android:id="@+id/subReps_CV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:cardBackgroundColor="@color/lightgray"
@@ -202,19 +225,21 @@
                         </androidx.cardview.widget.CardView>
 
                         <TextView
+                            android:id="@+id/Reps_TV"
                             android:layout_width="150dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_weight="3"
                             android:fontFamily="@font/roboto_regular"
                             android:gravity="center"
-                            android:text="5"
+                            android:text="1"
                             android:textAlignment="center"
                             android:textColor="@color/black"
                             android:textSize="20sp"
                             android:textStyle="bold" />
 
                         <androidx.cardview.widget.CardView
+                            android:id="@+id/addReps_CV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:cardBackgroundColor="@color/lightgray"
@@ -236,7 +261,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="32dp"
                     android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -255,9 +280,13 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:background="@drawable/round_border"
+                        android:backgroundTint="#EDEDED"
+                        android:orientation="horizontal"
+                        android:padding="2.5dp">
 
                         <androidx.cardview.widget.CardView
+                            android:id="@+id/subTime_CV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:cardBackgroundColor="@color/lightgray"
@@ -275,19 +304,21 @@
                         </androidx.cardview.widget.CardView>
 
                         <TextView
+                            android:id="@+id/Time_TV"
                             android:layout_width="150dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_weight="3"
                             android:fontFamily="@font/roboto_regular"
                             android:gravity="center"
-                            android:text="5"
+                            android:text="60s"
                             android:textAlignment="center"
                             android:textColor="@color/black"
                             android:textSize="20sp"
                             android:textStyle="bold" />
 
                         <androidx.cardview.widget.CardView
+                            android:id="@+id/addTime_CV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:cardBackgroundColor="@color/lightgray"
@@ -312,6 +343,7 @@
     </ScrollView>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/SaveExercise"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"

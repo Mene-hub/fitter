@@ -61,6 +61,7 @@ class ModifyCard() : DialogFragment() {
 
         var screenHeight = 0
 
+        //get screen height
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             try {
                 val windowMetrics = activity?.windowManager?.currentWindowMetrics
@@ -74,14 +75,17 @@ class ModifyCard() : DialogFragment() {
             screenHeight = metrics.heightPixels/3
         }
 
+        //set the image height
         val params = FrameLayout.LayoutParams( RelativeLayout.LayoutParams.MATCH_PARENT, screenHeight)
 
         binding.Header.layoutParams = params
 
+
+        //exercises adapter
         val recycle : RecyclerView = binding.exercisesListRV
 
         if(fitnessCard.exercises != null && fitnessCard.exercises?.size!! > 0){
-            val adapter = context?.let { FitnessCardExercisesAdapter((activity as MainActivity),fitnessCard,fitnessCard.exercises!!, true) }!!
+            val adapter = FitnessCardExercisesAdapter((activity as MainActivity),fitnessCard,fitnessCard.exercises!!, true)
             recycle.adapter = adapter
         }
 
@@ -111,10 +115,10 @@ class ModifyCard() : DialogFragment() {
             if(fitnessCard.exercises == null)
                 fitnessCard.exercises = ArrayList()
 
-            val action : NavDirections = ModifyCardDirections.actionModifyCardToNewExercieFormDialog(fitnessCard)
-            findNavController().navigate(action)
-
             fitnessCard.exercises?.add(Exercise())
+
+            val action : NavDirections = ModifyCardDirections.actionModifyCardToNewExercieFormDialog(fitnessCard, fitnessCard.exercises?.lastIndex!!)
+            findNavController().navigate(action)
 
             if(fitnessCard.exercises != null && fitnessCard.exercises?.size!! > 0){
                 val adapter = context?.let { FitnessCardExercisesAdapter((activity as MainActivity),fitnessCard,fitnessCard.exercises!!, true) }!!
