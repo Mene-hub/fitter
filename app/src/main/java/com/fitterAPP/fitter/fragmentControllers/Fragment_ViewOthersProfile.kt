@@ -2,6 +2,7 @@ package com.fitterAPP.fitter.fragmentControllers
 
 import android.opengl.Visibility
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,12 +22,13 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.Query
 import com.squareup.picasso.Picasso
+import okhttp3.Response
 
 class Fragment_ViewOthersProfile : DialogFragment() {
 
     private lateinit var binding : FragmentViewOthersProfileBinding
     private lateinit var adapter : FitnessCardAdapter
-    private val cardList : MutableList<FitnessCard> = mutableListOf()
+    private var cardList : MutableList<FitnessCard> = mutableListOf()
     private val args by navArgs<Fragment_ViewOthersProfileArgs>()
     private lateinit var shimmerFrameLayout : ShimmerFrameLayout
 
@@ -65,42 +67,42 @@ class Fragment_ViewOthersProfile : DialogFragment() {
                 .into(image)
         }
 
-        val tv_userCards = binding.TVUsernameCards
+        binding.TVUsernameCards.text = "${athlete.username}'s cards"
 
         adapter = context?.let { FitnessCardAdapter((activity as MainActivity), cardList, null) }!!
         binding.RVCards.adapter = adapter
 
-        retrieveUserCards(athlete)
 
         return binding.root
     }
 
-
-    private fun retrieveUserCards(athlete : Athlete) {
-        val reference = StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference))
-        StaticFitnessCardDatabase.setFitnessCardChildListener(reference, athlete.UID, cardListener())
-        shimmerFrameLayout.stopShimmer()
-        binding.RVCardsShimmer.visibility = View.GONE
-        binding.RVCards.visibility = View.VISIBLE
+    override fun onStart() {
+        super.onStart()
+        retrieveUserCards()
     }
 
-    private fun cardListener(): ChildEventListener {
-        return object : ChildEventListener{
-            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                val item = snapshot.getValue(FitnessCard::class.java)
-                cardList.add(item!!)
-                adapter.notifyItemInserted(cardList.indexOf(item))
-            }
 
-            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+    private fun retrieveUserCards() {
+        val reference = StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference)).child(Athlete.UID)
+        val usernameOrdered : Query  = reference.orderByKey()
+        usernameOrdered.get().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val result = task.result
+                result?.let { snapShot ->
+                    Log.d("Count", snapShot.childrenCount.toString())
+                    for (cardSnap in snapShot.children) {
+                        val item = cardSnap.getValue(FitnessCard::class.java)!!
+                        cardList.add(item)
+                        adapter.notifyItemInserted(cardList.indexOf(item))
+                        Log.d("CountCard", cardList.size.toString())
+                    }
+                }
             }
-            override fun onChildRemoved(snapshot: DataSnapshot) {
-            }
-            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
-            }
-            override fun onCancelled(error: DatabaseError) {
-            }
+        }.addOnCompleteListener {
+            binding.RVCardsShimmer.visibility = View.GONE
+            binding.RVCardsShimmer.stopShimmer()
+
+            binding.RVCards.visibility = View.VISIBLE
         }
     }
-
 }

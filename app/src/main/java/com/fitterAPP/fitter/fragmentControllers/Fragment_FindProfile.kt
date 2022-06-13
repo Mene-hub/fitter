@@ -70,7 +70,6 @@ class FindProfile : Fragment() {
         return listener
     }
 
-
     /**
      * * databaseQuery is a function that is called in queryTextListener() and it queries the database for the particular string given as input (text : String?).
      * * for more information about the database query method check the [documentation](https://firebase.google.com/docs/database/android/lists-of-data#sorting_and_filtering_data)
