@@ -35,6 +35,7 @@ class newExercieFormDialog : DialogFragment() {
     /**
      * onCreate method which is used to set the dialog style. This mathod is paired with a WindowManager setting done in [onCreateView]
      * @author Daniel Satriano
+     * @author Claudio MEnegotto
      * @since 1/06/2022
      */
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,6 +60,7 @@ class newExercieFormDialog : DialogFragment() {
 
         var screenHeight = 0
 
+        //getting the screen height
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             try {
                 val windowMetrics = activity?.windowManager?.currentWindowMetrics
@@ -72,10 +74,12 @@ class newExercieFormDialog : DialogFragment() {
             screenHeight = metrics.heightPixels/3
         }
 
+        //setting the height
         val params = FrameLayout.LayoutParams( RelativeLayout.LayoutParams.MATCH_PARENT, screenHeight)
 
         binding.Header.layoutParams = params
 
+        //back bt pressed
         binding.backBt.setOnClickListener {
             findNavController().navigateUp()
         }
@@ -137,6 +141,7 @@ class newExercieFormDialog : DialogFragment() {
             textTime.text = tmp.toString() + "s"
         }
 
+        //save card on db and close the fragment
         binding.SaveExercise.setOnClickListener {
             fitnessCard.exercises?.get(index)?.exerciseSer = textSeries.text.toString().toInt()
             fitnessCard.exercises?.get(index)?.exerciseRep = textReps.text.toString().toInt()

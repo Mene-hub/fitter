@@ -12,19 +12,26 @@ import com.fitterAPP.fitter.classes.Athlete
 import com.fitterAPP.fitter.databases.StaticFitnessCardDatabase
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
+/**
+ * BottomSheetDialogFragment to change the string properties of the FitnessCard
+ * @author Menegotto Claudio
+ */
 class StringEditMenu(val propertyname : String, var Value : String, var card: FitnessCard) : BottomSheetDialogFragment() {
 
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View {
 
         val v : View = inflater.inflate(R.layout.fragment_string_edit_menu, container, false)
 
+        //setting the old value
         v.findViewById<TextView>(R.id.PropertyName_TV).text = propertyname
         v.findViewById<TextView>(R.id.et_editedString).text = Value
 
+        //closing the dialog
         v.findViewById<TextView>(R.id.backBt_TV).setOnClickListener {
             dismiss()
         }
 
+        //save bt clicked
         v.findViewById<TextView>(R.id.saveBt_TV).setOnClickListener {
 
             if(propertyname == "Card name")
@@ -39,10 +46,6 @@ class StringEditMenu(val propertyname : String, var Value : String, var card: Fi
         }
 
         return v
-    }
-
-    override fun onDismiss(dialog: DialogInterface) {
-        super.onDismiss(dialog)
     }
 
 }

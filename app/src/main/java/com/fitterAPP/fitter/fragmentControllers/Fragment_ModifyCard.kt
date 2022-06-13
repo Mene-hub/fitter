@@ -39,6 +39,7 @@ class ModifyCard() : DialogFragment() {
     /**
      * onCreate method which is used to set the dialog style. This mathod is paired with a WindowManager setting done in [onCreateView]
      * @author Daniel Satriano
+     * @author Claudio Menegotto
      * @since 1/06/2022
      */
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -89,10 +90,12 @@ class ModifyCard() : DialogFragment() {
             recycle.adapter = adapter
         }
 
+        //binding the card properties
         val cardName : TextView = binding.CardNameTV
         val cardDuration : TextView = binding.TimeDurationTV
         val cardDescription: TextView = binding.DescriptionTV
 
+        //edit image cover on click
         val editCover : ImageView = binding.EditCoverIV
         editCover.setOnClickListener {
             val modalBottomSheet = ImageSelector("Card image cover", fitnessCard)
@@ -101,14 +104,17 @@ class ModifyCard() : DialogFragment() {
 
         val bgimage : ImageView = binding.CardBgImageIV
 
+        //setting the card cover
         val id: Int? = context?.resources?.getIdentifier("com.fitterAPP.fitter:drawable/" + fitnessCard.imageCover.toString(), null, null )
 
         bgimage.setImageResource(id!!)
 
+        //setting the card properties
         cardName.text = fitnessCard.name
         cardDescription.text = fitnessCard.description
         cardDuration.text = fitnessCard.timeDuration.toString() + " minutes"
 
+        //nre Exercise button clicked
         val newCardBT : ExtendedFloatingActionButton = binding.newExerciseBT
         newCardBT.setOnClickListener {
 
@@ -126,16 +132,19 @@ class ModifyCard() : DialogFragment() {
             }
         }
 
+        //edit card name
         binding.editCardName.setOnClickListener {
             val modalBottomSheet = StringEditMenu("Card name", fitnessCard.name!!, fitnessCard)
             modalBottomSheet.show(activity?.supportFragmentManager!!, profileMenu.TAG)
         }
 
+        //edit card description
         binding.editCardDescription.setOnClickListener {
             val modalBottomSheet = StringEditMenu("Card description", fitnessCard.description!!, fitnessCard)
             modalBottomSheet.show(activity?.supportFragmentManager!!, profileMenu.TAG)
         }
 
+        //get database update
         StaticFitnessCardDatabase.setFitnessCardChildListener(StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference)), Athlete.UID, cardChildEventListener())
 
         return binding.root
@@ -150,6 +159,7 @@ class ModifyCard() : DialogFragment() {
             }
 
             override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                //settings new properties from the database
                 val cardName : TextView = binding.CardNameTV
                 val cardDuration : TextView = binding.TimeDurationTV
                 val cardDescription: TextView = binding.DescriptionTV

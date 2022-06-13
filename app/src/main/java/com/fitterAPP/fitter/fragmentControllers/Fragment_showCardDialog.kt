@@ -35,6 +35,7 @@ class Fragment_showCardDialog() : DialogFragment() {
     /**
      * onCreate method which is used to set the dialog style. This mathod is paired with a WindowManager setting done in [onCreateView]
      * @author Daniel Satriano
+     * @author Menegotto Claudio
      * @since 25/05/2022
      */
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,6 +59,7 @@ class Fragment_showCardDialog() : DialogFragment() {
 
         var screenHeight = 0
 
+        //getting the screen height in px
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             try {
                 val windowMetrics = activity?.windowManager?.currentWindowMetrics
@@ -71,27 +73,32 @@ class Fragment_showCardDialog() : DialogFragment() {
             screenHeight = metrics.heightPixels/3
         }
 
+        //setting the height
         val params = FrameLayout.LayoutParams( RelativeLayout.LayoutParams.MATCH_PARENT, screenHeight)
 
         binding.Header.layoutParams = params
 
         val recycle : RecyclerView = binding.exercisesListRV
 
+        //adapter for the exercises
         if(newFitnessCard.exercises != null && newFitnessCard.exercises?.size!! > 0){
             val adapter = FitnessCardExercisesAdapter((activity as MainActivity),newFitnessCard,newFitnessCard.exercises!!,false)
             recycle.adapter = adapter
         }
 
+        //binding the card properties
         val cardName : TextView = binding.CardNameTV
         val cardDuration : TextView = binding.TimeDurationTV
         val cardDescription: TextView = binding.DescriptionTV
 
+        //setting the card properties
         cardName.text = newFitnessCard.name
         cardDescription.text = newFitnessCard.description
         val text = newFitnessCard.timeDuration.toString() +" "+ getString(R.string.minutes)
         cardDuration.text = text
         val bgimage : ImageView = binding.CardBgImageIV
 
+        //setting the image cover
         val id: Int? = CardsCover.getResource(newFitnessCard.imageCover)
 
         bgimage.setImageResource(id!!)
