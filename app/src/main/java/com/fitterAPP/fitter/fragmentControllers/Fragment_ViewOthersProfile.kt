@@ -81,7 +81,11 @@ class Fragment_ViewOthersProfile : DialogFragment() {
         retrieveUserCards()
     }
 
-
+    /**
+     * Method to retrieve targetted user fitness cards, this method doesn't utilize listeners
+     * @author Daniel Satriano
+     * @since 13/06/2022
+     */
     private fun retrieveUserCards() {
         val reference = StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference)).child(Athlete.UID)
         val usernameOrdered : Query  = reference.orderByKey()
@@ -97,12 +101,12 @@ class Fragment_ViewOthersProfile : DialogFragment() {
                         Log.d("CountCard", cardList.size.toString())
                     }
                 }
-            }
-        }.addOnCompleteListener {
-            binding.RVCardsShimmer.visibility = View.GONE
-            binding.RVCardsShimmer.stopShimmer()
+                //Stop shimmer effect, make shimmer template gone and RecyclerView visible
+                binding.RVCardsShimmer.visibility = View.GONE
+                binding.RVCardsShimmer.stopShimmer()
 
-            binding.RVCards.visibility = View.VISIBLE
+                binding.RVCards.visibility = View.VISIBLE
+            }
         }
     }
 }
