@@ -7,10 +7,10 @@ package com.fitterAPP.fitter.classes
  * @param exerciseSer number of sets (series)
  * @param exerciseRest time of rest between sets
  * @param images list of images for the exercise
- * @author Daniel Satriano
+ * @author Menegotto Claudio
  */
-data class Exercise(var exerciseName : String, var exerciseRep : Int, var exerciseSer : Int, var exerciseRest : Double, var images : List<String?>) {
+data class Exercise(var exerciseName : String, var images : List<String?>) {
 
-    constructor() : this("Default name",1,1,60.0, images = listOf())
+    constructor() : this("Default name", images = listOf())
 
 }

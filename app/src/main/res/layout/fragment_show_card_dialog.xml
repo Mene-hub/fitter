@@ -36,96 +36,37 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:contentDescription="@string/background_image"
-                android:scaleType="centerCrop"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0"
-                app:srcCompat="@drawable/gigachad2" />
-
                 <ImageView
-                    android:id="@+id/backBt"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="?actionBarSize"
-                    android:contentDescription="@string/backArrow"
+                    android:id="@+id/CardBgImage_IV"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:contentDescription="Background image"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/arrow_back"
-                    app:tint="@color/darkgray" />
+                    app:layout_constraintVertical_bias="0.0"
+                    app:srcCompat="@drawable/gigachad2" />
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cardView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginBottom="16dp"
-                    app:cardBackgroundColor="@color/white"
+                    android:layout_marginTop="?attr/actionBarSize"
                     app:cardCornerRadius="10dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-                    app:layout_constraintStart_toStartOf="parent">
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/CardName_TV"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/roboto_bold"
-                            android:text="Card name"
-                            android:textColor="@color/black"
-                            android:textSize="20sp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            app:cardBackgroundColor="@color/lightgray"
-                            app:cardCornerRadius="10dp"
-                            app:cardElevation="0dp">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <ImageView
-                                    android:id="@+id/imageView14"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:src="@drawable/time_clock"
-                                    app:tint="@color/secondary" />
-
-                                <TextView
-                                    android:id="@+id/TimeDurationTV"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_vertical"
-                                    android:layout_marginStart="5dp"
-                                    android:layout_marginEnd="10dp"
-                                    android:layout_weight="1"
-                                    android:text="60 min"
-                                    android:textColor="@color/darkgray" />
-                            </LinearLayout>
-                        </androidx.cardview.widget.CardView>
-
-                    </LinearLayout>
+                    <ImageView
+                        android:id="@+id/backBt"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="Back arrow"
+                        app:srcCompat="@drawable/arrow_back"
+                        app:tint="@color/darkgray" />
                 </androidx.cardview.widget.CardView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -138,64 +79,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/Header">
-
-                <LinearLayout
-                    android:id="@+id/LL_Profile_menu"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/MenuBt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        app:cardBackgroundColor="@color/lightgray"
-                        app:cardCornerRadius="25dp">
-
-                        <ImageView
-                            android:id="@+id/profilepic_IV"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            app:srcCompat="@drawable/person_24" />
-                    </androidx.cardview.widget.CardView>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginHorizontal="8dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/textView4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="-10dp"
-                            android:layout_weight="1"
-                            android:text="@string/owner"
-                            android:textColor="@color/black"
-                            android:textSize="16sp" />
-
-                        <TextView
-                            android:id="@+id/TV_Username"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/Username"
-                            android:textColor="@color/black"
-                            android:textSize="24sp" />
-                    </LinearLayout>
-
-                </LinearLayout>
+                app:layout_constraintTop_toBottomOf="@id/Header">
 
                 <LinearLayout
                     android:id="@+id/linearLayout2"
@@ -207,11 +91,42 @@
                     android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/LL_Profile_menu">
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/CardName_TV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_bold"
+                        android:text="Card name"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView7"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="Restore Time"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/TimeDurationTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="1"
+                        android:text="60 min"
+                        android:textColor="@color/darkgray" />
 
                     <TextView
                         android:id="@+id/textView10"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto_medium"
                         android:text="@string/description"
@@ -256,19 +171,23 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/Body"/>
+                app:layout_constraintTop_toBottomOf="@+id/Body">
+
+            </androidx.recyclerview.widget.RecyclerView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/extended_fab2"
+        android:id="@+id/playExercise_BT"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
         android:text="PLAY"
-        app:backgroundTint="@color/primary"
+        android:textColorHighlight="@color/light_blue_600"
+        android:textColorLink="@color/light_blue_600"
+        app:backgroundTint="@color/light_blue_600"
         app:icon="@drawable/play_icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

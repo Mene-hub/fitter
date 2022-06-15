@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fitterAPP.fitter.classes.Exercise
 import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.R
+import com.fitterAPP.fitter.classes.NormalExercise
 
 class FitnessCardExercisesAdapter (val context2: Context, val Card:FitnessCard, val exercises : MutableList<Exercise>, val isEditable : Boolean) : RecyclerView.Adapter<FitnessCardExercisesAdapter.Holder>() {
 
@@ -34,8 +35,11 @@ class FitnessCardExercisesAdapter (val context2: Context, val Card:FitnessCard, 
 
 
         fun setCard(ex:Exercise, context: Context){
-            ExName.text = ex.exerciseName
-            ExReps.text = ex.exerciseSer.toString() + " x " + ex.exerciseRep.toString()
+            if(ex.javaClass.equals(NormalExercise::class.java)) {
+                var normalEx = ex as NormalExercise
+                ExName.text = normalEx.exerciseName
+                ExReps.text = normalEx.exerciseSer.toString() + " x " + normalEx.exerciseRep.toString()
+            }
             openMenu.setOnClickListener {
                 exMenu.isGone = !exMenu.isGone
             }

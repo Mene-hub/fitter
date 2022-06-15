@@ -57,6 +57,7 @@ class ExerciseQueryHelper {
          * @see Exercise for more information
          * @see Root for more information
          */
+        /*
         fun convertToExercise(exerciseSuggestion: Root) : MutableList<Exercise>{
             val exercises = mutableListOf<Exercise>()
             for(suggestion in exerciseSuggestion.suggestions){
@@ -65,7 +66,7 @@ class ExerciseQueryHelper {
             }
             return exercises
         }
-
+        */
     }
 }
 

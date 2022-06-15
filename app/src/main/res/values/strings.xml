@@ -51,7 +51,11 @@
     <string name="backArrow">Back arrow</string>
     <string name="clock">Clock</string>
 
-    <string name="FitnessCardsReference" translatable="false" >FITNESS_CARDS</string>
-    <string name="AthleteReference" translatable="false" >USERS</string>
+    <string name="FitnessCardsReference" translatable="false">FITNESS_CARDS</string>
+    <string name="AthleteReference" translatable="false">USERS</string>
+    <string name="warmap">Warm-up</string>
+    <string name="normalexercise">Single Exercise</string>
+    <string name="series">Series</string>
+    <string name="piramidal">Piramidal Exercise</string>
 
 </resources>

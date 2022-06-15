@@ -39,4 +39,8 @@
     <string name="findUsers">Cerca utenti</string>
     <string name="backArrow">Freccia per tornare indietro</string>
     <string name="clock">Orologio</string>
+    <string name="warmap" >Riscaldamento</string>
+    <string name="normalexercise" >Esercizio Singolo</string>
+    <string name="series" >Serie</string>
+    <string name="piramidal" >Esercizio Piramidale</string>
 </resources>

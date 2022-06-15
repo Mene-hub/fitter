@@ -117,7 +117,9 @@ class MainActivity : AppCompatActivity() {
         val childEventListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val item = snapshot.getValue(Athlete::class.java) //GRAB USER ITEM
-                user.SetNewValue(item!!)
+
+                if(item!=null)
+                    user.SetNewValue(item!!)
 
                 if(user.profilePic != "null") {
                     val imageProfile: ImageView = findViewById(R.id.profilepic_IV)

@@ -1,7 +1,6 @@
 package com.fitterAPP.fitter.itemsAdapter
 
 import android.content.Context
-import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.isGone
 import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.NavDirections
@@ -23,18 +21,16 @@ import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.fragmentControllers.Fragment_showCardDialog
 import com.fitterAPP.fitter.fragmentControllers.ModifyCard
-import com.fitterAPP.fitter.fragmentControllers.MyFitnessCards
 import com.fitterAPP.fitter.fragmentControllers.MyFitnessCardsDirections
 
-class FitnessCardAdapter (val context2: Context, private val Cards:MutableList<FitnessCard>, val fitnessCards: MyFitnessCards) : RecyclerView.Adapter<FitnessCardAdapter.Holder>() {
+class FitnessCardAdapter (val context2: Context, val Cards:MutableList<FitnessCard>) : RecyclerView.Adapter<FitnessCardAdapter.Holder>() {
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnLongClickListener{
 
-        private val cardName : TextView = itemView.findViewById(R.id.CardName_TV)
-        private val cardDuration : TextView = itemView.findViewById(R.id.TimeDuration_TV)
-        private val cardExercises : TextView = itemView.findViewById(R.id.ExerciseCount_TV)
-        private val bgImage : ImageView = itemView.findViewById(R.id.CardBgImage_IV)
-        private val cardView : CardView = itemView.findViewById(R.id.ItemCard_CardView)
+        val CardName : TextView = itemView.findViewById(R.id.CardName_TV)
+        val CardDuration : TextView = itemView.findViewById(R.id.TimeDuration_TV)
+        val CardExercises : TextView = itemView.findViewById(R.id.ExerciseCount_TV)
+        val bgimage : ImageView = itemView.findViewById(R.id.CardBgImage_IV)
 
         init {
             itemView.setOnLongClickListener(this)
@@ -49,35 +45,18 @@ class FitnessCardAdapter (val context2: Context, private val Cards:MutableList<F
 
 
         fun setCard(Card:FitnessCard, context: Context){
-            cardName.text = Card.name
-            cardDuration.text = "Duration: " + Card.timeDuration.toString() + " min"
-
+            CardName.text = Card.name
+            CardDuration.text = "Duration: " + Card.timeDuration.toString() + " min"
 
             if(Card.exercises != null)
-                cardExercises.text = Card.exercises?.count().toString() + " exercise"
-            else {
-                cardExercises.text = "0 exercise"
+                CardExercises.text = Card.exercises?.count().toString() + " exercise"
+            else
+                CardExercises.text = "15 exercise"
+
+            itemView.setOnClickListener {
+                val action : NavDirections = MyFitnessCardsDirections.actionMyFitnessCardsToFragmentShowCardDialog(Card)
+                it.findNavController().navigate(action)
             }
-
-            if(Card.key == "addCard"){
-                cardView.cardElevation = 0F
-                bgImage.scaleType = ImageView.ScaleType.CENTER_INSIDE
-                val padding = bgImage.resources.getDimensionPixelOffset(R.dimen.button_add_card_padding);
-                bgImage.setPadding(padding,padding,padding,padding)
-                cardExercises.text = ""
-                itemView.setOnClickListener{
-                    fitnessCards.showAlertDialogFitnessCard()
-                }
-
-            }else{
-                itemView.setOnClickListener {
-                    val action : NavDirections = MyFitnessCardsDirections.actionMyFitnessCardsToFragmentShowCardDialog(Card)
-                    it.findNavController().navigate(action)
-                }
-            }
-
-
-
 
             itemView.findViewById<CardView>(R.id.EditCardButton_CV).setOnClickListener {
                 val action : NavDirections = MyFitnessCardsDirections.actionMyFitnessCardsToModifyCard(Card)
@@ -91,7 +70,7 @@ class FitnessCardAdapter (val context2: Context, private val Cards:MutableList<F
                 null
             )
 
-            bgImage.setImageResource(id)
+            bgimage.setImageResource(id)
 
         }
 

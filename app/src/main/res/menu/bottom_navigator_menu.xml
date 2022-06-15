@@ -1,13 +1,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/myFitnessCards"
-        android:enabled="true"
+        android:id="@+id/home"
+        android:checked="false"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/home"
         />
 
     <item
-        android:id="@+id/findprofile"
+        android:id="@+id/addCard"
+        android:enabled="true"
+        android:icon="@drawable/ic_plus"
+        android:title="@string/AddCard"
+        />
+
+    <item
+        android:id="@+id/search"
         android:enabled="true"
         android:icon="@drawable/search"
         android:title="@string/findUsers"
