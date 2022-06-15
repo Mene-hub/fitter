@@ -12,8 +12,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.classes.Exercise
+import com.fitterAPP.fitter.classes.ExerciseType
 import com.fitterAPP.fitter.classes.FitnessCard
-import com.fitterAPP.fitter.classes.NormalExercise
 import com.fitterAPP.fitter.databinding.FragmentNewExercieFormDialogBinding
 import com.fitterAPP.fitter.databinding.FragmentSelectExerciseGroupBinding
 
@@ -40,7 +40,7 @@ class select_exercise_group : DialogFragment() {
         index = args.index
 
         binding.NormalExerciseCV.setOnClickListener{
-            fitnessCard.exercises?.add(NormalExercise("Name PlaceHolder", ArrayList(), 1, 1,60.0))
+            fitnessCard.exercises?.add(Exercise("Name PlaceHolder", ExerciseType.normal))
             val action : NavDirections = select_exercise_groupDirections.actionSelectExerciseGroupToNewExercieFormDialog(fitnessCard, index)
             findNavController().navigate(action)
         }

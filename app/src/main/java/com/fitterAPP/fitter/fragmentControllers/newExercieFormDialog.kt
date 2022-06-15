@@ -20,7 +20,6 @@ import androidx.navigation.fragment.navArgs
 import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.classes.Athlete
 import com.fitterAPP.fitter.classes.FitnessCard
-import com.fitterAPP.fitter.classes.NormalExercise
 import com.fitterAPP.fitter.databases.StaticFitnessCardDatabase
 import com.fitterAPP.fitter.databinding.FragmentNewExercieFormDialogBinding
 import com.fitterAPP.fitter.databinding.FragmentShowCardDialogBinding
@@ -144,9 +143,9 @@ class newExercieFormDialog : DialogFragment() {
 
         //save card on db and close the fragment
         binding.SaveExercise.setOnClickListener {
-            (fitnessCard.exercises?.get(index) as NormalExercise).exerciseSer = textSeries.text.toString().toInt()
-            (fitnessCard.exercises?.get(index) as NormalExercise).exerciseRep = textReps.text.toString().toInt()
-            (fitnessCard.exercises?.get(index) as NormalExercise).exerciseRest = textTime.text.toString().removeSuffix("s").toDouble()
+            fitnessCard.exercises?.get(index)?.exerciseSer = textSeries.text.toString().toInt()
+            fitnessCard.exercises?.get(index)?.exerciseRep = textReps.text.toString().toInt()
+            fitnessCard.exercises?.get(index)?.exerciseRest = textTime.text.toString().removeSuffix("s").toDouble()
             StaticFitnessCardDatabase.setFitnessCardItem(StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference)), Athlete.UID, fitnessCard)
             findNavController().navigateUp()
         }

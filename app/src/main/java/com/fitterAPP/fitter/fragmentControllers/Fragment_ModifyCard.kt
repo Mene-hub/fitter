@@ -121,7 +121,10 @@ class ModifyCard() : DialogFragment() {
             if(fitnessCard.exercises == null)
                 fitnessCard.exercises = ArrayList()
 
-            //fitnessCard.exercises?.add(Exercise())
+            fitnessCard.exercises?.add(Exercise())
+
+            val action : NavDirections = ModifyCardDirections.actionModifyCardToSelectExerciseGroup(fitnessCard, fitnessCard.exercises?.lastIndex!!)
+            findNavController().navigate(action)
 
             if(fitnessCard.exercises != null && fitnessCard.exercises?.size!! > 0){
                 val adapter = context?.let { FitnessCardExercisesAdapter((activity as MainActivity),fitnessCard,fitnessCard.exercises!!, true) }!!
