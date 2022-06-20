@@ -36,6 +36,12 @@ class MyFitnessCards : Fragment() {
     private val fitnessCads : MutableList<FitnessCard> = ArrayList()
     private var dummyCard : FitnessCard = FitnessCard()
 
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        fitnessCads.add(dummyCard)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
         binding = FragmentMyFitnessCardsBinding.inflate(inflater, container, false)
@@ -48,8 +54,8 @@ class MyFitnessCards : Fragment() {
 
         val recycle : RecyclerView = binding.MyFitnessCardsRV
         adapter = context?.let { FitnessCardAdapter((activity as MainActivity), fitnessCads, this) }!!
-        fitnessCads.add(dummyCard)
         recycle.adapter = adapter
+
 
 
         Log.w("Fragment", binding.MyFitnessCardsRV.id.toString())

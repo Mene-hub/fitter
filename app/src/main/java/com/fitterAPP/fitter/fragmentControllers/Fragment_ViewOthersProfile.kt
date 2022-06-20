@@ -1,6 +1,5 @@
 package com.fitterAPP.fitter.fragmentControllers
 
-import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,12 +16,8 @@ import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.databases.StaticFitnessCardDatabase
 import com.fitterAPP.fitter.databinding.FragmentViewOthersProfileBinding
 import com.fitterAPP.fitter.itemsAdapter.FitnessCardAdapter
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.Query
 import com.squareup.picasso.Picasso
-import okhttp3.Response
 
 class Fragment_ViewOthersProfile : DialogFragment() {
 
