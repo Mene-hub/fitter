@@ -27,6 +27,12 @@ class select_exercise_group : DialogFragment() {
     private lateinit var fitnessCard : FitnessCard
     private var index : Int = 0
 
+    //set full screen fragment
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(STYLE_NORMAL, R.style.Theme_Fitter_FullScreenDialog)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,9 +45,25 @@ class select_exercise_group : DialogFragment() {
         fitnessCard = args.fitnessCard
         index = args.index
 
+        //warm-up exercise selected
+        binding.WarmapCV.setOnClickListener {
+            if(fitnessCard.exercises?.size == index)
+                fitnessCard.exercises?.add(Exercise("Place Holder", ExerciseType.warmup))
+            else
+                fitnessCard.exercises?.set(index, Exercise(fitnessCard.exercises?.get(index)?.exerciseName!!, ExerciseType.warmup))
+
+            val action : NavDirections = select_exercise_groupDirections.actionSelectExerciseGroupToSelectExerciseList(fitnessCard, index)
+            findNavController().navigate(action)
+        }
+
+        //normal exercise selected
         binding.NormalExerciseCV.setOnClickListener{
-            fitnessCard.exercises?.add(Exercise("Name PlaceHolder", ExerciseType.normal))
-            val action : NavDirections = select_exercise_groupDirections.actionSelectExerciseGroupToNewExercieFormDialog(fitnessCard, index)
+            if(fitnessCard.exercises?.size == index)
+                fitnessCard.exercises?.add(Exercise("Place Holder", ExerciseType.normal))
+            else
+                fitnessCard.exercises?.set(index, Exercise(fitnessCard.exercises?.get(index)?.exerciseName!!, ExerciseType.normal))
+
+            val action : NavDirections = select_exercise_groupDirections.actionSelectExerciseGroupToFindExercise(fitnessCard, index)
             findNavController().navigate(action)
         }
 

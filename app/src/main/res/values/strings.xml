@@ -57,5 +57,6 @@
     <string name="normalexercise">Single Exercise</string>
     <string name="series">Series</string>
     <string name="piramidal">Piramidal Exercise</string>
+    <string name="select">Select</string>
 
 </resources>

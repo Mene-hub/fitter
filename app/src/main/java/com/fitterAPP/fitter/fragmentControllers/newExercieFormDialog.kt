@@ -14,6 +14,7 @@ import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
+import androidx.navigation.NavDirections
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -147,7 +148,8 @@ class newExercieFormDialog : DialogFragment() {
             fitnessCard.exercises?.get(index)?.exerciseRep = textReps.text.toString().toInt()
             fitnessCard.exercises?.get(index)?.exerciseRest = textTime.text.toString().removeSuffix("s").toDouble()
             StaticFitnessCardDatabase.setFitnessCardItem(StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference)), Athlete.UID, fitnessCard)
-            findNavController().navigateUp()
+            val action : NavDirections = newExercieFormDialogDirections.actionNewExercieFormDialogToModifyCard(fitnessCard)
+            findNavController().navigate(action)
         }
 
         // Inflate the layout for this fragment

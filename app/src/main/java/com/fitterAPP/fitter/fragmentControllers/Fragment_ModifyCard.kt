@@ -35,6 +35,7 @@ class ModifyCard() : DialogFragment() {
     private lateinit var fitnessCard: FitnessCard
     private val args by navArgs<ModifyCardArgs>()
     private lateinit var binding : FragmentModifyCardBinding
+    lateinit var recycle : RecyclerView
 
     /**
      * onCreate method which is used to set the dialog style. This mathod is paired with a WindowManager setting done in [onCreateView]
@@ -83,7 +84,7 @@ class ModifyCard() : DialogFragment() {
 
 
         //exercises adapter
-        val recycle : RecyclerView = binding.exercisesListRV
+        recycle = binding.exercisesListRV
 
         if(fitnessCard.exercises != null && fitnessCard.exercises?.size!! > 0){
             val adapter = FitnessCardExercisesAdapter((activity as MainActivity),fitnessCard,fitnessCard.exercises!!, true)
@@ -121,15 +122,10 @@ class ModifyCard() : DialogFragment() {
             if(fitnessCard.exercises == null)
                 fitnessCard.exercises = ArrayList()
 
-            fitnessCard.exercises?.add(Exercise())
+            //fitnessCard.exercises?.add(Exercise())
 
-            val action : NavDirections = ModifyCardDirections.actionModifyCardToSelectExerciseGroup(fitnessCard, fitnessCard.exercises?.lastIndex!!)
+            val action : NavDirections = ModifyCardDirections.actionModifyCardToSelectExerciseGroup(fitnessCard, fitnessCard.exercises?.size!!)
             findNavController().navigate(action)
-
-            if(fitnessCard.exercises != null && fitnessCard.exercises?.size!! > 0){
-                val adapter = context?.let { FitnessCardExercisesAdapter((activity as MainActivity),fitnessCard,fitnessCard.exercises!!, true) }!!
-                recycle.adapter = adapter
-            }
         }
 
         //edit card name
@@ -172,6 +168,11 @@ class ModifyCard() : DialogFragment() {
                 cardName.text = fitnessCard.name
                 cardDescription.text = fitnessCard.description
                 cardDuration.text = fitnessCard.timeDuration.toString() + " s"
+
+                if(fitnessCard.exercises != null && fitnessCard.exercises?.size!! > 0){
+                    val adapter = context?.let { FitnessCardExercisesAdapter((activity as MainActivity),fitnessCard,fitnessCard.exercises!!, true) }!!
+                    recycle.adapter = adapter
+                }
 
             }
 

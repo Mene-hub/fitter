@@ -51,7 +51,7 @@ class FitnessCardAdapter (val context2: Context, val Cards:MutableList<FitnessCa
             if(Card.exercises != null)
                 CardExercises.text = Card.exercises?.count().toString() + " exercise"
             else
-                CardExercises.text = "15 exercise"
+                CardExercises.text = "0 exercise"
 
             itemView.setOnClickListener {
                 val action : NavDirections = MyFitnessCardsDirections.actionMyFitnessCardsToFragmentShowCardDialog(Card)
