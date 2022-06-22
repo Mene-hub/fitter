@@ -149,15 +149,15 @@
         android:name="com.fitterAPP.fitter.fragmentControllers.SelectExerciseList"
         android:label="fragment_select_exercise_list"
         tools:layout="@layout/fragment_select_exercise_list" >
-        <action
-            android:id="@+id/action_selectExerciseList_to_newExercieFormDialog"
-            app:destination="@id/newExercieFormDialog" />
         <argument
             android:name="fitnessCard"
             app:argType="com.fitterAPP.fitter.classes.FitnessCard" />
         <argument
             android:name="index"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_selectExerciseList_to_setWarmUpExercise"
+            app:destination="@id/setWarmUpExercise" />
     </dialog>
     <dialog
         android:id="@+id/findExercise"
@@ -173,5 +173,20 @@
         <action
             android:id="@+id/action_findExercise_to_newExercieFormDialog"
             app:destination="@id/newExercieFormDialog" />
+    </dialog>
+    <dialog
+        android:id="@+id/setWarmUpExercise"
+        android:name="com.fitterAPP.fitter.fragmentControllers.SetWarmUpExercise"
+        android:label="fragment_set_warm_up_exercise"
+        tools:layout="@layout/fragment_set_warm_up_exercise" >
+        <argument
+            android:name="fitnessCard"
+            app:argType="com.fitterAPP.fitter.classes.FitnessCard" />
+        <argument
+            android:name="index"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_setWarmUpExercise_to_modifyCard"
+            app:destination="@id/modifyCard" />
     </dialog>
 </navigation>

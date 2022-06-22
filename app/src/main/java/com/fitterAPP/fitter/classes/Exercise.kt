@@ -46,7 +46,7 @@ data class Exercise(var exerciseName : String, var type : ExerciseType) {
 
     fun setAsNormal(rep: Int, ser : Int, rest : Double){
 
-        type = ExerciseType.warmup
+        type = ExerciseType.normal
         exerciseDuration = null
         exerciseRep = rep
         exerciseSer = ser
@@ -58,7 +58,7 @@ data class Exercise(var exerciseName : String, var type : ExerciseType) {
 
     fun setAsPiramid(rep: Int, ser : Int, rest : Double){
 
-        type = ExerciseType.warmup
+        type = ExerciseType.piramid
         exerciseDuration = null
         exerciseRep = rep
         exerciseSer = null
@@ -70,7 +70,7 @@ data class Exercise(var exerciseName : String, var type : ExerciseType) {
 
     fun setAsSeries(ser : Int, rest : Double, serie : MutableList<Exercise>){
 
-        type = ExerciseType.warmup
+        type = ExerciseType.series
         exerciseDuration = null
         exerciseRep = null
         exerciseSer = null

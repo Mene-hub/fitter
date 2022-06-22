@@ -54,7 +54,7 @@ class SelectExerciseList : DialogFragment() {
         }
 
         binding.SelectBT.setOnClickListener {
-            val action : NavDirections = SelectExerciseListDirections.actionSelectExerciseListToNewExercieFormDialog(fitnessCard, index)
+            val action : NavDirections = SelectExerciseListDirections.actionSelectExerciseListToSetWarmUpExercise(fitnessCard, index)
             findNavController().navigate(action)
         }
 

@@ -6,6 +6,7 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.SearchView
@@ -40,6 +41,8 @@ class FindExercise : DialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        dialog?.window?.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
 
         binding = FragmentFindExerciseBinding.inflate(inflater, container, false)
 
@@ -87,7 +90,7 @@ class FindExercise : DialogFragment() {
                                 for (i in 0..(Exercises?.suggestions?.size!!) -1)
                                     names.add(Exercises?.suggestions?.get(i)?.data?.name!!)
 
-                                binding.ExRecycle.adapter = ArrayAdapter(context!!,android.R.layout.simple_list_item_1,names)
+                                binding.ExRecycle.adapter = ArrayAdapter(context!!, android.R.layout.simple_list_item_1, names)
                             }
                         })
                     })

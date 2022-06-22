@@ -124,6 +124,7 @@ class ModifyCard() : DialogFragment() {
 
             //fitnessCard.exercises?.add(Exercise())
 
+            findNavController().popBackStack(0,true,true)
             val action : NavDirections = ModifyCardDirections.actionModifyCardToSelectExerciseGroup(fitnessCard, fitnessCard.exercises?.size!!)
             findNavController().navigate(action)
         }
