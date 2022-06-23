@@ -95,7 +95,10 @@ class SetWarmUpExercise : DialogFragment() {
 
         binding.SaveExercise.setOnClickListener {
             fitnessCard.exercises?.get(index)?.setAsWarmup(textTime.text.toString().removeSuffix(" min").toInt())
+
+            //get the reference of fitness_card
             StaticFitnessCardDatabase.setFitnessCardItem(StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference)), Athlete.UID, fitnessCard)
+
             val action : NavDirections = SetWarmUpExerciseDirections.actionSetWarmUpExerciseToModifyCard(fitnessCard)
             findNavController().navigate(action)
         }
