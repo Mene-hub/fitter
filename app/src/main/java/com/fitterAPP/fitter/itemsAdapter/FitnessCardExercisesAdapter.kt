@@ -38,7 +38,7 @@ class FitnessCardExercisesAdapter (val context2: Context, val Card:FitnessCard, 
             ExName.text = ex.exerciseName
 
             when (ex.type){
-                ExerciseType.warmup -> {ExReps.text = ex.exerciseDuration.toString() + " s"}
+                ExerciseType.warmup -> {ExReps.text = ex.exerciseDuration.toString() + " min"}
                 ExerciseType.normal -> {ExReps.text = ex.exerciseSer.toString() + " x " + ex.exerciseRep.toString()}
                 ExerciseType.series -> {ExReps.text = ex.exerciseSeries?.size.toString()}
                 ExerciseType.piramid -> {

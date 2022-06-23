@@ -122,7 +122,9 @@
             app:argType="integer" />
         <action
             android:id="@+id/action_newExercieFormDialog_to_modifyCard"
-            app:destination="@id/modifyCard" />
+            app:destination="@id/modifyCard"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/modifyCard" />
     </dialog>
     <dialog
         android:id="@+id/select_exercise_group"
@@ -187,6 +189,8 @@
             app:argType="integer" />
         <action
             android:id="@+id/action_setWarmUpExercise_to_modifyCard"
-            app:destination="@id/modifyCard" />
+            app:destination="@id/modifyCard"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/modifyCard" />
     </dialog>
 </navigation>

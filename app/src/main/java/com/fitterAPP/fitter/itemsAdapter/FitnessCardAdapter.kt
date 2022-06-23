@@ -19,8 +19,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.R
+import com.fitterAPP.fitter.databinding.FragmentMyFitnessCardsBinding
 import com.fitterAPP.fitter.fragmentControllers.Fragment_showCardDialog
 import com.fitterAPP.fitter.fragmentControllers.ModifyCard
+import com.fitterAPP.fitter.fragmentControllers.MyFitnessCards
 import com.fitterAPP.fitter.fragmentControllers.MyFitnessCardsDirections
 
 class FitnessCardAdapter (val context2: Context, val Cards:MutableList<FitnessCard>) : RecyclerView.Adapter<FitnessCardAdapter.Holder>() {
@@ -41,8 +43,6 @@ class FitnessCardAdapter (val context2: Context, val Cards:MutableList<FitnessCa
             v.startAnimation(AnimationUtils.loadAnimation(context2, R.anim.wibble_animation))
             return true
         }
-
-
 
         fun setCard(Card:FitnessCard, context: Context){
             CardName.text = Card.name
@@ -71,7 +71,6 @@ class FitnessCardAdapter (val context2: Context, val Cards:MutableList<FitnessCa
             )
 
             bgimage.setImageResource(id)
-
         }
 
         fun showControl(v: View, isGone : Boolean){

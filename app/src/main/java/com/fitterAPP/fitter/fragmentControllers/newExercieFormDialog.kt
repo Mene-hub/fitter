@@ -143,8 +143,8 @@ class newExercieFormDialog : DialogFragment() {
             fitnessCard.exercises?.get(index)?.setAsNormal(textReps.text.toString().toInt(), textSeries.text.toString().toInt(), textTime.text.toString().removeSuffix("s").toDouble())
             StaticFitnessCardDatabase.setFitnessCardItem(StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference)), Athlete.UID, fitnessCard)
             val action : NavDirections = newExercieFormDialogDirections.actionNewExercieFormDialogToModifyCard(fitnessCard)
-            findNavController().clearBackStack(0)
-            //findNavController().navigate(action)
+            //findNavController().clearBackStack(0)
+            findNavController().navigate(action)
         }
 
         // Inflate the layout for this fragment

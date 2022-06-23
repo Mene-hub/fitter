@@ -149,7 +149,7 @@
                             android:layout_weight="3"
                             android:fontFamily="@font/roboto_regular"
                             android:gravity="center"
-                            android:text="60s"
+                            android:text="10 min"
                             android:textAlignment="center"
                             android:textColor="@color/black"
                             android:textSize="20sp"

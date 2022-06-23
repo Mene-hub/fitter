@@ -80,21 +80,21 @@ class SetWarmUpExercise : DialogFragment() {
         var textTime = binding.TimeTV
 
         subTime.setOnClickListener{
-            var tmp = textTime.text.toString().removeSuffix("s").toInt()
+            var tmp = textTime.text.toString().removeSuffix( " min").toInt()
             if(tmp > 0){
                 tmp --
-                textTime.text = tmp.toString() + "s"
+                textTime.text = tmp.toString() + " min"
             }
         }
 
         addTime.setOnClickListener{
-            var tmp = textTime.text.toString().removeSuffix("s").toInt()
+            var tmp = textTime.text.toString().removeSuffix(" min").toInt()
             tmp ++
-            textTime.text = tmp.toString() + "s"
+            textTime.text = tmp.toString() + " min"
         }
 
         binding.SaveExercise.setOnClickListener {
-            fitnessCard.exercises?.get(index)?.setAsWarmup(textTime.text.toString().removeSuffix("s").toInt())
+            fitnessCard.exercises?.get(index)?.setAsWarmup(textTime.text.toString().removeSuffix(" min").toInt())
             StaticFitnessCardDatabase.setFitnessCardItem(StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference)), Athlete.UID, fitnessCard)
             val action : NavDirections = SetWarmUpExerciseDirections.actionSetWarmUpExerciseToModifyCard(fitnessCard)
             findNavController().navigate(action)

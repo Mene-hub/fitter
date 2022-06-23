@@ -168,9 +168,9 @@ class ModifyCard() : DialogFragment() {
 
                 cardName.text = fitnessCard.name
                 cardDescription.text = fitnessCard.description
-                cardDuration.text = fitnessCard.timeDuration.toString() + " s"
+                cardDuration.text = fitnessCard.timeDuration.toString() + " min"
 
-                if(fitnessCard.exercises != null && fitnessCard.exercises?.size!! > 0){
+                if(fitnessCard.exercises != null && fitnessCard.exercises?.size!! > 0 && recycle != null){
                     val adapter = context?.let { FitnessCardExercisesAdapter((activity as MainActivity),fitnessCard,fitnessCard.exercises!!, true) }!!
                     recycle.adapter = adapter
                 }
