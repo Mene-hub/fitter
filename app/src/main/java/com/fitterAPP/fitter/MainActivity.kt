@@ -62,8 +62,6 @@ class MainActivity : AppCompatActivity() {
         menuiv.setOnClickListener {
             navController.navigate(R.id.bottomSheetDialog)
         }
-
-
     }
 
     private fun bottomNavSelectedItem(): NavigationBarView.OnItemSelectedListener {
@@ -103,7 +101,6 @@ class MainActivity : AppCompatActivity() {
             }
             //Applying listener for the "on update" call
             StaticAthleteDatabase.setAthleteValueListener(dbReference, user.UID, getAthleteEventListener())
-
         }
         findViewById<TextView>(R.id.TV_Username).text = user.username       //SET USERNAME IN TEXTVIEW
         Athlete.setValues(user)         //SET NEW VALUES FOR THE STATIC USER PART, USED IN Fragment_MyFitnessCards.kt
