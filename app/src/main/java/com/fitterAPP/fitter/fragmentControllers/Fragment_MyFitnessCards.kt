@@ -20,9 +20,7 @@ import com.fitterAPP.fitter.itemsAdapter.FitnessCardAdapter
 import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.classes.CardsCover
 import com.fitterAPP.fitter.databinding.FragmentMyFitnessCardsBinding
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.navigation.NavigationBarView
 import com.google.firebase.database.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter

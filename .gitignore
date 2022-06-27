@@ -15,3 +15,5 @@
 local.properties
 .idea/gradle.xml
 app/google-services.json
+
+app/src/main/cpp/api-keys.cpp
