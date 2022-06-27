@@ -36,13 +36,6 @@ class MyFitnessCards : Fragment() {
     private val fitnessCads : MutableList<FitnessCard> = ArrayList()
     private var dummyCard : FitnessCard = FitnessCard()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
-
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
         binding = FragmentMyFitnessCardsBinding.inflate(inflater, container, false)
