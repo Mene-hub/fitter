@@ -19,3 +19,12 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-keep class com.fitterAPP.fitter.classes.Athlete
+-keep class com.fitterAPP.fitter.classes.DayRecap
+-keep class com.fitterAPP.fitter.classes.Exercise
+-keep class com.fitterAPP.fitter.classes.FitnessCard
+
+-keep class com.fitterAPP.fitter.classes.Data
+-keep class com.fitterAPP.fitter.classes.Suggestion
+-keep class com.fitterAPP.fitter.classes.Root
