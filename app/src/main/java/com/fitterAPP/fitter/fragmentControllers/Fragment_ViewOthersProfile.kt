@@ -73,7 +73,7 @@ class Fragment_ViewOthersProfile : DialogFragment() {
 
     override fun onStart() {
         super.onStart()
-        retrieveUserCards()
+        retrieveUserCards(args.bundleAthlete.UID)
     }
 
     /**
@@ -81,8 +81,8 @@ class Fragment_ViewOthersProfile : DialogFragment() {
      * @author Daniel Satriano
      * @since 13/06/2022
      */
-    private fun retrieveUserCards() {
-        val reference = StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference)).child(Athlete.UID)
+    private fun retrieveUserCards(UID : String) {
+        val reference = StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference)).child(UID)
         val usernameOrdered : Query  = reference.orderByKey()
         usernameOrdered.get().addOnCompleteListener { task ->
             if (task.isSuccessful) {

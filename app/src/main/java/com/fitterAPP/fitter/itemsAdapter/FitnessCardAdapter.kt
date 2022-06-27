@@ -55,8 +55,7 @@ class FitnessCardAdapter (val context2: Context, private val Cards:MutableList<F
                 if(fitnessCards != null) {
                     cardView.cardElevation = 0F
                     bgImage.scaleType = ImageView.ScaleType.CENTER_INSIDE
-                    val padding =
-                        bgImage.resources.getDimensionPixelOffset(R.dimen.button_add_card_padding);
+                    val padding = bgImage.resources.getDimensionPixelOffset(R.dimen.button_add_card_padding);
                     bgImage.setPadding(padding, padding, padding, padding)
                     cardExercises.text = ""
                     itemView.setOnClickListener {

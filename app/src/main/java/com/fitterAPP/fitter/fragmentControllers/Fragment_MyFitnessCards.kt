@@ -36,10 +36,11 @@ class MyFitnessCards : Fragment() {
     private val fitnessCads : MutableList<FitnessCard> = ArrayList()
     private var dummyCard : FitnessCard = FitnessCard()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        fitnessCads.add(dummyCard)
+
+
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -52,11 +53,15 @@ class MyFitnessCards : Fragment() {
         //grab event from companion class RealTimeDBHelper
         StaticFitnessCardDatabase.setFitnessCardChildListener(dbReference, Athlete.UID, getFitnessCardEventListener())
 
+
         val recycle : RecyclerView = binding.MyFitnessCardsRV
         adapter = context?.let { FitnessCardAdapter((activity as MainActivity), fitnessCads, this) }!!
+        if(fitnessCads.indexOf(dummyCard) == -1){
+            fitnessCads.add(dummyCard)
+        }
         recycle.adapter = adapter
 
-
+        adapter.notifyDataSetChanged()
 
         Log.w("Fragment", binding.MyFitnessCardsRV.id.toString())
         return binding.root
@@ -91,6 +96,8 @@ class MyFitnessCards : Fragment() {
         // set the custom layout
         val customLayout: View = layoutInflater.inflate(R.layout.dialog_input_text, null)
         builder.setView(customLayout)
+
+
 
         // add a button
         builder
