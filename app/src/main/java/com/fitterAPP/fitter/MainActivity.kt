@@ -14,6 +14,7 @@ import com.facebook.login.LoginManager
 import com.fitterAPP.fitter.classes.Athlete
 import com.fitterAPP.fitter.fragmentControllers.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationBarView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -45,7 +46,7 @@ class MainActivity : AppCompatActivity() {
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.FragmentContainer) as NavHostFragment
         navController = navHostFragment.navController
-        findViewById<BottomNavigationView>(R.id.bottom_navigation).setupWithNavController(navController)
+        findViewById<BottomNavigationView>(R.id.bottom_navigation).setOnItemSelectedListener(bottomNavSelectedItem())
 
         //FIREBASE ACCOUNT
         auth = Firebase.auth
@@ -59,11 +60,29 @@ class MainActivity : AppCompatActivity() {
         //Bottom sheet dialog
         menuiv = findViewById(R.id.MenuBt)
         menuiv.setOnClickListener {
-            val modalBottomSheet = profileMenu()
-            modalBottomSheet.show(supportFragmentManager, profileMenu.TAG)
+            navController.navigate(R.id.bottomSheetDialog)
         }
 
 
+    }
+
+    private fun bottomNavSelectedItem(): NavigationBarView.OnItemSelectedListener {
+        return NavigationBarView.OnItemSelectedListener {
+            item ->
+            when(item.itemId){
+                R.id.myFitnessCards ->{
+                    navController.navigate(R.id.myFitnessCards)
+                    true
+                }
+                R.id.findprofile ->{
+                    navController.navigate(R.id.findprofile)
+                    true
+                }
+                else ->{
+                    false
+                }
+            }
+        }
     }
 
     /**

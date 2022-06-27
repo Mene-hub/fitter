@@ -23,7 +23,7 @@ class profileMenu : BottomSheetDialogFragment() {
         val userprofile : AppCompatTextView = binding.txtUserProfile
 
         userprofile.setOnClickListener{
-            findNavController().navigate(R.id.action_myFitnessCards_to_profile)
+            findNavController().navigate(R.id.action_profileMenu_to_profile)
             dismiss()
         }
 
@@ -33,7 +33,7 @@ class profileMenu : BottomSheetDialogFragment() {
         }
 
         recapbt.setOnClickListener {
-            findNavController().navigate(R.id.action_myFitnessCards_to_timeRacap)
+            findNavController().navigate(R.id.action_profileMenu_to_timeRacap)
             dismiss()
         }
 
