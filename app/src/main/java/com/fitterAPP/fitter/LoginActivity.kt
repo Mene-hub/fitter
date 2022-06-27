@@ -59,8 +59,7 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //Database persistance when offline
-        Firebase.database.setPersistenceEnabled(true)
+        //Firebase.database.setPersistenceEnabled(true)
         dbReference = StaticAthleteDatabase.database.getReference(getString(R.string.AthleteReference))
 
         //Set transparent status bar
