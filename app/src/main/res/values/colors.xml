@@ -25,6 +25,7 @@
     <color name="orange">#FF681F</color>
 
     <color name="shimmer_color">#dddddd</color>
+    <color name="login_button_white">#fbfaf6</color>
 
 
 </resources>

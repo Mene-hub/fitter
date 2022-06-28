@@ -86,7 +86,7 @@
             android:id="@+id/IV_loginGoogle"
             android:layout_width="match_parent"
             android:layout_height="@dimen/button_height"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="@color/login_button_white"
 
             android:drawableLeft="@drawable/ic_google"
             android:elevation="10dp"
