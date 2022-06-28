@@ -85,7 +85,7 @@
         <Button
             android:id="@+id/IV_loginGoogle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/button_height"
             android:backgroundTint="@color/white"
 
             android:drawableLeft="@drawable/ic_google"
@@ -101,7 +101,7 @@
         <Button
             android:id="@+id/IV_loginFacebook"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/button_height"
             android:layout_marginTop="10dp"
             android:backgroundTint="@color/com_facebook_blue"
 
