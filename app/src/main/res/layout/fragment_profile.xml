@@ -37,17 +37,23 @@
                 app:boxCornerRadiusBottomEnd="10dp"
                 app:boxCornerRadiusBottomStart="10dp"
 
+                app:counterEnabled="true"
+                app:counterMaxLength="20"
+
                 app:boxCornerRadiusTopEnd="10dp"
                 app:boxCornerRadiusTopStart="10dp"
                 app:helperTextTextColor="@color/red"
                 app:startIconDrawable="@drawable/person_24">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:inputType="text"
+                    android:digits="qwertzuiopasdfghjklyxcvbnm._1234567890"
                     android:id="@+id/et_username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawablePadding="10dp"
                     android:fontFamily="@font/roboto_regular"
+                    android:maxLength="20"
                     android:hint="@string/Username" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -72,8 +78,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawablePadding="10dp"
-                    android:hint="Bio"
-                    android:text="Hey, I'm using Fitter"
+                    android:hint="@string/bio"
+                    android:text=""
                     android:gravity="top|left"
                     android:fontFamily="@font/roboto_regular"
                     android:lines="3"
@@ -124,7 +130,7 @@
                 android:background="@drawable/round_border"
 
                 android:fontFamily="@font/roboto_regular"
-                android:text="update"
+                android:text="@string/common_google_play_services_update_button"
                 android:textSize="17sp" />
 
         </LinearLayout>

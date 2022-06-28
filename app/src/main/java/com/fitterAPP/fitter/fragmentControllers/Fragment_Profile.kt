@@ -56,6 +56,7 @@ class Profile : Fragment() {
         etBio = binding.etBio
         etEmail = binding.etEmail
 
+
         val btnUpdate = binding.btnUpdate
 
         updateVariableInfo(etUsername,etBio,etEmail)
@@ -78,6 +79,7 @@ class Profile : Fragment() {
             Athlete.profileBio = binding.etBio.text.toString()
 
             if(etUsername.text.isNotBlank()){
+
                 val athlete = Athlete(Athlete.UID,Athlete.username,Athlete.profilePic,Athlete.profileBio,Athlete.spotifyplayList)
                 StaticAthleteDatabase.setAthleteItem(dbReference, Athlete.UID, athlete)
             }
@@ -87,7 +89,6 @@ class Profile : Fragment() {
         }
         return listener
     }
-
 
     /**
      * Method used to update all the EditTexts in the UI with the current data stored in [Athlete] companion class

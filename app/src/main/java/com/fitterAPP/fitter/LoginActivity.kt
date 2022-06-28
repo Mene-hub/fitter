@@ -130,7 +130,9 @@ class LoginActivity : AppCompatActivity() {
                 val request = GraphRequest.newGraphPathRequest(token, "/${token.userId}/picture") { response ->
                     val uri = Uri.parse(response.connection?.url.toString())
 
-                    val updater = UserProfileChangeRequest.Builder().setDisplayName(user.displayName.toString().replace("\\s".toRegex(),"")).setPhotoUri(uri).build()
+                    val name : String = user.displayName.toString().lowercase().replace("\\s".toRegex(),"").trim()
+
+                    val updater = UserProfileChangeRequest.Builder().setDisplayName(name.subSequence(0,19).toString()).setPhotoUri(uri).build()
                     auth.currentUser!!.updateProfile(updater).addOnCompleteListener{ task2 ->
                         if(task2.isSuccessful){
                             Log.d(TAG_login, "User profile updated")
@@ -176,7 +178,10 @@ class LoginActivity : AppCompatActivity() {
             }else{
                 //Doesn't exists
                 val user = auth.currentUser
-                val updater = UserProfileChangeRequest.Builder().setDisplayName(user?.displayName.toString().replace("\\s".toRegex(),"")).build()
+
+                val name : String = user?.displayName.toString().lowercase().replace("\\s".toRegex(),"").trim()
+
+                val updater = UserProfileChangeRequest.Builder().setDisplayName(name.subSequence(0,19).toString()).build()
                 auth.currentUser!!.updateProfile(updater).addOnCompleteListener{ task2 ->
                     if(task2.isSuccessful){
                         Log.d(TAG_login, "User profile updated")
