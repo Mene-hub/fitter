@@ -8,6 +8,4 @@ object ApiKeyRetriever {
     external fun getFacebookToken():String
     external fun getDatabase():String
     external fun getFacebookProtocolScheme():String
-
-
 }
