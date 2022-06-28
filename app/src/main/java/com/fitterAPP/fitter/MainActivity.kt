@@ -9,10 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
 import com.facebook.login.LoginManager
 import com.fitterAPP.fitter.classes.Athlete
-import com.fitterAPP.fitter.fragmentControllers.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
 import com.google.firebase.auth.FirebaseAuth
@@ -39,6 +37,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var menuiv : CardView
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -108,9 +107,9 @@ class MainActivity : AppCompatActivity() {
 
 
     /**
+     * Method used to log out users and send them back to the LoginActivity
      * @author Claudio Menegotto
      * @author Daniel Satriano
-     * METODO PER LA DISCONNESSIONE DELL'ACCOUNT
      */
     fun logout(){
         if(auth.currentUser != null){
@@ -133,27 +132,30 @@ class MainActivity : AppCompatActivity() {
         val childEventListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val item = snapshot.getValue(Athlete::class.java) //GRAB USER ITEM
-                user.SetNewValue(item!!)
+                if(item!=null) {
+                    user.SetNewValue(item)
+                    if(user.profilePic != "") {
+                        val imageProfile: ImageView = findViewById(R.id.profilepic_IV)
+                        val imageURI: String = user.profilePic!!
+                        Picasso.get()
+                            .load(imageURI)
+                            .resize(100, 100)
+                            .centerCrop()
+                            .into(imageProfile)
+                    }
 
-                if(user.profilePic != "") {
-                    val imageProfile: ImageView = findViewById(R.id.profilepic_IV)
-                    val imageURI: String = user.profilePic!!
-                    Picasso.get()
-                        .load(imageURI)
-                        .resize(100, 100)
-                        .centerCrop()
-                        .into(imageProfile)
+                    //SET NEW USER ITEM
+                    findViewById<TextView>(R.id.TV_Username).text = user.username       //SET USERNAME IN TEXTVIEW
+                    Athlete.setValues(user)         //SET NEW VALUES FOR THE STATIC USER PART, USED IN Fragment_MyFitnessCards.kt
                 }
 
-                //SET NEW USER ITEM
-                findViewById<TextView>(R.id.TV_Username).text = user.username       //SET USERNAME IN TEXTVIEW
-                Athlete.setValues(user)         //SET NEW VALUES FOR THE STATIC USER PART, USED IN Fragment_MyFitnessCards.kt
+                if(item == null){
+                    logout()
+                }
+
             }
-
-            override fun onCancelled(error: DatabaseError) {                        //(THIS EVENT IS CALLED ONLY WHEN THE USER IS ONLINE AND ITS ACCOUNT GETS DELETED)
-                Log.w("MainActivity-Database-User",
-                    "postcomments:onCancelled", error.toException())
-
+            override fun onCancelled(error: DatabaseError) {                        //(Event called when a problem occurred with the communication to the database, either because of server problems or listener errors)
+                Log.w("MainActivity-Database-User", "postcomments:onCancelled", error.toException())
                 logout()                                                            //LOGOUT
             }
         }

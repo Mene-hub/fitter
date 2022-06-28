@@ -28,3 +28,6 @@
 -keep class com.fitterAPP.fitter.classes.Data
 -keep class com.fitterAPP.fitter.classes.Suggestion
 -keep class com.fitterAPP.fitter.classes.Root
+
+-dontwarn org.conscrypt.Conscrypt
+-dontwarn org.conscrypt.OpenSSLProvider

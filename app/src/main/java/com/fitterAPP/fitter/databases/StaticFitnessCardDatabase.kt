@@ -1,6 +1,7 @@
 package com.fitterAPP.fitter.databases
 
 import com.fitterAPP.fitter.BuildConfig
+import com.fitterAPP.fitter.classes.ApiKeyRetriever
 import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.interfaces.DatabaseFitnessCardsInterface
 import com.google.firebase.database.ChildEventListener
@@ -15,7 +16,7 @@ import com.google.firebase.database.ValueEventListener
  */
 class StaticFitnessCardDatabase {
     companion object : DatabaseFitnessCardsInterface{
-        override val database: FirebaseDatabase = FirebaseDatabase.getInstance(BuildConfig.database)
+        override val database: FirebaseDatabase = FirebaseDatabase.getInstance(ApiKeyRetriever.getDatabase())
 
         override fun setFitnessCardChildListener(databaseRef : DatabaseReference, userID : String, fitnessCardListener: ChildEventListener){
             databaseRef.child(userID).addChildEventListener(fitnessCardListener)
