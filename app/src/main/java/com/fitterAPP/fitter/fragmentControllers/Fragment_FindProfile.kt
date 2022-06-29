@@ -10,13 +10,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
-import androidx.navigation.fragment.findNavController
 import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.classes.Athlete
 import com.fitterAPP.fitter.databinding.FragmentFindprofileBinding
 import com.fitterAPP.fitter.itemsAdapter.SuggestionAdapter
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationBarView
 import com.google.firebase.database.*
 
 /**

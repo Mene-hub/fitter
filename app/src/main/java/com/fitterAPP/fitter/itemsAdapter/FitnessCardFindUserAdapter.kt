@@ -6,13 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.FragmentContainerView
 import androidx.navigation.NavDirections
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
+import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.R
-import com.fitterAPP.fitter.fragmentControllers.MyFitnessCardsDirections
+import com.fitterAPP.fitter.fragmentControllers.Fragment_ViewOthersProfileDirections
 
 class FitnessCardFindUserAdapter (private val context2: Context, private val Cards:MutableList<FitnessCard>) : RecyclerView.Adapter<FitnessCardFindUserAdapter.Holder>() {
 
@@ -29,18 +30,16 @@ class FitnessCardFindUserAdapter (private val context2: Context, private val Car
             cardName.text = card.name
             cardDuration.text = "Duration: " + card.timeDuration.toString() + " min"
 
-
             if(card.exercises != null)
                 cardExercises.text = card.exercises?.count().toString() + " exercise"
             else {
                 cardExercises.text = "0 exercise"
             }
 
-
-
             itemView.setOnClickListener {
-                val action : NavDirections = MyFitnessCardsDirections.actionMyFitnessCardsToFragmentShowCardDialog(card)
-                findNavController().navigate(action)
+                val action : NavDirections = Fragment_ViewOthersProfileDirections.actionFragmentViewOthersProfileToFragmentShowCardDialog(card)
+                val containerView : FragmentContainerView = (context as MainActivity).findViewById(R.id.FragmentContainer)
+                findNavController(containerView).navigate(action)
             }
 
             val id: Int = context.resources.getIdentifier(
@@ -68,5 +67,3 @@ class FitnessCardFindUserAdapter (private val context2: Context, private val Car
     }
 
 }
-
-

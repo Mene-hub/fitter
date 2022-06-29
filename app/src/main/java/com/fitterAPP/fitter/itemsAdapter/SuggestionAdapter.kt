@@ -18,7 +18,7 @@ import com.squareup.picasso.Picasso
 /**
  * @author DanielSatriano
  */
-class SuggestionAdapter(val context2: Context, val users:MutableList<Athlete>) : RecyclerView.Adapter<SuggestionAdapter.Holder>() {
+class SuggestionAdapter(private val context2: Context, private val users:MutableList<Athlete>) : RecyclerView.Adapter<SuggestionAdapter.Holder>() {
 
     class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 

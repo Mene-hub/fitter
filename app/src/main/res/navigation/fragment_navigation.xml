@@ -52,6 +52,9 @@
         <argument
             android:name="cardBundle"
             app:argType="com.fitterAPP.fitter.classes.FitnessCard" />
+        <action
+            android:id="@+id/action_fragment_showCardDialog_to_fragment_ViewOthersProfile"
+            app:destination="@id/fragment_ViewOthersProfile" />
     </dialog>
     <dialog
         android:id="@+id/modifyCard"
@@ -77,6 +80,9 @@
         <argument
             android:name="bundleAthlete"
             app:argType="com.fitterAPP.fitter.classes.Athlete" />
+        <action
+            android:id="@+id/action_fragment_ViewOthersProfile_to_fragment_showCardDialog"
+            app:destination="@id/fragment_showCardDialog" />
     </dialog>
     <dialog
         android:id="@+id/bottomSheetDialog"
