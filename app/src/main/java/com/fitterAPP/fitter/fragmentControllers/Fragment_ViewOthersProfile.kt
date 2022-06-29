@@ -16,13 +16,14 @@ import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.databases.StaticFitnessCardDatabase
 import com.fitterAPP.fitter.databinding.FragmentViewOthersProfileBinding
 import com.fitterAPP.fitter.itemsAdapter.FitnessCardAdapter
+import com.fitterAPP.fitter.itemsAdapter.FitnessCardFindUserAdapter
 import com.google.firebase.database.Query
 import com.squareup.picasso.Picasso
 
 class Fragment_ViewOthersProfile : DialogFragment() {
 
     private lateinit var binding : FragmentViewOthersProfileBinding
-    private lateinit var adapter : FitnessCardAdapter
+    private lateinit var adapter : FitnessCardFindUserAdapter
     private var cardList : MutableList<FitnessCard> = mutableListOf()
     private val args by navArgs<Fragment_ViewOthersProfileArgs>()
     private lateinit var shimmerFrameLayout : ShimmerFrameLayout
@@ -47,10 +48,10 @@ class Fragment_ViewOthersProfile : DialogFragment() {
         //Set transparent status bar
         dialog?.window?.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
 
-        //Get FitnessCard by bundle passed via navigation controller in [FitnessCardAdapter.kt] (the bundle is also set in fragment_navigation.xml
+        //Get FitnessCard by bundle passed via navigation controller in [FitnessCardAdapter.kt] (the bundle is also set in fragment_navigation.xml)
         val athlete : Athlete = args.bundleAthlete
 
-        //Setting up top bar informations, name, profile picture and bio
+        //Setting up top bar information, name, profile picture and bio
         binding.TVUsername.text = athlete.username
         binding.TVBiography.text = athlete.profileBio
         if(athlete.profilePic != "") {
@@ -64,20 +65,24 @@ class Fragment_ViewOthersProfile : DialogFragment() {
 
         binding.TVUsernameCards.text = "${athlete.username}'s cards"
 
-        adapter = context?.let { FitnessCardAdapter((activity as MainActivity), cardList, null) }!!
+        adapter = context?.let { FitnessCardFindUserAdapter((activity as MainActivity), cardList) }!!
         binding.RVCards.adapter = adapter
 
 
         return binding.root
     }
 
+    /**
+     * Used to call the method to retrieve user cards.
+     * @author Daniel Satriano
+     */
     override fun onStart() {
         super.onStart()
         retrieveUserCards(args.bundleAthlete.UID)
     }
 
     /**
-     * Method to retrieve targetted user fitness cards, this method doesn't utilize listeners
+     * Method to retrieve targeted user fitness cards, this method doesn't utilize listeners
      * @author Daniel Satriano
      * @since 13/06/2022
      */
