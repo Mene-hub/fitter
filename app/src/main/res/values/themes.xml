@@ -30,6 +30,10 @@
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:fitsSystemWindows">true</item>
+
+
+        <item name="android:navigationBarColor">?android:fullDark</item>
+        <item name="android:windowLightNavigationBar">true</item>
     </style>
 
 
