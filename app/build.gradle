@@ -80,7 +80,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx:21.0.0'
 
     //FACEBOOK
-    implementation 'com.facebook.android:facebook-android-sdk:13.2.0'
+    implementation 'com.facebook.android:facebook-android-sdk:latest.release'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.4.2'
     implementation 'androidx.navigation:navigation-ui-ktx:2.4.2'
 

@@ -26,13 +26,6 @@
             android:name=".MainActivity"
             android:exported="false" />
 
-
-        <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="${fbLoginProtocolScheme}" />
-        <meta-data
-            android:name="com.facebook.sdk.ClientToken"
-            android:value="${facebookClientToken}" />
     </application>
 
 </manifest>
