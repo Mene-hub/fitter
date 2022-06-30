@@ -69,7 +69,7 @@ class LoginActivity : AppCompatActivity() {
         auth = Firebase.auth    //istantiate auth variable
 
 
-        FacebookSdk.setApplicationId(ApiKeyRetriever.getFacebookProtocolScheme())
+        FacebookSdk.setApplicationId(ApiKeyRetriever.getFacebookApplicationID())
         FacebookSdk.setClientToken(ApiKeyRetriever.getFacebookToken())
         FacebookSdk.sdkInitialize(applicationContext)
 

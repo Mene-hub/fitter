@@ -7,5 +7,5 @@ object ApiKeyRetriever {
     external fun getGoogleKey():String
     external fun getFacebookToken():String
     external fun getDatabase():String
-    external fun getFacebookProtocolScheme():String
+    external fun getFacebookApplicationID():String
 }
