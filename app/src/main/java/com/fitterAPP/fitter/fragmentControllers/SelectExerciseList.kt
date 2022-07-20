@@ -50,10 +50,6 @@ class SelectExerciseList : DialogFragment() {
 
         binding.ExRecycle.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             fitnessCard.exercises?.get(index)?.exerciseName = parent.getItemAtPosition(position) as String
-            Toast.makeText(context, "selected " + fitnessCard.exercises?.get(index)?.exerciseName, Toast.LENGTH_SHORT).show()
-        }
-
-        binding.SelectBT.setOnClickListener {
             val action : NavDirections = SelectExerciseListDirections.actionSelectExerciseListToSetWarmUpExercise(fitnessCard, index)
             findNavController().navigate(action)
         }

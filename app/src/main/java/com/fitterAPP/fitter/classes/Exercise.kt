@@ -80,4 +80,16 @@ data class Exercise(var exerciseName : String, var type : ExerciseType) {
 
     }
 
+    fun setAsSeriesItem(rep: Int){
+
+        type = ExerciseType.seriesItem
+        exerciseDuration = null
+        exerciseRep = rep
+        exerciseSer = null
+        exerciseRest = null
+        piramidSeries = null
+        exerciseSeries = null
+
+    }
+
 }

@@ -21,6 +21,9 @@ class ExerciseQueryHelper {
     companion object{
         private const val EXERCISE_QUERY = "https://wger.de/api/v2/exercise/search/?format=json&term="
         private const val ALL_EXERCISE_QUERY = "https://wger.de/api/v2/exercise/?format=json&lan=1"
+        private const val SINGLE_EXERCISE_QUERY = "https://wger.de/api/v2/exercise/"
+        private const val QUERY_SUFFIX = "/?format=json&lan=1"
+
 
         /**
          * This function is used to get the exercise name query from the REST API
@@ -75,6 +78,27 @@ class ExerciseQueryHelper {
             return gson.fromJson(json, type)
         }
 
+        /**
+         * * Method to retrieve all exercises, utilizing OkHttp and GSON.
+         * For more information about OkHttp and GSON, visit [OkHttp](https://square.github.io/okhttp/), [GSON](https://github.com/google/gson/blob/master/UserGuide.md)
+         * @author Menegotto Claudio
+         * @throws android.os.NetworkOnMainThreadException
+         */
+        @Throws(android.os.NetworkOnMainThreadException::class)
+        fun getSingleExerciseById(id:Int): Result {
+            //get json object from the REST API with exerciseName as a query
+            val client = OkHttpClient()
+            val request = Request.Builder()
+                .url(SINGLE_EXERCISE_QUERY + id + QUERY_SUFFIX)
+                .build()
+            val response = client.newCall(request).execute()
+            val json = response.body()?.string()
+
+            //convert responseBody to object of ExerciseSuggestions
+            val gson = Gson()
+            val type = object : TypeToken<Result>() {}.type
+            return gson.fromJson(json, type)
+        }
 
         /**
          * Private method which is used to convert Root list of suggestion to a MutableList<Exercise>

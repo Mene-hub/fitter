@@ -3,6 +3,7 @@ package com.fitterAPP.fitter.fragmentControllers
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,6 +32,7 @@ class FindExercise : DialogFragment() {
     private lateinit var fitnessCard : FitnessCard
     private lateinit var adapter : SuggestionAdapter
     private var index : Int = 0
+    var Exercises : Root? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,14 +55,10 @@ class FindExercise : DialogFragment() {
 
         binding.ExRecycle.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             fitnessCard.exercises?.get(index)?.exerciseName = parent.getItemAtPosition(position) as String
-            Toast.makeText(context, "selected " + fitnessCard.exercises?.get(index)?.exerciseName, Toast.LENGTH_SHORT).show()
-        }
 
-        binding.SelectBT.setOnClickListener {
-            val action : NavDirections = FindExerciseDirections.actionFindExerciseToNewExercieFormDialog(fitnessCard, index)
-            findNavController().navigate(action)
-        }
+            queryById(Exercises?.suggestions?.get(position)?.data?.id!!)
 
+        }
         return binding.root
     }
 
@@ -77,11 +75,12 @@ class FindExercise : DialogFragment() {
                     val executor: ExecutorService = Executors.newSingleThreadExecutor()
                     val handler: Handler = Handler(Looper.getMainLooper())
                     var normalEx : MutableList<Result>? = null
-                    var Exercises : Root? = null
 
                     executor.execute(Runnable () {
                         executor.run() {
-                            Exercises = ExerciseQueryHelper.getExercises(newText)
+                            try {
+                                Exercises = ExerciseQueryHelper.getExercises(newText)
+                            }catch(e:Exception ){ Log.d("FindExercise", e.toString()) }
                         }
 
                         handler.post(Runnable() {
@@ -99,5 +98,23 @@ class FindExercise : DialogFragment() {
             }
         }
         return listener
+    }
+
+    private fun queryById(id : Int){
+        val executor: ExecutorService = Executors.newSingleThreadExecutor()
+        val handler: Handler = Handler(Looper.getMainLooper())
+        var ex : Result
+
+        executor.execute(Runnable () {
+            executor.run() {
+               ex  = ExerciseQueryHelper.getSingleExerciseById(id)
+            }
+
+            handler.post(Runnable() {
+                fitnessCard.exercises?.get(index)?.description = ex.description
+                val action : NavDirections = FindExerciseDirections.actionFindExerciseToNewExercieFormDialog(fitnessCard, index)
+                findNavController().navigate(action)
+            })
+        })
     }
 }

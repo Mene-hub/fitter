@@ -8,7 +8,7 @@
     android:fillViewport="true"
     tools:context=".fragmentControllers.Fragment_showCardDialog">
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -183,7 +183,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/exercisesList_RV" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/playExercise_BT"

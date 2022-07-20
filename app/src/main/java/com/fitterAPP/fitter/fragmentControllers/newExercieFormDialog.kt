@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavDirections
@@ -54,6 +55,10 @@ class newExercieFormDialog : DialogFragment() {
         //Get FitnessCard by bundle passed via navigation controller in [FitnessCardAdapter.kt] (the bundle is also set in fragment_navigation.xml
         fitnessCard = args.fitnessCard
         index = args.index
+
+
+        //setting the exercise name
+        binding.ExNameTV.text = fitnessCard.exercises?.get(index)?.exerciseName
 
         var screenHeight = 0
 
@@ -140,6 +145,7 @@ class newExercieFormDialog : DialogFragment() {
 
         //save card on db and close the fragment
         binding.SaveExercise.setOnClickListener {
+            System.out.println(textReps.text.toString() + " " + textSeries.text.toString() + " " + textTime.text.toString().removeSuffix("s").toDouble())
             fitnessCard.exercises?.get(index)?.setAsNormal(textReps.text.toString().toInt(), textSeries.text.toString().toInt(), textTime.text.toString().removeSuffix("s").toDouble())
             StaticFitnessCardDatabase.setFitnessCardItem(StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference)), Athlete.UID, fitnessCard)
             val action : NavDirections = newExercieFormDialogDirections.actionNewExercieFormDialogToModifyCard(fitnessCard)
