@@ -67,6 +67,9 @@
         <argument
             android:name="cardBundle"
             app:argType="com.fitterAPP.fitter.classes.FitnessCard" />
+        <action
+            android:id="@+id/action_modifyCard_to_select_exercise_group"
+            app:destination="@id/select_exercise_group" />
     </dialog>
     <dialog
         android:id="@+id/newExercieFormDialog"

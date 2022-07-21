@@ -13,10 +13,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.classes.FitnessCard
+import com.fitterAPP.fitter.classes.Root
 import com.fitterAPP.fitter.databinding.FragmentSelectExerciseListBinding
 import com.fitterAPP.fitter.itemsAdapter.SuggestionAdapter
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class SelectExerciseList : DialogFragment() {
 
@@ -24,6 +25,7 @@ class SelectExerciseList : DialogFragment() {
     private val args by navArgs<newExercieFormDialogArgs>()
     private lateinit var fitnessCard : FitnessCard
     private lateinit var adapter : SuggestionAdapter
+    private val warmupex = "[\"Tapis Roullant\",\"Cyclette\",\"Elliptical\",\"Spin Bike\", \"Stepper\"]"
     private var index : Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,10 +42,9 @@ class SelectExerciseList : DialogFragment() {
 
         fitnessCard = args.fitnessCard
         index = args.index
-
-        val fileInString: String = context?.assets?.open("warm-up.json")?.bufferedReader().use { it?.readText()!! }
-
-        var warmupEx = Json.decodeFromString<MutableList<String>>(fileInString)
+        val gson = Gson()
+        val type = object : TypeToken<MutableList<String>>() {}.type
+        var warmupEx : MutableList<String> = gson.fromJson(warmupex, type)
 
         //adapter = context?.let { SuggestionAdapter((activity as MainActivity), warmupEx) }!!
         binding.ExRecycle.adapter = ArrayAdapter(context!!, android.R.layout.simple_list_item_1,warmupEx)
@@ -56,5 +57,4 @@ class SelectExerciseList : DialogFragment() {
 
         return binding.root
     }
-
 }
