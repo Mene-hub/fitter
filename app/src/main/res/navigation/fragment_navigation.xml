@@ -69,6 +69,22 @@
             app:argType="com.fitterAPP.fitter.classes.FitnessCard" />
     </dialog>
     <dialog
+        android:id="@+id/newExercieFormDialog"
+        android:name="com.fitterAPP.fitter.fragmentControllers.newExercieFormDialog"
+        android:label="newExercieFormDialog" >
+        <argument
+            android:name="fitnessCard"
+            app:argType="com.fitterAPP.fitter.classes.FitnessCard" />
+        <argument
+            android:name="index"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_newExercieFormDialog_to_modifyCard"
+            app:destination="@id/modifyCard"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/modifyCard" />
+    </dialog>
+    <dialog
         android:id="@+id/select_exercise_group"
         android:name="com.fitterAPP.fitter.fragmentControllers.select_exercise_group"
         android:label="select_exercise_group" >
