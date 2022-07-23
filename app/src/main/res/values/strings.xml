@@ -43,5 +43,6 @@
     <string name="series">Series</string>
     <string name="piramidal">Piramidal Exercise</string>
     <string name="select">Select</string>
+    <string name="restore_time">Restore Time</string>
 
 </resources>

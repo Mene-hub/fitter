@@ -34,7 +34,7 @@ class TimeRacap : Fragment() {
         var recap : ArrayList<DayRecap> = ArrayList<DayRecap>()
 
         for (i in 0..10)
-            recap.add(DayRecap(i, 2, 2022, 10F,  500-Random.nextInt(10, 100).toFloat()))
+            //recap.add(DayRecap(i, 2, 2022, 10F,  500-Random.nextInt(10, 100).toFloat()))
 
         graphFromArray(recap, v, activity as MainActivity)
         return v
@@ -58,8 +58,9 @@ class TimeRacap : Fragment() {
 
         var weightRecap : ArrayList<Entry> = ArrayList()
 
-        for (i in 0..recap.size-1)
-            weightRecap.add(Entry(recap[i].dayOfMonth.toFloat(), recap[i].currentWeight))
+        for (i in 0 until recap.size)
+            break
+            //weightRecap.add(Entry(recap[i].dayOfMonth.toFloat(), recap[i].currentWeight))
 
         var line : LineDataSet = LineDataSet(weightRecap, "Weight")
         line.setAxisDependency(YAxis.AxisDependency.LEFT)
