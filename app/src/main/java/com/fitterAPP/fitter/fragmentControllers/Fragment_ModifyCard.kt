@@ -88,7 +88,7 @@ class ModifyCard() : DialogFragment() {
         recycle = binding.exercisesListRV
 
         if(fitnessCard.exercises != null && fitnessCard.exercises?.size!! > 0){
-            adapter = FitnessCardExercisesAdapter((activity as MainActivity),fitnessCard,fitnessCard.exercises!!, true)
+            adapter = FitnessCardExercisesAdapter((activity as MainActivity),fitnessCard.exercises!!, true)
             recycle.adapter = adapter
         }
 

@@ -1,21 +1,11 @@
 package com.fitterAPP.fitter.itemsAdapter
 
 import android.content.Context
-import android.graphics.Interpolator
-import android.icu.number.Scale
-import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewPropertyAnimator
-import android.view.animation.AccelerateInterpolator
-import android.webkit.WebChromeClient
-import android.webkit.WebView
 import android.widget.*
-import androidx.cardview.widget.CardView
-import androidx.core.view.ViewCompat.animate
 import androidx.core.view.isGone
-import androidx.core.view.isVisible
 
 import androidx.recyclerview.widget.RecyclerView
 import com.fitterAPP.fitter.classes.Exercise
@@ -23,22 +13,18 @@ import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.classes.ExerciseType
 
-class FitnessCardExercisesAdapter (val context2: Context, val Card:FitnessCard, val exercises : MutableList<Exercise>, val isEditable : Boolean) : RecyclerView.Adapter<FitnessCardExercisesAdapter.Holder>() {
+class FitnessCardExercisesAdapter (val context2: Context,  val exercises : MutableList<Exercise>, val isEditable : Boolean) : RecyclerView.Adapter<FitnessCardExercisesAdapter.Holder>() {
 
     class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
 
         val ExName : TextView = itemView.findViewById(R.id.ExName_TV)
         val ExReps : TextView = itemView.findViewById(R.id.ExReps_TV)
-        val openMenu : ImageView = itemView.findViewById(R.id.openMenu_IV)
-        val exMenu : LinearLayout = itemView.findViewById(R.id.ExMenu_LL)
         val icon : ImageView = itemView.findViewById(R.id.exercise_icon_IV)
-        val description : TextView = itemView.findViewById(R.id.ExerciseDescription_TV)
 
 
         fun setCard(ex:Exercise, context: Context){
             ExName.text = ex.exerciseName
-            description.text = ex.description
 
             when (ex.type){
                 ExerciseType.warmup -> {
@@ -71,33 +57,33 @@ class FitnessCardExercisesAdapter (val context2: Context, val Card:FitnessCard, 
                     icon.setImageResource(R.drawable.normal_exercise_icon)
                 }
             }
-
-
-            openMenu.setOnClickListener {
-                exMenu.isGone = !exMenu.isGone
-            }
         }
-
-        /*
-        private fun transaction(context2:Context, ex : Exercise) {
-
-            val fragmentManager = (context2 as AppCompatActivity).supportFragmentManager
-            val newFragment = Fragment_createCardDialog(ex)
-
-            // The device is smaller, so show the fragment fullscreen
-            val transaction = fragmentManager.beginTransaction()
-            // For a little polish, specify a transition animation
-            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-            // To make it fullscreen, use the 'content' root view as the container
-            // for the fragment, which is always the root view for the activity
-            transaction
-                .replace(android.R.id.content, newFragment)
-                .addToBackStack(null)
-                .commit()
-
-        }
-         */
     }
+
+    /**
+     * Used to delete an exercise
+     * @author Daniel Satriano
+     * @since 23/07/2022
+     * @param index its the index of the item that needs to be removed
+     */
+    fun deleteItem(index : Int){
+        exercises.removeAt(index)
+        notifyItemRemoved(index)
+    }
+
+    /**
+     * Used to set a new recap
+     * @author Daniel Satriano
+     * @since 23/07/2022
+     * @param index its the index of the item that needs to be removed
+     */
+    fun addRecap(index : Int){
+        //TODO("Aggiungere recap")
+        //TODO("Cambiare il colore della CardView in verde")
+    }
+
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         if(!isEditable) {

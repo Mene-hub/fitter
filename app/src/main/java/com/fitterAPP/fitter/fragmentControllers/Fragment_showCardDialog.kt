@@ -15,10 +15,12 @@ import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.classes.CardsCover
 import com.fitterAPP.fitter.classes.FitnessCard
+import com.fitterAPP.fitter.classes.SwipeGesture
 import com.fitterAPP.fitter.databinding.FragmentShowCardDialogBinding
 import com.fitterAPP.fitter.itemsAdapter.FitnessCardExercisesAdapter
 
@@ -82,8 +84,25 @@ class Fragment_showCardDialog() : DialogFragment() {
 
         //adapter for the exercises
         if(newFitnessCard.exercises != null && newFitnessCard.exercises?.size!! > 0){
-            val adapter = FitnessCardExercisesAdapter((activity as MainActivity),newFitnessCard,newFitnessCard.exercises!!,false)
+            val adapter = FitnessCardExercisesAdapter((activity as MainActivity), newFitnessCard.exercises!!,false)
             recycle.adapter = adapter
+
+            //Inserisco il gestore dello SWIPE della listview
+            val swipeGesture = object : SwipeGesture(requireContext()){
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    when(direction){
+                        ItemTouchHelper.LEFT -> {
+                            adapter.deleteItem(viewHolder.absoluteAdapterPosition)
+                        }
+                        ItemTouchHelper.RIGHT -> {
+                            adapter.addRecap(viewHolder.absoluteAdapterPosition)
+                        }
+                    }
+                }
+            }
+            val itemTouchHelper = ItemTouchHelper(swipeGesture)
+            itemTouchHelper.attachToRecyclerView(recycle)
+
         }
 
         //binding the card properties
