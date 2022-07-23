@@ -177,7 +177,7 @@
 
             <Space
                 android:layout_width="wrap_content"
-                android:layout_height="75dp"
+                android:layout_height="80dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/exercisesList_RV" />
@@ -190,8 +190,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
-        android:layout_margin="16dp"
         android:text="PLAY"
+        android:layout_marginBottom="?attr/actionBarSize"
         android:textColorHighlight="@color/light_blue_600"
         android:textColorLink="@color/light_blue_600"
         app:backgroundTint="@color/light_blue_600"

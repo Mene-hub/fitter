@@ -36,7 +36,7 @@ class ModifyCard() : DialogFragment() {
     private val args by navArgs<ModifyCardArgs>()
     private lateinit var binding : FragmentModifyCardBinding
     lateinit var recycle : RecyclerView
-    lateinit var adapter : FitnessCardExercisesAdapter
+    var adapter : FitnessCardExercisesAdapter ? = null
 
     /**
      * onCreate method which is used to set the dialog style. This mathod is paired with a WindowManager setting done in [onCreateView]
@@ -87,7 +87,10 @@ class ModifyCard() : DialogFragment() {
         //exercises adapter
         recycle = binding.exercisesListRV
 
-        if(fitnessCard.exercises != null && fitnessCard.exercises?.size!! > 0){
+        if(fitnessCard.exercises == null)
+            fitnessCard.exercises = ArrayList()
+
+        if(fitnessCard.exercises != null){
             adapter = FitnessCardExercisesAdapter((activity as MainActivity),fitnessCard,fitnessCard.exercises!!, true)
             recycle.adapter = adapter
         }
@@ -169,7 +172,7 @@ class ModifyCard() : DialogFragment() {
                 cardDescription.text = fitnessCard.description
                 cardDuration.text = fitnessCard.timeDuration.toString() + " min"
 
-                adapter.notifyDataSetChanged()
+                adapter?.notifyDataSetChanged()
 
             }
 

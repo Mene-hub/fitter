@@ -28,6 +28,7 @@ data class Exercise(var exerciseName : String, var type : ExerciseType) {
     var images : List<String?>? = null
     var notes : String ?= null
     var description : String ?= null
+    var exerciseId : Int ? = null
 
     //default
     constructor() : this("Default name", ExerciseType.normal)
@@ -56,12 +57,12 @@ data class Exercise(var exerciseName : String, var type : ExerciseType) {
 
     }
 
-    fun setAsPiramid(rep: Int, ser : Int, rest : Double){
+    fun setAsPiramid(ser : Int, rest : Double){
 
         type = ExerciseType.piramid
         exerciseDuration = null
-        exerciseRep = rep
-        exerciseSer = null
+        exerciseRep = null
+        exerciseSer = ser
         exerciseRest = rest
         piramidSeries = null
         exerciseSeries = null
