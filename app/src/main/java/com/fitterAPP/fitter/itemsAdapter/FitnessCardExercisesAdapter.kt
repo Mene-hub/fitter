@@ -1,27 +1,33 @@
 package com.fitterAPP.fitter.itemsAdapter
 
 import android.content.Context
+import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.cardview.widget.CardView
 import androidx.core.view.isGone
 
 import androidx.recyclerview.widget.RecyclerView
-import com.fitterAPP.fitter.classes.Exercise
-import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.R
-import com.fitterAPP.fitter.classes.ExerciseType
+import com.fitterAPP.fitter.classes.*
+import com.fitterAPP.fitter.databases.StaticRecapDatabase
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
-class FitnessCardExercisesAdapter (val context2: Context,  val exercises : MutableList<Exercise>, val isEditable : Boolean) : RecyclerView.Adapter<FitnessCardExercisesAdapter.Holder>() {
+class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: FitnessCard,  val exercises : MutableList<Exercise>, val isEditable : Boolean) : RecyclerView.Adapter<FitnessCardExercisesAdapter.Holder>() {
+
+    var exerciseRecap : MutableList<ExerciseRecap> = mutableListOf()
+    val currentDateAndTime : String = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-M-yyyy hh:mm:ss"))
+    val dayRecap = DayRecap(currentDateAndTime, fitnessCard.key, exerciseRecap)
 
     class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
 
         val ExName : TextView = itemView.findViewById(R.id.ExName_TV)
         val ExReps : TextView = itemView.findViewById(R.id.ExReps_TV)
         val icon : ImageView = itemView.findViewById(R.id.exercise_icon_IV)
-
+        val cardView : CardView = itemView.findViewById(R.id.checkedBackground)
 
         fun setCard(ex:Exercise, context: Context){
             ExName.text = ex.exerciseName
@@ -58,6 +64,7 @@ class FitnessCardExercisesAdapter (val context2: Context,  val exercises : Mutab
                 }
             }
         }
+
     }
 
     /**
@@ -77,9 +84,17 @@ class FitnessCardExercisesAdapter (val context2: Context,  val exercises : Mutab
      * @since 23/07/2022
      * @param index its the index of the item that needs to be removed
      */
+    //TODO("Apertura form per il recap e cambio color")
     fun addRecap(index : Int){
-        //TODO("Aggiungere recap")
-        //TODO("Cambiare il colore della CardView in verde")
+        val database = StaticRecapDatabase.database.getReference(context2.getString(R.string.RecapReference))
+
+        exerciseRecap.add(ExerciseRecap(0,80))
+        exerciseRecap.add(ExerciseRecap(0,100))
+        exerciseRecap.add(ExerciseRecap(0,2000))
+
+        StaticRecapDatabase.setRecapItem(database, Athlete.UID, dayRecap)
+
+
     }
 
 
@@ -98,7 +113,7 @@ class FitnessCardExercisesAdapter (val context2: Context,  val exercises : Mutab
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        val Card: Exercise = exercises?.get(position)!!
+        val Card: Exercise = exercises[position]
         holder.setCard(Card, context2)
     }
 

@@ -19,6 +19,7 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
+            android:id="@+id/checkedBackground"
             android:layout_height="70dp"
             app:cardBackgroundColor="@color/white"
             app:cardElevation="0dp">

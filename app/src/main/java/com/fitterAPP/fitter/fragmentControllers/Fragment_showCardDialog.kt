@@ -84,7 +84,7 @@ class Fragment_showCardDialog() : DialogFragment() {
 
         //adapter for the exercises
         if(newFitnessCard.exercises != null && newFitnessCard.exercises?.size!! > 0){
-            val adapter = FitnessCardExercisesAdapter((activity as MainActivity), newFitnessCard.exercises!!,false)
+            val adapter = FitnessCardExercisesAdapter((activity as MainActivity), newFitnessCard,  newFitnessCard.exercises!!,false)
             recycle.adapter = adapter
 
             //Inserisco il gestore dello SWIPE della listview
@@ -118,9 +118,9 @@ class Fragment_showCardDialog() : DialogFragment() {
         val bgimage : ImageView = binding.CardBgImageIV
 
         //setting the image cover
-        val id: Int? = CardsCover.getResource(newFitnessCard.imageCover)
+        val id: Int = CardsCover.getResource(newFitnessCard.imageCover)
 
-        bgimage.setImageResource(id!!)
+        bgimage.setImageResource(id)
 
         // Inflate the layout for this fragment
         return binding.root

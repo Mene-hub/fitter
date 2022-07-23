@@ -32,7 +32,7 @@ interface DatabaseRecapInterface {
      * @author Daniel Satriano
      * @since 16/07/2022
      */
-    fun setRecapItem(databaseRef: DatabaseReference, userID: String, cardID: String, recap: DayRecap)
+    fun setRecapItem(databaseRef: DatabaseReference, userID: String, recap: DayRecap)
 
     /**
      * Enables to remove a DayRecap object from the database

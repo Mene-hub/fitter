@@ -44,5 +44,6 @@
     <string name="piramidal">Piramidal Exercise</string>
     <string name="select">Select</string>
     <string name="restore_time">Restore Time</string>
+    <string name="RecapReference" translatable="false">RECAP_SCHEDA</string>
 
 </resources>

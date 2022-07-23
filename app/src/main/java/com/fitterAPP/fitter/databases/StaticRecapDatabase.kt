@@ -25,8 +25,8 @@ class StaticRecapDatabase {
          * @param cardID The fitness card ID
          * @since 16/07/2022
          */
-        override fun setRecapItem(databaseRef: DatabaseReference, userID: String, cardID: String, recap: DayRecap) {
-            databaseRef.child(userID).child(cardID).setValue(recap)
+        override fun setRecapItem(databaseRef: DatabaseReference, userID: String, recap: DayRecap) {
+            databaseRef.child(userID).child(recap.cardKey).child(recap.key).setValue(recap)
         }
 
         /**
