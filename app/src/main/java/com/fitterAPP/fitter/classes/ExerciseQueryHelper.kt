@@ -3,6 +3,7 @@ package com.fitterAPP.fitter.classes
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import okhttp3.*
+import java.io.FileDescriptor
 
 /**
  * Exercise query helper which utilizes REST API
@@ -19,6 +20,10 @@ import okhttp3.*
 class ExerciseQueryHelper {
     companion object{
         private const val EXERCISE_QUERY = "https://wger.de/api/v2/exercise/search/?format=json&term="
+        private const val ALL_EXERCISE_QUERY = "https://wger.de/api/v2/exercise/?format=json&lan=1"
+        private const val SINGLE_EXERCISE_QUERY = "https://wger.de/api/v2/exercise/"
+        private const val QUERY_SUFFIX = "/?format=json&lan=1"
+
 
         /**
          * This function is used to get the exercise name query from the REST API
@@ -50,6 +55,49 @@ class ExerciseQueryHelper {
             return gson.fromJson(json, type)
         }
 
+        /**
+         * * Method to retrieve all exercises, utilizing OkHttp and GSON.
+         * For more information about OkHttp and GSON, visit [OkHttp](https://square.github.io/okhttp/), [GSON](https://github.com/google/gson/blob/master/UserGuide.md)
+         * @author Menegotto Claudio
+         * @throws android.os.NetworkOnMainThreadException
+         */
+        @Throws(android.os.NetworkOnMainThreadException::class)
+        fun getAllExercises(): Response {
+            //get json object from the REST API with exerciseName as a query
+            val client = OkHttpClient()
+            val request = Request.Builder()
+                .url(ALL_EXERCISE_QUERY)
+                .build()
+            val response = client.newCall(request).execute()
+            val json = response.body()?.string()
+
+            //convert responseBody to object of ExerciseSuggestions
+            val gson = Gson()
+            val type = object : TypeToken<Response>() {}.type
+            return gson.fromJson(json, type)
+        }
+
+        /**
+         * * Method to retrieve all exercises, utilizing OkHttp and GSON.
+         * For more information about OkHttp and GSON, visit [OkHttp](https://square.github.io/okhttp/), [GSON](https://github.com/google/gson/blob/master/UserGuide.md)
+         * @author Menegotto Claudio
+         * @throws android.os.NetworkOnMainThreadException
+         */
+        @Throws(android.os.NetworkOnMainThreadException::class)
+        fun getSingleExerciseById(id:Int): Result {
+            //get json object from the REST API with exerciseName as a query
+            val client = OkHttpClient()
+            val request = Request.Builder()
+                .url(SINGLE_EXERCISE_QUERY + id + QUERY_SUFFIX)
+                .build()
+            val response = client.newCall(request).execute()
+            val json = response.body()?.string()
+
+            //convert responseBody to object of ExerciseSuggestions
+            val gson = Gson()
+            val type = object : TypeToken<Result>() {}.type
+            return gson.fromJson(json, type)
+        }
 
         /**
          * Private method which is used to convert Root list of suggestion to a MutableList<Exercise>
@@ -57,6 +105,7 @@ class ExerciseQueryHelper {
          * @see Exercise for more information
          * @see Root for more information
          */
+        /*
         fun convertToExercise(exerciseSuggestion: Root) : MutableList<Exercise>{
             val exercises = mutableListOf<Exercise>()
             for(suggestion in exerciseSuggestion.suggestions){
@@ -65,7 +114,7 @@ class ExerciseQueryHelper {
             }
             return exercises
         }
-
+        */
     }
 }
 
@@ -120,4 +169,23 @@ data class Data(var id : Int, var name : String, var category : String, var imag
     override fun toString(): String {
         return "DataSuggestion(id=$id, name='$name', category='$category', image='$image', image_thumbnail='$image_thumbnail')"
     }
+}
+
+//The classes below are used to parse the JSON response from the REST API inside [ExerciseQueryHelper.getAllExercises]
+
+/**
+ * Data class for the query which contains the body information.
+ * @author Claudio Menegotto
+ */
+data class Response(var count : Int, var next : String, var previus : String, var results : MutableList<Result>){
+
+}
+
+/**
+ * Data class for the exercise query which contains the exercise information.
+ * used in [Response] class
+ * @author Claudio Menegotto
+ */
+data class Result(var id : Int, var uuid : String, var name : String, var exercise_base : Int, var description : String, var creation_date : String, var category : Int, var muscle : MutableList<Int>, var muscles_secondary : MutableList<Int>, var equipment : MutableList<Int>, var language : Int, var license : Int, var license_author : String, var variations :MutableList<Int>){
+
 }

@@ -38,5 +38,10 @@
     <string name="login_log_in">Login</string>
     <string name="Email">Email</string>
     <string name="bio">Bio</string>
+    <string name="warmap">Warm-up</string>
+    <string name="normalexercise">Single Exercise</string>
+    <string name="series">Series</string>
+    <string name="piramidal">Piramidal Exercise</string>
+    <string name="select">Select</string>
 
 </resources>

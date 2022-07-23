@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fitterAPP.fitter.classes.Exercise
 import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.R
+import com.fitterAPP.fitter.classes.ExerciseType
 
 class FitnessCardExercisesAdapter (val context2: Context, val Card:FitnessCard, val exercises : MutableList<Exercise>, val isEditable : Boolean) : RecyclerView.Adapter<FitnessCardExercisesAdapter.Holder>() {
 
@@ -31,11 +32,47 @@ class FitnessCardExercisesAdapter (val context2: Context, val Card:FitnessCard, 
         val ExReps : TextView = itemView.findViewById(R.id.ExReps_TV)
         val openMenu : ImageView = itemView.findViewById(R.id.openMenu_IV)
         val exMenu : LinearLayout = itemView.findViewById(R.id.ExMenu_LL)
+        val icon : ImageView = itemView.findViewById(R.id.exercise_icon_IV)
+        val description : TextView = itemView.findViewById(R.id.ExerciseDescription_TV)
 
 
         fun setCard(ex:Exercise, context: Context){
             ExName.text = ex.exerciseName
-            ExReps.text = ex.exerciseSer.toString() + " x " + ex.exerciseRep.toString()
+            description.text = ex.description
+
+            when (ex.type){
+                ExerciseType.warmup -> {
+                    ExReps.text = ex.exerciseDuration.toString() + " min"
+                    icon.setImageResource(R.drawable.warmup_exercise_icon)
+                }
+
+                ExerciseType.normal -> {
+                    ExReps.text = ex.exerciseSer.toString() + " x " + ex.exerciseRep.toString() + " - " + ex.exerciseRest + " s"
+                    icon.setImageResource(R.drawable.normal_exercise_icon)
+                }
+                ExerciseType.series -> {
+                    ExReps.text = ex.exerciseSeries?.size.toString() + " - " + ex.exerciseRest + " s"
+                    icon.setImageResource(R.drawable.series_exercise_icon)
+                }
+                ExerciseType.piramid -> {
+                    icon.setImageResource(R.drawable.pyramid_exercise_icon)
+                    var reps : String = ""
+                    for (i in 0 until ex.piramidSeries?.size!!) {
+                        reps += ex.piramidSeries?.get(i)!!.toString()
+                        if(i < ex.piramidSeries?.lastIndex!!)
+                            reps += " x "
+                    }
+
+                    ExReps.text = reps + " - " + ex.exerciseRest + " s"
+                }
+
+                else ->{
+                    ExReps.text = ex.exerciseSer.toString() + " x " + ex.exerciseRep.toString() + " - " + ex.exerciseRest + " s"
+                    icon.setImageResource(R.drawable.normal_exercise_icon)
+                }
+            }
+
+
             openMenu.setOnClickListener {
                 exMenu.isGone = !exMenu.isGone
             }

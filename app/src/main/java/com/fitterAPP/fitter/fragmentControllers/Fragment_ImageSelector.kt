@@ -1,5 +1,7 @@
 package com.fitterAPP.fitter.fragmentControllers
 
+import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +19,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 class ImageSelector(val propertyname : String, var card: FitnessCard) : BottomSheetDialogFragment() {
 
     var selectedImage:CardsCover = card.imageCover
+    //dialog tag to find it with supportFragmentManager.findViewById
+    val TAG = "selectImageDialog"
+
 
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View {
 
@@ -24,15 +29,13 @@ class ImageSelector(val propertyname : String, var card: FitnessCard) : BottomSh
 
         v.findViewById<TextView>(R.id.PropertyName_TV).text = propertyname
 
-        v.findViewById<TextView>(R.id.backBt_TV).setOnClickListener {
-            dismiss()
-        }
-
+        /*
         v.findViewById<TextView>(R.id.saveBt_TV).setOnClickListener {
             card.imageCover = selectedImage
             //MyFitnessCards().addFitnessCard(card)
             dismiss()
         }
+         */
 
         val mybgs : MutableList<Int> = ArrayList()
         mybgs.add(R.drawable.gigachad)
@@ -45,10 +48,17 @@ class ImageSelector(val propertyname : String, var card: FitnessCard) : BottomSh
         val recycle = v.findViewById<RecyclerView>(R.id.imageGridList_RV)
         recycle.layoutManager = GridLayoutManager(context, 2)
 
-        val adapter = context?.let { imagerGridAdapter((activity as MainActivity),mybgs) }
+        val adapter = context?.let { imagerGridAdapter((activity as MainActivity),mybgs, card, this) }
         recycle.adapter = adapter
 
         return v
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+
+
+
+        super.onDismiss(dialog)
     }
 
 }

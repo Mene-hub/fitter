@@ -28,4 +28,9 @@
     <string name="sign_in_with_google">Accedi con Google</string>
     <string name="sign_in_with_facebook">Accedi con Facebook</string>
     <string name="bio">Bio</string>
+    <string name="warmap" >Riscaldamento</string>
+    <string name="normalexercise" >Esercizio Singolo</string>
+    <string name="series" >Serie</string>
+    <string name="piramidal" >Esercizio Piramidale</string>
+    <string name="select" >Seleziona</string>
 </resources>

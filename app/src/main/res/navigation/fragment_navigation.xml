@@ -67,6 +67,92 @@
         <argument
             android:name="cardBundle"
             app:argType="com.fitterAPP.fitter.classes.FitnessCard" />
+        <action
+            android:id="@+id/action_modifyCard_to_select_exercise_group"
+            app:destination="@id/select_exercise_group" />
+    </dialog>
+    <dialog
+        android:id="@+id/newExercieFormDialog"
+        android:name="com.fitterAPP.fitter.fragmentControllers.newExercieFormDialog"
+        android:label="newExercieFormDialog" >
+        <argument
+            android:name="fitnessCard"
+            app:argType="com.fitterAPP.fitter.classes.FitnessCard" />
+        <argument
+            android:name="index"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_newExercieFormDialog_to_modifyCard"
+            app:destination="@id/modifyCard"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/modifyCard" />
+    </dialog>
+    <dialog
+        android:id="@+id/select_exercise_group"
+        android:name="com.fitterAPP.fitter.fragmentControllers.select_exercise_group"
+        android:label="select_exercise_group" >
+        <action
+            android:id="@+id/action_select_exercise_group_to_modifyCard"
+            app:destination="@id/modifyCard" />
+        <argument
+            android:name="fitnessCard"
+            app:argType="com.fitterAPP.fitter.classes.FitnessCard" />
+        <argument
+            android:name="index"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_select_exercise_group_to_selectExerciseList"
+            app:destination="@id/selectExerciseList" />
+        <action
+            android:id="@+id/action_select_exercise_group_to_findExercise"
+            app:destination="@id/findExercise" />
+    </dialog>
+    <dialog
+        android:id="@+id/selectExerciseList"
+        android:name="com.fitterAPP.fitter.fragmentControllers.SelectExerciseList"
+        android:label="fragment_select_exercise_list"
+        tools:layout="@layout/fragment_select_exercise_list" >
+        <argument
+            android:name="fitnessCard"
+            app:argType="com.fitterAPP.fitter.classes.FitnessCard" />
+        <argument
+            android:name="index"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_selectExerciseList_to_setWarmUpExercise"
+            app:destination="@id/setWarmUpExercise" />
+    </dialog>
+    <dialog
+        android:id="@+id/findExercise"
+        android:name="com.fitterAPP.fitter.fragmentControllers.FindExercise"
+        android:label="fragment_find_exercise"
+        tools:layout="@layout/fragment_find_exercise" >
+        <argument
+            android:name="fitnessCard"
+            app:argType="com.fitterAPP.fitter.classes.FitnessCard" />
+        <argument
+            android:name="index"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_findExercise_to_newExercieFormDialog"
+            app:destination="@id/newExercieFormDialog" />
+    </dialog>
+    <dialog
+        android:id="@+id/setWarmUpExercise"
+        android:name="com.fitterAPP.fitter.fragmentControllers.SetWarmUpExercise"
+        android:label="fragment_set_warm_up_exercise"
+        tools:layout="@layout/fragment_set_warm_up_exercise" >
+        <argument
+            android:name="fitnessCard"
+            app:argType="com.fitterAPP.fitter.classes.FitnessCard" />
+        <argument
+            android:name="index"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_setWarmUpExercise_to_modifyCard"
+            app:destination="@id/modifyCard"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/modifyCard" />
     </dialog>
     <dialog
         android:id="@+id/fragment_ViewOthersProfile"

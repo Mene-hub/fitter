@@ -2,15 +2,22 @@ package com.fitterAPP.fitter.fragmentControllers
 
 import com.fitterAPP.fitter.R
 import android.app.Dialog
+import android.graphics.Rect
+import android.os.Build
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.*
 import android.view.animation.Animation
+import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import com.fitterAPP.fitter.MainActivity
+import com.fitterAPP.fitter.classes.CardsCover
 import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.databinding.FragmentShowCardDialogBinding
 import com.fitterAPP.fitter.itemsAdapter.FitnessCardExercisesAdapter
@@ -28,6 +35,7 @@ class Fragment_showCardDialog() : DialogFragment() {
     /**
      * onCreate method which is used to set the dialog style. This mathod is paired with a WindowManager setting done in [onCreateView]
      * @author Daniel Satriano
+     * @author Menegotto Claudio
      * @since 25/05/2022
      */
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,26 +57,51 @@ class Fragment_showCardDialog() : DialogFragment() {
             findNavController().navigateUp()
         }
 
+        var screenHeight = 0
+
+        //getting the screen height in px
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            try {
+                val windowMetrics = activity?.windowManager?.currentWindowMetrics
+                val display: Rect = windowMetrics?.bounds!!
+                screenHeight = display.height()/3
+            } catch (e: NoSuchMethodError) {}
+
+        } else {
+            val metrics = DisplayMetrics()
+            activity?.windowManager?.defaultDisplay?.getMetrics(metrics)
+            screenHeight = metrics.heightPixels/3
+        }
+
+        //setting the height
+        val params = FrameLayout.LayoutParams( RelativeLayout.LayoutParams.MATCH_PARENT, screenHeight)
+
+        binding.Header.layoutParams = params
+
         val recycle : RecyclerView = binding.exercisesListRV
 
+        //adapter for the exercises
         if(newFitnessCard.exercises != null && newFitnessCard.exercises?.size!! > 0){
-
-            newFitnessCard.exercises?.addAll(newFitnessCard.exercises!!)
-            newFitnessCard.exercises?.addAll(newFitnessCard.exercises!!)
-            newFitnessCard.exercises?.addAll(newFitnessCard.exercises!!)
-
-            val adapter = context?.let {FitnessCardExercisesAdapter((activity as MainActivity),newFitnessCard,newFitnessCard.exercises!!,false)}!!
+            val adapter = FitnessCardExercisesAdapter((activity as MainActivity),newFitnessCard,newFitnessCard.exercises!!,false)
             recycle.adapter = adapter
         }
 
+        //binding the card properties
         val cardName : TextView = binding.CardNameTV
         val cardDuration : TextView = binding.TimeDurationTV
         val cardDescription: TextView = binding.DescriptionTV
 
+        //setting the card properties
         cardName.text = newFitnessCard.name
         cardDescription.text = newFitnessCard.description
         val text = newFitnessCard.timeDuration.toString() +" "+ getString(R.string.minutes)
         cardDuration.text = text
+        val bgimage : ImageView = binding.CardBgImageIV
+
+        //setting the image cover
+        val id: Int? = CardsCover.getResource(newFitnessCard.imageCover)
+
+        bgimage.setImageResource(id!!)
 
         // Inflate the layout for this fragment
         return binding.root
