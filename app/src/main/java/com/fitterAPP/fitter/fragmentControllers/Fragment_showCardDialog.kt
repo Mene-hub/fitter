@@ -13,6 +13,8 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
+import androidx.navigation.NavDirections
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
@@ -84,6 +86,12 @@ class Fragment_showCardDialog() : DialogFragment() {
         if(newFitnessCard.exercises != null && newFitnessCard.exercises?.size!! > 0){
             val adapter = FitnessCardExercisesAdapter((activity as MainActivity),newFitnessCard,newFitnessCard.exercises!!,false)
             recycle.adapter = adapter
+        }
+
+        //open edith view for card
+        binding.floatingActionButton.setOnClickListener {
+            val action : NavDirections = Fragment_showCardDialogDirections.actionFragmentShowCardDialogToModifyCard(newFitnessCard)
+            it.findNavController().navigate(action)
         }
 
         //binding the card properties

@@ -101,13 +101,13 @@ class ModifyCard() : DialogFragment() {
         val cardDescription: TextView = binding.DescriptionTV
 
         //edit image cover on click
-        val editCover : ImageView = binding.EditCoverIV
-        editCover.setOnClickListener {
+        val bgimage : ImageView = binding.CardBgImageIV
+        bgimage.setOnClickListener {
             val modalBottomSheet = ImageSelector("Card image cover", fitnessCard)
             modalBottomSheet.show(activity?.supportFragmentManager!!, profileMenu.TAG)
         }
 
-        val bgimage : ImageView = binding.CardBgImageIV
+
 
         //setting the card cover
         val id: Int? = context?.resources?.getIdentifier("com.fitterAPP.fitter:drawable/" + fitnessCard.imageCover.toString(), null, null )

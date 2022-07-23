@@ -70,14 +70,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            app:cardBackgroundColor="#95FFFFFF"
+            app:cardBackgroundColor="#95FF0000"
             app:cardCornerRadius="1dp">
 
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
-                app:srcCompat="@drawable/edit_24"
+                app:srcCompat="@drawable/delete_24"
                 app:tint="@color/darkgray" />
         </androidx.cardview.widget.CardView>
 
