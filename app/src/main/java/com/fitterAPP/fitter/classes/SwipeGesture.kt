@@ -21,7 +21,7 @@ abstract class SwipeGesture(context : Context) : ItemTouchHelper.SimpleCallback(
 
     val deleteColor = ContextCompat.getColor(context, R.color.red)
     val recapColor = ContextCompat.getColor(context, R.color.green)
-    val deleteIcon = android.R.drawable.ic_menu_delete
+    val deleteIcon = R.drawable.delete_24
     val recapIcon = R.drawable.ic_check
 
     val typeface = ResourcesCompat.getFont(context, R.font.roboto_regular)
