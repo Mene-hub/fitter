@@ -12,7 +12,6 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.facebook.*
-import com.facebook.appevents.AppEventsLogger
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.fitterAPP.fitter.classes.ApiKeyRetriever
@@ -25,9 +24,7 @@ import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import okhttp3.internal.cache.DiskLruCache
 import kotlin.random.Random
 
 /**

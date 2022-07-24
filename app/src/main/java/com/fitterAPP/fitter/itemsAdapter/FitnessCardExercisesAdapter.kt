@@ -48,7 +48,7 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
                 }
                 ExerciseType.piramid -> {
                     icon.setImageResource(R.drawable.pyramid_exercise_icon)
-                    var reps : String = ""
+                    var reps = ""
                     for (i in 0 until ex.piramidSeries?.size!!) {
                         reps += ex.piramidSeries?.get(i)!!.toString()
                         if(i < ex.piramidSeries?.lastIndex!!)
@@ -93,7 +93,6 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
         exerciseRecap.add(ExerciseRecap(0,2000))
 
         StaticRecapDatabase.setRecapItem(database, Athlete.UID, dayRecap)
-
 
     }
 
