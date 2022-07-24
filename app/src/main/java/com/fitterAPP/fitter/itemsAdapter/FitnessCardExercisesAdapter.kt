@@ -12,9 +12,11 @@ import androidx.core.view.isGone
 import androidx.recyclerview.widget.RecyclerView
 import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.classes.*
+import com.fitterAPP.fitter.databases.StaticFitnessCardDatabase
 import com.fitterAPP.fitter.databases.StaticRecapDatabase
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import kotlin.concurrent.thread
 
 class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: FitnessCard,  val exercises : MutableList<Exercise>, val isEditable : Boolean) : RecyclerView.Adapter<FitnessCardExercisesAdapter.Holder>() {
 
@@ -27,7 +29,6 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
         val ExName : TextView = itemView.findViewById(R.id.ExName_TV)
         val ExReps : TextView = itemView.findViewById(R.id.ExReps_TV)
         val icon : ImageView = itemView.findViewById(R.id.exercise_icon_IV)
-        val cardView : CardView = itemView.findViewById(R.id.checkedBackground)
 
         fun setCard(ex:Exercise, context: Context){
             ExName.text = ex.exerciseName
@@ -73,9 +74,15 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
      * @since 23/07/2022
      * @param index its the index of the item that needs to be removed
      */
-    fun deleteItem(index : Int){
+    //TODO("Fixare il fatto che non si cancellano tutti")
+    fun deleteItem(context: Context,index : Int){
         exercises.removeAt(index)
         notifyItemRemoved(index)
+
+        val databaseRef = StaticFitnessCardDatabase.database.getReference(context.getString(R.string.FitnessCardsReference))
+        thread(start = true) {
+            StaticFitnessCardDatabase.setFitnessCardItem(databaseRef, Athlete.UID, fitnessCard)
+        }
     }
 
     /**

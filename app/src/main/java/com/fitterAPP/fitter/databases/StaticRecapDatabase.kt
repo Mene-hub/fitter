@@ -29,6 +29,9 @@ class StaticRecapDatabase {
             databaseRef.child(userID).child(recap.cardKey).child(recap.key).setValue(recap)
         }
 
+
+
+
         /**
          * Using the recap ID, removes the given recap from the database
          * @author Daniel Satriano

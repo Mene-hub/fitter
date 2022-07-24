@@ -2,6 +2,7 @@ package com.fitterAPP.fitter.databases
 
 import com.fitterAPP.fitter.BuildConfig
 import com.fitterAPP.fitter.classes.ApiKeyRetriever
+import com.fitterAPP.fitter.classes.Exercise
 import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.interfaces.DatabaseFitnessCardsInterface
 import com.google.firebase.database.ChildEventListener
@@ -34,11 +35,5 @@ class StaticFitnessCardDatabase {
         override fun removeAllFitnessCard(databaseRef: DatabaseReference, userID: String){
             databaseRef.child(userID).removeValue()
         }
-
-        override fun setAthleteValueListener(databaseRef: DatabaseReference, userID: String, cardID: String, cardListener: ValueEventListener) {
-            databaseRef.child(userID).child(cardID).addValueEventListener(cardListener)
-        }
-
-
     }
 }

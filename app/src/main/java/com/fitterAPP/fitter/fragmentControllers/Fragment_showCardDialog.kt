@@ -18,17 +18,21 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.fitterAPP.fitter.MainActivity
+import com.fitterAPP.fitter.classes.Athlete
 import com.fitterAPP.fitter.classes.CardsCover
 import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.classes.SwipeGesture
+import com.fitterAPP.fitter.databases.StaticFitnessCardDatabase
 import com.fitterAPP.fitter.databinding.FragmentShowCardDialogBinding
 import com.fitterAPP.fitter.itemsAdapter.FitnessCardExercisesAdapter
+import kotlin.concurrent.thread
 
 
 class Fragment_showCardDialog() : DialogFragment() {
 
     /** The system calls this to get the DialogFragment's layout, regardless
     of whether it's being displayed as a dialog or an embedded fragment. */
+
 
     private lateinit var binding : FragmentShowCardDialogBinding
     private val args by navArgs<Fragment_showCardDialogArgs>()
@@ -51,6 +55,7 @@ class Fragment_showCardDialog() : DialogFragment() {
 
         //Set transparent status bar
         dialog?.window?.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+
 
         //Get FitnessCard by bundle passed via navigation controller in [FitnessCardAdapter.kt] (the bundle is also set in fragment_navigation.xml
         newFitnessCard = args.cardBundle
@@ -92,7 +97,8 @@ class Fragment_showCardDialog() : DialogFragment() {
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                     when(direction){
                         ItemTouchHelper.LEFT -> {
-                            adapter.deleteItem(viewHolder.absoluteAdapterPosition)
+                            adapter.deleteItem(requireContext(), viewHolder.absoluteAdapterPosition)
+
                         }
                         ItemTouchHelper.RIGHT -> {
                             adapter.addRecap(viewHolder.absoluteAdapterPosition)
