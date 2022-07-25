@@ -1,4 +1,4 @@
-package com.fitterAPP.fitter
+package com.fitterAPP.fitter.fragmentControllers
 
 import android.graphics.Rect
 import android.os.Build
@@ -15,13 +15,11 @@ import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.classes.Athlete
 import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.databases.StaticFitnessCardDatabase
 import com.fitterAPP.fitter.databinding.FragmentSetSeriesExerciseBinding
-import com.fitterAPP.fitter.fragmentControllers.newExercieFormDialogArgs
-import com.fitterAPP.fitter.fragmentControllers.newExercieFormDialogDirections
-
 
 /**
  * @author Menegotto Claudio
@@ -109,7 +107,9 @@ class SetSeriesExercise : DialogFragment() {
         //save card on db and close the fragment
         binding.AddSeriesExercise.setOnClickListener {
             //fitnessCard.exercises?.get(index)?.setAsSeries()
-            StaticFitnessCardDatabase.setFitnessCardItem(StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference)), Athlete.UID, fitnessCard)
+            StaticFitnessCardDatabase.setFitnessCardItem(StaticFitnessCardDatabase.database.getReference(getString(
+                R.string.FitnessCardsReference
+            )), Athlete.UID, fitnessCard)
             val action : NavDirections = newExercieFormDialogDirections.actionNewExercieFormDialogToModifyCard(fitnessCard)
             //findNavController().clearBackStack(0)
             findNavController().navigate(action)
