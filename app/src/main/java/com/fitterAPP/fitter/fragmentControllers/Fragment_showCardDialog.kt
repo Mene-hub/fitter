@@ -13,14 +13,23 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.fitterAPP.fitter.MainActivity
+import com.fitterAPP.fitter.classes.Athlete
 import com.fitterAPP.fitter.classes.CardsCover
 import com.fitterAPP.fitter.classes.FitnessCard
+import com.fitterAPP.fitter.classes.SwipeGesture
+import com.fitterAPP.fitter.databases.StaticFitnessCardDatabase
 import com.fitterAPP.fitter.databinding.FragmentShowCardDialogBinding
 import com.fitterAPP.fitter.itemsAdapter.FitnessCardExercisesAdapter
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 
 
 class Fragment_showCardDialog() : DialogFragment() {
@@ -31,8 +40,9 @@ class Fragment_showCardDialog() : DialogFragment() {
     private lateinit var binding : FragmentShowCardDialogBinding
     private val args by navArgs<Fragment_showCardDialogArgs>()
     private lateinit var newFitnessCard : FitnessCard
+    lateinit var adapter : FitnessCardExercisesAdapter
 
-    /**
+        /**
      * onCreate method which is used to set the dialog style. This mathod is paired with a WindowManager setting done in [onCreateView]
      * @author Daniel Satriano
      * @author Menegotto Claudio
@@ -82,7 +92,7 @@ class Fragment_showCardDialog() : DialogFragment() {
 
         //adapter for the exercises
         if(newFitnessCard.exercises != null && newFitnessCard.exercises?.size!! > 0){
-            val adapter = FitnessCardExercisesAdapter((activity as MainActivity),newFitnessCard,newFitnessCard.exercises!!,false)
+            adapter = FitnessCardExercisesAdapter((activity as MainActivity),newFitnessCard,false)
             recycle.adapter = adapter
 
             //Inserisco il gestore dello SWIPE della listview
@@ -154,6 +164,9 @@ class Fragment_showCardDialog() : DialogFragment() {
         return a
     }
 
+
+
+
     private fun cardChildEventListener(): ChildEventListener {
         return object : ChildEventListener {
             override fun onCancelled(p0: DatabaseError) {
@@ -172,9 +185,9 @@ class Fragment_showCardDialog() : DialogFragment() {
                 val cardDescription: TextView = binding.DescriptionTV
                 val bgimage : ImageView = binding.CardBgImageIV
 
-                val id: Int? = CardsCover.getResource(newFitnessCard.imageCover)
+                val id: Int = CardsCover.getResource(newFitnessCard.imageCover)
 
-                bgimage.setImageResource(id!!)
+                bgimage.setImageResource(id)
 
                 cardName.text = newFitnessCard.name
                 cardDescription.text = newFitnessCard.description
