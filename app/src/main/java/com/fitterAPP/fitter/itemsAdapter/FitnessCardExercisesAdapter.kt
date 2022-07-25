@@ -13,11 +13,13 @@ import com.fitterAPP.fitter.databases.StaticRecapDatabase
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: FitnessCard,  val exercises : MutableList<Exercise>, val isEditable : Boolean) : RecyclerView.Adapter<FitnessCardExercisesAdapter.Holder>() {
+class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: FitnessCard, val isEditable : Boolean) : RecyclerView.Adapter<FitnessCardExercisesAdapter.Holder>() {
 
     var exerciseRecap : MutableList<ExerciseRecap> = mutableListOf()
     val currentDateAndTime : String = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-M-yyyy hh:mm:ss"))
     val dayRecap = DayRecap(currentDateAndTime, fitnessCard.key, exerciseRecap)
+
+    private val databaseRef = StaticFitnessCardDatabase.database.getReference(context2.getString(R.string.FitnessCardsReference))
 
     class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -69,13 +71,10 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
      * @since 23/07/2022
      * @param index it's the index of the item that needs to be removed
      */
-    //TODO("Fixare il fatto che non si cancellano tutti")
-    fun deleteItem(context: Context,index : Int){
-        exercises.removeAt(index)
+    fun deleteItem(index : Int){
+        fitnessCard.exercises!!.removeAt(index)
         notifyItemRemoved(index)
-
-        val databaseRef = StaticFitnessCardDatabase.database.getReference(context.getString(R.string.FitnessCardsReference))
-        StaticFitnessCardDatabase.setFitnessCardItem(databaseRef, Athlete.UID, fitnessCard)
+        StaticFitnessCardDatabase.setFitnessCardItem(databaseRef,Athlete.UID,fitnessCard)
     }
 
     /**
@@ -107,12 +106,12 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        val card: Exercise = exercises[position]
+        val card: Exercise = fitnessCard.exercises!![position]
         holder.setCard(card, context2)
     }
 
     override fun getItemCount(): Int {
-        return exercises.size
+        return fitnessCard.exercises!!.size
     }
 
 }

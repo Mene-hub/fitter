@@ -35,5 +35,6 @@ class StaticFitnessCardDatabase {
         override fun removeAllFitnessCard(databaseRef: DatabaseReference, userID: String){
             databaseRef.child(userID).removeValue()
         }
+
     }
 }

@@ -91,7 +91,7 @@ class ModifyCard() : DialogFragment() {
             fitnessCard.exercises = ArrayList()
 
         if(fitnessCard.exercises != null){
-            adapter = FitnessCardExercisesAdapter((activity as MainActivity),fitnessCard, fitnessCard.exercises!!, true)
+            adapter = FitnessCardExercisesAdapter((activity as MainActivity),fitnessCard, true)
             recycle.adapter = adapter
         }
 
@@ -164,7 +164,7 @@ class ModifyCard() : DialogFragment() {
                 val cardDescription: TextView = binding.DescriptionTV
                 val bgimage : ImageView = binding.CardBgImageIV
 
-                val id: Int? = CardsCover.getResource(fitnessCard.imageCover)
+                val id: Int = CardsCover.getResource(fitnessCard.imageCover)
 
                 bgimage.setImageResource(id!!)
 
@@ -184,7 +184,7 @@ class ModifyCard() : DialogFragment() {
         }
     }
 
-    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
+    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation {
         val a: Animation = object : Animation() {}
         a.duration = 0
         return a

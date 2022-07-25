@@ -89,7 +89,7 @@ class Fragment_showCardDialog() : DialogFragment() {
 
         //adapter for the exercises
         if(newFitnessCard.exercises != null && newFitnessCard.exercises?.size!! > 0){
-            val adapter = FitnessCardExercisesAdapter((activity as MainActivity), newFitnessCard,  newFitnessCard.exercises!!,false)
+            val adapter = FitnessCardExercisesAdapter((activity as MainActivity), newFitnessCard,false)
             recycle.adapter = adapter
 
             //Inserisco il gestore dello SWIPE della listview
@@ -97,8 +97,7 @@ class Fragment_showCardDialog() : DialogFragment() {
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                     when(direction){
                         ItemTouchHelper.LEFT -> {
-                            adapter.deleteItem(requireContext(), viewHolder.absoluteAdapterPosition)
-
+                            adapter.deleteItem(viewHolder.absoluteAdapterPosition)
                         }
                         ItemTouchHelper.RIGHT -> {
                             adapter.addRecap(viewHolder.absoluteAdapterPosition)
@@ -143,8 +142,6 @@ class Fragment_showCardDialog() : DialogFragment() {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         return dialog
     }
-
-
 
     override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation {
         val a: Animation = object : Animation() {}
