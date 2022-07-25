@@ -4,7 +4,6 @@ import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,11 +18,14 @@ import androidx.navigation.fragment.navArgs
 import com.fitterAPP.fitter.classes.Athlete
 import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.databases.StaticFitnessCardDatabase
-import com.fitterAPP.fitter.databinding.FragmentNewExercieFormDialogBinding
 import com.fitterAPP.fitter.databinding.FragmentSetSeriesExerciseBinding
 import com.fitterAPP.fitter.fragmentControllers.newExercieFormDialogArgs
 import com.fitterAPP.fitter.fragmentControllers.newExercieFormDialogDirections
 
+
+/**
+ * @author Menegotto Claudio
+ */
 class SetSeriesExercise : DialogFragment() {
     private lateinit var binding : FragmentSetSeriesExerciseBinding
     private val args by navArgs<newExercieFormDialogArgs>()
@@ -33,7 +35,6 @@ class SetSeriesExercise : DialogFragment() {
     /**
      * onCreate method which is used to set the dialog style. This mathod is paired with a WindowManager setting done in [onCreateView]
      * @author Daniel Satriano
-     * @author Claudio MEnegotto
      * @since 1/06/2022
      */
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +45,7 @@ class SetSeriesExercise : DialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         //Set transparent status bar
         dialog?.window?.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
