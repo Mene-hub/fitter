@@ -1,14 +1,10 @@
 package com.fitterAPP.fitter.itemsAdapter
 
 import android.content.Context
-import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.cardview.widget.CardView
-import androidx.core.view.isGone
-
 import androidx.recyclerview.widget.RecyclerView
 import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.classes.*
@@ -16,7 +12,6 @@ import com.fitterAPP.fitter.databases.StaticFitnessCardDatabase
 import com.fitterAPP.fitter.databases.StaticRecapDatabase
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import kotlin.concurrent.thread
 
 class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: FitnessCard,  val exercises : MutableList<Exercise>, val isEditable : Boolean) : RecyclerView.Adapter<FitnessCardExercisesAdapter.Holder>() {
 
@@ -26,25 +21,25 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
 
     class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        val ExName : TextView = itemView.findViewById(R.id.ExName_TV)
-        val ExReps : TextView = itemView.findViewById(R.id.ExReps_TV)
+        val exName : TextView = itemView.findViewById(R.id.ExName_TV)
+        val exReps : TextView = itemView.findViewById(R.id.ExReps_TV)
         val icon : ImageView = itemView.findViewById(R.id.exercise_icon_IV)
 
         fun setCard(ex:Exercise, context: Context){
-            ExName.text = ex.exerciseName
+            exName.text = ex.exerciseName
 
             when (ex.type){
                 ExerciseType.warmup -> {
-                    ExReps.text = ex.exerciseDuration.toString() + " min"
+                    exReps.text = ex.exerciseDuration.toString() + " min"
                     icon.setImageResource(R.drawable.warmup_exercise_icon)
                 }
 
                 ExerciseType.normal -> {
-                    ExReps.text = ex.exerciseSer.toString() + " x " + ex.exerciseRep.toString() + " - " + ex.exerciseRest + " s"
+                    exReps.text = ex.exerciseSer.toString() + " x " + ex.exerciseRep.toString() + " - " + ex.exerciseRest + " s"
                     icon.setImageResource(R.drawable.normal_exercise_icon)
                 }
                 ExerciseType.series -> {
-                    ExReps.text = ex.exerciseSeries?.size.toString() + " - " + ex.exerciseRest + " s"
+                    exReps.text = ex.exerciseSeries?.size.toString() + " - " + ex.exerciseRest + " s"
                     icon.setImageResource(R.drawable.series_exercise_icon)
                 }
                 ExerciseType.piramid -> {
@@ -56,11 +51,11 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
                             reps += " x "
                     }
 
-                    ExReps.text = reps + " - " + ex.exerciseRest + " s"
+                    exReps.text = reps + " - " + ex.exerciseRest + " s"
                 }
 
                 else ->{
-                    ExReps.text = ex.exerciseSer.toString() + " x " + ex.exerciseRep.toString() + " - " + ex.exerciseRest + " s"
+                    exReps.text = ex.exerciseSer.toString() + " x " + ex.exerciseRep.toString() + " - " + ex.exerciseRest + " s"
                     icon.setImageResource(R.drawable.normal_exercise_icon)
                 }
             }
@@ -72,7 +67,7 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
      * Used to delete an exercise
      * @author Daniel Satriano
      * @since 23/07/2022
-     * @param index its the index of the item that needs to be removed
+     * @param index it's the index of the item that needs to be removed
      */
     //TODO("Fixare il fatto che non si cancellano tutti")
     fun deleteItem(context: Context,index : Int){
@@ -87,7 +82,7 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
      * Used to set a new recap
      * @author Daniel Satriano
      * @since 23/07/2022
-     * @param index its the index of the item that needs to be removed
+     * @param index it's the index of the item that needs to be removed
      */
     //TODO("Apertura form per il recap e cambio color")
     fun addRecap(index : Int){
@@ -102,23 +97,18 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
     }
 
 
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        if(!isEditable) {
-            val view: View =
+        val view: View = if(!isEditable) {
                 LayoutInflater.from(context2).inflate(R.layout.item_exercise, parent, false)
-            return Holder(view)
         }else{
-            val view: View =
                 LayoutInflater.from(context2).inflate(R.layout.item_edit_exercise, parent, false)
-            return Holder(view)
         }
+        return Holder(view)
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        val Card: Exercise = exercises[position]
-        holder.setCard(Card, context2)
+        val card: Exercise = exercises[position]
+        holder.setCard(card, context2)
     }
 
     override fun getItemCount(): Int {
