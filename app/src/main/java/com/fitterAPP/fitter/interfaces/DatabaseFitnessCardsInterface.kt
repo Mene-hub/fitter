@@ -50,4 +50,12 @@ interface DatabaseFitnessCardsInterface {
     fun removeAllFitnessCard(databaseRef: DatabaseReference, userID: String)
 
 
+    /**
+     * Method that will create a value listener for a specific card
+     * @author Daniel Satriano
+     * @since 25/07/2022
+     */
+    fun setFitnessCardValueListener(databaseRef: DatabaseReference, userID: String, fitnessCard: FitnessCard, fitnessCardListener: ValueEventListener)
+
+
 }

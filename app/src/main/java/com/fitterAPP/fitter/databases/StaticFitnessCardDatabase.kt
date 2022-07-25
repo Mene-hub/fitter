@@ -23,6 +23,10 @@ class StaticFitnessCardDatabase {
             databaseRef.child(userID).addChildEventListener(fitnessCardListener)
         }
 
+        override fun setFitnessCardValueListener(databaseRef: DatabaseReference, userID: String, fitnessCard: FitnessCard, fitnessCardListener: ValueEventListener){
+            databaseRef.child(userID).child(fitnessCard.key).addValueEventListener(fitnessCardListener)
+        }
+
         override fun setFitnessCardItem(databaseRef : DatabaseReference, userID : String, card : FitnessCard){
             val currentDate = card.key
             databaseRef.child(userID).child(currentDate).setValue(card)

@@ -1,6 +1,5 @@
 package com.fitterAPP.fitter.fragmentControllers
 
-import android.graphics.Point
 import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
@@ -13,11 +12,9 @@ import android.view.animation.Animation
 import android.widget.*
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.NavDirections
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
-import com.fitterAPP.fitter.classes.Exercise
 import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.itemsAdapter.FitnessCardExercisesAdapter
 import com.fitterAPP.fitter.MainActivity
@@ -28,11 +25,9 @@ import com.fitterAPP.fitter.databases.StaticFitnessCardDatabase
 import com.fitterAPP.fitter.databinding.FragmentModifyCardBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import com.google.firebase.database.ValueEventListener
 
 class ModifyCard() : DialogFragment() {
     private lateinit var fitnessCard: FitnessCard
@@ -64,6 +59,7 @@ class ModifyCard() : DialogFragment() {
         binding.backBt.setOnClickListener {
             activity?.onBackPressed()
         }
+
 
         var screenHeight = 0
 
@@ -152,22 +148,18 @@ class ModifyCard() : DialogFragment() {
             showAlertDialogFitnessCard()
         }
 
-        //get database update
-        StaticFitnessCardDatabase.setFitnessCardChildListener(StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference)), Athlete.UID, cardChildEventListener())
+        //gat database update
+        val databaseRef = StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference))
+        StaticFitnessCardDatabase.setFitnessCardValueListener(databaseRef,Athlete.UID,fitnessCard,cardValueEventListener())
+
 
         return binding.root
     }
 
-    private fun cardChildEventListener(): ChildEventListener {
-        return object : ChildEventListener {
-            override fun onCancelled(p0: DatabaseError) {
-            }
+    private fun cardValueEventListener(): ValueEventListener {
+        return object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
 
-            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
-            }
-
-            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-                //settings new properties from the database
                 val cardName : TextView = binding.CardNameTV
                 val cardDuration : TextView = binding.TimeDurationTV
                 val cardDescription: TextView = binding.DescriptionTV
@@ -175,7 +167,7 @@ class ModifyCard() : DialogFragment() {
 
                 val id: Int = CardsCover.getResource(fitnessCard.imageCover)
 
-                bgimage.setImageResource(id!!)
+                bgimage.setImageResource(id)
 
                 cardName.text = fitnessCard.name
                 cardDescription.text = fitnessCard.description
@@ -187,16 +179,15 @@ class ModifyCard() : DialogFragment() {
 
 
                 adapter?.notifyDataSetChanged()
-
             }
 
-            override fun onChildRemoved(snapshot: DataSnapshot) {
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
             }
 
-            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-            }
         }
     }
+
 
     override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation {
         val a: Animation = object : Animation() {}
@@ -204,7 +195,7 @@ class ModifyCard() : DialogFragment() {
         return a
     }
 
-    fun showAlertDialogFitnessCard(){
+    private fun showAlertDialogFitnessCard(){
 
         // Create an alert builder
         val builder = MaterialAlertDialogBuilder(requireContext(),  R.style.ThemeOverlay_App_MaterialAlertDialog)
@@ -219,7 +210,6 @@ class ModifyCard() : DialogFragment() {
         customLayout.findViewById<EditText>(R.id.et_description).setText(fitnessCard.description)
 
         customLayout.findViewById<EditText>(R.id.et_duration).setText(fitnessCard.timeDuration.toString())
-
 
         // add a button
         builder

@@ -27,9 +27,9 @@ import com.fitterAPP.fitter.databases.StaticFitnessCardDatabase
 import com.fitterAPP.fitter.databinding.FragmentShowCardDialogBinding
 import com.fitterAPP.fitter.itemsAdapter.FitnessCardExercisesAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 
 
 class Fragment_showCardDialog() : DialogFragment() {
@@ -40,7 +40,7 @@ class Fragment_showCardDialog() : DialogFragment() {
     private lateinit var binding : FragmentShowCardDialogBinding
     private val args by navArgs<Fragment_showCardDialogArgs>()
     private lateinit var newFitnessCard : FitnessCard
-    lateinit var adapter : FitnessCardExercisesAdapter
+    private lateinit var adapter : FitnessCardExercisesAdapter
 
         /**
      * onCreate method which is used to set the dialog style. This mathod is paired with a WindowManager setting done in [onCreateView]
@@ -90,28 +90,30 @@ class Fragment_showCardDialog() : DialogFragment() {
 
         val recycle : RecyclerView = binding.exercisesListRV
 
-        //adapter for the exercises
-        if(newFitnessCard.exercises != null && newFitnessCard.exercises?.size!! > 0){
-            adapter = FitnessCardExercisesAdapter((activity as MainActivity),newFitnessCard,false)
-            recycle.adapter = adapter
+        if(newFitnessCard.exercises == null){
+            newFitnessCard.exercises = ArrayList()
+        }
 
-            //Inserisco il gestore dello SWIPE della listview
-            val swipeGesture = object : SwipeGesture(requireContext()){
-                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                    when(direction){
-                        ItemTouchHelper.LEFT -> {
-                            adapter.deleteItem(viewHolder.absoluteAdapterPosition)
-                        }
-                        ItemTouchHelper.RIGHT -> {
-                            adapter.addRecap(viewHolder.absoluteAdapterPosition)
-                        }
+        //adapter for the exercises
+        adapter = FitnessCardExercisesAdapter((activity as MainActivity),newFitnessCard,false)
+        recycle.adapter = adapter
+
+        //Inserisco il gestore dello SWIPE della listview
+        val swipeGesture = object : SwipeGesture(requireContext()){
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                when(direction){
+                    ItemTouchHelper.LEFT -> {
+                        adapter.deleteItem(viewHolder.absoluteAdapterPosition)
+                    }
+                    ItemTouchHelper.RIGHT -> {
+                        adapter.addRecap(viewHolder.absoluteAdapterPosition)
                     }
                 }
             }
-            val itemTouchHelper = ItemTouchHelper(swipeGesture)
-            itemTouchHelper.attachToRecyclerView(recycle)
-
         }
+        val itemTouchHelper = ItemTouchHelper(swipeGesture)
+        itemTouchHelper.attachToRecyclerView(recycle)
+
 
         //binding the card properties
         val cardName : TextView = binding.CardNameTV
@@ -131,7 +133,7 @@ class Fragment_showCardDialog() : DialogFragment() {
         bgimage.setImageResource(id)
 
         //open edith view for card
-        var edithBtn : FloatingActionButton = binding.edithCardView
+        val edithBtn : FloatingActionButton = binding.edithCardView
 
         edithBtn.setOnClickListener {
             val action : NavDirections = Fragment_showCardDialogDirections.actionFragmentShowCardDialogToModifyCard(newFitnessCard)
@@ -139,11 +141,38 @@ class Fragment_showCardDialog() : DialogFragment() {
         }
 
         //gat database update
-        StaticFitnessCardDatabase.setFitnessCardChildListener(StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference)), Athlete.UID, cardChildEventListener())
+        val databaseRef = StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference))
+        StaticFitnessCardDatabase.setFitnessCardValueListener(databaseRef,Athlete.UID,newFitnessCard,cardValueEventListener())
 
 
         // Inflate the layout for this fragment
         return binding.root
+    }
+
+    private fun cardValueEventListener(): ValueEventListener {
+        return object :  ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                newFitnessCard = snapshot.getValue(FitnessCard::class.java)!!
+
+                val id: Int = CardsCover.getResource(newFitnessCard.imageCover)
+
+                binding.CardBgImageIV.setImageResource(id)
+
+                binding.CardNameTV.text = newFitnessCard.name
+                binding.DescriptionTV.text = newFitnessCard.description
+                try {
+                    binding.TimeDurationTV.text = newFitnessCard.timeDuration.toString() + " " + getString(R.string.minutes)
+                }catch(e:Exception){e.printStackTrace()}
+
+                adapter?.notifyDataSetChanged()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        }
     }
 
     /** The system calls this only when creating the layout in a dialog. */
@@ -167,45 +196,5 @@ class Fragment_showCardDialog() : DialogFragment() {
 
 
 
-    private fun cardChildEventListener(): ChildEventListener {
-        return object : ChildEventListener {
-            override fun onCancelled(p0: DatabaseError) {
-            }
-
-            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
-            }
-
-            override fun onChildChanged(dataSnapshot: DataSnapshot, p1: String?) {
-
-                newFitnessCard = dataSnapshot.getValue(FitnessCard::class.java)!!
-
-                //settings new properties from the database
-                val cardName : TextView = binding.CardNameTV
-                val cardDuration : TextView = binding.TimeDurationTV
-                val cardDescription: TextView = binding.DescriptionTV
-                val bgimage : ImageView = binding.CardBgImageIV
-
-                val id: Int = CardsCover.getResource(newFitnessCard.imageCover)
-
-                bgimage.setImageResource(id)
-
-                cardName.text = newFitnessCard.name
-                cardDescription.text = newFitnessCard.description
-                try {
-                    cardDuration.text =
-                        newFitnessCard.timeDuration.toString() + " " + getString(R.string.minutes)
-                }catch(e:Exception){e.printStackTrace()}
-
-                adapter?.notifyDataSetChanged()
-
-            }
-
-            override fun onChildRemoved(snapshot: DataSnapshot) {
-            }
-
-            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-            }
-        }
-    }
 
 }
