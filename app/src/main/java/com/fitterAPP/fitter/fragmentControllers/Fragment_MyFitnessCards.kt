@@ -81,8 +81,8 @@ class MyFitnessCards : Fragment() {
         val newFitnessCard = FitnessCard()
 
         // Create an alert builder
-        val builder = MaterialAlertDialogBuilder(requireContext())
-        builder.setTitle("Create new fitness card")
+        val builder = MaterialAlertDialogBuilder(requireContext(),  R.style.ThemeOverlay_App_MaterialAlertDialog)
+
 
         // set the custom layout
         val customLayout: View = layoutInflater.inflate(R.layout.dialog_input_text, null)
@@ -119,7 +119,7 @@ class MyFitnessCards : Fragment() {
                     activity?.onBackPressed()
                 }
             }
-            .setIcon(AppCompatResources.getDrawable(requireContext(),R.drawable.fitness_24)).show()
+            .show()
     }
 
 

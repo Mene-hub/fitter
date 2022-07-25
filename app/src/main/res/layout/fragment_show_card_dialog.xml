@@ -26,6 +26,17 @@
             android:isScrollContainer="true"
             app:layout_scrollFlags="scroll">
 
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/edithCardView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:clickable="true"
+                android:src="@drawable/edit_24"
+                app:layout_constraintBottom_toBottomOf="@+id/Header"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Header" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/Header"
                 android:layout_width="match_parent"
@@ -40,7 +51,7 @@
                     android:id="@+id/CardBgImage_IV"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:contentDescription="@string/background_image"
+                    android:contentDescription="Background image"
                     android:scaleType="centerCrop"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -64,7 +75,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
-                        android:contentDescription="@string/backArrow"
+                        android:contentDescription="Back arrow"
                         app:srcCompat="@drawable/arrow_back"
                         app:tint="@color/darkgray" />
                 </androidx.cardview.widget.CardView>
@@ -87,57 +98,52 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginEnd="56dp"
                     android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
-                        android:id="@+id/CardName_TV"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_bold"
-                        android:text="Card name"
-                        android:textColor="@color/black"
-                        android:textSize="20sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:ignore="HardcodedText" />
-
-                    <TextView
-                        android:id="@+id/textView7"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_medium"
-                        android:text="@string/restore_time"
-                        android:textColor="@color/black"
-                        android:textSize="20sp" />
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/TimeDurationTV"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_weight="1"
-                        android:text=""
-                        android:textColor="@color/darkgray" />
+                        <TextView
+                            android:id="@+id/CardName_TV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_bold"
+                            android:text="Card name"
+                            android:textColor="@color/black"
+                            android:textSize="20sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/textView10"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_medium"
-                        android:text="@string/description"
-                        android:textColor="@color/black"
-                        android:textSize="20sp" />
+                        <TextView
+                            android:id="@+id/textView9"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginHorizontal="8dp"
+                            android:gravity="center_vertical"
+                            android:text="-" />
+
+                        <TextView
+                            android:id="@+id/TimeDurationTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/roboto_regular"
+                            android:gravity="center_vertical"
+                            android:text="60 min"
+                            android:textColor="@color/darkgray" />
+
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/Description_TV"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
                         android:text="@string/description" />
                 </LinearLayout>
 
@@ -162,7 +168,9 @@
                 android:id="@+id/exercisesList_RV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
                 android:animateLayoutChanges="false"
                 android:nestedScrollingEnabled="false"
                 android:scrollbars="none"
@@ -170,17 +178,20 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginBottom="?attr/actionBarSize"
                 app:layout_constraintTop_toBottomOf="@+id/Body">
 
             </androidx.recyclerview.widget.RecyclerView>
 
             <Space
                 android:layout_width="wrap_content"
-                android:layout_height="80dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/exercisesList_RV" />
+                app:layout_constraintTop_toBottomOf="@+id/exercisesList_RV"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="?attr/actionBarSize"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

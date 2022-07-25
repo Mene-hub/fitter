@@ -34,4 +34,5 @@
     <string name="piramidal" >Esercizio Piramidale</string>
     <string name="select" >Seleziona</string>
     <string name="restore_time">Recupero</string>
+    <string name="card_info">Informazioni Scheda</string>
 </resources>

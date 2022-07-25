@@ -26,10 +26,13 @@ import com.fitterAPP.fitter.classes.Athlete
 import com.fitterAPP.fitter.classes.CardsCover
 import com.fitterAPP.fitter.databases.StaticFitnessCardDatabase
 import com.fitterAPP.fitter.databinding.FragmentModifyCardBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class ModifyCard() : DialogFragment() {
     private lateinit var fitnessCard: FitnessCard
@@ -101,13 +104,13 @@ class ModifyCard() : DialogFragment() {
         val cardDescription: TextView = binding.DescriptionTV
 
         //edit image cover on click
-        val editCover : ImageView = binding.EditCoverIV
-        editCover.setOnClickListener {
+        val bgimage : ImageView = binding.CardBgImageIV
+        bgimage.setOnClickListener {
             val modalBottomSheet = ImageSelector("Card image cover", fitnessCard)
             modalBottomSheet.show(activity?.supportFragmentManager!!, profileMenu.TAG)
         }
 
-        val bgimage : ImageView = binding.CardBgImageIV
+
 
         //setting the card cover
         val id: Int? = context?.resources?.getIdentifier("com.fitterAPP.fitter:drawable/" + fitnessCard.imageCover.toString(), null, null )
@@ -117,9 +120,9 @@ class ModifyCard() : DialogFragment() {
         //setting the card properties
         cardName.text = fitnessCard.name
         cardDescription.text = fitnessCard.description
-        cardDuration.text = fitnessCard.timeDuration.toString() + " minutes"
+        cardDuration.text = fitnessCard.timeDuration.toString() + " " + getString(R.string.minutes)
 
-        //nre Exercise button clicked
+        //new Exercise button clicked
         val newExerciseBT : ExtendedFloatingActionButton = binding.newExerciseBT
         newExerciseBT.setOnClickListener {
 
@@ -132,6 +135,7 @@ class ModifyCard() : DialogFragment() {
         }
 
         //edit card name
+        /*
         binding.editCardName.setOnClickListener {
             val modalBottomSheet = StringEditMenu("Card name", fitnessCard.name!!, fitnessCard)
             modalBottomSheet.show(activity?.supportFragmentManager!!, profileMenu.TAG)
@@ -141,6 +145,11 @@ class ModifyCard() : DialogFragment() {
         binding.editCardDescription.setOnClickListener {
             val modalBottomSheet = StringEditMenu("Card description", fitnessCard.description!!, fitnessCard)
             modalBottomSheet.show(activity?.supportFragmentManager!!, profileMenu.TAG)
+        }
+         */
+
+        binding.ModifyCardInformations.setOnClickListener {
+            showAlertDialogFitnessCard()
         }
 
         //get database update
@@ -170,7 +179,12 @@ class ModifyCard() : DialogFragment() {
 
                 cardName.text = fitnessCard.name
                 cardDescription.text = fitnessCard.description
-                cardDuration.text = fitnessCard.timeDuration.toString() + " min"
+
+                try {
+                    cardDuration.text = fitnessCard.timeDuration.toString() + " " + getString(R.string.minutes)
+                }catch(e:Exception){e.printStackTrace()}
+
+
 
                 adapter?.notifyDataSetChanged()
 
@@ -188,6 +202,48 @@ class ModifyCard() : DialogFragment() {
         val a: Animation = object : Animation() {}
         a.duration = 0
         return a
+    }
+
+    fun showAlertDialogFitnessCard(){
+
+        // Create an alert builder
+        val builder = MaterialAlertDialogBuilder(requireContext(),  R.style.ThemeOverlay_App_MaterialAlertDialog)
+
+
+        // set the custom layout
+        val customLayout: View = layoutInflater.inflate(R.layout.dialog_input_text, null)
+        builder.setView(customLayout)
+
+        customLayout.findViewById<EditText>(R.id.et_cardName).setText(fitnessCard.name)
+
+        customLayout.findViewById<EditText>(R.id.et_description).setText(fitnessCard.description)
+
+        customLayout.findViewById<EditText>(R.id.et_duration).setText(fitnessCard.timeDuration.toString())
+
+
+        // add a button
+        builder
+            .setPositiveButton("OK") { _, _ -> // send data from the
+                // AlertDialog to the Activity
+                val name = customLayout.findViewById<EditText>(R.id.et_cardName).text.toString()
+                val description = customLayout.findViewById<EditText>(R.id.et_description).text.toString()
+                val duration = customLayout.findViewById<EditText>(R.id.et_duration).text.toString()
+
+                if((name.isNotBlank() && name != "") && (duration.isNotBlank() && duration != "") && (name.replace(" ","")?.length!! > 0)){
+
+                    fitnessCard.name = customLayout.findViewById<EditText>(R.id.et_cardName).text.toString()
+                    fitnessCard.description = customLayout.findViewById<EditText>(R.id.et_description).text.toString()
+                    fitnessCard.timeDuration = customLayout.findViewById<EditText>(R.id.et_duration).text.toString().toInt()
+                    StaticFitnessCardDatabase.setFitnessCardItem(StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference)), Athlete.UID, fitnessCard)
+
+                }else{
+                    Toast.makeText(activity, "insert valid informations", Toast.LENGTH_SHORT).show()
+                }
+            }.setNegativeButton("BACK") { _, _ ->
+
+            }.setOnDismissListener {
+            }
+            .show()
     }
 
 }

@@ -15,24 +15,18 @@ import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.fitterAPP.fitter.MainActivity
-import com.fitterAPP.fitter.classes.Athlete
 import com.fitterAPP.fitter.classes.CardsCover
 import com.fitterAPP.fitter.classes.FitnessCard
-import com.fitterAPP.fitter.classes.SwipeGesture
-import com.fitterAPP.fitter.databases.StaticFitnessCardDatabase
 import com.fitterAPP.fitter.databinding.FragmentShowCardDialogBinding
 import com.fitterAPP.fitter.itemsAdapter.FitnessCardExercisesAdapter
-import kotlin.concurrent.thread
 
 
 class Fragment_showCardDialog() : DialogFragment() {
 
     /** The system calls this to get the DialogFragment's layout, regardless
     of whether it's being displayed as a dialog or an embedded fragment. */
-
 
     private lateinit var binding : FragmentShowCardDialogBinding
     private val args by navArgs<Fragment_showCardDialogArgs>()
@@ -55,7 +49,6 @@ class Fragment_showCardDialog() : DialogFragment() {
 
         //Set transparent status bar
         dialog?.window?.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
-
 
         //Get FitnessCard by bundle passed via navigation controller in [FitnessCardAdapter.kt] (the bundle is also set in fragment_navigation.xml
         newFitnessCard = args.cardBundle
@@ -89,7 +82,7 @@ class Fragment_showCardDialog() : DialogFragment() {
 
         //adapter for the exercises
         if(newFitnessCard.exercises != null && newFitnessCard.exercises?.size!! > 0){
-            val adapter = FitnessCardExercisesAdapter((activity as MainActivity), newFitnessCard,false)
+            val adapter = FitnessCardExercisesAdapter((activity as MainActivity),newFitnessCard,newFitnessCard.exercises!!,false)
             recycle.adapter = adapter
 
             //Inserisco il gestore dello SWIPE della listview
@@ -127,6 +120,18 @@ class Fragment_showCardDialog() : DialogFragment() {
 
         bgimage.setImageResource(id)
 
+        //open edith view for card
+        var edithBtn : FloatingActionButton = binding.edithCardView
+
+        edithBtn.setOnClickListener {
+            val action : NavDirections = Fragment_showCardDialogDirections.actionFragmentShowCardDialogToModifyCard(newFitnessCard)
+            findNavController().navigate(action)
+        }
+
+        //gat database update
+        StaticFitnessCardDatabase.setFitnessCardChildListener(StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference)), Athlete.UID, cardChildEventListener())
+
+
         // Inflate the layout for this fragment
         return binding.root
     }
@@ -147,6 +152,47 @@ class Fragment_showCardDialog() : DialogFragment() {
         val a: Animation = object : Animation() {}
         a.duration = 0
         return a
+    }
+
+    private fun cardChildEventListener(): ChildEventListener {
+        return object : ChildEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+            }
+
+            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+            }
+
+            override fun onChildChanged(dataSnapshot: DataSnapshot, p1: String?) {
+
+                newFitnessCard = dataSnapshot.getValue(FitnessCard::class.java)!!
+
+                //settings new properties from the database
+                val cardName : TextView = binding.CardNameTV
+                val cardDuration : TextView = binding.TimeDurationTV
+                val cardDescription: TextView = binding.DescriptionTV
+                val bgimage : ImageView = binding.CardBgImageIV
+
+                val id: Int? = CardsCover.getResource(newFitnessCard.imageCover)
+
+                bgimage.setImageResource(id!!)
+
+                cardName.text = newFitnessCard.name
+                cardDescription.text = newFitnessCard.description
+                try {
+                    cardDuration.text =
+                        newFitnessCard.timeDuration.toString() + " " + getString(R.string.minutes)
+                }catch(e:Exception){e.printStackTrace()}
+
+                adapter?.notifyDataSetChanged()
+
+            }
+
+            override fun onChildRemoved(snapshot: DataSnapshot) {
+            }
+
+            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+            }
+        }
     }
 
 }

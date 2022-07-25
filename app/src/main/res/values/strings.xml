@@ -45,5 +45,6 @@
     <string name="select">Select</string>
     <string name="restore_time">Restore Time</string>
     <string name="RecapReference" translatable="false">RECAP_SCHEDA</string>
+    <string name="card_info">Card Informations</string>
 
 </resources>
