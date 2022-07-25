@@ -80,9 +80,7 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
         notifyItemRemoved(index)
 
         val databaseRef = StaticFitnessCardDatabase.database.getReference(context.getString(R.string.FitnessCardsReference))
-        thread(start = true) {
-            StaticFitnessCardDatabase.setFitnessCardItem(databaseRef, Athlete.UID, fitnessCard)
-        }
+        StaticFitnessCardDatabase.setFitnessCardItem(databaseRef, Athlete.UID, fitnessCard)
     }
 
     /**
