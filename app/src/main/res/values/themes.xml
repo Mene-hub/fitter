@@ -52,4 +52,18 @@
     </style>
     <!-- [END OF] MATERIAL DESIGN THEME FOR BOTTOM SHEET DIALOG -->
 
+    <!-- [START OF] MATERIAL DESIGN THEME FOR ALERT DIALOG -->
+    <style name="Theme.App" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+        ...
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
+    </style>
+
+    <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="alertDialogStyle">@style/MaterialAlertDialog.App</item>
+        <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.App.Title.Text</item>
+    </style>
+    <!-- [END OF] MATERIAL DESIGN THEME FOR ALERT DIALOG -->
+
 </resources>

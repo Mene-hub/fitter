@@ -69,15 +69,6 @@ class FitnessCardAdapter (val context2: Context, private val Cards:MutableList<F
                 }
             }
 
-
-
-
-            itemView.findViewById<CardView>(R.id.EditCardButton_CV).setOnClickListener {
-                val action : NavDirections = MyFitnessCardsDirections.actionMyFitnessCardsToModifyCard(Card)
-                it.findNavController().navigate(action)
-                showControl(itemView, true)
-            }
-
             val id: Int = context.resources.getIdentifier(
                 "com.fitterAPP.fitter:drawable/" + Card.imageCover.toString(),
                 null,

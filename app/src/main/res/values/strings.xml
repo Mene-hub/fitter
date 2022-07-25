@@ -43,5 +43,6 @@
     <string name="series">Series</string>
     <string name="piramidal">Piramidal Exercise</string>
     <string name="select">Select</string>
+    <string name="card_info">Card Informations</string>
 
 </resources>
