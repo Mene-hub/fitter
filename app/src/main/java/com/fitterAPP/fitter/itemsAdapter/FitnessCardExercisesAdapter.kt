@@ -4,7 +4,9 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.classes.*
@@ -13,6 +15,7 @@ import com.fitterAPP.fitter.databases.StaticRecapDatabase
 import com.google.android.material.snackbar.Snackbar
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+
 
 class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: FitnessCard, val isEditable : Boolean) : RecyclerView.Adapter<FitnessCardExercisesAdapter.Holder>() {
 
@@ -79,8 +82,9 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
         Snackbar.make(recyclerView,deletedItem.exerciseName,Snackbar.LENGTH_LONG).setAction("Undo") {
             fitnessCard.exercises!!.add(index, deletedItem)
             notifyItemInserted(index)
+            StaticFitnessCardDatabase.setFitnessCardItem(databaseRef,Athlete.UID,fitnessCard)
         }.show()
-        //StaticFitnessCardDatabase.setFitnessCardItem(databaseRef,Athlete.UID,fitnessCard)
+        StaticFitnessCardDatabase.setFitnessCardItem(databaseRef,Athlete.UID,fitnessCard)
     }
 
     /**
@@ -100,7 +104,6 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
         StaticRecapDatabase.setRecapItem(database, Athlete.UID, dayRecap)
 
     }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val view: View = if(!isEditable) {
