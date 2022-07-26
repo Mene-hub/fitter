@@ -10,6 +10,7 @@ import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.classes.*
 import com.fitterAPP.fitter.databases.StaticFitnessCardDatabase
 import com.fitterAPP.fitter.databases.StaticRecapDatabase
+import com.google.android.material.snackbar.Snackbar
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -71,10 +72,15 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
      * @since 23/07/2022
      * @param index it's the index of the item that needs to be removed
      */
-    fun deleteItem(index : Int){
+    fun deleteItem(index : Int, recyclerView : RecyclerView){
+        val deletedItem = fitnessCard.exercises!!.get(index)
         fitnessCard.exercises!!.removeAt(index)
         notifyItemRemoved(index)
-        StaticFitnessCardDatabase.setFitnessCardItem(databaseRef,Athlete.UID,fitnessCard)
+        Snackbar.make(recyclerView,deletedItem.exerciseName,Snackbar.LENGTH_LONG).setAction("Undo") {
+            fitnessCard.exercises!!.add(index, deletedItem)
+            notifyItemInserted(index)
+        }.show()
+        //StaticFitnessCardDatabase.setFitnessCardItem(databaseRef,Athlete.UID,fitnessCard)
     }
 
     /**
