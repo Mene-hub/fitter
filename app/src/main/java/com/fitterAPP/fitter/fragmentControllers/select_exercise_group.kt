@@ -52,6 +52,9 @@ class select_exercise_group : DialogFragment() {
             else
                 fitnessCard.exercises?.set(index, Exercise(fitnessCard.exercises?.get(index)?.exerciseName!!, ExerciseType.warmup))
 
+            if(fitnessCard.exercises?.get(index)?.exerciseId == null)
+                fitnessCard.exercises?.get(index)?.exerciseId = index
+
             val action : NavDirections = select_exercise_groupDirections.actionSelectExerciseGroupToSelectExerciseList(fitnessCard, index)
             findNavController().navigate(action)
         }
@@ -62,6 +65,9 @@ class select_exercise_group : DialogFragment() {
                 fitnessCard.exercises?.add(Exercise("Place Holder", ExerciseType.normal))
             else
                 fitnessCard.exercises?.set(index, Exercise(fitnessCard.exercises?.get(index)?.exerciseName!!, ExerciseType.normal))
+
+            if(fitnessCard.exercises?.get(index)?.exerciseId == null)
+                fitnessCard.exercises?.get(index)?.exerciseId = index
 
             val action : NavDirections = select_exercise_groupDirections.actionSelectExerciseGroupToFindExercise(fitnessCard, index)
             findNavController().navigate(action)
