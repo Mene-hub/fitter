@@ -14,10 +14,14 @@ import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
  * Class used to manage swipes and movements of listItems inside the exercise recyclerview
  * @author Daniel Satriano
  * @since 23/07/2022
- * @param context context of the caller
  */
 class SwipeGesture(){
 
+    /**
+     * Used to manage the swipe left action in [com.fitterAPP.fitter.fragmentControllers.ModifyCard]
+     * @author Daniel Satriano
+     * @since 27/07/2022
+     */
     abstract  class SwipeGestureLeft(private val context : Context) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
 
         private val deleteColor = ContextCompat.getColor(context, R.color.red)
@@ -32,7 +36,7 @@ class SwipeGesture(){
 
             RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
                 .addSwipeLeftBackgroundColor(deleteColor)
-                .addSwipeLeftLabel("Delete")
+                .addSwipeLeftLabel(context.getString(R.string.delete))
                 .addSwipeLeftActionIcon(deleteIcon)
                 .setSwipeLeftLabelTextSize(TypedValue.COMPLEX_UNIT_SP, 16F)
                 .setSwipeLeftLabelTypeface(typeface)
@@ -43,6 +47,11 @@ class SwipeGesture(){
         }
     }
 
+    /**
+     * Used to manage the swipe right action in [com.fitterAPP.fitter.fragmentControllers.Fragment_showCardDialog]
+     * @author Daniel Satriano
+     * @since 27/07/2022
+     */
     abstract  class SwipeGestureRight(private val context : Context) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
 
         private val recapColor = ContextCompat.getColor(context, R.color.green)
@@ -57,7 +66,7 @@ class SwipeGesture(){
 
             RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
                 .addSwipeRightBackgroundColor(recapColor)
-                .addSwipeRightLabel("Done")
+                .addSwipeRightLabel(context.getString(R.string.done))
                 .addSwipeRightActionIcon(recapIcon)
                 .setSwipeRightLabelTextSize(TypedValue.COMPLEX_UNIT_SP, 16F)
                 .setSwipeRightLabelTypeface(typeface)

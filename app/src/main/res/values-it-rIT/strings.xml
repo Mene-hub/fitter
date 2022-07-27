@@ -35,4 +35,7 @@
     <string name="select" >Seleziona</string>
     <string name="restore_time">Recupero</string>
     <string name="card_info">Informazioni Scheda</string>
+    <string name="delete">Elimina</string>
+    <string name="done">Fatto</string>
+    <string name="button_that_allows_you_to_modify_a_card">Ti permette di modificare una scheda</string>
 </resources>

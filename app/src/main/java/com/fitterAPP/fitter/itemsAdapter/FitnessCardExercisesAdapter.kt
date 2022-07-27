@@ -76,10 +76,10 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
      * @param index it's the index of the item that needs to be removed
      */
     fun deleteItem(index : Int, recyclerView : RecyclerView){
-        val deletedItem = fitnessCard.exercises!!.get(index)
+        val deletedItem = fitnessCard.exercises!![index]
         fitnessCard.exercises!!.removeAt(index)
         notifyItemRemoved(index)
-        Snackbar.make(recyclerView,deletedItem.exerciseName,Snackbar.LENGTH_LONG).setAction("Undo") {
+        Snackbar.make(recyclerView,deletedItem.exerciseName,Snackbar.LENGTH_LONG).setAnchorView(R.id.newExercise_BT).setAction("Undo") {
             fitnessCard.exercises!!.add(index, deletedItem)
             notifyItemInserted(index)
             StaticFitnessCardDatabase.setFitnessCardItem(databaseRef,Athlete.UID,fitnessCard)
@@ -120,7 +120,12 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
     }
 
     override fun getItemCount(): Int {
-        return fitnessCard.exercises!!.size
+        return if(fitnessCard.exercises?.size == 0){
+            0
+        }else{
+            fitnessCard.exercises!!.size
+        }
+
     }
 
 }
