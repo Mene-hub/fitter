@@ -2,16 +2,19 @@ package com.fitterAPP.fitter.fragmentControllers
 
 import com.fitterAPP.fitter.R
 import android.app.Dialog
+import android.graphics.Canvas
 import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.util.TypedValue
 import android.view.*
 import android.view.animation.Animation
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
@@ -27,6 +30,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
 
 class Fragment_showCardDialog() : DialogFragment() {
@@ -96,17 +100,10 @@ class Fragment_showCardDialog() : DialogFragment() {
         recycle.adapter = adapter
 
         //Inserisco il gestore dello SWIPE della listview
-        val swipeGesture = object : SwipeGesture(requireContext()){
-
-            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
-                return false
-            }
+        val swipeGesture = object : SwipeGesture.SwipeGestureRight(requireContext()){
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 when(direction){
-                    ItemTouchHelper.LEFT -> {
-                        adapter.deleteItem(viewHolder.absoluteAdapterPosition, recycle)
-                    }
                     ItemTouchHelper.RIGHT -> {
                         adapter.addRecap(viewHolder.absoluteAdapterPosition)
                     }

@@ -1,19 +1,23 @@
 package com.fitterAPP.fitter.fragmentControllers
 
+import android.graphics.Canvas
 import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.animation.Animation
 import android.widget.*
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.itemsAdapter.FitnessCardExercisesAdapter
@@ -21,6 +25,7 @@ import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.classes.Athlete
 import com.fitterAPP.fitter.classes.CardsCover
+import com.fitterAPP.fitter.classes.SwipeGesture
 import com.fitterAPP.fitter.databases.StaticFitnessCardDatabase
 import com.fitterAPP.fitter.databinding.FragmentModifyCardBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -28,13 +33,14 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
 class ModifyCard() : DialogFragment() {
     private lateinit var fitnessCard: FitnessCard
     private val args by navArgs<ModifyCardArgs>()
     private lateinit var binding : FragmentModifyCardBinding
     lateinit var recycle : RecyclerView
-    var adapter : FitnessCardExercisesAdapter ? = null
+    private lateinit var adapter : FitnessCardExercisesAdapter
 
     /**
      * onCreate method which is used to set the dialog style. This mathod is paired with a WindowManager setting done in [onCreateView]
@@ -92,6 +98,22 @@ class ModifyCard() : DialogFragment() {
         if(fitnessCard.exercises != null){
             adapter = FitnessCardExercisesAdapter((activity as MainActivity),fitnessCard, true)
             recycle.adapter = adapter
+
+            //Inserisco il gestore dello SWIPE della listview
+            val swipeGesture = object : SwipeGesture.SwipeGestureLeft(requireContext()){
+
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    when(direction){
+                        ItemTouchHelper.LEFT -> {
+                            adapter.deleteItem(viewHolder.absoluteAdapterPosition, recycle)
+                        }
+                    }
+                }
+
+            }
+            val itemTouchHelper = ItemTouchHelper(swipeGesture)
+            itemTouchHelper.attachToRecyclerView(recycle)
+
         }
 
         //binding the card properties
@@ -151,7 +173,6 @@ class ModifyCard() : DialogFragment() {
         //gat database update
         val databaseRef = StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference))
         StaticFitnessCardDatabase.setFitnessCardValueListener(databaseRef,Athlete.UID,fitnessCard,cardValueEventListener())
-
 
         return binding.root
     }
