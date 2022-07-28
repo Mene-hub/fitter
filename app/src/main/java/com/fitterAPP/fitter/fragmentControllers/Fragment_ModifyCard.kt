@@ -1,18 +1,15 @@
 package com.fitterAPP.fitter.fragmentControllers
 
-import android.graphics.Canvas
 import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.animation.Animation
 import android.widget.*
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
@@ -33,7 +30,6 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
 class ModifyCard() : DialogFragment() {
     private lateinit var fitnessCard: FitnessCard
@@ -109,7 +105,6 @@ class ModifyCard() : DialogFragment() {
                         }
                     }
                 }
-
             }
             val itemTouchHelper = ItemTouchHelper(swipeGesture)
             itemTouchHelper.attachToRecyclerView(recycle)
@@ -199,7 +194,7 @@ class ModifyCard() : DialogFragment() {
 
 
 
-                adapter?.notifyDataSetChanged()
+                adapter.notifyDataSetChanged()
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -237,10 +232,9 @@ class ModifyCard() : DialogFragment() {
             .setPositiveButton("OK") { _, _ -> // send data from the
                 // AlertDialog to the Activity
                 val name = customLayout.findViewById<EditText>(R.id.et_cardName).text.toString()
-                val description = customLayout.findViewById<EditText>(R.id.et_description).text.toString()
                 val duration = customLayout.findViewById<EditText>(R.id.et_duration).text.toString()
 
-                if((name.isNotBlank() && name != "") && (duration.isNotBlank() && duration != "") && (name.replace(" ","")?.length!! > 0)){
+                if((name.isNotBlank() && name != "") && (duration.isNotBlank() && duration != "") && (name.replace(" ","").length > 0)){
 
                     fitnessCard.name = customLayout.findViewById<EditText>(R.id.et_cardName).text.toString()
                     fitnessCard.description = customLayout.findViewById<EditText>(R.id.et_description).text.toString()

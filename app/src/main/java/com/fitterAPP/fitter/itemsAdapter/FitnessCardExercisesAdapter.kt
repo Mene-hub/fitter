@@ -4,18 +4,16 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.classes.*
 import com.fitterAPP.fitter.databases.StaticFitnessCardDatabase
 import com.fitterAPP.fitter.databases.StaticRecapDatabase
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-
 
 class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: FitnessCard, val isEditable : Boolean) : RecyclerView.Adapter<FitnessCardExercisesAdapter.Holder>() {
 
@@ -92,14 +90,15 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
      * @author Daniel Satriano
      * @since 23/07/2022
      * @param index it's the index of the item that needs to be removed
+     * @param improvement Is the value given by the user that holds the weight or the minutes used/done for an exercise. EG : Today I lifted 50Kg , Today I run 15 minutes
      */
-    //TODO("Apertura form per il recap e cambio color")
-    fun addRecap(index : Int){
+    //TODO("Apertura form recap e fixare problema che se entro nella modifica -> aggiungo un es e torno indietro se avevo degli esercizi in "Done" adesso non lo sono più e si rompe il db
+    // se si prova ad inserirli nuovamente")
+    fun addRecap(index : Int, improvement : Int){
         val database = StaticRecapDatabase.database.getReference(context2.getString(R.string.RecapReference))
+        val exercise = fitnessCard.exercises!![index]
 
-        exerciseRecap.add(ExerciseRecap(0,80))
-        exerciseRecap.add(ExerciseRecap(0,100))
-        exerciseRecap.add(ExerciseRecap(0,2000))
+        exerciseRecap.add(ExerciseRecap(exercise.exerciseId!!, improvement))
 
         StaticRecapDatabase.setRecapItem(database, Athlete.UID, dayRecap)
 
@@ -127,5 +126,4 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
         }
 
     }
-
 }

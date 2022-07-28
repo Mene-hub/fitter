@@ -10,10 +10,7 @@ import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.*
 import android.view.animation.Animation
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.RelativeLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.NavDirections
@@ -26,11 +23,15 @@ import com.fitterAPP.fitter.classes.*
 import com.fitterAPP.fitter.databases.StaticFitnessCardDatabase
 import com.fitterAPP.fitter.databinding.FragmentShowCardDialogBinding
 import com.fitterAPP.fitter.itemsAdapter.FitnessCardExercisesAdapter
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 
 class Fragment_showCardDialog() : DialogFragment() {
@@ -54,6 +55,8 @@ class Fragment_showCardDialog() : DialogFragment() {
         setStyle(STYLE_NORMAL, R.style.Theme_Fitter_FullScreenDialog)
 
     }
+
+    //TODO("Spostare un po' di robe in funzioni esterne in modo da rendere il tutto più leggibile")
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentShowCardDialogBinding.inflate(inflater, container, false)
@@ -95,6 +98,9 @@ class Fragment_showCardDialog() : DialogFragment() {
             newFitnessCard.exercises = ArrayList()
         }
 
+
+
+
         //adapter for the exercises
         adapter = FitnessCardExercisesAdapter((activity as MainActivity),newFitnessCard,false)
         recycle.adapter = adapter
@@ -105,7 +111,7 @@ class Fragment_showCardDialog() : DialogFragment() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 when(direction){
                     ItemTouchHelper.RIGHT -> {
-                        adapter.addRecap(viewHolder.absoluteAdapterPosition)
+                        showAlertDialog(viewHolder)
                     }
                 }
             }
@@ -194,7 +200,37 @@ class Fragment_showCardDialog() : DialogFragment() {
     }
 
 
+    private fun showAlertDialog(viewHolder : RecyclerView.ViewHolder){
+        // set the custom layout
+        val customLayout: View = layoutInflater.inflate(R.layout.improvement_dialog_showfitnesscard, null)
 
+        //Check if the exercise is a warmup exercise or a normal exercise, and then set the correct hint for both cases
+        val editText = customLayout.findViewById<TextInputEditText>(R.id.et_improvement)
+        if(newFitnessCard.exercises!![viewHolder.absoluteAdapterPosition].type == ExerciseType.warmup){
+            editText.hint = getString(R.string.minutesSpent)
+        }else{
+            //If its not warmup then it should be something that uses kg, so I change the hint accordingly
+            editText.hint = getString(R.string.kilogramsUsed)
+        }
+        // Create an alert builder
+        val builder = MaterialAlertDialogBuilder(requireContext(),  R.style.ThemeOverlay_App_MaterialAlertDialog)
+        builder.setView(customLayout)
+        // add a button
+        builder
+            .setPositiveButton("OK") { _, _ -> // send data from the
+                // AlertDialog to the Activity
+                val recap = customLayout.findViewById<EditText>(R.id.et_improvement).text.toString()
+                if(recap.isNotBlank() && recap.isNotEmpty()){
+                    adapter.addRecap(viewHolder.absoluteAdapterPosition, Integer.parseInt(recap))
+                }
 
+            }.setNegativeButton("Cancel") { _, _ ->
+                //TODO("Da pensarci, ancora non so come comportarmi in questo caso. Inserimento di una variabile di
+                // sistema che indica se l'utente vuole usare la feature recap oppure no ?")
+            }.setOnDismissListener {
+                //TODO("Impostare il fatto che lo swipe viene annullato")
+            }
+            .show()
+    }
 
 }

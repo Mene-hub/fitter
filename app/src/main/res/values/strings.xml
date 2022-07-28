@@ -49,5 +49,8 @@
     <string name="delete">Delete</string>
     <string name="done">Done</string>
     <string name="button_that_allows_you_to_modify_a_card">Allows you to modify a card</string>
+    <string name="recap_information">Recap information</string>
+    <string name="minutesSpent">How many minutes ?</string>
+    <string name="kilogramsUsed">How many kilos ?</string>
 
 </resources>

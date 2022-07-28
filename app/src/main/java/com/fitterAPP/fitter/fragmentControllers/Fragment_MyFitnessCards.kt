@@ -79,17 +79,11 @@ class MyFitnessCards : Fragment() {
 
     fun showAlertDialogFitnessCard(){
         val newFitnessCard = FitnessCard()
-
         // Create an alert builder
         val builder = MaterialAlertDialogBuilder(requireContext(),  R.style.ThemeOverlay_App_MaterialAlertDialog)
-
-
         // set the custom layout
         val customLayout: View = layoutInflater.inflate(R.layout.dialog_input_text, null)
         builder.setView(customLayout)
-
-
-
         // add a button
         builder
             .setPositiveButton("OK") { _, _ -> // send data from the
