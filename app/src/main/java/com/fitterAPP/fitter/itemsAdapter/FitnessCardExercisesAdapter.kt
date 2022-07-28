@@ -92,7 +92,7 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
      * @param index it's the index of the item that needs to be removed
      * @param improvement Is the value given by the user that holds the weight or the minutes used/done for an exercise. EG : Today I lifted 50Kg , Today I run 15 minutes
      */
-    //TODO("Apertura form recap e fixare problema che se entro nella modifica -> aggiungo un es e torno indietro se avevo degli esercizi in "Done" adesso non lo sono più e si rompe il db
+    //TODO("fixare problema che se entro nella modifica -> aggiungo un es e torno indietro se avevo degli esercizi in "Done" adesso non lo sono più e si rompe il db
     // se si prova ad inserirli nuovamente")
     fun addRecap(index : Int, improvement : Int){
         val database = StaticRecapDatabase.database.getReference(context2.getString(R.string.RecapReference))

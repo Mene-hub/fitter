@@ -175,7 +175,7 @@ class Fragment_showCardDialog() : DialogFragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                Toast.makeText(requireContext(),error.message, Toast.LENGTH_LONG).show()
             }
 
         }
