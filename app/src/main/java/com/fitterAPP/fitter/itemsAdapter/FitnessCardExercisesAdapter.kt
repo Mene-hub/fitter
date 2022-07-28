@@ -120,7 +120,7 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
     }
 
     override fun getItemCount(): Int {
-        return if(fitnessCard.exercises?.size == 0){
+        return if(fitnessCard.exercises == null){
             0
         }else{
             fitnessCard.exercises!!.size
