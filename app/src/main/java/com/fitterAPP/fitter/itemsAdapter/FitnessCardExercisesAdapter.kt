@@ -29,6 +29,7 @@ import com.fitterAPP.fitter.fragmentControllers.select_exercise_group
 import com.google.android.material.snackbar.Snackbar
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import kotlin.concurrent.thread
 
 /**
  * Adapter for the Exercise RecycleView used for showind and edith exercises
@@ -122,17 +123,35 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
      * @param index it's the index of the item that needs to be removed
      * @param improvement Is the value given by the user that holds the weight or the minutes used/done for an exercise. EG : Today I lifted 50Kg , Today I run 15 minutes
      */
-    //TODO("fixare problema che se entro nella modifica -> aggiungo un es e torno indietro se avevo degli esercizi in "Done" adesso non lo sono più e si rompe il db
-    // se si prova ad inserirli nuovamente")
+    //TODO("controllare possibile problema quando chiudi e riapri l'app nello stesso giorno se ti fa aggiungere un recap aggiuntivo. (sicuramente sì ed è da fixare)")
     fun addRecap(index : Int, improvement : Int){
         val database = StaticRecapDatabase.database.getReference(context2.getString(R.string.RecapReference))
         val exercise = fitnessCard.exercises!![index]
 
         exerciseRecap.add(ExerciseRecap(exercise.exerciseId!!, improvement))
-
         StaticRecapDatabase.setRecapItem(database, Athlete.UID, dayRecap)
 
     }
+
+    /**
+     * Used to check if the recap that the user is trying to add is already added to the database for that given instance
+     * @author Daniel Satriano
+     * @param index it's the index of the item that needs to be checked
+     * @return a boolean which defines whether it exists. If true it does exist, if false it doesn't
+     */
+    fun recapChecker(index : Int) : Boolean{
+        val exercise = fitnessCard.exercises!![index]
+
+        var alreadySet = false
+        for (item in exerciseRecap) {
+            if (item.uidExercise == exercise.exerciseId) {
+                alreadySet = true
+            }
+        }
+        return alreadySet
+    }
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val view: View = if(!isEditable) {

@@ -32,6 +32,7 @@ import com.google.firebase.database.ValueEventListener
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import kotlin.concurrent.thread
 
 
 class Fragment_showCardDialog() : DialogFragment() {
@@ -111,7 +112,9 @@ class Fragment_showCardDialog() : DialogFragment() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 when(direction){
                     ItemTouchHelper.RIGHT -> {
-                        showAlertDialog(viewHolder)
+                        if(!adapter.recapChecker(viewHolder.absoluteAdapterPosition)) {
+                            showAlertDialog(viewHolder)
+                        }
                     }
                 }
             }
