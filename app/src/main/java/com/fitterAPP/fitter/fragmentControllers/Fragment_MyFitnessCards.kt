@@ -99,7 +99,6 @@ class MyFitnessCards : Fragment() {
                     newFitnessCard.timeDuration = duration.toInt()
 
                     addFitnessCard(newFitnessCard)
-                    transaction(newFitnessCard)
 
                 }else{
                     Toast.makeText(requireContext(), "Missing name field on fitness card", Toast.LENGTH_LONG).show()

@@ -62,7 +62,7 @@ enum class CardsCover:IImageName {
     },
     addCard{
         override fun toString(): String {
-            return "ic_add_placeholder"
+            return ""
         }
 
         override fun getname(): String {

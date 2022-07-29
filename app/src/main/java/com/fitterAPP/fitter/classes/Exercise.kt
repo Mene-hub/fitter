@@ -1,5 +1,8 @@
 package com.fitterAPP.fitter.classes
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
 /**
  *
  * @param exerciseName name of the exercise
@@ -9,7 +12,8 @@ package com.fitterAPP.fitter.classes
  * @param images list of images for the exercise
  * @author Menegotto Claudio
  */
-data class Exercise(var exerciseName : String, var type : ExerciseType) {
+@Parcelize
+data class Exercise(var exerciseName : String, var type : ExerciseType) : Parcelable {
 
     //warmup
     var exerciseDuration : Int? = null
@@ -59,7 +63,7 @@ data class Exercise(var exerciseName : String, var type : ExerciseType) {
 
     fun setAsPiramid(ser : Int, rest : Double){
 
-        type = ExerciseType.piramid
+        type = ExerciseType.pyramid
         exerciseDuration = null
         exerciseRep = null
         exerciseSer = ser

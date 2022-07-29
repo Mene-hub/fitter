@@ -37,7 +37,7 @@
                     android:orientation="horizontal">
 
                     <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
+                        android:layout_width="54dp"
                         android:layout_height="match_parent"
                         app:cardBackgroundColor="@color/white"
                         app:cardCornerRadius="10dp"
@@ -45,11 +45,11 @@
 
                         <ImageView
                             android:id="@+id/exercise_icon_IV"
-                            android:layout_width="54dp"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:contentDescription="@string/background_image"
                             android:padding="10dp"
-                            android:scaleType="centerCrop"
-                            tools:tint="@color/black" />
+                            android:scaleType="centerCrop" />
 
                     </androidx.cardview.widget.CardView>
 
@@ -97,7 +97,7 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:id="@+id/imageView4"
+                        android:id="@+id/edithExercise_IV"
                         android:layout_width="25dp"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="10dp"

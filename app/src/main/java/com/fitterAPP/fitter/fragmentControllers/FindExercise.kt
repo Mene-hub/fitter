@@ -85,11 +85,13 @@ class FindExercise : DialogFragment() {
 
                         handler.post(Runnable() {
                             handler.run {
+                                try {
                                 var names : MutableList<String> = ArrayList()
-                                for (i in 0..(Exercises?.suggestions?.size!!) -1)
-                                    names.add(Exercises?.suggestions?.get(i)?.data?.name!!)
+                                    for (i in 0..(Exercises?.suggestions?.size!!) -1)
+                                        names.add(Exercises?.suggestions?.get(i)?.data?.name!!)
 
-                                binding.ExRecycle.adapter = ArrayAdapter(context!!, android.R.layout.simple_list_item_1, names)
+                                    binding.ExRecycle.adapter = ArrayAdapter(context!!, android.R.layout.simple_list_item_1, names)
+                                }catch(e:Exception ){ Log.d("FindExercise", e.toString()) }
                             }
                         })
                     })

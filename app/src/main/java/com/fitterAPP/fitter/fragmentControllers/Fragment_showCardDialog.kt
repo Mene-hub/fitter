@@ -221,7 +221,7 @@ class Fragment_showCardDialog() : DialogFragment() {
                 // AlertDialog to the Activity
                 val recap = customLayout.findViewById<EditText>(R.id.et_improvement).text.toString()
                 if(recap.isNotBlank() && recap.isNotEmpty()){
-                    adapter.addRecap(viewHolder.absoluteAdapterPosition, Integer.parseInt(recap))
+                    adapter.addRecap(viewHolder.absoluteAdapterPosition/*, Integer.parseInt(recap)*/)
                 }
 
             }.setNegativeButton("Cancel") { _, _ ->

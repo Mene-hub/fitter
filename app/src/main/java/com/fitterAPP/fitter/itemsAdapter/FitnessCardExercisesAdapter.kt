@@ -1,20 +1,39 @@
 package com.fitterAPP.fitter.itemsAdapter
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.fragment.app.FragmentContainerView
+import androidx.fragment.app.FragmentController
+import androidx.fragment.app.findFragment
+import androidx.navigation.NavDirections
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.FragmentNavigator
+import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.lottie.LottieAnimationView
+import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.classes.*
 import com.fitterAPP.fitter.databases.StaticFitnessCardDatabase
 import com.fitterAPP.fitter.databases.StaticRecapDatabase
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.fitterAPP.fitter.fragmentControllers.ModifyCard
+import com.fitterAPP.fitter.fragmentControllers.ModifyCardDirections
+import com.fitterAPP.fitter.fragmentControllers.select_exercise_group
 import com.google.android.material.snackbar.Snackbar
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
+/**
+ * Adapter for the Exercise RecycleView used for showind and edith exercises
+ * @author Claudio Menegotto
+ */
 class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: FitnessCard, val isEditable : Boolean) : RecyclerView.Adapter<FitnessCardExercisesAdapter.Holder>() {
 
     var exerciseRecap : MutableList<ExerciseRecap> = mutableListOf()
@@ -23,14 +42,26 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
 
     private val databaseRef = StaticFitnessCardDatabase.database.getReference(context2.getString(R.string.FitnessCardsReference))
 
-    class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class Holder(itemView: View, edit: Boolean, fitnessCard: FitnessCard) : RecyclerView.ViewHolder(itemView) {
 
         val exName : TextView = itemView.findViewById(R.id.ExName_TV)
         val exReps : TextView = itemView.findViewById(R.id.ExReps_TV)
         val icon : ImageView = itemView.findViewById(R.id.exercise_icon_IV)
+        val edit_ : Boolean = edit
+        var fitnessCard_ = fitnessCard
 
-        fun setCard(ex:Exercise, context: Context){
+
+        fun setCard(ex:Exercise, context: Context, index : Int){
             exName.text = ex.exerciseName
+
+            if(edit_){
+                itemView.findViewById<ImageView>(R.id.edithExercise_IV).setOnClickListener {
+                    val controller = itemView.findFragment<ModifyCard>().findNavController()
+                    val action : NavDirections = ModifyCardDirections.actionModifyCardToSelectExerciseGroup(fitnessCard_, index)
+                    controller.navigate(action)
+
+                }
+            }
 
             when (ex.type){
                 ExerciseType.warmup -> {
@@ -46,7 +77,7 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
                     exReps.text = ex.exerciseSeries?.size.toString() + " - " + ex.exerciseRest + " s"
                     icon.setImageResource(R.drawable.series_exercise_icon)
                 }
-                ExerciseType.piramid -> {
+                ExerciseType.pyramid -> {
                     icon.setImageResource(R.drawable.pyramid_exercise_icon)
                     var reps = ""
                     for (i in 0 until ex.piramidSeries?.size!!) {
@@ -54,13 +85,12 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
                         if(i < ex.piramidSeries?.lastIndex!!)
                             reps += " x "
                     }
-
                     exReps.text = reps + " - " + ex.exerciseRest + " s"
                 }
 
                 else ->{
                     exReps.text = ex.exerciseSer.toString() + " x " + ex.exerciseRep.toString() + " - " + ex.exerciseRest + " s"
-                    icon.setImageResource(R.drawable.normal_exercise_icon)
+                    //icon.setImageResource(R.drawable.normal_exercise_icon)
                 }
             }
         }
@@ -90,15 +120,14 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
      * @author Daniel Satriano
      * @since 23/07/2022
      * @param index it's the index of the item that needs to be removed
-     * @param improvement Is the value given by the user that holds the weight or the minutes used/done for an exercise. EG : Today I lifted 50Kg , Today I run 15 minutes
      */
-    //TODO("fixare problema che se entro nella modifica -> aggiungo un es e torno indietro se avevo degli esercizi in "Done" adesso non lo sono più e si rompe il db
-    // se si prova ad inserirli nuovamente")
-    fun addRecap(index : Int, improvement : Int){
+    //TODO("Apertura form per il recap e cambio color")
+    fun addRecap(index : Int){
         val database = StaticRecapDatabase.database.getReference(context2.getString(R.string.RecapReference))
-        val exercise = fitnessCard.exercises!![index]
 
-        exerciseRecap.add(ExerciseRecap(exercise.exerciseId!!, improvement))
+        exerciseRecap.add(ExerciseRecap(0,80))
+        exerciseRecap.add(ExerciseRecap(0,100))
+        exerciseRecap.add(ExerciseRecap(0,2000))
 
         StaticRecapDatabase.setRecapItem(database, Athlete.UID, dayRecap)
 
@@ -110,12 +139,12 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
         }else{
                 LayoutInflater.from(context2).inflate(R.layout.item_edit_exercise, parent, false)
         }
-        return Holder(view)
+        return Holder(view, isEditable, fitnessCard)
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        val card: Exercise = fitnessCard.exercises!![position]
-        holder.setCard(card, context2)
+        val ex: Exercise = fitnessCard.exercises!![position]
+        holder.setCard(ex, context2, position)
     }
 
     override fun getItemCount(): Int {
@@ -126,4 +155,5 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
         }
 
     }
+
 }

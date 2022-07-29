@@ -176,6 +176,8 @@ class ModifyCard() : DialogFragment() {
         return object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
 
+                //fitnessCard = snapshot.getValue(FitnessCard::class.java)!!
+
                 val cardName : TextView = binding.CardNameTV
                 val cardDuration : TextView = binding.TimeDurationTV
                 val cardDescription: TextView = binding.DescriptionTV
@@ -191,8 +193,6 @@ class ModifyCard() : DialogFragment() {
                 try {
                     cardDuration.text = fitnessCard.timeDuration.toString() + " " + getString(R.string.minutes)
                 }catch(e:Exception){e.printStackTrace()}
-
-
 
                 adapter.notifyDataSetChanged()
             }
