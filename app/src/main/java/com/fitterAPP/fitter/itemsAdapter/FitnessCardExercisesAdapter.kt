@@ -90,7 +90,7 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
 
                 else ->{
                     exReps.text = ex.exerciseSer.toString() + " x " + ex.exerciseRep.toString() + " - " + ex.exerciseRest + " s"
-                    //icon.setImageResource(R.drawable.normal_exercise_icon)
+                    icon.setImageResource(R.drawable.normal_exercise_icon)
                 }
             }
         }
@@ -120,14 +120,15 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
      * @author Daniel Satriano
      * @since 23/07/2022
      * @param index it's the index of the item that needs to be removed
+     * @param improvement Is the value given by the user that holds the weight or the minutes used/done for an exercise. EG : Today I lifted 50Kg , Today I run 15 minutes
      */
-    //TODO("Apertura form per il recap e cambio color")
-    fun addRecap(index : Int){
+    //TODO("fixare problema che se entro nella modifica -> aggiungo un es e torno indietro se avevo degli esercizi in "Done" adesso non lo sono più e si rompe il db
+    // se si prova ad inserirli nuovamente")
+    fun addRecap(index : Int, improvement : Int){
         val database = StaticRecapDatabase.database.getReference(context2.getString(R.string.RecapReference))
+        val exercise = fitnessCard.exercises!![index]
 
-        exerciseRecap.add(ExerciseRecap(0,80))
-        exerciseRecap.add(ExerciseRecap(0,100))
-        exerciseRecap.add(ExerciseRecap(0,2000))
+        exerciseRecap.add(ExerciseRecap(exercise.exerciseId!!, improvement))
 
         StaticRecapDatabase.setRecapItem(database, Athlete.UID, dayRecap)
 
