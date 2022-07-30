@@ -42,8 +42,6 @@ class RecapAdapter(private val context2: Context, private val Cards:MutableList<
     }
 
 
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecapAdapter.Holder {
         val view: View = LayoutInflater.from(context2).inflate(R.layout.item_fitnesscard, parent, false)
         return Holder(view)

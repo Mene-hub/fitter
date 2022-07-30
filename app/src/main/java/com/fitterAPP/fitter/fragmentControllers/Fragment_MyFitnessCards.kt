@@ -41,12 +41,17 @@ class MyFitnessCards : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
         binding = FragmentMyFitnessCardsBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         dbReference = StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference))
 
         dummyCard = FitnessCard("","",null,null,"addCard",CardsCover.addCard)
         //grab event from companion class RealTimeDBHelper
-        StaticFitnessCardDatabase.setFitnessCardChildListener(dbReference, Athlete.UID, getFitnessCardEventListener())
+
 
 
         val recycle : RecyclerView = binding.MyFitnessCardsRV
@@ -61,9 +66,16 @@ class MyFitnessCards : Fragment() {
         recapAdapter = context?.let { RecapAdapter((activity as MainActivity), recapCards) }!!
         recapRecycle.adapter = recapAdapter
 
+        StaticFitnessCardDatabase.setFitnessCardChildListener(dbReference, Athlete.UID, getFitnessCardEventListener())
+        binding.MyFitnessCardsShimmerRV.visibility = View.INVISIBLE
+        binding.MyRecapsShimmerRV.visibility = View.INVISIBLE
+        binding.MyFitnessCardsShimmerRV.stopShimmer()
+        binding.MyRecapsShimmerRV.stopShimmer()
+
+        binding.MyFitnessCardsRV.visibility = View.VISIBLE
+        binding.MyRecapsRV.visibility = View.VISIBLE
 
         Log.w("Fragment", binding.MyFitnessCardsRV.id.toString())
-        return binding.root
     }
 
     /**
@@ -121,7 +133,6 @@ class MyFitnessCards : Fragment() {
                 val item = snapshot.getValue(FitnessCard::class.java)
                 //aggiungo nuova fitness card
                 if(!fitnessCads.contains(item)) {
-
                     fitnessCads.remove(dummyCard)
                     fitnessCads.add((item!!))
                     fitnessCads.add(dummyCard)
