@@ -92,6 +92,12 @@
             app:destination="@id/modifyCard"
             app:launchSingleTop="true"
             app:popUpTo="@id/modifyCard" />
+        <argument
+            android:name="exercise"
+            app:argType="com.fitterAPP.fitter.classes.Exercise"
+            app:nullable="true"
+            android:defaultValue="@null"
+            />
     </dialog>
     <dialog
         android:id="@+id/select_exercise_group"
@@ -127,6 +133,11 @@
         <action
             android:id="@+id/action_selectExerciseList_to_setWarmUpExercise"
             app:destination="@id/setWarmUpExercise" />
+        <argument
+            android:name="exercise"
+            app:argType="com.fitterAPP.fitter.classes.Exercise"
+            app:nullable="true"
+            android:defaultValue="@null"/>
     </dialog>
     <dialog
         android:id="@+id/findExercise"
@@ -142,6 +153,11 @@
         <action
             android:id="@+id/action_findExercise_to_newExercieFormDialog"
             app:destination="@id/newExercieFormDialog" />
+        <argument
+            android:name="exercise"
+            app:argType="com.fitterAPP.fitter.classes.Exercise"
+            app:nullable="true"
+            android:defaultValue="@null"/>
     </dialog>
     <dialog
         android:id="@+id/setWarmUpExercise"
@@ -159,6 +175,11 @@
             app:destination="@id/modifyCard"
             app:launchSingleTop="true"
             app:popUpTo="@id/modifyCard" />
+        <argument
+            android:name="exercise"
+            app:argType="com.fitterAPP.fitter.classes.Exercise"
+            app:nullable="true"
+            android:defaultValue="@null"/>
     </dialog>
     <dialog
         android:id="@+id/fragment_ViewOthersProfile"

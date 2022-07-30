@@ -7,10 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.classes.Exercise
 import com.fitterAPP.fitter.classes.ExerciseType
@@ -26,8 +28,9 @@ class select_exercise_group : DialogFragment() {
     private lateinit var binding : FragmentSelectExerciseGroupBinding
     private val args by navArgs<newExercieFormDialogArgs>()
     private lateinit var fitnessCard : FitnessCard
+    private lateinit var exercise: Exercise
     private var index : Int = 0
-    private var tmpsaveExercise : Exercise ? = null
+    private var backupCard : FitnessCard ? = null
     private var canDelete : Boolean = true
 
     //set full screen fragment
@@ -36,69 +39,59 @@ class select_exercise_group : DialogFragment() {
         setStyle(STYLE_NORMAL, R.style.Theme_Fitter_FullScreenDialog)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         canDelete = true
-
-        binding = FragmentSelectExerciseGroupBinding.inflate(inflater, container, false)
 
         dialog?.window?.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
 
         fitnessCard = args.fitnessCard
         index = args.index
 
-        if(fitnessCard.exercises?.size != index)
-            tmpsaveExercise = fitnessCard.exercises?.get(index)!!
-
         //warm-up exercise selected
         binding.WarmapCV.setOnClickListener {
-            if(fitnessCard.exercises?.size == index) {
-                fitnessCard.exercises?.add(Exercise("Place Holder", ExerciseType.warmup))
 
-            }else
-                fitnessCard.exercises?.set(index, Exercise(fitnessCard.exercises?.get(index)?.exerciseName!!, ExerciseType.warmup))
-
-            var lastindex : Int = 0
-
-            if(fitnessCard.exercises?.size!! > 0)
-                for (i in fitnessCard.exercises!!)
-                    if(i.exerciseId != null && i.exerciseId!! > lastindex)
-                        lastindex = i.exerciseId!!
-
-            if(fitnessCard.exercises?.get(index)?.exerciseId == null)
-                fitnessCard.exercises?.get(index)?.exerciseId = lastindex +1
+            exercise = Exercise("Place Holder", ExerciseType.warmup)
+            exercise.exerciseId = getLastIndex()
 
             canDelete = false
 
-            val action : NavDirections = select_exercise_groupDirections.actionSelectExerciseGroupToSelectExerciseList(fitnessCard, index)
+            val action : NavDirections = select_exercise_groupDirections.actionSelectExerciseGroupToSelectExerciseList(fitnessCard, index, exercise)
             findNavController().navigate(action)
         }
 
         //normal exercise selected
         binding.NormalExerciseCV.setOnClickListener{
-            if(fitnessCard.exercises?.size == index)
-                fitnessCard.exercises?.add(Exercise("Place Holder", ExerciseType.normal))
-            else
-                fitnessCard.exercises?.set(index, Exercise(fitnessCard.exercises?.get(index)?.exerciseName!!, ExerciseType.normal))
 
-            if(fitnessCard.exercises?.get(index)?.exerciseId == null)
-                fitnessCard.exercises?.get(index)?.exerciseId = index
+            exercise = Exercise("Place Holder", ExerciseType.normal)
+            exercise.exerciseId = getLastIndex()
 
             canDelete = false
 
-            val action : NavDirections = select_exercise_groupDirections.actionSelectExerciseGroupToFindExercise(fitnessCard, index)
+            val action : NavDirections = select_exercise_groupDirections.actionSelectExerciseGroupToFindExercise(fitnessCard, index, exercise)
             findNavController().navigate(action)
         }
+    }
 
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
+        binding = FragmentSelectExerciseGroupBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun onDismiss(dialog: DialogInterface) {
-        super.onDismiss(dialog)
-        if(tmpsaveExercise == null && canDelete)
-            fitnessCard.exercises?.removeAt(index)
+    fun getLastIndex() : Int{
+        var lastindex : Int = 0
+
+        if(fitnessCard.exercises?.size!! > 0)
+            for (i in fitnessCard.exercises!!)
+                if(i.exerciseId != null && i.exerciseId!! > lastindex)
+                    lastindex = i.exerciseId!!
+
+        return lastindex + 1
     }
+
+
 }

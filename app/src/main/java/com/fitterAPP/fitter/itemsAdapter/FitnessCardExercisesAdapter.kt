@@ -68,8 +68,8 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
 
                     when(ex.type){
 
-                        ExerciseType.warmup-> action =  ModifyCardDirections.actionModifyCardToSetWarmUpExercise(fitnessCard_, index)
-                        ExerciseType.normal-> action =  ModifyCardDirections.actionModifyCardToNewExercieFormDialog(fitnessCard_, index)
+                        ExerciseType.warmup-> action =  ModifyCardDirections.actionModifyCardToSetWarmUpExercise(fitnessCard_, index, fitnessCard_.exercises?.get(index)!!)
+                        ExerciseType.normal-> action =  ModifyCardDirections.actionModifyCardToNewExercieFormDialog(fitnessCard_, index, fitnessCard_.exercises?.get(index)!!)
                         ExerciseType.series-> action = null
                         ExerciseType.pyramid-> action = null
                         ExerciseType.seriesItem-> action = null

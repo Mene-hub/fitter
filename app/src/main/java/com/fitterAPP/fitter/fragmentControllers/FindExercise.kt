@@ -17,10 +17,7 @@ import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.fitterAPP.fitter.R
-import com.fitterAPP.fitter.classes.ExerciseQueryHelper
-import com.fitterAPP.fitter.classes.FitnessCard
-import com.fitterAPP.fitter.classes.Result
-import com.fitterAPP.fitter.classes.Root
+import com.fitterAPP.fitter.classes.*
 import com.fitterAPP.fitter.databinding.FragmentFindExerciseBinding
 import com.fitterAPP.fitter.itemsAdapter.SuggestionAdapter
 import java.util.concurrent.ExecutorService
@@ -32,6 +29,7 @@ class FindExercise : DialogFragment() {
     private lateinit var fitnessCard : FitnessCard
     private lateinit var adapter : SuggestionAdapter
     private var index : Int = 0
+    private lateinit var exercise : Exercise
     var Exercises : Root? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,12 +47,13 @@ class FindExercise : DialogFragment() {
         binding = FragmentFindExerciseBinding.inflate(inflater, container, false)
 
         fitnessCard = args.fitnessCard
+        exercise = args.exercise!!
         index = args.index
 
         binding.SVFindExercise.setOnQueryTextListener(queryTextListener())
 
         binding.ExRecycle.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
-            fitnessCard.exercises?.get(index)?.exerciseName = parent.getItemAtPosition(position) as String
+            exercise.exerciseName = parent.getItemAtPosition(position) as String
 
             queryById(Exercises?.suggestions?.get(position)?.data?.id!!)
 
@@ -113,8 +112,8 @@ class FindExercise : DialogFragment() {
             }
 
             handler.post(Runnable() {
-                fitnessCard.exercises?.get(index)?.description = ex.description
-                val action : NavDirections = FindExerciseDirections.actionFindExerciseToNewExercieFormDialog(fitnessCard, index)
+                exercise.description = ex.description
+                val action : NavDirections = FindExerciseDirections.actionFindExerciseToNewExercieFormDialog(fitnessCard, index, exercise)
                 findNavController().navigate(action)
             })
         })

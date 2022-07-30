@@ -49,9 +49,8 @@ class ModifyCard() : DialogFragment() {
         setStyle(STYLE_NORMAL, R.style.Theme_Fitter_FullScreenDialog)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View {
-        binding = FragmentModifyCardBinding.inflate(inflater, container, false)
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         //Set transparent status bar
         dialog?.window?.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
 
@@ -111,6 +110,7 @@ class ModifyCard() : DialogFragment() {
 
         }
 
+
         //binding the card properties
         val cardName : TextView = binding.CardNameTV
         val cardDuration : TextView = binding.TimeDurationTV
@@ -169,6 +169,11 @@ class ModifyCard() : DialogFragment() {
         val databaseRef = StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference))
         StaticFitnessCardDatabase.setFitnessCardValueListener(databaseRef,Athlete.UID,fitnessCard,cardValueEventListener())
 
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View {
+        binding = FragmentModifyCardBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 
@@ -177,6 +182,8 @@ class ModifyCard() : DialogFragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
 
                 //fitnessCard = snapshot.getValue(FitnessCard::class.java)!!
+
+
 
                 val cardName : TextView = binding.CardNameTV
                 val cardDuration : TextView = binding.TimeDurationTV
@@ -190,12 +197,15 @@ class ModifyCard() : DialogFragment() {
                 cardName.text = fitnessCard.name
                 cardDescription.text = fitnessCard.description
 
+                adapter.notifyDataSetChanged()
+
                 try {
                     cardDuration.text = fitnessCard.timeDuration.toString() + " " + getString(R.string.minutes)
                 }catch(e:Exception){e.printStackTrace()}
-
-                adapter.notifyDataSetChanged()
             }
+
+
+
 
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(requireContext(),error.message, Toast.LENGTH_LONG).show()

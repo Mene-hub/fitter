@@ -18,6 +18,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.classes.Athlete
+import com.fitterAPP.fitter.classes.Exercise
 import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.databases.StaticFitnessCardDatabase
 import com.fitterAPP.fitter.databinding.FragmentNewExercieFormDialogBinding
@@ -28,6 +29,7 @@ class newExercieFormDialog : DialogFragment() {
     private lateinit var binding : FragmentNewExercieFormDialogBinding
     private val args by navArgs<newExercieFormDialogArgs>()
     private lateinit var fitnessCard : FitnessCard
+    private lateinit var exercise: Exercise
     private var index : Int = 0
 
     /**
@@ -54,11 +56,12 @@ class newExercieFormDialog : DialogFragment() {
 
         //Get FitnessCard by bundle passed via navigation controller in [FitnessCardAdapter.kt] (the bundle is also set in fragment_navigation.xml
         fitnessCard = args.fitnessCard
+        exercise = args.exercise!!
         index = args.index
 
 
         //setting the exercise name
-        binding.ExNameTV.text = fitnessCard.exercises?.get(index)?.exerciseName
+        binding.ExNameTV.text = exercise.exerciseName
 
         var screenHeight = 0
 
@@ -154,7 +157,14 @@ class newExercieFormDialog : DialogFragment() {
         //save card on db and close the fragment
         binding.SaveExercise.setOnClickListener {
             System.out.println(textReps.text.toString() + " " + textSeries.text.toString() + " " + textTime.text.toString().removeSuffix("s").toDouble())
-            fitnessCard.exercises?.get(index)?.setAsNormal(textReps.text.toString().toInt(), textSeries.text.toString().toInt(), textTime.text.toString().removeSuffix("s").toInt())
+            exercise.setAsNormal(textReps.text.toString().toInt(), textSeries.text.toString().toInt(), textTime.text.toString().removeSuffix("s").toInt())
+
+            //save the exercise in the card object
+            if(fitnessCard.exercises?.size!! == index)
+                fitnessCard.exercises?.add(exercise)
+            else
+                fitnessCard.exercises?.set(index, exercise)
+
             StaticFitnessCardDatabase.setFitnessCardItem(StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference)), Athlete.UID, fitnessCard)
             val action : NavDirections = newExercieFormDialogDirections.actionNewExercieFormDialogToModifyCard(fitnessCard)
             //findNavController().clearBackStack(0)

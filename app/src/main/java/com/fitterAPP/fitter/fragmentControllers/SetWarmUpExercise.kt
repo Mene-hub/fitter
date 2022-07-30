@@ -16,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.classes.Athlete
+import com.fitterAPP.fitter.classes.Exercise
 import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.databases.StaticFitnessCardDatabase
 import com.fitterAPP.fitter.databinding.FragmentSetWarmUpExerciseBinding
@@ -25,6 +26,7 @@ class SetWarmUpExercise : DialogFragment() {
     private lateinit var binding : FragmentSetWarmUpExerciseBinding
     private val args by navArgs<newExercieFormDialogArgs>()
     private lateinit var fitnessCard : FitnessCard
+    private lateinit var exercise: Exercise
     private var index : Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,10 +48,11 @@ class SetWarmUpExercise : DialogFragment() {
 
         //Get FitnessCard by bundle passed via navigation controller in [FitnessCardAdapter.kt] (the bundle is also set in fragment_navigation.xml
         fitnessCard = args.fitnessCard
+        exercise = args.exercise!!
         index = args.index
 
         //setting the exercise name
-        binding.ExNameTV.text = fitnessCard.exercises?.get(index)?.exerciseName
+        binding.ExNameTV.text = exercise.exerciseName
 
         var screenHeight = 0
 
@@ -96,12 +99,19 @@ class SetWarmUpExercise : DialogFragment() {
             textTime.text = tmp.toString() + " min"
         }
 
-        if(fitnessCard.exercises?.get(index)?.exerciseDuration != null){
-            textTime.text = fitnessCard.exercises?.get(index)?.exerciseDuration.toString() + " min"
+        if(exercise.exerciseDuration != null){
+            textTime.text = exercise.exerciseDuration.toString() + " min"
         }
 
         binding.SaveExercise.setOnClickListener {
-            fitnessCard.exercises?.get(index)?.setAsWarmup(textTime.text.toString().removeSuffix(" min").toInt())
+            //set the exercise
+            exercise.setAsWarmup(textTime.text.toString().removeSuffix(" min").toInt())
+
+            //save the exercise in the card object
+            if(fitnessCard.exercises?.size!! == index)
+                fitnessCard.exercises?.add(exercise)
+            else
+                fitnessCard.exercises?.set(index, exercise)
 
             //get the reference of fitness_card
             StaticFitnessCardDatabase.setFitnessCardItem(StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference)), Athlete.UID, fitnessCard)

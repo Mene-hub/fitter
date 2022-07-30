@@ -12,6 +12,7 @@ import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.fitterAPP.fitter.R
+import com.fitterAPP.fitter.classes.Exercise
 import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.classes.Root
 import com.fitterAPP.fitter.databinding.FragmentSelectExerciseListBinding
@@ -24,6 +25,7 @@ class SelectExerciseList : DialogFragment() {
     private lateinit var binding : FragmentSelectExerciseListBinding
     private val args by navArgs<newExercieFormDialogArgs>()
     private lateinit var fitnessCard : FitnessCard
+    private lateinit var exercise : Exercise
     private lateinit var adapter : SuggestionAdapter
     private val warmupex = "[\"Tapis Roullant\",\"Cyclette\",\"Elliptical\",\"Spin Bike\", \"Stepper\"]"
     private var index : Int = 0
@@ -41,7 +43,9 @@ class SelectExerciseList : DialogFragment() {
         binding = FragmentSelectExerciseListBinding.inflate(inflater, container, false)
 
         fitnessCard = args.fitnessCard
+        exercise = args.exercise!!
         index = args.index
+
         val gson = Gson()
         val type = object : TypeToken<MutableList<String>>() {}.type
         var warmupEx : MutableList<String> = gson.fromJson(warmupex, type)
@@ -50,8 +54,8 @@ class SelectExerciseList : DialogFragment() {
         binding.ExRecycle.adapter = ArrayAdapter(context!!, android.R.layout.simple_list_item_1,warmupEx)
 
         binding.ExRecycle.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
-            fitnessCard.exercises?.get(index)?.exerciseName = parent.getItemAtPosition(position) as String
-            val action : NavDirections = SelectExerciseListDirections.actionSelectExerciseListToSetWarmUpExercise(fitnessCard, index)
+            exercise.exerciseName = parent.getItemAtPosition(position) as String
+            val action : NavDirections = SelectExerciseListDirections.actionSelectExerciseListToSetWarmUpExercise(fitnessCard, index, exercise)
             findNavController().navigate(action)
         }
 
