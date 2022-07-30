@@ -18,7 +18,6 @@ class profileMenu : BottomSheetDialogFragment() {
         binding =FragmentProfileMenuBinding.inflate(inflater,container,false)
 
         val logoutbt : AppCompatTextView = binding.txtLogout
-        val recapbt : AppCompatTextView = binding.txtRecap
 
         val userprofile : AppCompatTextView = binding.txtUserProfile
 
@@ -29,11 +28,6 @@ class profileMenu : BottomSheetDialogFragment() {
 
         logoutbt.setOnClickListener {
             (activity as MainActivity).logout()
-            dismiss()
-        }
-
-        recapbt.setOnClickListener {
-            findNavController().navigate(R.id.action_profileMenu_to_timeRacap)
             dismiss()
         }
 

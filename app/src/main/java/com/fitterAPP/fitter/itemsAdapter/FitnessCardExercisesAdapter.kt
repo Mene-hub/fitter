@@ -1,35 +1,29 @@
 package com.fitterAPP.fitter.itemsAdapter
 
 import android.content.Context
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.fragment.app.FragmentContainerView
-import androidx.fragment.app.FragmentController
+import android.widget.Toast
 import androidx.fragment.app.findFragment
 import androidx.navigation.NavDirections
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.FragmentNavigator
-import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.airbnb.lottie.LottieAnimationView
-import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.classes.*
 import com.fitterAPP.fitter.databases.StaticFitnessCardDatabase
 import com.fitterAPP.fitter.databases.StaticRecapDatabase
 import com.fitterAPP.fitter.fragmentControllers.ModifyCard
 import com.fitterAPP.fitter.fragmentControllers.ModifyCardDirections
-import com.fitterAPP.fitter.fragmentControllers.select_exercise_group
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import kotlin.concurrent.thread
 
 /**
  * Adapter for the Exercise RecycleView used for showind and edith exercises
@@ -38,10 +32,22 @@ import kotlin.concurrent.thread
 class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: FitnessCard, val isEditable : Boolean) : RecyclerView.Adapter<FitnessCardExercisesAdapter.Holder>() {
 
     var exerciseRecap : MutableList<ExerciseRecap> = mutableListOf()
-    val currentDateAndTime : String = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-M-yyyy hh:mm:ss"))
-    val dayRecap = DayRecap(currentDateAndTime, fitnessCard.key, exerciseRecap)
+    private val currentDateAndTime : String = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-M-yyyy"))
+    private val dayRecap = DayRecap(currentDateAndTime, fitnessCard.key, exerciseRecap)
+    val database = StaticRecapDatabase.database.getReference(context2.getString(R.string.RecapReference))
+    var recapDoneAlready : Boolean = false
 
     private val databaseRef = StaticFitnessCardDatabase.database.getReference(context2.getString(R.string.FitnessCardsReference))
+
+    /**
+     * Used to check at the very start of the adapter if a given recap for a given card is already been done today. calls valueListener()
+     * @author Daniel Satriano
+     * @since 30/07/2022
+     */
+    init {
+        StaticRecapDatabase.setSingleListenerToCardRecap(databaseRef = database, Athlete.UID, dayRecap, valueListener())
+    }
+
 
     class Holder(itemView: View, edit: Boolean, fitnessCard: FitnessCard) : RecyclerView.ViewHolder(itemView) {
 
@@ -109,12 +115,15 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
 
     }
 
+
+
     /**
      * Used to delete an exercise
      * @author Daniel Satriano
      * @since 23/07/2022
      * @param index it's the index of the item that needs to be removed
      */
+    //TODO("Should it also delete each recap in that month ?")
     fun deleteItem(index : Int, recyclerView : RecyclerView){
         val deletedItem = fitnessCard.exercises!![index]
         fitnessCard.exercises!!.removeAt(index)
@@ -134,18 +143,37 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
      * @param index it's the index of the item that needs to be removed
      * @param improvement Is the value given by the user that holds the weight or the minutes used/done for an exercise. EG : Today I lifted 50Kg , Today I run 15 minutes
      */
-    //TODO("controllare possibile problema quando chiudi e riapri l'app nello stesso giorno se ti fa aggiungere un recap aggiuntivo. (sicuramente sì ed è da fixare)")
     fun addRecap(index : Int, improvement : Int){
-        val database = StaticRecapDatabase.database.getReference(context2.getString(R.string.RecapReference))
-        val exercise = fitnessCard.exercises!![index]
-
-        exerciseRecap.add(ExerciseRecap(exercise.exerciseId!!, improvement))
-        StaticRecapDatabase.setRecapItem(database, Athlete.UID, dayRecap)
-
+        if(!recapDoneAlready) {
+            val exercise = fitnessCard.exercises!![index]
+            exerciseRecap.add(ExerciseRecap(exercise.exerciseId!!, improvement))
+            StaticRecapDatabase.setRecapItem(database, Athlete.UID, dayRecap)
+        }
     }
 
     /**
-     * Used to check if the recap that the user is trying to add is already added to the database for that given instance
+     * @author Daniel Satriano
+     * @since 30/07/2022
+     * Checks if the recap is already been done today, if it is then it sets [recapDoneAlready] to true. Note that this listener is not a normal ValueListener, but its a
+     * ListenerForSingleValueEvent
+     */
+    private fun valueListener(): ValueEventListener {
+        return object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                   recapDoneAlready = true
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(context2, error.message,Toast.LENGTH_LONG)
+            }
+        }
+    }
+
+
+    /**
+     * Used to check if the recap that the user is trying to add is already added to the database for that given instance.
+     * this function is being used in Fragment_showCardDialog.kt
      * @author Daniel Satriano
      * @param index it's the index of the item that needs to be checked
      * @return a boolean which defines whether it exists. If true it does exist, if false it doesn't

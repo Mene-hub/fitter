@@ -23,7 +23,7 @@
     <string name="profile_image">Profile image</string>
     <string name="AddExercise">New exercise</string>
     <string name="AddCard">New card</string>
-    <string name="yourWeeklyRecaps">Your Weekly Recaps</string>
+    <string name="yourWeeklyRecaps">Your Monthly Recaps</string>
     <string name="YourCards">Your Cards</string>
     <string name="yourProfile">Your profile</string>
     <string name="findUsers">Find users</string>
@@ -52,5 +52,7 @@
     <string name="recap_information">Recap information</string>
     <string name="minutesSpent">How many minutes ?</string>
     <string name="kilogramsUsed">How many kilos ?</string>
+    <string name="user_profile">User profile</string>
+    <string name="logout" translatable="false">Logout</string>
 
 </resources>

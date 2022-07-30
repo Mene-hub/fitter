@@ -19,7 +19,7 @@
     <string name="profile_image">Immagine profilo</string>
     <string name="AddExercise">Nuovo esercizio</string>
     <string name="AddCard">Nuova scheda</string>
-    <string name="yourWeeklyRecaps">I tuoi recap settimanali</string>
+    <string name="yourWeeklyRecaps">I tuoi recap mensili</string>
     <string name="YourCards">Le tue schede</string>
     <string name="yourProfile">Il tuo profilo</string>
     <string name="findUsers">Cerca utenti</string>
@@ -41,4 +41,5 @@
     <string name="recap_information">Informazioni di recap</string>
     <string name="minutesSpent">Quanti minuti?</string>
     <string name="kilogramsUsed">Quanti chili ?</string>
+    <string name="user_profile">Profilo utente</string>
 </resources>

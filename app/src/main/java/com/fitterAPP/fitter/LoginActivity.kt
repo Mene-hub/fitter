@@ -58,6 +58,10 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        FacebookSdk.setApplicationId(ApiKeyRetriever.getFacebookApplicationID())
+        FacebookSdk.setClientToken(ApiKeyRetriever.getFacebookToken())
+        FacebookSdk.sdkInitialize(applicationContext)
+
         //Firebase.database.setPersistenceEnabled(true)
         dbReference = StaticAthleteDatabase.database.getReference(getString(R.string.AthleteReference))
 
@@ -65,10 +69,6 @@ class LoginActivity : AppCompatActivity() {
         window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         auth = Firebase.auth    //istantiate auth variable
 
-
-        FacebookSdk.setApplicationId(ApiKeyRetriever.getFacebookApplicationID())
-        FacebookSdk.setClientToken(ApiKeyRetriever.getFacebookToken())
-        FacebookSdk.sdkInitialize(applicationContext)
 
         //region googleStuff
         binding.IVLoginGoogle.setOnClickListener(loginGoogle())

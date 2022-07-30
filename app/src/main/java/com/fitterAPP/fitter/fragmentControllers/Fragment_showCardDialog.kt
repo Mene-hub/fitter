@@ -34,7 +34,6 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import kotlin.concurrent.thread
 
-
 class Fragment_showCardDialog() : DialogFragment() {
 
     /** The system calls this to get the DialogFragment's layout, regardless
@@ -112,7 +111,7 @@ class Fragment_showCardDialog() : DialogFragment() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 when(direction){
                     ItemTouchHelper.RIGHT -> {
-                        if(!adapter.recapChecker(viewHolder.absoluteAdapterPosition)) {
+                        if(!adapter.recapChecker(viewHolder.absoluteAdapterPosition) && !adapter.recapDoneAlready) {
                             showAlertDialog(viewHolder)
                         }
                     }

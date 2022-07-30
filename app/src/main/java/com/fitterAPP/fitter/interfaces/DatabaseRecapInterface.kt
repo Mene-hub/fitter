@@ -4,6 +4,7 @@ import com.fitterAPP.fitter.classes.DayRecap
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 
 /**
@@ -40,5 +41,12 @@ interface DatabaseRecapInterface {
      * @since 16/07/2022
      */
     fun removeRecap(databaseRef: DatabaseReference, userID: String, cardID: String, recapID: String)
+
+    /**
+     * Makes you able to check if a given
+     * @author Daniel Satriano
+     * @since 30/07/2022
+     */
+    fun setSingleListenerToCardRecap(databaseRef: DatabaseReference, userID: String, recap :DayRecap , valueListener : ValueEventListener)
 
 }

@@ -44,7 +44,7 @@ class FitnessCardAdapter (val context2: Context, private val Cards:MutableList<F
                 if(fitnessCards != null) {
                     cardView.cardElevation = 0F
                     bgImage.scaleType = ImageView.ScaleType.FIT_CENTER
-                    val padding = bgImage.resources.getDimensionPixelOffset(R.dimen.button_add_card_padding);
+                    val padding = bgImage.resources.getDimensionPixelOffset(R.dimen.button_add_card_padding)
                     bgImage.setPadding(padding, padding, padding, padding)
                     cardExercises.text = ""
                     itemView.findViewById<LottieAnimationView>(R.id.lottie_add).isGone = false
@@ -59,7 +59,6 @@ class FitnessCardAdapter (val context2: Context, private val Cards:MutableList<F
                     val action : NavDirections = MyFitnessCardsDirections.actionMyFitnessCardsToFragmentShowCardDialog(Card)
                     it.findNavController().navigate(action)
                 }
-
             }
 
             val id: Int = context.resources.getIdentifier( "com.fitterAPP.fitter:drawable/" + Card.imageCover.toString(),null,null)

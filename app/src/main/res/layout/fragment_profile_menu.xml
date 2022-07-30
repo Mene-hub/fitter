@@ -28,6 +28,7 @@
             android:background="@color/white">
 
             <ImageView
+                android:contentDescription="@string/user_profile"
                 android:id="@+id/userprofileImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -43,34 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="0dp"
                 android:drawableTint="#000000"
-                android:text="User profile"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                app:layout_constraintTop_toBottomOf="@+id/txt_calendar" />
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/imageView10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:tint="@color/black"
-                app:srcCompat="@drawable/graph" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txt_recap"
-                style="@style/BottomSheetItem"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="0dp"
-                android:drawableTint="#000000"
-                android:text="Weekly Recap"
+                android:text="@string/user_profile"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintTop_toBottomOf="@+id/txt_calendar" />
@@ -82,6 +56,7 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:contentDescription="@string/logout"
                 android:id="@+id/imageView11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -96,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="0dp"
                 android:drawableTint="#000000"
-                android:text="Log out"
+                android:text="@string/logout"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintTop_toBottomOf="@+id/txt_search_profiles" />
