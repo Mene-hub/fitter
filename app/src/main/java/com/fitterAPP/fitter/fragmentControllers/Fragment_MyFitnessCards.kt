@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AbsListView
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
@@ -20,6 +21,7 @@ import com.fitterAPP.fitter.itemsAdapter.FitnessCardAdapter
 import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.classes.CardsCover
 import com.fitterAPP.fitter.databinding.FragmentMyFitnessCardsBinding
+import com.fitterAPP.fitter.itemsAdapter.RecapAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.database.*
 import java.time.LocalDateTime
@@ -29,9 +31,11 @@ import kotlin.collections.ArrayList
 class MyFitnessCards : Fragment() {
     private lateinit var binding : FragmentMyFitnessCardsBinding //Binding
     private lateinit var adapter : FitnessCardAdapter
+    private lateinit var recapAdapter: RecapAdapter
     private lateinit var dbReference : DatabaseReference
     //firebase database
     private val fitnessCads : MutableList<FitnessCard> = ArrayList()
+    private val recapCards : MutableList<FitnessCard> = ArrayList()
     private var dummyCard : FitnessCard = FitnessCard()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -51,20 +55,15 @@ class MyFitnessCards : Fragment() {
             fitnessCads.add(dummyCard)
         }
         recycle.adapter = adapter
-
         adapter.notifyDataSetChanged()
+
+        val recapRecycle : RecyclerView = binding.MyRecapsRV
+        recapAdapter = context?.let { RecapAdapter((activity as MainActivity), recapCards) }!!
+        recapRecycle.adapter = recapAdapter
+
 
         Log.w("Fragment", binding.MyFitnessCardsRV.id.toString())
         return binding.root
-    }
-
-    /**
-     * @author Daniel Satriano
-     * @author Claudio Menegotto
-     */
-    private fun transaction(newFitnessCard : FitnessCard) {
-        val action : NavDirections = MyFitnessCardsDirections.actionMyFitnessCardsToFragmentShowCardDialog(newFitnessCard)
-        findNavController().navigate(action)
     }
 
     /**
@@ -73,7 +72,7 @@ class MyFitnessCards : Fragment() {
      * @see Athlete
      * @see FitnessCard
      */
-    fun addFitnessCard(card : FitnessCard){
+    private fun addFitnessCard(card : FitnessCard){
         StaticFitnessCardDatabase.setFitnessCardItem(dbReference, Athlete.UID, card)
     }
 
@@ -122,10 +121,15 @@ class MyFitnessCards : Fragment() {
                 val item = snapshot.getValue(FitnessCard::class.java)
                 //aggiungo nuova fitness card
                 if(!fitnessCads.contains(item)) {
+
                     fitnessCads.remove(dummyCard)
                     fitnessCads.add((item!!))
                     fitnessCads.add(dummyCard)
                     adapter.notifyItemInserted(fitnessCads.indexOf(item))
+                }
+                if(!recapCards.contains(item)){
+                    recapCards.add(item!!)
+                    recapAdapter.notifyItemInserted(recapCards.indexOf(item))
                 }
             }
 
@@ -137,6 +141,7 @@ class MyFitnessCards : Fragment() {
 
                 fitnessCads[index].set(item)
                 adapter.notifyItemChanged(index)
+
             }
 
             override fun onChildRemoved(snapshot: DataSnapshot) {
