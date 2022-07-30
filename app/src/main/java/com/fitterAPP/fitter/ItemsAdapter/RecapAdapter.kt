@@ -16,17 +16,14 @@ class RecapAdapter(private val context2: Context, private val Cards:MutableList<
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
-        private val cardName : TextView = itemView.findViewById(R.id.CardName_TV)
-        private val cardExercises : TextView = itemView.findViewById(R.id.ExerciseCount_TV)
-        private val bgImage : ImageView = itemView.findViewById(R.id.CardBgImage_IV)
+        private val cardName : TextView = itemView.findViewById(R.id.recapName_TV)
+        private val cardExercises : TextView = itemView.findViewById(R.id.recapCount_TV)
+        private val bgImage : ImageView = itemView.findViewById(R.id.recapBgImage_IV)
 
         fun setCard(Card:FitnessCard, context: Context){
             cardName.text = Card.name
 
             cardExercises.text = "Ci sono 0 recap"
-            cardExercises.setTextColor(Color.BLACK)
-
-            cardName.setTextColor(Color.BLACK)
 
 
             itemView.setOnClickListener {
@@ -34,7 +31,7 @@ class RecapAdapter(private val context2: Context, private val Cards:MutableList<
                //it.findNavController().navigate(action)
             }
 
-            val id: Int = context.resources.getIdentifier( "com.fitterAPP.fitter:drawable/" + "recap",null,null)
+            val id: Int = context.resources.getIdentifier( "com.fitterAPP.fitter:drawable/" + "recapbg",null,null)
             bgImage.setImageResource(id)
 
         }
@@ -43,7 +40,7 @@ class RecapAdapter(private val context2: Context, private val Cards:MutableList<
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecapAdapter.Holder {
-        val view: View = LayoutInflater.from(context2).inflate(R.layout.item_fitnesscard, parent, false)
+        val view: View = LayoutInflater.from(context2).inflate(R.layout.item_monthly_recap, parent, false)
         return Holder(view)
     }
 
