@@ -61,8 +61,15 @@ class select_exercise_group : DialogFragment() {
             }else
                 fitnessCard.exercises?.set(index, Exercise(fitnessCard.exercises?.get(index)?.exerciseName!!, ExerciseType.warmup))
 
+            var lastindex : Int = 0
+
+            if(fitnessCard.exercises?.size!! > 0)
+                for (i in fitnessCard.exercises!!)
+                    if(i.exerciseId != null && i.exerciseId!! > lastindex)
+                        lastindex = i.exerciseId!!
+
             if(fitnessCard.exercises?.get(index)?.exerciseId == null)
-                fitnessCard.exercises?.get(index)?.exerciseId = index
+                fitnessCard.exercises?.get(index)?.exerciseId = lastindex +1
 
             canDelete = false
 
