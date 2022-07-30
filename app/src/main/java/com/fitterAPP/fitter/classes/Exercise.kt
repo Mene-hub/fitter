@@ -21,7 +21,7 @@ data class Exercise(var exerciseName : String, var type : ExerciseType) : Parcel
     //normal exercise
     var exerciseRep : Int? = null
     var exerciseSer : Int? = null
-    var exerciseRest : Double? = null
+    var exerciseRest : Int? = null
 
     //piramidal exercise
     var piramidSeries : MutableList<Int>? = null
@@ -49,7 +49,7 @@ data class Exercise(var exerciseName : String, var type : ExerciseType) : Parcel
 
     }
 
-    fun setAsNormal(rep: Int, ser : Int, rest : Double){
+    fun setAsNormal(rep: Int, ser : Int, rest : Int){
 
         type = ExerciseType.normal
         exerciseDuration = null
@@ -61,7 +61,7 @@ data class Exercise(var exerciseName : String, var type : ExerciseType) : Parcel
 
     }
 
-    fun setAsPiramid(ser : Int, rest : Double){
+    fun setAsPiramid(ser : Int, rest : Int){
 
         type = ExerciseType.pyramid
         exerciseDuration = null
@@ -73,7 +73,7 @@ data class Exercise(var exerciseName : String, var type : ExerciseType) : Parcel
 
     }
 
-    fun setAsSeries(ser : Int, rest : Double, serie : MutableList<Exercise>){
+    fun setAsSeries(ser : Int, rest : Int, serie : MutableList<Exercise>){
 
         type = ExerciseType.series
         exerciseDuration = null

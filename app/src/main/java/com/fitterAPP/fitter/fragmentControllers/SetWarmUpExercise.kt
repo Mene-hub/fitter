@@ -96,6 +96,10 @@ class SetWarmUpExercise : DialogFragment() {
             textTime.text = tmp.toString() + " min"
         }
 
+        if(fitnessCard.exercises?.get(index)?.exerciseDuration != null){
+            textTime.text = fitnessCard.exercises?.get(index)?.exerciseDuration.toString() + " min"
+        }
+
         binding.SaveExercise.setOnClickListener {
             fitnessCard.exercises?.get(index)?.setAsWarmup(textTime.text.toString().removeSuffix(" min").toInt())
 

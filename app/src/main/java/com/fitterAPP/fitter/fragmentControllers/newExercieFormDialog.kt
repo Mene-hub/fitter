@@ -91,6 +91,7 @@ class newExercieFormDialog : DialogFragment() {
         var addSeries = binding.addSeriesCV
         var textSeries = binding.SeriesTV
 
+
         subSeries.setOnClickListener{
             var tmp = textSeries.text.toString().toInt()
             if(tmp > 1){
@@ -143,10 +144,17 @@ class newExercieFormDialog : DialogFragment() {
             textTime.text = tmp.toString() + "s"
         }
 
+        //settings ui with exercise data
+        if(fitnessCard.exercises?.get(index)?.exerciseSer != null){
+            textSeries.text = fitnessCard.exercises?.get(index)?.exerciseSer!!.toString()
+            textReps.text = fitnessCard.exercises?.get(index)?.exerciseRep!!.toString()
+            textTime.text = fitnessCard.exercises?.get(index)?.exerciseRest!!.toString() + "s"
+        }
+
         //save card on db and close the fragment
         binding.SaveExercise.setOnClickListener {
             System.out.println(textReps.text.toString() + " " + textSeries.text.toString() + " " + textTime.text.toString().removeSuffix("s").toDouble())
-            fitnessCard.exercises?.get(index)?.setAsNormal(textReps.text.toString().toInt(), textSeries.text.toString().toInt(), textTime.text.toString().removeSuffix("s").toDouble())
+            fitnessCard.exercises?.get(index)?.setAsNormal(textReps.text.toString().toInt(), textSeries.text.toString().toInt(), textTime.text.toString().removeSuffix("s").toInt())
             StaticFitnessCardDatabase.setFitnessCardItem(StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference)), Athlete.UID, fitnessCard)
             val action : NavDirections = newExercieFormDialogDirections.actionNewExercieFormDialogToModifyCard(fitnessCard)
             //findNavController().clearBackStack(0)
