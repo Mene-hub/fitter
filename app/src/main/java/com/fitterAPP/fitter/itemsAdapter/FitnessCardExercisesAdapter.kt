@@ -4,9 +4,11 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.isGone
 import androidx.fragment.app.findFragment
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
@@ -15,8 +17,10 @@ import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.classes.*
 import com.fitterAPP.fitter.databases.StaticFitnessCardDatabase
 import com.fitterAPP.fitter.databases.StaticRecapDatabase
+import com.fitterAPP.fitter.fragmentControllers.Fragment_showCardDialog
 import com.fitterAPP.fitter.fragmentControllers.ModifyCard
 import com.fitterAPP.fitter.fragmentControllers.ModifyCardDirections
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -79,6 +83,11 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
                         controller.navigate(action!!)
 
                 }
+            }else
+            {
+                itemView.setOnClickListener {
+                    showExerciseinformation(ex)
+                }
             }
 
             when (ex.type){
@@ -111,6 +120,11 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
                     icon.setImageResource(R.drawable.normal_exercise_icon)
                 }
             }
+        }
+
+        fun showExerciseinformation(exercise: Exercise){
+            if(exercise.wgerBaseId != null)
+                itemView.findFragment<Fragment_showCardDialog>().showExerciseinformation(exercise)
         }
 
     }

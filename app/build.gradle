@@ -65,6 +65,7 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'
     implementation 'com.google.android.material:material:1.6.1' //material design
+
     //CONSTRAINT LAYOUT + support constraint
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
@@ -96,6 +97,9 @@ dependencies {
     //implementation for image load from URI
     implementation 'com.squareup.picasso:picasso:2.71828'
 
+    //image slider
+    implementation 'com.github.denzcoskun:ImageSlideshow:0.1.0'
+
     //gson library
     implementation 'com.google.code.gson:gson:2.9.0'
 
@@ -107,5 +111,8 @@ dependencies {
 
     //lottie
     implementation 'com.airbnb.android:lottie:5.2.0'
+
+    //Html text cleaner
+    implementation 'org.jsoup:jsoup:1.10.3'
 
 }

@@ -20,6 +20,7 @@ import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.classes.*
 import com.fitterAPP.fitter.databinding.FragmentFindExerciseBinding
 import com.fitterAPP.fitter.itemsAdapter.SuggestionAdapter
+import org.jsoup.Jsoup
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -112,7 +113,9 @@ class FindExercise : DialogFragment() {
             }
 
             handler.post(Runnable() {
-                exercise.description = ex.description
+                exercise.description = Jsoup.parse(ex.description).text()
+                exercise.wgerId = ex.id
+                exercise.wgerBaseId = ex.exercise_base
                 val action : NavDirections = FindExerciseDirections.actionFindExerciseToNewExercieFormDialog(fitnessCard, index, exercise)
                 findNavController().navigate(action)
             })

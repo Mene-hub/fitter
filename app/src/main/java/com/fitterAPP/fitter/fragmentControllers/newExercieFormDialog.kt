@@ -148,10 +148,10 @@ class newExercieFormDialog : DialogFragment() {
         }
 
         //settings ui with exercise data
-        if(fitnessCard.exercises?.get(index)?.exerciseSer != null){
-            textSeries.text = fitnessCard.exercises?.get(index)?.exerciseSer!!.toString()
-            textReps.text = fitnessCard.exercises?.get(index)?.exerciseRep!!.toString()
-            textTime.text = fitnessCard.exercises?.get(index)?.exerciseRest!!.toString() + "s"
+        if(exercise.exerciseSer != null){
+            textSeries.text = exercise.exerciseSer!!.toString()
+            textReps.text = exercise.exerciseRep!!.toString()
+            textTime.text = exercise.exerciseRest!!.toString() + "s"
         }
 
         //save card on db and close the fragment

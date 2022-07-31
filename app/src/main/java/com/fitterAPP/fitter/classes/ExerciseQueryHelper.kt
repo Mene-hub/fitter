@@ -22,6 +22,7 @@ class ExerciseQueryHelper {
         private const val EXERCISE_QUERY = "https://wger.de/api/v2/exercise/search/?format=json&term="
         private const val ALL_EXERCISE_QUERY = "https://wger.de/api/v2/exercise/?format=json&lan=1"
         private const val SINGLE_EXERCISE_QUERY = "https://wger.de/api/v2/exercise/"
+        private const val IMAGE_EXERCISE_QUERY = "https://wger.de/api/v2/exercisebaseinfo/"
         private const val QUERY_SUFFIX = "/?format=json&lan=1"
 
 
@@ -115,6 +116,42 @@ class ExerciseQueryHelper {
             return exercises
         }
         */
+
+        /**
+         * * Method to retrieve all images abount an exercise, utilizing OkHttp and GSON.
+         * For more information about OkHttp and GSON, visit [OkHttp](https://square.github.io/okhttp/), [GSON](https://github.com/google/gson/blob/master/UserGuide.md)
+         * @author Menegotto Claudio
+         */
+        fun getImageFromExercise(exerciseId: Int) : MutableList<String> ? {
+
+            //get json object from the REST API with exerciseName as a query
+            val client = OkHttpClient()
+            val request = Request.Builder()
+                .url(IMAGE_EXERCISE_QUERY + exerciseId + QUERY_SUFFIX)
+                .build()
+            val response = client.newCall(request).execute()
+            val json = response.body()?.string()
+
+            //convert responseBody to object of ExerciseSuggestions
+            val gson = Gson()
+            val type = object : TypeToken<BaseExercise>() {}.type
+            try{
+                var image : BaseExercise? =  gson.fromJson(json, type)
+
+                var images : MutableList<String> = ArrayList()
+
+                if(image?.images != null && image?.images?.size!! > 0)
+                    for ( i in 1..image?.images?.size!!){
+                        images.add(image.images?.get(i-1)?.image!!)
+                    }
+
+                return images
+            }catch(e:NullPointerException){
+                e.printStackTrace()
+                return null
+            }
+        }
+
     }
 }
 

@@ -4,20 +4,27 @@ import com.fitterAPP.fitter.R
 import android.app.Dialog
 import android.graphics.Canvas
 import android.graphics.Rect
+import android.media.Image
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.*
 import android.view.animation.Animation
 import android.widget.*
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.isGone
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.denzcoskun.imageslider.ImageSlider
+import com.denzcoskun.imageslider.constants.ScaleTypes
+import com.denzcoskun.imageslider.models.SlideModel
 import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.classes.*
 import com.fitterAPP.fitter.databases.StaticFitnessCardDatabase
@@ -32,6 +39,8 @@ import com.google.firebase.database.ValueEventListener
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 import kotlin.concurrent.thread
 
 class Fragment_showCardDialog() : DialogFragment() {
@@ -231,6 +240,62 @@ class Fragment_showCardDialog() : DialogFragment() {
                 // sistema che indica se l'utente vuole usare la feature recap oppure no ?")
             }.setOnDismissListener {
                 //TODO("Impostare il fatto che lo swipe viene annullato")
+            }
+            .show()
+    }
+
+    fun showExerciseinformation( ex:Exercise ){
+        // Create an alert builder
+        val builder = MaterialAlertDialogBuilder(requireContext(),  R.style.ThemeOverlay_App_MaterialAlertDialog)
+        // set the custom layout
+
+        val customLayout: View = layoutInflater.inflate(R.layout.dialog_open_exercise, null)
+
+
+        var imageList : ImageSlider = customLayout.findViewById(R.id.exercise_image_slider)
+        var list : MutableList<SlideModel> = ArrayList<SlideModel>()
+
+        val executor: ExecutorService = Executors.newSingleThreadExecutor()
+        val handler: Handler = Handler(Looper.getMainLooper())
+        var imageUri : MutableList<String> ? = null
+
+        executor.execute(Runnable () {
+            executor.run() {
+                imageUri = ExerciseQueryHelper.getImageFromExercise(ex.wgerBaseId!!)
+            }
+
+            handler.post(Runnable() {
+
+                if(imageUri != null && imageUri?.size!!>0) {
+
+                    for(i in 1..imageUri?.size!!)
+                        list.add(SlideModel(imageUri?.get(i-1)))
+
+                    imageList.setImageList(list, ScaleTypes.CENTER_INSIDE)
+                    customLayout.findViewById<ImageView>(R.id.placeHolder).isGone = true
+                }else
+                    customLayout.findViewById<ImageView>(R.id.placeHolder).isGone = false
+            })
+        })
+
+        builder.setView(customLayout)
+
+        var exName : TextView = customLayout.findViewById(R.id.ExName_TV)
+        exName.setText(ex.exerciseName)
+
+        var exDescription : TextView = customLayout.findViewById(R.id.exDescription_TV)
+        exDescription.setText(ex.description)
+
+
+
+        // add a button
+        builder
+
+            .setPositiveButton("OK") { _, _ -> // send data from the
+            }
+
+            .setOnDismissListener {
+
             }
             .show()
     }

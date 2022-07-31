@@ -33,6 +33,8 @@ data class Exercise(var exerciseName : String, var type : ExerciseType) : Parcel
     var notes : String ?= null
     var description : String ?= null
     var exerciseId : Int ? = null
+    var wgerId : Int ? = null
+    var wgerBaseId : Int ? = null
 
     //default
     constructor() : this("Default name", ExerciseType.normal)

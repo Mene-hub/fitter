@@ -5,8 +5,7 @@
     android:layout_height="170dp"
 
     android:layout_marginRight="10dp"
-    app:cardCornerRadius="20dp"
-    app:cardElevation="5dp">
+    app:cardCornerRadius="16dp">
 
     <ImageView
         android:id="@+id/recapBgImage_IV"
