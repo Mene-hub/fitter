@@ -2,19 +2,15 @@ package com.fitterAPP.fitter.fragmentControllers
 
 import com.fitterAPP.fitter.R
 import android.app.Dialog
-import android.graphics.Canvas
 import android.graphics.Rect
-import android.media.Image
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.DisplayMetrics
-import android.util.TypedValue
 import android.view.*
 import android.view.animation.Animation
 import android.widget.*
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isGone
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.NavDirections
@@ -36,12 +32,8 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-import kotlin.concurrent.thread
 
 class Fragment_showCardDialog() : DialogFragment() {
 

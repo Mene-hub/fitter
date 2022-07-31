@@ -20,6 +20,9 @@
         <action
             android:id="@+id/action_myFitnessCards_to_fragment_showCardDialog"
             app:destination="@id/fragment_showCardDialog" />
+        <action
+            android:id="@+id/action_myFitnessCards_to_monthlyRecapChart"
+            app:destination="@id/monthlyRecapChart" />
     </fragment>
     <fragment
         android:id="@+id/findprofile"
@@ -223,4 +226,16 @@
         android:name="com.fitterAPP.fitter.fragmentControllers.TimeRacap"
         android:label="fragment_time_racap"
         tools:layout="@layout/fragment_time_racap" />
+    <fragment
+        android:id="@+id/monthlyRecapChart"
+        android:name="com.fitterAPP.fitter.fragmentControllers.MonthlyRecapChart"
+        android:label="fragment_monthly_recap_chart"
+        tools:layout="@layout/fragment_monthly_recap_chart" >
+        <action
+            android:id="@+id/action_monthlyRecapChart_to_myFitnessCards"
+            app:destination="@id/myFitnessCards" />
+        <argument
+            android:name="fitnessCard"
+            app:argType="com.fitterAPP.fitter.classes.FitnessCard" />
+    </fragment>
 </navigation>
