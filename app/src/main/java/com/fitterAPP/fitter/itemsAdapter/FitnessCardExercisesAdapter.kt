@@ -62,7 +62,7 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
         var fitnessCard_ = fitnessCard
 
 
-        fun setCard(ex:Exercise, context: Context, index : Int){
+        fun setCard(ex:Exercise, index : Int){
             exName.text = ex.exerciseName
 
             if(edit_){
@@ -80,7 +80,7 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
                     }
 
                     if(action != null)
-                        controller.navigate(action!!)
+                        controller.navigate(action)
 
                 }
             }else
@@ -160,7 +160,7 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
     fun addRecap(index : Int, improvement : Int){
         if(!recapDoneAlready) {
             val exercise = fitnessCard.exercises!![index]
-            exerciseRecap.add(ExerciseRecap(exercise.exerciseId!!, improvement))
+            exerciseRecap.add(ExerciseRecap(exercise.exerciseName, improvement))
             StaticRecapDatabase.setRecapItem(database, Athlete.UID, dayRecap)
         }
     }
@@ -197,7 +197,7 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
 
         var alreadySet = false
         for (item in exerciseRecap) {
-            if (item.uidExercise == exercise.exerciseId) {
+            if (item.exerciseName == exercise.exerciseName) {
                 alreadySet = true
             }
         }
@@ -217,7 +217,7 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         val ex: Exercise = fitnessCard.exercises!![position]
-        holder.setCard(ex, context2, position)
+        holder.setCard(ex, position)
     }
 
     override fun getItemCount(): Int {

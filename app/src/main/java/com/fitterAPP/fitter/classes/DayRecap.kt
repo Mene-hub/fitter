@@ -19,8 +19,8 @@ data class DayRecap (var key : String, var cardKey : String, var recapExercise :
  * @author Daniel Satriano
  * @since 23/07/2022
  * @param improvement Contains the improvement set by the user in terms of weight or cardio minutes (warmup).
- * @param uidExercise UID of the exercise, retrievable in [Exercise] class.
+ * @param exerciseName The name of the exercise, retrievable in [Exercise] class.
  */
-data class ExerciseRecap(var uidExercise : Int, var improvement : Int){
-    constructor() : this(0,0)
+data class ExerciseRecap(var exerciseName : String, var improvement : Int){
+    constructor() : this("",0)
 }

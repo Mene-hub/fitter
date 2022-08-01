@@ -12,12 +12,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.classes.DayRecap
 import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.github.mikephil.charting.utils.ColorTemplate
 
+/**
+ * An adapter for the recycler view inside [com.fitterAPP.fitter.fragmentControllers.MonthlyRecapChart] layout
+ * @author Daniel Satriano
+ * @since 31/07/2022
+ * @param context2 context
+ * @param recapList a list which contains all the monthly recap
+ * @param graph the BarChart defined in the layout
+ */
 class MonthlyRecapAdapter(private val context2: Context, private val recapList: MutableList<DayRecap>, private val graph : BarChart) : RecyclerView.Adapter<MonthlyRecapAdapter.Holder>() {
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView){
@@ -25,7 +35,7 @@ class MonthlyRecapAdapter(private val context2: Context, private val recapList: 
         private val cardLabel: TextView = itemView.findViewById(R.id.recapName_TV)
         private val description : TextView = itemView.findViewById(R.id.recapCount_TV)
 
-        fun setCard(monthlyRecap: DayRecap, context: Context){
+        fun setCard(monthlyRecap: DayRecap){
 
             description.visibility = View.GONE
 
@@ -33,7 +43,7 @@ class MonthlyRecapAdapter(private val context2: Context, private val recapList: 
             //cardLabel.textSize = 30F
 
             itemView.setOnClickListener {
-                updateGraph(monthlyRecap.key)
+                updateGraph(monthlyRecap)
             }
 
             //TODO("Aggiunta immagini diverse per ogni stagione ?")
@@ -45,54 +55,40 @@ class MonthlyRecapAdapter(private val context2: Context, private val recapList: 
 
     }
 
-    private fun updateGraph(mese: String) {
-        graph.setTouchEnabled(false)
 
-        val a : MutableList<IBarDataSet> = ArrayList()
+    /**
+     * Method called when a user clicks on a cardview inside the recycler view. This method will generate all the necessary data to populate the graph
+     * @author Daniel Satriano
+     * @since 1/08/2022
+     * @param recap recap of the month clicked in the recycler view
+     */
+    private fun updateGraph(recap: DayRecap) {
+        val month : String = recap.key
 
-        val tmp1 : BarEntry = BarEntry(0F,30F)
-        val tmp2 : BarEntry = BarEntry(1F,50F)
-        val tmp3 : BarEntry = BarEntry(2F,80F)
+        val xLabels : ArrayList<String> = ArrayList()
+        val dataSets : MutableList<IBarDataSet> = ArrayList()
 
-        val gg1 : BarDataSet = BarDataSet(mutableListOf(tmp1), "Warmup")
-        val gg2 : BarDataSet = BarDataSet(mutableListOf(tmp2), "ChestPress")
-        val gg3 : BarDataSet = BarDataSet(mutableListOf(tmp3), "Boh")
+        recap.recapExercise.forEachIndexed { index, exerciseRecap ->
+            val tmp = BarEntry(index.toFloat(), exerciseRecap.improvement.toFloat())    //creates a BarEntry
+            val datasetTMP = BarDataSet(mutableListOf(tmp), exerciseRecap.exerciseName) //creates the dataSet
+            datasetTMP.valueTextSize = 18f
+            datasetTMP.color = ColorTemplate.MATERIAL_COLORS[index%4] //Set a different color for each bar its % 4 because in the int array there are only 4 items, otherwise it would throw an index exception
+            dataSets.add(datasetTMP)
 
-        gg1.color = ColorTemplate.MATERIAL_COLORS[0]
-        gg1.valueTextSize = 18F
-        gg1.label = "Warmup"
+            xLabels.add(exerciseRecap.exerciseName) //Adds the corrisponding label for the bar
+        }
 
-        gg2.color = ColorTemplate.MATERIAL_COLORS[1]
-        gg2.valueTextSize = 18F
-        gg2.label = "ChestPress"
+        val barData = BarData(dataSets)
+        barData.barWidth = 0.9f
 
-        gg3.color = ColorTemplate.MATERIAL_COLORS[2]
-        gg3.valueTextSize = 18F
-        gg3.label = "Boh"
-
-
-        a.add(gg1)
-        a.add(gg2)
-        a.add(gg3)
-
-/*
-        barDataset.valueTextColor = Color.BLACK
-        barDataset.valueTextSize = 16F
-*/
-
-
-
-        val barData = BarData(a)
-
-        graph.xAxis.setDrawAxisLine(false)
-        graph.xAxis.setDrawLabels(true)
-        graph.xAxis.setDrawGridLines(false)
-        graph.setFitBars(true)
         graph.data = barData
-        graph.setFitBars(true)
-        graph.description.text = mese
-        graph.animateY(500)
 
+        graph.description.text = month
+        graph.xAxis.valueFormatter = IndexAxisValueFormatter(xLabels)
+        graph.xAxis.labelCount = recap.recapExercise.size
+
+
+        graph.invalidate()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MonthlyRecapAdapter.Holder {
@@ -102,7 +98,7 @@ class MonthlyRecapAdapter(private val context2: Context, private val recapList: 
 
     override fun onBindViewHolder(holder: MonthlyRecapAdapter.Holder, position: Int) {
         val tmp: DayRecap = recapList[position]
-        holder.setCard(tmp, context2)
+        holder.setCard(tmp)
     }
 
     override fun getItemCount(): Int {
