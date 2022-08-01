@@ -76,8 +76,13 @@ class MonthlyRecapChart : Fragment() {
         chart.axisRight.isEnabled = false
         chart.legend.isEnabled = false
 
+        //mette le lable personalizzate ma non in modo corretto
         val xAxisLabels = listOf("warmup", "chestpress", "boh" )
         chart.xAxis.valueFormatter = IndexAxisValueFormatter(xAxisLabels)
+
+        //TODO implementare correttamente i dati nelle lable sotto al grafico, per farlo in modo corretto
+        // seguire il link di discord o qui sotto:
+        // https://stackoverflow.com/a/57040079/17288129
     }
 
 
