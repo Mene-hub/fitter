@@ -1,18 +1,23 @@
 package com.fitterAPP.fitter.fragmentControllers
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.fitterAPP.fitter.MainActivity
+import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.classes.DayRecap
 import com.fitterAPP.fitter.classes.ExerciseRecap
 import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.databinding.FragmentMonthlyRecapChartBinding
-import com.fitterAPP.fitter.itemsAdapter.FitnessCardAdapter
 import com.fitterAPP.fitter.itemsAdapter.MonthlyRecapAdapter
+import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.charts.BarLineChartBase
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.github.mikephil.charting.formatter.ValueFormatter
 
 
 class MonthlyRecapChart : Fragment() {
@@ -31,10 +36,10 @@ class MonthlyRecapChart : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         fitnessCard = args.fitnessCard
-        binding.TVMonthlyRecap.text = "Recap mensili della scheda: ${fitnessCard.name}"
+        binding.TVMonthlyRecap.text = (context?.getString(R.string.MonthlyRecap) + ": ${fitnessCard.name}")
         val monthlyRecap : MutableList<DayRecap> = ArrayList()
 
-
+        setBarChart(binding.BarChartMonthlyRecap)
 
         adapter = context?.let { MonthlyRecapAdapter((activity as MainActivity), monthlyRecap, binding.BarChartMonthlyRecap)}!!
         binding.monthlyRecapRecycler.adapter = adapter
@@ -64,6 +69,15 @@ class MonthlyRecapChart : Fragment() {
 
         monthlyRecap.add(DayRecap("Agosto", fitnessCard.key, tmpExerciseRecap ))
 
+    }
+
+    private fun setBarChart(chart : BarChart){
+        chart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+        chart.axisRight.isEnabled = false
+        chart.legend.isEnabled = false
+
+        val xAxisLabels = listOf("warmup", "chestpress", "boh" )
+        chart.xAxis.valueFormatter = IndexAxisValueFormatter(xAxisLabels)
     }
 
 

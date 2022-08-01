@@ -42,4 +42,5 @@
     <string name="minutesSpent">Quanti minuti?</string>
     <string name="kilogramsUsed">Quanti chili ?</string>
     <string name="user_profile">Profilo utente</string>
+    <string name="MonthlyRecap">Riassunti mensili</string>
 </resources>

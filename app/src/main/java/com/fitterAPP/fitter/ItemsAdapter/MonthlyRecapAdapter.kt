@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -29,7 +30,7 @@ class MonthlyRecapAdapter(private val context2: Context, private val recapList: 
             description.visibility = View.GONE
 
             cardLabel.text = monthlyRecap.key
-            cardLabel.textSize = 30F
+            //cardLabel.textSize = 30F
 
             itemView.setOnClickListener {
                 updateGraph(monthlyRecap.key)
@@ -90,7 +91,7 @@ class MonthlyRecapAdapter(private val context2: Context, private val recapList: 
         graph.data = barData
         graph.setFitBars(true)
         graph.description.text = mese
-        graph.animateY(2000)
+        graph.animateY(500)
 
     }
 
