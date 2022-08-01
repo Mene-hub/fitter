@@ -223,6 +223,6 @@ data class Response(var count : Int, var next : String, var previus : String, va
  * used in [Response] class
  * @author Claudio Menegotto
  */
-data class Result(var id : Int, var uuid : String, var name : String, var exercise_base : Int, var description : String, var creation_date : String, var category : Int, var muscle : MutableList<Int>, var muscles_secondary : MutableList<Int>, var equipment : MutableList<Int>, var language : Int, var license : Int, var license_author : String, var variations :MutableList<Int>){
+data class Result(var id : Int, var name : String, var exercise_base : Int, var description : String, var category : Int, var muscle : MutableList<Int>, var muscles_secondary : MutableList<Int>, var equipment : MutableList<Int>, var language : Int){
 
 }
