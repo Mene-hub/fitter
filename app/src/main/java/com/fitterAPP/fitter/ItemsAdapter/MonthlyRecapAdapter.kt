@@ -70,7 +70,6 @@ class MonthlyRecapAdapter(private val context2: Context, private val recapList: 
         gg3.label = "Boh"
 
 
-
         a.add(gg1)
         a.add(gg2)
         a.add(gg3)
@@ -83,8 +82,13 @@ class MonthlyRecapAdapter(private val context2: Context, private val recapList: 
 
 
         val barData = BarData(a)
+
+        graph.xAxis.setDrawAxisLine(false)
+        graph.xAxis.setDrawLabels(true)
+        graph.xAxis.setDrawGridLines(false)
         graph.setFitBars(true)
         graph.data = barData
+        graph.setFitBars(true)
         graph.description.text = mese
         graph.animateY(2000)
 
