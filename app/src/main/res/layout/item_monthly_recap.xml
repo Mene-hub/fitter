@@ -4,7 +4,7 @@
     android:layout_width="250dp"
     android:layout_height="170dp"
 
-    android:layout_marginRight="10dp"
+    android:layout_marginEnd="10dp"
     app:cardCornerRadius="16dp">
 
     <ImageView
@@ -12,14 +12,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        app:srcCompat="@drawable/gigachad2" />
+        app:srcCompat="@drawable/recapbg" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_margin="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
         android:orientation="vertical">
 
         <TextView
@@ -29,9 +29,7 @@
             android:fontFamily="@font/roboto_bold"
             android:text=""
             android:textColor="@color/white"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/recapCount_TV"
@@ -40,8 +38,7 @@
             android:fontFamily="@font/roboto_bold"
             android:text=""
             android:textColor="@color/white"
-            android:textSize="14sp"
-            app:layout_constraintTop_toBottomOf="@+id/TimeDuration_TV" />
+            android:textSize="14sp" />
 
     </LinearLayout>
 

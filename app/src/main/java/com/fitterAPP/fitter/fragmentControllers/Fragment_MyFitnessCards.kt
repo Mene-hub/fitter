@@ -17,7 +17,7 @@ import com.fitterAPP.fitter.itemsAdapter.FitnessCardAdapter
 import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.classes.CardsCover
 import com.fitterAPP.fitter.databinding.FragmentMyFitnessCardsBinding
-import com.fitterAPP.fitter.itemsAdapter.RecapAdapter
+import com.fitterAPP.fitter.itemsAdapter.HomeRecapAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.database.*
 import java.time.LocalDateTime
@@ -27,7 +27,7 @@ import kotlin.collections.ArrayList
 class MyFitnessCards : Fragment() {
     private lateinit var binding : FragmentMyFitnessCardsBinding //Binding
     private lateinit var adapter : FitnessCardAdapter
-    private lateinit var recapAdapter: RecapAdapter
+    private lateinit var recapAdapter: HomeRecapAdapter
     private lateinit var dbReference : DatabaseReference
     //firebase database
     private val fitnessCads : MutableList<FitnessCard> = ArrayList()
@@ -59,7 +59,7 @@ class MyFitnessCards : Fragment() {
         adapter.notifyDataSetChanged()
 
         val recapRecycle : RecyclerView = binding.MyRecapsRV
-        recapAdapter = context?.let { RecapAdapter((activity as MainActivity), recapCards) }!!
+        recapAdapter = context?.let { HomeRecapAdapter((activity as MainActivity), recapCards) }!!
         recapRecycle.adapter = recapAdapter
 
         StaticFitnessCardDatabase.setFitnessCardChildListener(dbReference, Athlete.UID, getFitnessCardEventListener())

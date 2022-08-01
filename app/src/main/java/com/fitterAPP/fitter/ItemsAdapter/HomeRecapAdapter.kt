@@ -1,50 +1,47 @@
 package com.fitterAPP.fitter.itemsAdapter
 
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.NavDirections
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.classes.FitnessCard
+import com.fitterAPP.fitter.fragmentControllers.MyFitnessCardsDirections
 
-class RecapAdapter(private val context2: Context, private val Cards:MutableList<FitnessCard>) : RecyclerView.Adapter<RecapAdapter.Holder>() {
-
+class HomeRecapAdapter(private val context2: Context, private val Cards:MutableList<FitnessCard>) : RecyclerView.Adapter<HomeRecapAdapter.Holder>() {
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
         private val cardName : TextView = itemView.findViewById(R.id.recapName_TV)
         private val cardExercises : TextView = itemView.findViewById(R.id.recapCount_TV)
-        private val bgImage : ImageView = itemView.findViewById(R.id.recapBgImage_IV)
 
         fun setCard(Card:FitnessCard, context: Context){
             cardName.text = Card.name
 
+            //TODO("Extract")
             cardExercises.text = "Ci sono 0 recap"
 
 
             itemView.setOnClickListener {
-                //val action : NavDirections = MyFitnessCardsDirections.actionMyFitnessCardsToFragmentShowCardDialog(Card)
-               //it.findNavController().navigate(action)
+                val action : NavDirections = MyFitnessCardsDirections.actionMyFitnessCardsToMonthlyRecapChart(fitnessCard = Card)
+                it.findNavController().navigate(action)
             }
-
-            val id: Int = context.resources.getIdentifier( "com.fitterAPP.fitter:drawable/" + "recapbg",null,null)
-            bgImage.setImageResource(id)
 
         }
 
     }
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecapAdapter.Holder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeRecapAdapter.Holder {
         val view: View = LayoutInflater.from(context2).inflate(R.layout.item_monthly_recap, parent, false)
         return Holder(view)
     }
 
-    override fun onBindViewHolder(holder: RecapAdapter.Holder, position: Int) {
+    override fun onBindViewHolder(holder: HomeRecapAdapter.Holder, position: Int) {
         val Card: FitnessCard = Cards[position]
         holder.setCard(Card, context2)
     }
