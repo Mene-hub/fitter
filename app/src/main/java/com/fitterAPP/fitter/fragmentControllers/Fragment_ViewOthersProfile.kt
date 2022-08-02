@@ -15,7 +15,6 @@ import com.fitterAPP.fitter.classes.Athlete
 import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.databases.StaticFitnessCardDatabase
 import com.fitterAPP.fitter.databinding.FragmentViewOthersProfileBinding
-import com.fitterAPP.fitter.itemsAdapter.FitnessCardAdapter
 import com.fitterAPP.fitter.itemsAdapter.FitnessCardFindUserAdapter
 import com.google.firebase.database.Query
 import com.squareup.picasso.Picasso

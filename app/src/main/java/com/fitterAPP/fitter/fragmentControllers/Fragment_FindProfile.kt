@@ -35,13 +35,11 @@ class FindProfile : Fragment() {
         binding.SVFindUsers.clearFocus()
         binding.SVFindUsers.setOnQueryTextListener(queryTextListener())
 
-
         adapter = context?.let { SuggestionAdapter((activity as MainActivity), suggestedUsers) }!!
         binding.recyclerView.adapter = adapter
 
         return binding.root
     }
-
 
     /**
      * * Private listener for the SearchView which updates on every change in the textfield or when submit is pressed.
@@ -75,7 +73,7 @@ class FindProfile : Fragment() {
      * @author Daniel Satriano
      * @since 28/05/2022
      */
-    @SuppressLint("NotifyDataSetChanged")
+    //TODO("Cambiare modo in cui prendo le informazioni, con metodi meno pesanti")
     fun databaseQuery(text : String?){
         val usernameOrdered : Query  = databaseReference.orderByChild("username").startAt(text).endAt("$text\uF7FF").limitToFirst(10)
         suggestedUsers.clear()

@@ -38,7 +38,6 @@ class SuggestionAdapter(private val context2: Context, private val users:Mutable
         }
     }
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val view: View = LayoutInflater.from(context2).inflate(R.layout.suggestion_adapter_row, parent, false)
         return Holder(view)
@@ -50,7 +49,5 @@ class SuggestionAdapter(private val context2: Context, private val users:Mutable
     override fun getItemCount(): Int {
         return users.size
     }
-
-
 
 }

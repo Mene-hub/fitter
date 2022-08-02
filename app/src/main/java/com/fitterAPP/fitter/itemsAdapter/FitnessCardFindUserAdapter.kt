@@ -17,7 +17,7 @@ import com.fitterAPP.fitter.fragmentControllers.Fragment_ViewOthersProfileDirect
 
 class FitnessCardFindUserAdapter (private val context2: Context, private val Cards:MutableList<FitnessCard>) : RecyclerView.Adapter<FitnessCardFindUserAdapter.Holder>() {
 
-    //TODO("Settare il long click listener che ti mostra un + per salvare la card")
+
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
@@ -37,6 +37,7 @@ class FitnessCardFindUserAdapter (private val context2: Context, private val Car
             }
 
             itemView.setOnClickListener {
+                //TODO("Cambiare il fragment. creare un fragmentDialog a parte, smettere di usere il viewOthersProfile")
                 val action : NavDirections = Fragment_ViewOthersProfileDirections.actionFragmentViewOthersProfileToFragmentShowCardDialog(card)
                 val containerView : FragmentContainerView = (context as MainActivity).findViewById(R.id.FragmentContainer)
                 findNavController(containerView).navigate(action)
@@ -49,8 +50,8 @@ class FitnessCardFindUserAdapter (private val context2: Context, private val Car
             )
 
             bgImage.setImageResource(id)
-
         }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
