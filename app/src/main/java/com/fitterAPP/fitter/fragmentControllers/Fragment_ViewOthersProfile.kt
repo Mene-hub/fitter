@@ -64,7 +64,7 @@ class Fragment_ViewOthersProfile : DialogFragment() {
 
         binding.TVUsernameCards.text = "${athlete.username}'s cards"
 
-        adapter = context?.let { FitnessCardFindUserAdapter((activity as MainActivity), cardList) }!!
+        adapter = context?.let { FitnessCardFindUserAdapter((activity as MainActivity), cardList, athlete.UID) }!!
         binding.RVCards.adapter = adapter
 
 

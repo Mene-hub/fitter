@@ -247,5 +247,8 @@
         <action
             android:id="@+id/action_showOthersCardDialog_to_fragment_ViewOthersProfile"
             app:destination="@id/fragment_ViewOthersProfile" />
+        <argument
+            android:name="ownerUID"
+            app:argType="string" />
     </dialog>
 </navigation>

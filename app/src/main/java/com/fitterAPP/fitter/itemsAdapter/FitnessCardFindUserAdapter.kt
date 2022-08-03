@@ -15,7 +15,7 @@ import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.fragmentControllers.Fragment_ViewOthersProfileDirections
 
-class FitnessCardFindUserAdapter (private val context2: Context, private val Cards:MutableList<FitnessCard>) : RecyclerView.Adapter<FitnessCardFindUserAdapter.Holder>() {
+class FitnessCardFindUserAdapter (private val context2: Context, private val Cards:MutableList<FitnessCard>, private val ownerUID : String) : RecyclerView.Adapter<FitnessCardFindUserAdapter.Holder>() {
 
 
 
@@ -37,7 +37,7 @@ class FitnessCardFindUserAdapter (private val context2: Context, private val Car
             }
 
             itemView.setOnClickListener {
-                val action : NavDirections = Fragment_ViewOthersProfileDirections.actionFragmentViewOthersProfileToShowOthersCardDialog(card)
+                val action : NavDirections = Fragment_ViewOthersProfileDirections.actionFragmentViewOthersProfileToShowOthersCardDialog(card, ownerUID)
                 val containerView : FragmentContainerView = (context as MainActivity).findViewById(R.id.FragmentContainer)
                 findNavController(containerView).navigate(action)
             }

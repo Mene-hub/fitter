@@ -55,5 +55,6 @@
     <string name="user_profile">User profile</string>
     <string name="logout" translatable="false">Logout</string>
     <string name="MonthlyRecap">Monthly Recaps</string>
+    <string name="BookmarkReference" translatable="false">BOOKMARKED_CARDS</string>
 
 </resources>
