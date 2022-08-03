@@ -5,6 +5,10 @@ import com.fitterAPP.fitter.interfaces.FitnessCardInterface
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue
 
+/**
+ * @author Daniel Satriano
+ * @since 3/08/2022
+ */
 @Parcelize
 class BookmarkCard(override var name: String?, override var description: String?, override var timeDuration: Int?, override var exercises: @RawValue MutableList<Exercise>?,
                    override var key: String, override var imageCover: CardsCover, var ownerUID: String) : Parcelable,FitnessCardInterface {
@@ -29,4 +33,10 @@ class BookmarkCard(override var name: String?, override var description: String?
         this.key = fitnessCard!!.key
         this.imageCover = fitnessCard.imageCover
     }
+
+    companion object {
+        var bookmarkList : MutableList<BookmarkCard> = ArrayList()
+
+    }
+
 }

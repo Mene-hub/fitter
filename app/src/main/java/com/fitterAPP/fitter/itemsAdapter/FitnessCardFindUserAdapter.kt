@@ -13,11 +13,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.R
+import com.fitterAPP.fitter.classes.BookmarkCard
 import com.fitterAPP.fitter.fragmentControllers.Fragment_ViewOthersProfileDirections
 
+/**
+ * @author Daniel Satriano
+ * @since 3/08/2022
+ */
 class FitnessCardFindUserAdapter (private val context2: Context, private val Cards:MutableList<FitnessCard>, private val ownerUID : String) : RecyclerView.Adapter<FitnessCardFindUserAdapter.Holder>() {
-
-
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
@@ -37,7 +40,18 @@ class FitnessCardFindUserAdapter (private val context2: Context, private val Car
             }
 
             itemView.setOnClickListener {
-                val action : NavDirections = Fragment_ViewOthersProfileDirections.actionFragmentViewOthersProfileToShowOthersCardDialog(card, ownerUID)
+
+                var hasBeenBookmarked : Boolean = false
+
+                for (item in BookmarkCard.bookmarkList){
+                    if(item.key == card.key){
+                        if(item.ownerUID == ownerUID){
+                            hasBeenBookmarked = true
+                        }
+                    }
+                }
+
+                val action : NavDirections = Fragment_ViewOthersProfileDirections.actionFragmentViewOthersProfileToShowOthersCardDialog(card, ownerUID, hasBeenBookmarked)
                 val containerView : FragmentContainerView = (context as MainActivity).findViewById(R.id.FragmentContainer)
                 findNavController(containerView).navigate(action)
             }

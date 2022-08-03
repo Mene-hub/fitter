@@ -12,6 +12,7 @@ import com.facebook.shimmer.ShimmerFrameLayout
 import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.classes.Athlete
+import com.fitterAPP.fitter.classes.BookmarkCard
 import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.databases.StaticFitnessCardDatabase
 import com.fitterAPP.fitter.databinding.FragmentViewOthersProfileBinding
@@ -26,6 +27,7 @@ class Fragment_ViewOthersProfile : DialogFragment() {
     private var cardList : MutableList<FitnessCard> = mutableListOf()
     private val args by navArgs<Fragment_ViewOthersProfileArgs>()
     private lateinit var shimmerFrameLayout : ShimmerFrameLayout
+    private var isSameUser : Boolean = false
 
     /**
      * onCreate method which is used to set the dialog style. This mathod is paired with a WindowManager setting done in [onCreateView]

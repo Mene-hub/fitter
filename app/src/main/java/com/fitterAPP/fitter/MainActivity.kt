@@ -9,8 +9,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import com.facebook.internal.Mutable
 import com.facebook.login.LoginManager
 import com.fitterAPP.fitter.classes.Athlete
+import com.fitterAPP.fitter.classes.BookmarkCard
+import com.fitterAPP.fitter.classes.FitnessCard
+import com.fitterAPP.fitter.databases.StaticBookmarkDatabase
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
 import com.google.firebase.auth.FirebaseAuth
@@ -49,6 +53,10 @@ class MainActivity : AppCompatActivity() {
 
         //FIREBASE ACCOUNT
         auth = Firebase.auth
+
+        //Adds a value listener to the database
+        val bookmarkReference = StaticBookmarkDatabase.database.getReference(getString(R.string.BookmarkReference))
+        StaticBookmarkDatabase.setBookmarkListener(bookmarkReference, auth.uid!!, bookMarkValueListener())
 
         if(auth.currentUser != null){
             currentUser = auth.currentUser!!
@@ -104,8 +112,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.TV_Username).text = user.username       //SET USERNAME IN TEXTVIEW
         Athlete.setValues(user)         //SET NEW VALUES FOR THE STATIC USER PART, USED IN Fragment_MyFitnessCards.kt
     }
-
-
+    
     /**
      * Method used to log out users and send them back to the LoginActivity
      * @author Claudio Menegotto
@@ -160,5 +167,29 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return childEventListener
+    }
+
+
+    /**
+     * Value listener for the bookmarks
+     * @author Daniel Satriano
+     * @since 3/08/2022
+     */
+    private fun bookMarkValueListener(): ValueEventListener {
+        return object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                for(item in snapshot.children){
+                    if(item != null){
+                        BookmarkCard.bookmarkList.add(item.getValue(BookmarkCard::class.java)!!)
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@MainActivity,error.message, Toast.LENGTH_LONG)
+            }
+
+        }
     }
 }

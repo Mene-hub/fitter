@@ -1,6 +1,7 @@
 package com.fitterAPP.fitter.fragmentControllers
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +28,9 @@ class ShowOthersCardDialog : DialogFragment() {
 
     private lateinit var binding : FragmentShowOthersCardDialogBinding
     private val args by navArgs<ShowOthersCardDialogArgs>()
-    private var isChecked : Boolean = false
+    private var isChecked : Boolean = false //used to check if the card is already bookmarked
+
+    private var isCheckedFlag : Boolean = false //used for lottie animation
     private lateinit var databaseRef : DatabaseReference
 
 
@@ -53,24 +56,35 @@ class ShowOthersCardDialog : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val fitnessCard : FitnessCard = args.fitnesscard
+        isChecked = args.isChecked
         val lottieAnimator = binding.lottieBookmark
+
         val adapter = FitnessCardExercisesAdapter((activity as MainActivity), fitnessCard,false)
-        val bookmarkList: MutableList<BookmarkCard> = ArrayList()
         val bookmark = BookmarkCard(fitnessCard, args.ownerUID)
 
 
         databaseRef =  StaticBookmarkDatabase.database.getReference(getString(R.string.BookmarkReference))
 
+        checkIfBookmarked(lottieAnimator)
         binding.exerciseListRecycler.adapter = adapter
         adapter.notifyDataSetChanged()
 
         binding.backBt.setOnClickListener(onBackButton())
-        lottieAnimator.setOnClickListener(bookmarkClickListener(lottieAnimator, bookmarkList, bookmark))
+        lottieAnimator.setOnClickListener(bookmarkClickListener(lottieAnimator, bookmark))
 
     }
 
-    private fun checkIfBookmarked(){
-        TODO("Da implementare")
+    /**
+     * This method is used to set if the bookmark icon needs to be activated by default or not. whatever or not the user have already bookmarked the card is viewing
+     * @author Daniel Satriano
+     * @since 3/08/2022
+     * @param lottieAnimator The graphical object (View) which is defined inside this fragment layout.
+     */
+    private fun checkIfBookmarked(lottieAnimator : LottieAnimationView){
+        if(isChecked){
+            isCheckedFlag = true
+            lottieAnimator.frame = 50
+        }
     }
 
     /**
@@ -85,28 +99,32 @@ class ShowOthersCardDialog : DialogFragment() {
     }
 
     /**
+     * Method that manages all the bookmark add and remove options. This method is connected to the database
      * @author Daniel Satriano
      * @since 3/08/2022
+     * @param lottieAnimator The graphical object (View) which is defined inside this fragment layout.
+     * @param bookmark The current card that the user is viewing
      */
-    //TODO("Salvare fitness cards")
-    private fun bookmarkClickListener(lottieAnimator: LottieAnimationView, bookmarkList: MutableList<BookmarkCard>, bookmark : BookmarkCard): View.OnClickListener {
+    private fun bookmarkClickListener(lottieAnimator: LottieAnimationView, bookmark: BookmarkCard): View.OnClickListener {
         return View.OnClickListener{
-            if(!isChecked){
+            if(!isCheckedFlag){
 
-                bookmarkList.add(bookmark)
-                StaticBookmarkDatabase.updateBookmarkList(databaseRef, Athlete.UID, bookmarkList)
-
+                BookmarkCard.bookmarkList.add(bookmark)
+                StaticBookmarkDatabase.updateBookmarkList(databaseRef, Athlete.UID, BookmarkCard.bookmarkList)
                 lottieAnimator.speed = 1F
                 lottieAnimator.playAnimation()
-                isChecked = true
+                isCheckedFlag = true
             }else{
 
-                bookmarkList.remove(bookmark)
-                StaticBookmarkDatabase.updateBookmarkList(databaseRef, Athlete.UID, bookmarkList)
+                val index = BookmarkCard.bookmarkList.indexOf(BookmarkCard.bookmarkList.find { it.key == bookmark.key })
 
+                BookmarkCard.bookmarkList.removeAt(index)
+                StaticBookmarkDatabase.updateBookmarkList(databaseRef, Athlete.UID, BookmarkCard.bookmarkList)
+
+                lottieAnimator.frame = 50
                 lottieAnimator.speed = -1.5F
                 lottieAnimator.playAnimation()
-                isChecked = false
+                isCheckedFlag = false
             }
         }
     }

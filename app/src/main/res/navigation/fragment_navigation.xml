@@ -250,5 +250,9 @@
         <argument
             android:name="ownerUID"
             app:argType="string" />
+        <argument
+            android:name="isChecked"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </dialog>
 </navigation>
