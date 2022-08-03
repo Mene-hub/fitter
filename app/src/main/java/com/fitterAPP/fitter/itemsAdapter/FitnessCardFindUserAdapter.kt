@@ -37,8 +37,7 @@ class FitnessCardFindUserAdapter (private val context2: Context, private val Car
             }
 
             itemView.setOnClickListener {
-                //TODO("Cambiare il fragment. creare un fragmentDialog a parte, smettere di usere il viewOthersProfile")
-                val action : NavDirections = Fragment_ViewOthersProfileDirections.actionFragmentViewOthersProfileToFragmentShowCardDialog(card)
+                val action : NavDirections = Fragment_ViewOthersProfileDirections.actionFragmentViewOthersProfileToShowOthersCardDialog(card)
                 val containerView : FragmentContainerView = (context as MainActivity).findViewById(R.id.FragmentContainer)
                 findNavController(containerView).navigate(action)
             }

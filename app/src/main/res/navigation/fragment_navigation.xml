@@ -53,9 +53,6 @@
             android:name="cardBundle"
             app:argType="com.fitterAPP.fitter.classes.FitnessCard" />
         <action
-            android:id="@+id/action_fragment_showCardDialog_to_fragment_ViewOthersProfile"
-            app:destination="@id/fragment_ViewOthersProfile" />
-        <action
             android:id="@+id/action_fragment_showCardDialog_to_modifyCard"
             app:destination="@id/modifyCard" />
     </dialog>
@@ -197,8 +194,9 @@
             android:name="bundleAthlete"
             app:argType="com.fitterAPP.fitter.classes.Athlete" />
         <action
-            android:id="@+id/action_fragment_ViewOthersProfile_to_fragment_showCardDialog"
-            app:destination="@id/fragment_showCardDialog" />
+            android:id="@+id/action_fragment_ViewOthersProfile_to_showOthersCardDialog"
+            app:destination="@id/showOthersCardDialog"
+            app:enterAnim="@android:anim/fade_in" />
     </dialog>
     <dialog
         android:id="@+id/bottomSheetDialog"
@@ -238,4 +236,16 @@
             android:name="fitnessCard"
             app:argType="com.fitterAPP.fitter.classes.FitnessCard" />
     </fragment>
+    <dialog
+        android:id="@+id/showOthersCardDialog"
+        android:name="com.fitterAPP.fitter.fragmentControllers.ShowOthersCardDialog"
+        android:label="fragment_show_others_card_dialog"
+        tools:layout="@layout/fragment_show_others_card_dialog" >
+        <argument
+            android:name="fitnesscard"
+            app:argType="com.fitterAPP.fitter.classes.FitnessCard" />
+        <action
+            android:id="@+id/action_showOthersCardDialog_to_fragment_ViewOthersProfile"
+            app:destination="@id/fragment_ViewOthersProfile" />
+    </dialog>
 </navigation>

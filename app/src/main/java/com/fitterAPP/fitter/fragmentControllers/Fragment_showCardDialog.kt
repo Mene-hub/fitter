@@ -99,9 +99,6 @@ class Fragment_showCardDialog() : DialogFragment() {
             newFitnessCard.exercises = ArrayList()
         }
 
-
-
-
         //adapter for the exercises
         adapter = FitnessCardExercisesAdapter((activity as MainActivity),newFitnessCard,false)
         recycle.adapter = adapter
