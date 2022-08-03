@@ -1,7 +1,6 @@
 package com.fitterAPP.fitter.fragmentControllers
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,7 +34,7 @@ class ShowOthersCardDialog : DialogFragment() {
 
 
     /**
-     * onCreate method which is used to set the dialog style. This mathod is paired with a WindowManager setting done in [onCreateView]
+     * onCreate method which is used to set the dialog style. This method is paired with a WindowManager setting done in [onCreateView]
      * @author Daniel Satriano
      * @since 25/05/2022
      */
