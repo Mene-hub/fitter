@@ -25,14 +25,18 @@ class BookmarkCard(override var name: String?, override var description: String?
         this.imageCover = fitnessCard.imageCover
     }
 
-    override fun set(fitnessCard: FitnessCard?) {
-        this.name = fitnessCard?.name
-        this.description = fitnessCard?.description
-        this.exercises = fitnessCard?.exercises
-        this.timeDuration = fitnessCard?.timeDuration
-        this.key = fitnessCard!!.key
-        this.imageCover = fitnessCard.imageCover
+    /**
+     * Converts a [BookmarkCard] to a [FitnessCard]
+     * @author Daniel Satriano
+     * @since 5/08/2022
+     */
+    fun toFitnessCard() : FitnessCard{
+        return FitnessCard(this.name,this.description,this.timeDuration,this.exercises,this.key,this.imageCover)
     }
+
+
+
+
 
     companion object {
         var bookmarkList : MutableList<BookmarkCard> = ArrayList()

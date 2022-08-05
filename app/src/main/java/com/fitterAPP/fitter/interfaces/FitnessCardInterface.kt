@@ -15,7 +15,5 @@ interface FitnessCardInterface {
     var key : String
     var imageCover : CardsCover
 
-    //metodo per sovrascrivere un oggetto
-    fun set(fitnessCard : com.fitterAPP.fitter.classes.FitnessCard?)
 
 }

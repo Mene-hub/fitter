@@ -50,6 +50,34 @@
                 app:layout_constraintTop_toBottomOf="@+id/txt_calendar" />
         </LinearLayout>
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:contentDescription="@string/logout"
+                android:id="@+id/IV_bookmarks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:tint="@color/black"
+                app:srcCompat="@drawable/ic_bookmarks" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_bookmark"
+                style="@style/BottomSheetItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:drawableTint="#000000"
+                android:text="Saved cards"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@+id/txt_search_profiles" />
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

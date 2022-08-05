@@ -16,7 +16,7 @@ data class FitnessCard(override var name: String?, override var description: Str
     }
 
     //metodo per sovrascrivere un oggetto
-    override fun set(fitnessCard : FitnessCard?){
+    fun set(fitnessCard : FitnessCard?){
         this.name = fitnessCard?.name
         this.description = fitnessCard?.description
         this.exercises = fitnessCard?.exercises

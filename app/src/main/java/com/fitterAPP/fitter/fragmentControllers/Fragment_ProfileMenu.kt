@@ -5,7 +5,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.navigation.fragment.findNavController
 import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.R
@@ -15,24 +14,32 @@ class profileMenu : BottomSheetDialogFragment() {
     private lateinit var binding : FragmentProfileMenuBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding =FragmentProfileMenuBinding.inflate(inflater,container,false)
+        binding = FragmentProfileMenuBinding.inflate(inflater,container,false)
+        return binding.root
+    }
 
-        val logoutbt : AppCompatTextView = binding.txtLogout
 
-        val userprofile : AppCompatTextView = binding.txtUserProfile
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        userprofile.setOnClickListener{
+        binding.txtUserProfile.setOnClickListener{
             findNavController().navigate(R.id.action_profileMenu_to_profile)
             dismiss()
         }
 
-        logoutbt.setOnClickListener {
+        binding.txtLogout.setOnClickListener {
             (activity as MainActivity).logout()
             dismiss()
         }
 
-        return binding.root
+        binding.txtBookmark.setOnClickListener{
+            findNavController().navigate(R.id.action_bottomSheetDialog_to_bookmarkCards)
+            dismiss()
+        }
+
     }
+
+
 
     companion object {
         const val TAG = "ModalBottomSheet"

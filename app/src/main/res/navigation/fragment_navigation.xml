@@ -207,8 +207,8 @@
             android:id="@+id/action_profileMenu_to_profile"
             app:destination="@id/profile" />
         <action
-            android:id="@+id/action_profileMenu_to_timeRacap"
-            app:destination="@id/timeRacap" />
+            android:id="@+id/action_bottomSheetDialog_to_bookmarkCards"
+            app:destination="@id/bookmarkCards" />
     </dialog>
     <fragment
         android:id="@+id/profile"
@@ -219,11 +219,6 @@
             android:id="@+id/action_profile_to_myFitnessCards"
             app:destination="@id/myFitnessCards" />
     </fragment>
-    <fragment
-        android:id="@+id/timeRacap"
-        android:name="com.fitterAPP.fitter.fragmentControllers.TimeRacap"
-        android:label="fragment_time_racap"
-        tools:layout="@layout/fragment_time_racap" />
     <fragment
         android:id="@+id/monthlyRecapChart"
         android:name="com.fitterAPP.fitter.fragmentControllers.MonthlyRecapChart"
@@ -254,5 +249,20 @@
             android:name="isChecked"
             app:argType="boolean"
             android:defaultValue="false" />
+        <action
+            android:id="@+id/action_showOthersCardDialog_to_bookmarkCards"
+            app:destination="@id/bookmarkCards" />
     </dialog>
+    <fragment
+        android:id="@+id/bookmarkCards"
+        android:name="com.fitterAPP.fitter.fragmentControllers.BookmarkCards"
+        android:label="fragment_bookmark_cards"
+        tools:layout="@layout/fragment_bookmark_cards" >
+        <action
+            android:id="@+id/action_bookmarkCards_to_myFitnessCards"
+            app:destination="@id/myFitnessCards" />
+        <action
+            android:id="@+id/action_bookmarkCards_to_showOthersCardDialog"
+            app:destination="@id/showOthersCardDialog" />
+    </fragment>
 </navigation>
