@@ -62,11 +62,15 @@ class ShowOthersCardDialog : DialogFragment() {
         val bookmark = BookmarkCard(fitnessCard, args.ownerUID)
 
 
+        binding.CardNameTV.text = fitnessCard.name
+        binding.DescriptionTV.text = fitnessCard.description
+        binding.TimeDurationTV.text = fitnessCard.timeDuration.toString() +  " min"
+
         databaseRef =  StaticBookmarkDatabase.database.getReference(getString(R.string.BookmarkReference))
 
         checkIfBookmarked(lottieAnimator)
         binding.exerciseListRecycler.adapter = adapter
-        adapter.notifyDataSetChanged()
+        adapter.notifyItemInserted(0)
 
         binding.backBt.setOnClickListener(onBackButton())
         lottieAnimator.setOnClickListener(bookmarkClickListener(lottieAnimator, bookmark))
@@ -120,7 +124,6 @@ class ShowOthersCardDialog : DialogFragment() {
                 BookmarkCard.bookmarkList.removeAt(index)
                 StaticBookmarkDatabase.updateBookmarkList(databaseRef, Athlete.UID, BookmarkCard.bookmarkList)
 
-                lottieAnimator.frame = 50
                 lottieAnimator.speed = -1.5F
                 lottieAnimator.playAnimation()
                 isCheckedFlag = false

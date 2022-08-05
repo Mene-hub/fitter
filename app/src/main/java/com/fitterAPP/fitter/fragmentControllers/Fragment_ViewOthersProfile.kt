@@ -37,6 +37,7 @@ class Fragment_ViewOthersProfile : DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.Theme_Fitter_FullScreenDialog)
+        retrieveUserCards(args.bundleAthlete.UID)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -74,15 +75,6 @@ class Fragment_ViewOthersProfile : DialogFragment() {
     }
 
     /**
-     * Used to call the method to retrieve user cards.
-     * @author Daniel Satriano
-     */
-    override fun onStart() {
-        super.onStart()
-        retrieveUserCards(args.bundleAthlete.UID)
-    }
-
-    /**
      * Method to retrieve targeted user fitness cards, this method doesn't utilize listeners
      * @author Daniel Satriano
      * @since 13/06/2022
@@ -105,7 +97,6 @@ class Fragment_ViewOthersProfile : DialogFragment() {
                 //Stop shimmer effect, make shimmer template gone and RecyclerView visible
                 binding.RVCardsShimmer.visibility = View.GONE
                 binding.RVCardsShimmer.stopShimmer()
-
                 binding.RVCards.visibility = View.VISIBLE
             }
         }

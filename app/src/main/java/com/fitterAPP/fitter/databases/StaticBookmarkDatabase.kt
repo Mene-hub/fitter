@@ -17,7 +17,7 @@ class StaticBookmarkDatabase {
          * @since 3/08/2022
          */
         override fun setBookmarkListener(databaseRef: DatabaseReference, currentUserUID: String, BookmarkListener: ValueEventListener) {
-            databaseRef.child(currentUserUID).addValueEventListener(BookmarkListener)
+            databaseRef.child(currentUserUID).addListenerForSingleValueEvent(BookmarkListener)
         }
 
         /**
