@@ -70,7 +70,6 @@ class ShowOthersCardDialog : DialogFragment() {
 
         checkIfBookmarked(lottieAnimator)
         binding.exerciseListRecycler.adapter = adapter
-        adapter.notifyItemInserted(0)
 
         binding.backBt.setOnClickListener(onBackButton())
         lottieAnimator.setOnClickListener(bookmarkClickListener(lottieAnimator, bookmark))
