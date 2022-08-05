@@ -17,7 +17,7 @@ class BookmarkCards : Fragment() {
 
     private lateinit var binding : FragmentBookmarkCardsBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
         binding = FragmentBookmarkCardsBinding.inflate(inflater, container, false)
         return binding.root
