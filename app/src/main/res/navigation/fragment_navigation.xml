@@ -55,6 +55,10 @@
         <action
             android:id="@+id/action_fragment_showCardDialog_to_modifyCard"
             app:destination="@id/modifyCard" />
+        <argument
+            android:name="monthlyRecap"
+            app:argType="com.fitterAPP.fitter.classes.MonthlyRecap"
+            app:nullable="true" />
     </dialog>
     <dialog
         android:id="@+id/modifyCard"

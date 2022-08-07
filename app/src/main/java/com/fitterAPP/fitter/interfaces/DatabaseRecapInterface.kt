@@ -1,6 +1,6 @@
 package com.fitterAPP.fitter.interfaces
 
-import com.fitterAPP.fitter.classes.DayRecap
+import com.fitterAPP.fitter.classes.MonthlyRecap
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -26,14 +26,14 @@ interface DatabaseRecapInterface {
      * @author Daniel Satriano
      * @since 16/07/2022
      */
-    fun setRecapChildListener(databaseRef: DatabaseReference, userID: String, recapListener: ChildEventListener)
+    fun setRecapChildListener(databaseRef: DatabaseReference, userID: String, cardID : String,  recapListener: ChildEventListener)
 
     /**
      * Enables to save a DayRecap object in the database
      * @author Daniel Satriano
      * @since 16/07/2022
      */
-    fun setRecapItem(databaseRef: DatabaseReference, userID: String, recap: DayRecap)
+    fun setRecapItem(databaseRef: DatabaseReference, userID: String, recap: MonthlyRecap)
 
     /**
      * Enables to remove a DayRecap object from the database
@@ -47,6 +47,6 @@ interface DatabaseRecapInterface {
      * @author Daniel Satriano
      * @since 30/07/2022
      */
-    fun setSingleListenerToCardRecap(databaseRef: DatabaseReference, userID: String, recap :DayRecap , valueListener : ValueEventListener)
+    fun setSingleListenerToCardRecap(databaseRef: DatabaseReference, userID: String, recap :MonthlyRecap , valueListener : ValueEventListener)
 
 }

@@ -1,18 +1,14 @@
 package com.fitterAPP.fitter.itemsAdapter
 
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.fitterAPP.fitter.R
-import com.fitterAPP.fitter.classes.DayRecap
+import com.fitterAPP.fitter.classes.MonthlyRecap
 import com.github.mikephil.charting.charts.BarChart
-import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
@@ -28,18 +24,18 @@ import com.github.mikephil.charting.utils.ColorTemplate
  * @param recapList a list which contains all the monthly recap
  * @param graph the BarChart defined in the layout
  */
-class MonthlyRecapAdapter(private val context2: Context, private val recapList: MutableList<DayRecap>, private val graph : BarChart) : RecyclerView.Adapter<MonthlyRecapAdapter.Holder>() {
+class MonthlyRecapAdapter(private val context2: Context, private val recapList: MutableList<MonthlyRecap>, private val graph : BarChart) : RecyclerView.Adapter<MonthlyRecapAdapter.Holder>() {
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
         private val cardLabel: TextView = itemView.findViewById(R.id.recapName_TV)
         private val description : TextView = itemView.findViewById(R.id.recapCount_TV)
 
-        fun setCard(monthlyRecap: DayRecap){
+        fun setCard(monthlyRecap: MonthlyRecap){
 
             description.visibility = View.GONE
 
-            cardLabel.text = monthlyRecap.key
+            cardLabel.text = monthlyRecap.month
             //cardLabel.textSize = 30F
 
             itemView.setOnClickListener {
@@ -62,8 +58,8 @@ class MonthlyRecapAdapter(private val context2: Context, private val recapList: 
      * @since 1/08/2022
      * @param recap recap of the month clicked in the recycler view
      */
-    private fun updateGraph(recap: DayRecap) {
-        val month : String = recap.key
+    private fun updateGraph(recap: MonthlyRecap) {
+        val month : String = recap.month
 
         val xLabels : ArrayList<String> = ArrayList()
         val dataSets : MutableList<IBarDataSet> = ArrayList()
@@ -97,7 +93,7 @@ class MonthlyRecapAdapter(private val context2: Context, private val recapList: 
     }
 
     override fun onBindViewHolder(holder: MonthlyRecapAdapter.Holder, position: Int) {
-        val tmp: DayRecap = recapList[position]
+        val tmp: MonthlyRecap = recapList[position]
         holder.setCard(tmp)
     }
 

@@ -21,9 +21,10 @@
 #-renamesourcefileattribute SourceFile
 
 -keep class com.fitterAPP.fitter.classes.Athlete
--keep class com.fitterAPP.fitter.classes.DayRecap
+-keep class com.fitterAPP.fitter.classes.MonthlyRecap
 -keep class com.fitterAPP.fitter.classes.Exercise
 -keep class com.fitterAPP.fitter.classes.FitnessCard
+-keep class com.fitterAPP.fitter.classes.BookmarkCard
 
 -keep class com.fitterAPP.fitter.classes.Data
 -keep class com.fitterAPP.fitter.classes.Suggestion

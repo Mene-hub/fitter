@@ -1,8 +1,7 @@
 package com.fitterAPP.fitter.databases
 
-import android.renderscript.Sampler
 import com.fitterAPP.fitter.classes.ApiKeyRetriever
-import com.fitterAPP.fitter.classes.DayRecap
+import com.fitterAPP.fitter.classes.MonthlyRecap
 import com.fitterAPP.fitter.interfaces.DatabaseRecapInterface
 import com.google.firebase.database.*
 
@@ -11,8 +10,8 @@ class StaticRecapDatabase {
 
         override val database: FirebaseDatabase = FirebaseDatabase.getInstance(ApiKeyRetriever.getDatabase())
 
-        override fun setRecapChildListener(databaseRef: DatabaseReference, userID: String, recapListener: ChildEventListener) {
-            databaseRef.child(userID).addChildEventListener(recapListener)
+        override fun setRecapChildListener(databaseRef: DatabaseReference, userID: String, cardID : String, recapListener: ChildEventListener) {
+            databaseRef.child(userID).child(cardID).addChildEventListener(recapListener)
         }
 
         /**
@@ -23,8 +22,8 @@ class StaticRecapDatabase {
          * @param databaseRef The database reference
          * @since 16/07/2022
          */
-        override fun setRecapItem(databaseRef: DatabaseReference, userID: String, recap: DayRecap) {
-            databaseRef.child(userID).child(recap.cardKey).child(recap.key).setValue(recap)
+        override fun setRecapItem(databaseRef: DatabaseReference, userID: String, recap: MonthlyRecap) {
+            databaseRef.child(userID).child(recap.cardKey).child(recap.month).setValue(recap)
         }
 
         /**
@@ -36,10 +35,15 @@ class StaticRecapDatabase {
          * @param recap The recap to be added
          * @param valueListener the object that will be listening database calls
          */
-        override fun setSingleListenerToCardRecap(databaseRef: DatabaseReference, userID: String, recap :DayRecap , valueListener : ValueEventListener ){
-            val query : Query = databaseRef.child(userID).child(recap.cardKey).orderByChild("key").equalTo(recap.key)
-            query.addListenerForSingleValueEvent(valueListener)
+        override fun setSingleListenerToCardRecap(databaseRef: DatabaseReference, userID: String, recap :MonthlyRecap , valueListener : ValueEventListener ){
+            //val query : Query = databaseRef.child(userID).child(recap.cardKey).orderByChild("key").equalTo(recap.key)
+            //query.addListenerForSingleValueEvent(valueListener)
         }
+
+        fun setSingleListenerForMonth(databaseRef: DatabaseReference, userID: String, cardID: String, month : String, valueListener: ValueEventListener){
+            databaseRef.child(userID).child(cardID).child(month).addListenerForSingleValueEvent(valueListener)
+        }
+
 
         /**
          * Using the recap ID, removes the given recap from the database

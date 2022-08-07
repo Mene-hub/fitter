@@ -4,20 +4,28 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.core.view.isGone
+import androidx.fragment.app.FragmentContainerView
 import androidx.navigation.NavDirections
-import androidx.navigation.findNavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
+import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.R
+import com.fitterAPP.fitter.classes.Athlete
+import com.fitterAPP.fitter.classes.MonthlyRecap
+import com.fitterAPP.fitter.databases.StaticRecapDatabase
 import com.fitterAPP.fitter.fragmentControllers.MyFitnessCards
 import com.fitterAPP.fitter.fragmentControllers.MyFitnessCardsDirections
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import java.time.LocalDate
 
 class FitnessCardAdapter (val context2: Context, private val Cards:MutableList<FitnessCard>, val fitnessCards: MyFitnessCards?) : RecyclerView.Adapter<FitnessCardAdapter.Holder>() {
 
@@ -56,8 +64,15 @@ class FitnessCardAdapter (val context2: Context, private val Cards:MutableList<F
                 }
             }else{
                 itemView.setOnClickListener {
-                    val action : NavDirections = MyFitnessCardsDirections.actionMyFitnessCardsToFragmentShowCardDialog(Card)
-                    it.findNavController().navigate(action)
+
+                    StaticRecapDatabase.setSingleListenerForMonth(
+                        StaticRecapDatabase.database.getReference(context.getString(R.string.RecapReference)),
+                        Athlete.UID,
+                        Card.key,
+                        LocalDate.now().month.toString(),
+                        currentMonthRecapListener(Card)
+                    )
+
                 }
             }
 
@@ -67,6 +82,21 @@ class FitnessCardAdapter (val context2: Context, private val Cards:MutableList<F
         }
 
 
+    }
+
+    private fun currentMonthRecapListener(Card: FitnessCard): ValueEventListener {
+        return object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val item = snapshot.getValue(MonthlyRecap::class.java)
+                val action : NavDirections = MyFitnessCardsDirections.actionMyFitnessCardsToFragmentShowCardDialog(Card, item)
+                val containerView : FragmentContainerView = (context2 as MainActivity).findViewById(R.id.FragmentContainer)
+                Navigation.findNavController(containerView).navigate(action)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(context2,error.message, Toast.LENGTH_LONG).show()
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {

@@ -58,7 +58,7 @@ class ShowOthersCardDialog : DialogFragment() {
         isChecked = args.isChecked
         val lottieAnimator = binding.lottieBookmark
 
-        val adapter = FitnessCardExercisesAdapter((activity as MainActivity), fitnessCard,false)
+        val adapter = FitnessCardExercisesAdapter((activity as MainActivity), fitnessCard,false )
         val bookmark = BookmarkCard(fitnessCard, args.ownerUID)
 
 
@@ -73,6 +73,8 @@ class ShowOthersCardDialog : DialogFragment() {
 
         binding.backBt.setOnClickListener(onBackButton())
         lottieAnimator.setOnClickListener(bookmarkClickListener(lottieAnimator, bookmark))
+
+
 
     }
 
@@ -129,6 +131,9 @@ class ShowOthersCardDialog : DialogFragment() {
             }
         }
     }
+
+
+
 
 
 }

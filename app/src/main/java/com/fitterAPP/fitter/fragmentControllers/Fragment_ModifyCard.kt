@@ -91,7 +91,7 @@ class ModifyCard() : DialogFragment() {
             fitnessCard.exercises = ArrayList()
 
         if(fitnessCard.exercises != null){
-            adapter = FitnessCardExercisesAdapter((activity as MainActivity),fitnessCard, true)
+            adapter = FitnessCardExercisesAdapter((activity as MainActivity),fitnessCard, true )
             recycle.adapter = adapter
 
             //Inserisco il gestore dello SWIPE della listview
@@ -183,8 +183,6 @@ class ModifyCard() : DialogFragment() {
 
                 //fitnessCard = snapshot.getValue(FitnessCard::class.java)!!
 
-
-
                 val cardName : TextView = binding.CardNameTV
                 val cardDuration : TextView = binding.TimeDurationTV
                 val cardDescription: TextView = binding.DescriptionTV
@@ -231,24 +229,28 @@ class ModifyCard() : DialogFragment() {
         val customLayout: View = layoutInflater.inflate(R.layout.dialog_input_text, null)
         builder.setView(customLayout)
 
-        customLayout.findViewById<EditText>(R.id.et_cardName).setText(fitnessCard.name)
+        val name =  customLayout.findViewById<EditText>(R.id.et_cardName)
+        name.setText(fitnessCard.name)
 
-        customLayout.findViewById<EditText>(R.id.et_description).setText(fitnessCard.description)
+        val description = customLayout.findViewById<EditText>(R.id.et_description)
+        description.setText(fitnessCard.description)
 
-        customLayout.findViewById<EditText>(R.id.et_duration).setText(fitnessCard.timeDuration.toString())
+        val timeduration = customLayout.findViewById<EditText>(R.id.et_duration)
+        timeduration.setText(fitnessCard.timeDuration.toString())
 
         // add a button
         builder
             .setPositiveButton("OK") { _, _ -> // send data from the
                 // AlertDialog to the Activity
-                val name = customLayout.findViewById<EditText>(R.id.et_cardName).text.toString()
-                val duration = customLayout.findViewById<EditText>(R.id.et_duration).text.toString()
 
-                if((name.isNotBlank() && name != "") && (duration.isNotBlank() && duration != "") && (name.replace(" ","").length > 0)){
+                val stringName = name.text.toString()
+                val duration = timeduration.text.toString()
 
-                    fitnessCard.name = customLayout.findViewById<EditText>(R.id.et_cardName).text.toString()
-                    fitnessCard.description = customLayout.findViewById<EditText>(R.id.et_description).text.toString()
-                    fitnessCard.timeDuration = customLayout.findViewById<EditText>(R.id.et_duration).text.toString().toInt()
+                if((stringName.isNotBlank() && stringName != "") && (duration.isNotBlank() && duration != "") && (stringName.replace(" ", "").isNotEmpty())){
+
+                    fitnessCard.name = stringName
+                    fitnessCard.description = description.text.toString()
+                    fitnessCard.timeDuration = timeduration.text.toString().toInt()
                     StaticFitnessCardDatabase.setFitnessCardItem(StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference)), Athlete.UID, fitnessCard)
 
                 }else{

@@ -4,11 +4,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.view.isGone
 import androidx.fragment.app.findFragment
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
@@ -20,38 +17,34 @@ import com.fitterAPP.fitter.databases.StaticRecapDatabase
 import com.fitterAPP.fitter.fragmentControllers.Fragment_showCardDialog
 import com.fitterAPP.fitter.fragmentControllers.ModifyCard
 import com.fitterAPP.fitter.fragmentControllers.ModifyCardDirections
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ValueEventListener
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import java.time.LocalDate
 
 /**
  * Adapter for the Exercise RecycleView used for showind and edith exercises
  * @author Claudio Menegotto
  */
-class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: FitnessCard, val isEditable : Boolean) : RecyclerView.Adapter<FitnessCardExercisesAdapter.Holder>() {
+class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: FitnessCard, val isEditable : Boolean, var monthlyRecap : MonthlyRecap? = null) : RecyclerView.Adapter<FitnessCardExercisesAdapter.Holder>() {
 
-    var exerciseRecap : MutableList<ExerciseRecap> = mutableListOf()
-    private val currentDateAndTime : String = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-M-yyyy"))
-    private val dayRecap = DayRecap(currentDateAndTime, fitnessCard.key, exerciseRecap)
     val database = StaticRecapDatabase.database.getReference(context2.getString(R.string.RecapReference))
-    var recapDoneAlready : Boolean = false
 
     private val databaseRef = StaticFitnessCardDatabase.database.getReference(context2.getString(R.string.FitnessCardsReference))
 
-    /**
-     * Used to check at the very start of the adapter if a given recap for a given card is already been done today. calls valueListener()
-     * @author Daniel Satriano
-     * @since 30/07/2022
+    //TODO("CONTROLLARE SE FUNZIONA ANCORA / SE è NECESSARIO")
+    /*
+    var recapDoneAlready : Boolean = false
      */
-    init {
-        StaticRecapDatabase.setSingleListenerToCardRecap(databaseRef = database, Athlete.UID, dayRecap, valueListener())
-    }
 
+    /**
+      * Used to check at the very start of the adapter if a given recap for a given card is already been done today. calls valueListener()
+      * @author Daniel Satriano
+      * @since 30/07/2022
+    */
+
+     init {
+         //StaticRecapDatabase.setSingleListenerToCardRecap(databaseRef = database, Athlete.UID, dayRecap, valueListener())
+         checkForNullOrCorrectYear()
+     }
 
     class Holder(itemView: View, edit: Boolean, fitnessCard: FitnessCard) : RecyclerView.ViewHolder(itemView) {
 
@@ -129,8 +122,6 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
 
     }
 
-
-
     /**
      * Used to delete an exercise
      * @author Daniel Satriano
@@ -150,6 +141,7 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
         StaticFitnessCardDatabase.setFitnessCardItem(databaseRef,Athlete.UID,fitnessCard)
     }
 
+
     /**
      * Used to set a new recap
      * @author Daniel Satriano
@@ -158,13 +150,39 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
      * @param improvement Is the value given by the user that holds the weight or the minutes used/done for an exercise. EG : Today I lifted 50Kg , Today I run 15 minutes
      */
     fun addRecap(index : Int, improvement : Int){
-        if(!recapDoneAlready) {
-            val exercise = fitnessCard.exercises!![index]
-            exerciseRecap.add(ExerciseRecap(exercise.exerciseName, improvement))
-            StaticRecapDatabase.setRecapItem(database, Athlete.UID, dayRecap)
+
+        val exercise = fitnessCard.exercises!![index]
+
+        if(monthlyRecap!!.recapExercise.isNotEmpty()) {
+
+            val index2 = monthlyRecap!!.recapExercise.indexOf(
+                monthlyRecap!!.recapExercise.find { it.exerciseName == exercise.exerciseName }
+            )
+
+            if (index2 == -1) {
+                monthlyRecap!!.recapExercise.add(ExerciseRecap(exercise.exerciseName, improvement))
+            } else {
+                //Execute the average between the current value for that exercise and the new one
+                monthlyRecap!!.recapExercise[index2].improvement =
+                    (monthlyRecap!!.recapExercise[index2].improvement + improvement) / 2
+            }
+
+        }else{
+            monthlyRecap!!.recapExercise.add(ExerciseRecap(exercise.exerciseName, improvement))
+        }
+
+        StaticRecapDatabase.setRecapItem(database, Athlete.UID, monthlyRecap!!)
+
+    }
+
+    private fun checkForNullOrCorrectYear(){
+        if(monthlyRecap == null || monthlyRecap!!.year == LocalDate.now().year){
+            monthlyRecap = MonthlyRecap(LocalDate.now().month.toString(), fitnessCard.key, mutableListOf())
         }
     }
 
+    //TODO("SISTEMARE RECAP ")
+/*
     /**
      * @author Daniel Satriano
      * @since 30/07/2022
@@ -179,7 +197,7 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
                 }
             }
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(context2, error.message,Toast.LENGTH_LONG)
+                Toast.makeText(context2, error.message,Toast.LENGTH_LONG).show()
             }
         }
     }
@@ -203,7 +221,7 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
         }
         return alreadySet
     }
-
+*/
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {

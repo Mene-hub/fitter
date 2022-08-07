@@ -34,6 +34,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import kotlin.collections.ArrayList
 
 class Fragment_showCardDialog() : DialogFragment() {
 
@@ -44,6 +45,7 @@ class Fragment_showCardDialog() : DialogFragment() {
     private val args by navArgs<Fragment_showCardDialogArgs>()
     private lateinit var newFitnessCard : FitnessCard
     private lateinit var adapter : FitnessCardExercisesAdapter
+    private var monthlyRecap : MonthlyRecap? = null
 
     /**
      * onCreate method which is used to set the dialog style. This mathod is paired with a WindowManager setting done in [onCreateView]
@@ -67,6 +69,7 @@ class Fragment_showCardDialog() : DialogFragment() {
 
         //Get FitnessCard by bundle passed via navigation controller in [FitnessCardAdapter.kt] (the bundle is also set in fragment_navigation.xml
         newFitnessCard = args.cardBundle
+        monthlyRecap = args.monthlyRecap
 
         binding.backBt.setOnClickListener {
             findNavController().navigateUp()
@@ -100,7 +103,7 @@ class Fragment_showCardDialog() : DialogFragment() {
         }
 
         //adapter for the exercises
-        adapter = FitnessCardExercisesAdapter((activity as MainActivity),newFitnessCard,false)
+        adapter = FitnessCardExercisesAdapter((activity as MainActivity),newFitnessCard,false, monthlyRecap)
         recycle.adapter = adapter
 
         //Inserisco il gestore dello SWIPE della listview
@@ -109,9 +112,7 @@ class Fragment_showCardDialog() : DialogFragment() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 when(direction){
                     ItemTouchHelper.RIGHT -> {
-                        if(!adapter.recapChecker(viewHolder.absoluteAdapterPosition) && !adapter.recapDoneAlready) {
-                            showAlertDialog(viewHolder)
-                        }
+                        showAlertDialog(viewHolder)
                     }
                 }
             }
@@ -147,13 +148,22 @@ class Fragment_showCardDialog() : DialogFragment() {
         }
 
         //gat database update
-        val databaseRef = StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference))
-        StaticFitnessCardDatabase.setFitnessCardValueListener(databaseRef,Athlete.UID,newFitnessCard,cardValueEventListener())
+        StaticFitnessCardDatabase.setFitnessCardValueListener(
+            StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference)),
+            Athlete.UID,newFitnessCard,
+            cardValueEventListener()
+        )
+
+
+
 
 
         // Inflate the layout for this fragment
         return binding.root
     }
+
+    //TODO("Kdoc. INOLTRE FIXARE IL FATTO CHE QUESTO METODO POTREBBE VENIRE CHIAMATO MOLTO DOPO")
+
 
     private fun cardValueEventListener(): ValueEventListener {
         return object :  ValueEventListener{
@@ -241,38 +251,38 @@ class Fragment_showCardDialog() : DialogFragment() {
         val customLayout: View = layoutInflater.inflate(R.layout.dialog_open_exercise, null)
 
 
-        var imageList : ImageSlider = customLayout.findViewById(R.id.exercise_image_slider)
-        var list : MutableList<SlideModel> = ArrayList<SlideModel>()
+        val imageList : ImageSlider = customLayout.findViewById(R.id.exercise_image_slider)
+        val list : MutableList<SlideModel> = ArrayList<SlideModel>()
 
         val executor: ExecutorService = Executors.newSingleThreadExecutor()
-        val handler: Handler = Handler(Looper.getMainLooper())
-        var imageUri : MutableList<String> ? = null
+        val handler = Handler(Looper.getMainLooper())
+        var imageUri : MutableList<String> ?
 
-        executor.execute(Runnable () {
+        executor.execute {
             executor.run() {
                 imageUri = ExerciseQueryHelper.getImageFromExercise(ex.wgerBaseId!!)
             }
 
-            handler.post(Runnable() {
+            handler.post {
 
-                if(imageUri != null && imageUri?.size!!>0) {
+                if (imageUri != null && imageUri?.size!! > 0) {
 
-                    for(i in 1..imageUri?.size!!)
-                        list.add(SlideModel(imageUri?.get(i-1)))
+                    for (i in 1..imageUri?.size!!)
+                        list.add(SlideModel(imageUri?.get(i - 1)))
 
                     imageList.setImageList(list, ScaleTypes.CENTER_INSIDE)
                     customLayout.findViewById<ImageView>(R.id.placeHolder).isGone = true
-                }else
+                } else
                     customLayout.findViewById<ImageView>(R.id.placeHolder).isGone = false
-            })
-        })
+            }
+        }
 
         builder.setView(customLayout)
 
-        var exName : TextView = customLayout.findViewById(R.id.ExName_TV)
+        val exName : TextView = customLayout.findViewById(R.id.ExName_TV)
         exName.setText(ex.exerciseName)
 
-        var exDescription : TextView = customLayout.findViewById(R.id.exDescription_TV)
+        val exDescription : TextView = customLayout.findViewById(R.id.exDescription_TV)
         exDescription.setText(ex.description)
 
 
