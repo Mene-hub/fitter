@@ -56,6 +56,8 @@ class MainActivity : AppCompatActivity() {
 
         //Adds a value listener to the database
         val bookmarkReference = StaticBookmarkDatabase.database.getReference(getString(R.string.BookmarkReference))
+
+        BookmarkCard.bookmarkList.clear()
         StaticBookmarkDatabase.setBookmarkListener(bookmarkReference, auth.uid!!, bookMarkValueListener())
 
         if(auth.currentUser != null){
@@ -178,7 +180,6 @@ class MainActivity : AppCompatActivity() {
     private fun bookMarkValueListener(): ValueEventListener {
         return object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-
                 for(item in snapshot.children){
                     if(item != null){
                         BookmarkCard.bookmarkList.add(item.getValue(BookmarkCard::class.java)!!)
