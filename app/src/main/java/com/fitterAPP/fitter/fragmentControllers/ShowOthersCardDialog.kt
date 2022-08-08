@@ -13,6 +13,7 @@ import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.classes.Athlete
 import com.fitterAPP.fitter.classes.BookmarkCard
+import com.fitterAPP.fitter.classes.CardsCover
 import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.databases.StaticBookmarkDatabase
 import com.fitterAPP.fitter.databinding.FragmentShowOthersCardDialogBinding
@@ -64,7 +65,9 @@ class ShowOthersCardDialog : DialogFragment() {
 
         binding.CardNameTV.text = fitnessCard.name
         binding.DescriptionTV.text = fitnessCard.description
-        binding.TimeDurationTV.text = fitnessCard.timeDuration.toString() +  " min"
+        binding.TimeDurationTV.text = fitnessCard.timeDuration.toString().plus(" min")
+        binding.CardBgImageIV.setImageResource(CardsCover.getResource(fitnessCard.imageCover))
+
 
         databaseRef =  StaticBookmarkDatabase.database.getReference(getString(R.string.BookmarkReference))
 

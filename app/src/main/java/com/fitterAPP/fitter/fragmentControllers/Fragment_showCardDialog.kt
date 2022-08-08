@@ -178,11 +178,13 @@ class Fragment_showCardDialog() : DialogFragment() {
                 binding.CardNameTV.text = newFitnessCard.name
                 binding.DescriptionTV.text = newFitnessCard.description
                 try {
-                    binding.TimeDurationTV.text = newFitnessCard.timeDuration.toString() + " " + getString(R.string.minutes)
+                    binding.TimeDurationTV.text = newFitnessCard.timeDuration.toString().plus(" ").plus(getString(R.string.minutes))
                 }catch(e:Exception){e.printStackTrace()}
 
-                //Hypothetically the new item will always be the last one in the list, unless we do some swapping manually.
-                adapter.notifyItemInserted(newFitnessCard.exercises!!.size)
+                if(newFitnessCard.exercises != null) {
+                    //Hypothetically the new item will always be the last one in the list, unless we do some swapping manually.
+                    adapter.notifyItemInserted(newFitnessCard.exercises!!.size)
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {
