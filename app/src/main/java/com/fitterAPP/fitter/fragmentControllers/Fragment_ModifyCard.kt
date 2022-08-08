@@ -142,8 +142,8 @@ class ModifyCard() : DialogFragment() {
             if(fitnessCard.exercises == null)
                 fitnessCard.exercises = ArrayList()
 
-            findNavController().popBackStack(0,true,true)
-            val action : NavDirections = ModifyCardDirections.actionModifyCardToSelectExerciseGroup(fitnessCard, fitnessCard.exercises?.size!!)
+            findNavController().popBackStack(0, inclusive = true, saveState = true)
+            val action : NavDirections = ModifyCardDirections.actionModifyCardToSelectExerciseGroup(fitnessCard, fitnessCard.exercises!!.size)
             findNavController().navigate(action)
         }
 
@@ -195,7 +195,8 @@ class ModifyCard() : DialogFragment() {
                 cardName.text = fitnessCard.name
                 cardDescription.text = fitnessCard.description
 
-                adapter.notifyDataSetChanged()
+                //Hypothetically the new item will always be the last one in the list, unless we do some swapping manually.
+                adapter.notifyItemInserted(fitnessCard.exercises!!.size)
 
                 try {
                     cardDuration.text = fitnessCard.timeDuration.toString() + " " + getString(R.string.minutes)

@@ -181,7 +181,8 @@ class Fragment_showCardDialog() : DialogFragment() {
                     binding.TimeDurationTV.text = newFitnessCard.timeDuration.toString() + " " + getString(R.string.minutes)
                 }catch(e:Exception){e.printStackTrace()}
 
-                adapter.notifyDataSetChanged()
+                //Hypothetically the new item will always be the last one in the list, unless we do some swapping manually.
+                adapter.notifyItemInserted(newFitnessCard.exercises!!.size)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -284,8 +285,6 @@ class Fragment_showCardDialog() : DialogFragment() {
 
         val exDescription : TextView = customLayout.findViewById(R.id.exDescription_TV)
         exDescription.setText(ex.description)
-
-
 
         // add a button
         builder
