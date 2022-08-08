@@ -6,6 +6,7 @@ import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue
 
 /**
+ * Class used to store and manage bookmarks inside the database and on the app
  * @author Daniel Satriano
  * @since 3/08/2022
  */

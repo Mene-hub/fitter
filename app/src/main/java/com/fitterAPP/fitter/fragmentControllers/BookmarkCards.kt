@@ -12,7 +12,11 @@ import com.fitterAPP.fitter.databinding.FragmentBookmarkCardsBinding
 import com.fitterAPP.fitter.itemsAdapter.BookmarkAdapter
 import com.fitterAPP.fitter.itemsAdapter.FitnessCardExercisesAdapter
 
-
+/**
+ * Fragment which manage the recycler view inside the layout
+ * @author Daniel Satriano
+ * @since 7/08/2022
+ */
 class BookmarkCards : Fragment() {
 
     private lateinit var binding : FragmentBookmarkCardsBinding

@@ -18,23 +18,30 @@ import com.fitterAPP.fitter.fragmentControllers.BookmarkCards
 import com.fitterAPP.fitter.fragmentControllers.BookmarkCardsDirections
 import com.fitterAPP.fitter.fragmentControllers.Fragment_ViewOthersProfileDirections
 
+/**
+ * Adapter which manages how the cards are shown inside the recycler view and the onClickListener
+ * @author Daniel Satriano
+ * @since 7/08/2022
+ */
 class BookmarkAdapter(private val context : Context, private val bookmarks : MutableList<BookmarkCard>) : RecyclerView.Adapter<BookmarkAdapter.Holder>() {
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
-        private val cardName : TextView = itemView.findViewById(R.id.CardName_TV)
-        private val cardDuration : TextView = itemView.findViewById(R.id.TimeDuration_TV)
-        private val cardExercises : TextView = itemView.findViewById(R.id.ExerciseCount_TV)
-        private val bgImage : ImageView = itemView.findViewById(R.id.CardBgImage_IV)
+        private val name : TextView = itemView.findViewById(R.id.cardNameBookmark)
+        private val description : TextView = itemView.findViewById(R.id.descriptionBookmark)
+        private val duration : TextView = itemView.findViewById(R.id.durationBookmark)
+        private val numberOfExercise : TextView = itemView.findViewById(R.id.exerciseNumberBookmark)
+        private val image : ImageView = itemView.findViewById(R.id.cardBackground)
 
         fun setCard(card : BookmarkCard, context: Context){
-            cardName.text = card.name
-            cardDuration.text = "Duration: " + card.timeDuration.toString() + " min"
+            name.text = card.name
+            duration.text = context.getString(R.string.duration).plus(card.timeDuration.toString()).plus(" min")
+            description.text = card.description
 
             if(card.exercises != null)
-                cardExercises.text = card.exercises?.count().toString() + " exercise"
+                numberOfExercise.text = card.exercises!!.size.toString().plus(" ").plus(context.getString(R.string.exercises).lowercase())
             else {
-                cardExercises.text = "0 exercise"
+                numberOfExercise.text = "0 ".plus(context.getString(R.string.exercises))
             }
 
             itemView.setOnClickListener {
@@ -48,14 +55,13 @@ class BookmarkAdapter(private val context : Context, private val bookmarks : Mut
                 null,
                 null
             )
-
-            bgImage.setImageResource(id)
+            image.setImageResource(id)
         }
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookmarkAdapter.Holder {
-        val view: View = LayoutInflater.from(context).inflate(R.layout.item_fitnesscard, parent, false)
+        val view: View = LayoutInflater.from(context).inflate(R.layout.bookmark_card, parent, false)
         return Holder(view)
     }
 
