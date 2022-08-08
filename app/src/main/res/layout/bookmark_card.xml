@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="10dp">
 
     <View
         android:id="@+id/viewSupporter"
@@ -33,10 +34,9 @@
 
         <ImageView
 
-            android:id="@+id/imageView"
+            android:id="@+id/cardBackground"
             android:layout_width="110dp"
             android:layout_height="152dp"
-
             android:contentDescription="@string/background_image"
             android:src="@drawable/gigachad"
             android:scaleType="centerCrop"
@@ -55,8 +55,9 @@
         android:layout_marginTop="35dp"
         android:layout_marginEnd="10dp"
         android:paddingTop="10dp"
-        android:textSize="16sp"
+        android:textSize="20sp"
         android:textStyle="bold"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/cardView"
         app:layout_constraintTop_toTopOf="@id/cardView"
