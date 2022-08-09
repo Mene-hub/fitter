@@ -1,10 +1,15 @@
 package com.fitterAPP.fitter.fragmentControllers
 
+import android.graphics.Rect
+import android.os.Build
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.FrameLayout
+import android.widget.RelativeLayout
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -62,15 +67,13 @@ class ShowOthersCardDialog : DialogFragment() {
         val adapter = FitnessCardExercisesAdapter((activity as MainActivity), fitnessCard,false )
         val bookmark = BookmarkCard(fitnessCard, args.ownerUID)
 
-
         binding.CardNameTV.text = fitnessCard.name
         binding.DescriptionTV.text = fitnessCard.description
         binding.TimeDurationTV.text = fitnessCard.timeDuration.toString().plus(" min")
         binding.CardBgImageIV.setImageResource(CardsCover.getResource(fitnessCard.imageCover))
-
-
         databaseRef =  StaticBookmarkDatabase.database.getReference(getString(R.string.BookmarkReference))
 
+        screenHeightAdjustment()    //Sets correct height
         checkIfBookmarked(lottieAnimator)
         binding.exerciseListRecycler.adapter = adapter
 
@@ -79,6 +82,31 @@ class ShowOthersCardDialog : DialogFragment() {
 
 
 
+    }
+
+    /**
+     * @author Claudio Menegotto
+     * @since 9/08/2022
+     */
+    private fun screenHeightAdjustment(){
+        var screenHeight = 0
+        //getting the screen height in px
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            try {
+                val windowMetrics = activity?.windowManager?.currentWindowMetrics
+                val display: Rect = windowMetrics?.bounds!!
+                screenHeight = display.height()/3
+            } catch (e: NoSuchMethodError) {}
+
+        } else {
+            val metrics = DisplayMetrics()
+            activity?.windowManager?.defaultDisplay?.getMetrics(metrics)
+            screenHeight = metrics.heightPixels/3
+        }
+
+        //setting the height
+        val params = FrameLayout.LayoutParams( RelativeLayout.LayoutParams.MATCH_PARENT, screenHeight)
+        binding.Header.layoutParams = params
     }
 
     /**

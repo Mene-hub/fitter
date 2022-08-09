@@ -75,27 +75,6 @@ class Fragment_showCardDialog() : DialogFragment() {
             findNavController().navigateUp()
         }
 
-        var screenHeight = 0
-
-        //getting the screen height in px
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            try {
-                val windowMetrics = activity?.windowManager?.currentWindowMetrics
-                val display: Rect = windowMetrics?.bounds!!
-                screenHeight = display.height()/3
-            } catch (e: NoSuchMethodError) {}
-
-        } else {
-            val metrics = DisplayMetrics()
-            activity?.windowManager?.defaultDisplay?.getMetrics(metrics)
-            screenHeight = metrics.heightPixels/3
-        }
-
-        //setting the height
-        val params = FrameLayout.LayoutParams( RelativeLayout.LayoutParams.MATCH_PARENT, screenHeight)
-
-        binding.Header.layoutParams = params
-
         val recycle : RecyclerView = binding.exercisesListRV
 
         if(newFitnessCard.exercises == null){
@@ -142,6 +121,8 @@ class Fragment_showCardDialog() : DialogFragment() {
         //open edith view for card
         val edithBtn : FloatingActionButton = binding.edithCardView
 
+        screenHeightAdjustment()
+
         edithBtn.setOnClickListener {
             val action : NavDirections = Fragment_showCardDialogDirections.actionFragmentShowCardDialogToModifyCard(newFitnessCard)
             findNavController().navigate(action)
@@ -162,8 +143,30 @@ class Fragment_showCardDialog() : DialogFragment() {
         return binding.root
     }
 
-    //TODO("Kdoc. INOLTRE FIXARE IL FATTO CHE QUESTO METODO POTREBBE VENIRE CHIAMATO MOLTO DOPO")
+    /**
+     * @author Claudio Menegotto
+     * @since 1/08/2022
+     */
+    private fun screenHeightAdjustment(){
+        var screenHeight = 0
+        //getting the screen height in px
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            try {
+                val windowMetrics = activity?.windowManager?.currentWindowMetrics
+                val display: Rect = windowMetrics?.bounds!!
+                screenHeight = display.height()/3
+            } catch (e: NoSuchMethodError) {}
 
+        } else {
+            val metrics = DisplayMetrics()
+            activity?.windowManager?.defaultDisplay?.getMetrics(metrics)
+            screenHeight = metrics.heightPixels/3
+        }
+
+        //setting the height
+        val params = FrameLayout.LayoutParams( RelativeLayout.LayoutParams.MATCH_PARENT, screenHeight)
+        binding.Header.layoutParams = params
+    }
 
     private fun cardValueEventListener(): ValueEventListener {
         return object :  ValueEventListener{
@@ -211,7 +214,6 @@ class Fragment_showCardDialog() : DialogFragment() {
         a.duration = 0
         return a
     }
-
 
     private fun showAlertDialog(viewHolder : RecyclerView.ViewHolder){
         // set the custom layout
