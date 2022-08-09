@@ -193,7 +193,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:fontFamily="@font/roboto_regular"
-                        android:text="Repetions"
+                        android:text="Repetitions"
                         android:textAlignment="viewStart"
                         android:textColor="@color/black"
                         android:textSize="20sp" />

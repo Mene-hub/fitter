@@ -128,8 +128,15 @@ class FindExercise : DialogFragment() {
                 exercise.exerciseName = ex.name
                 exercise.wgerId = ex.id
                 exercise.wgerBaseId = ex.exercise_base
-                val action : NavDirections = FindExerciseDirections.actionFindExerciseToNewExercieFormDialog(fitnessCard, index, exercise)
-                findNavController().navigate(action)
+                var action : NavDirections ? = null
+
+                if(exercise.type == ExerciseType.normal)
+                    action = FindExerciseDirections.actionFindExerciseToNewExercieFormDialog(fitnessCard, index, exercise)
+
+                if(exercise.type == ExerciseType.pyramid)
+                    action = FindExerciseDirections.actionFindExerciseToSetPiramidalExercise(fitnessCard, exercise, index)
+
+                findNavController().navigate(action!!)
             })
         })
     }

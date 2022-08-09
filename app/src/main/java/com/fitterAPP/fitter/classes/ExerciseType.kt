@@ -4,8 +4,6 @@ enum class ExerciseType {
 
     warmup,
     normal,
-    series,
-    pyramid,
-    seriesItem
+    pyramid
 
 }

@@ -59,7 +59,7 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
             exName.text = ex.exerciseName
 
             if(edit_){
-                itemView.findViewById<ImageView>(R.id.edithExercise_IV).setOnClickListener {
+                itemView.findViewById<ImageView>(R.id.editExercise_IV).setOnClickListener {
                     val controller = itemView.findFragment<ModifyCard>().findNavController()
                     var action : NavDirections? = null
 
@@ -67,9 +67,8 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
 
                         ExerciseType.warmup-> action =  ModifyCardDirections.actionModifyCardToSetWarmUpExercise(fitnessCard_, index, fitnessCard_.exercises?.get(index)!!)
                         ExerciseType.normal-> action =  ModifyCardDirections.actionModifyCardToNewExercieFormDialog(fitnessCard_, index, fitnessCard_.exercises?.get(index)!!)
-                        ExerciseType.series-> action = null
                         ExerciseType.pyramid-> action = null
-                        ExerciseType.seriesItem-> action = null
+                        else -> {action = null}
                     }
 
                     if(action != null)
@@ -93,10 +92,7 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
                     exReps.text = ex.exerciseSer.toString() + " x " + ex.exerciseRep.toString() + " - " + ex.exerciseRest + " s"
                     icon.setImageResource(R.drawable.normal_exercise_icon)
                 }
-                ExerciseType.series -> {
-                    exReps.text = ex.exerciseSeries?.size.toString() + " - " + ex.exerciseRest + " s"
-                    icon.setImageResource(R.drawable.series_exercise_icon)
-                }
+
                 ExerciseType.pyramid -> {
                     icon.setImageResource(R.drawable.pyramid_exercise_icon)
                     var reps = ""

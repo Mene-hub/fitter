@@ -31,7 +31,6 @@ class select_exercise_group : DialogFragment() {
     private lateinit var exercise: Exercise
     private var index : Int = 0
     private var backupCard : FitnessCard ? = null
-    private var canDelete : Boolean = true
 
     //set full screen fragment
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +40,7 @@ class select_exercise_group : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        canDelete = true
+
 
         dialog?.window?.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
 
@@ -54,7 +53,6 @@ class select_exercise_group : DialogFragment() {
             exercise = Exercise("Place Holder", ExerciseType.warmup)
             exercise.exerciseId = getLastIndex()
 
-            canDelete = false
 
             val action : NavDirections = select_exercise_groupDirections.actionSelectExerciseGroupToSelectExerciseList(fitnessCard, index, exercise)
             findNavController().navigate(action)
@@ -66,7 +64,15 @@ class select_exercise_group : DialogFragment() {
             exercise = Exercise("Place Holder", ExerciseType.normal)
             exercise.exerciseId = getLastIndex()
 
-            canDelete = false
+            val action : NavDirections = select_exercise_groupDirections.actionSelectExerciseGroupToFindExercise(fitnessCard, index, exercise)
+            findNavController().navigate(action)
+        }
+
+        //piramidal exercise selected
+        binding.PyramidExerciseCV.setOnClickListener{
+
+            exercise = Exercise("Place Holder", ExerciseType.pyramid)
+            exercise.exerciseId = getLastIndex()
 
             val action : NavDirections = select_exercise_groupDirections.actionSelectExerciseGroupToFindExercise(fitnessCard, index, exercise)
             findNavController().navigate(action)

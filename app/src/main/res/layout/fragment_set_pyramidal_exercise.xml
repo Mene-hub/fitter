@@ -87,7 +87,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
                     android:fontFamily="@font/roboto_regular"
-                    android:text="@string/series"
+                    android:text="@string/piramidal"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -259,9 +259,9 @@
                 android:id="@+id/textView14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/roboto_regular"
-                android:text="@string/series"
+                android:text="Repetitions"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -273,7 +273,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:animateLayoutChanges="false"
                 android:nestedScrollingEnabled="false"
                 android:scrollbars="none"
@@ -287,7 +287,8 @@
 
             <Space
                 android:layout_width="wrap_content"
-                android:layout_height="75dp"
+                android:layout_height="55dp"
+                android:layout_marginTop="?attr/actionBarSize"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/exercisesList_RV" />
@@ -296,18 +297,19 @@
     </ScrollView>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/AddSeriesExercise"
+        android:id="@+id/saveExercise"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
-        android:layout_margin="16dp"
-        android:text="@string/AddExercise"
+        android:layout_marginBottom="?attr/actionBarSize"
+        android:text="SAVE"
         android:textColorHighlight="#4CAF50"
         android:textColorLink="@color/light_blue_600"
         app:backgroundTint="#4CAF50"
-        app:icon="@drawable/ic_baseline_add_24"
+        app:icon="@drawable/done"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:rippleColor="@color/white" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

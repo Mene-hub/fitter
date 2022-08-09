@@ -162,6 +162,9 @@
             app:argType="com.fitterAPP.fitter.classes.Exercise"
             app:nullable="true"
             android:defaultValue="@null"/>
+        <action
+            android:id="@+id/action_findExercise_to_setPiramidalExercise"
+            app:destination="@id/setPiramidalExercise" />
     </dialog>
     <dialog
         android:id="@+id/setWarmUpExercise"
@@ -269,4 +272,23 @@
             android:id="@+id/action_bookmarkCards_to_showOthersCardDialog"
             app:destination="@id/showOthersCardDialog" />
     </fragment>
+    <dialog
+        android:id="@+id/setPiramidalExercise"
+        android:name="com.fitterAPP.fitter.fragmentControllers.SetPiramidalExercise"
+        android:label="SetPiramidalExercise" >
+        <argument
+            android:name="fitnessCard"
+            app:argType="com.fitterAPP.fitter.classes.FitnessCard" />
+        <argument
+            android:name="exercise"
+            app:argType="com.fitterAPP.fitter.classes.Exercise" />
+        <argument
+            android:name="index"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_setPiramidalExercise_to_modifyCard"
+            app:destination="@id/modifyCard"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/modifyCard" />
+    </dialog>
 </navigation>

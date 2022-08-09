@@ -26,9 +26,6 @@ data class Exercise(var exerciseName : String, var type : ExerciseType) : Parcel
     //piramidal exercise
     var piramidSeries : MutableList<Int>? = null
 
-    //series exercises
-    var exerciseSeries : MutableList<Exercise>? = null
-
     var images : List<String?>? = null
     var notes : String ?= null
     var description : String ?= null
@@ -47,7 +44,6 @@ data class Exercise(var exerciseName : String, var type : ExerciseType) : Parcel
         exerciseSer = null
         exerciseRest = null
         piramidSeries = null
-        exerciseSeries = null
 
     }
 
@@ -59,7 +55,6 @@ data class Exercise(var exerciseName : String, var type : ExerciseType) : Parcel
         exerciseSer = ser
         exerciseRest = rest
         piramidSeries = null
-        exerciseSeries = null
 
     }
 
@@ -71,32 +66,6 @@ data class Exercise(var exerciseName : String, var type : ExerciseType) : Parcel
         exerciseSer = ser
         exerciseRest = rest
         piramidSeries = null
-        exerciseSeries = null
-
-    }
-
-    fun setAsSeries(ser : Int, rest : Int, serie : MutableList<Exercise>){
-
-        type = ExerciseType.series
-        exerciseDuration = null
-        exerciseRep = null
-        exerciseSer = null
-        exerciseRest = rest
-        piramidSeries = null
-        exerciseSeries = serie
-
-    }
-
-    fun setAsSeriesItem(rep: Int){
-
-        type = ExerciseType.seriesItem
-        exerciseDuration = null
-        exerciseRep = rep
-        exerciseSer = null
-        exerciseRest = null
-        piramidSeries = null
-        exerciseSeries = null
-
     }
 
 }
