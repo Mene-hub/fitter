@@ -25,7 +25,6 @@ class HomeRecapAdapter(private val context2: Context, private val Cards:MutableL
                 val action : NavDirections = MyFitnessCardsDirections.actionMyFitnessCardsToMonthlyRecapChart(fitnessCard = Card)
                 it.findNavController().navigate(action)
             }
-
         }
 
     }
