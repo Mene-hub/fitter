@@ -18,24 +18,11 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class ImageSelector(val propertyname : String, var card: FitnessCard) : BottomSheetDialogFragment() {
 
-    var selectedImage:CardsCover = card.imageCover
-    //dialog tag to find it with supportFragmentManager.findViewById
-    val TAG = "selectImageDialog"
-
-
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View {
 
         val v : View = inflater.inflate(R.layout.fragment_image_selector, container, false)
 
         v.findViewById<TextView>(R.id.PropertyName_TV).text = propertyname
-
-        /*
-        v.findViewById<TextView>(R.id.saveBt_TV).setOnClickListener {
-            card.imageCover = selectedImage
-            //MyFitnessCards().addFitnessCard(card)
-            dismiss()
-        }
-         */
 
         val mybgs : MutableList<Int> = ArrayList()
         mybgs.add(R.drawable.gigachad)
@@ -52,13 +39,6 @@ class ImageSelector(val propertyname : String, var card: FitnessCard) : BottomSh
         recycle.adapter = adapter
 
         return v
-    }
-
-    override fun onDismiss(dialog: DialogInterface) {
-
-
-
-        super.onDismiss(dialog)
     }
 
 }
