@@ -17,14 +17,9 @@ class HomeRecapAdapter(private val context2: Context, private val Cards:MutableL
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
         private val cardName : TextView = itemView.findViewById(R.id.recapName_TV)
-        private val cardExercises : TextView = itemView.findViewById(R.id.recapCount_TV)
 
-        fun setCard(Card:FitnessCard, context: Context){
+        fun setCard(Card:FitnessCard){
             cardName.text = Card.name
-
-            //TODO("Extract")
-            cardExercises.text = "Ci sono 0 recap"
-
 
             itemView.setOnClickListener {
                 val action : NavDirections = MyFitnessCardsDirections.actionMyFitnessCardsToMonthlyRecapChart(fitnessCard = Card)
@@ -43,7 +38,7 @@ class HomeRecapAdapter(private val context2: Context, private val Cards:MutableL
 
     override fun onBindViewHolder(holder: HomeRecapAdapter.Holder, position: Int) {
         val Card: FitnessCard = Cards[position]
-        holder.setCard(Card, context2)
+        holder.setCard(Card)
     }
 
     override fun getItemCount(): Int {

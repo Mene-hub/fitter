@@ -29,11 +29,8 @@ class MonthlyRecapAdapter(private val context2: Context, private val recapList: 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
         private val cardLabel: TextView = itemView.findViewById(R.id.recapName_TV)
-        private val description : TextView = itemView.findViewById(R.id.recapCount_TV)
 
         fun setCard(monthlyRecap: MonthlyRecap){
-
-            description.visibility = View.GONE
 
             cardLabel.text = monthlyRecap.month
             //cardLabel.textSize = 30F

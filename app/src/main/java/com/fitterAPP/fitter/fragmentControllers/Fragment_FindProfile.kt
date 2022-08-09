@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import android.widget.Toast
 import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.classes.Athlete
 import com.fitterAPP.fitter.databinding.FragmentFindprofileBinding
@@ -73,30 +74,26 @@ class FindProfile : Fragment() {
      * @author Daniel Satriano
      * @since 28/05/2022
      */
-    //TODO("Cambiare modo in cui prendo le informazioni, con metodi meno pesanti")
     fun databaseQuery(text : String?){
-        val usernameOrdered : Query  = databaseReference.orderByChild("username").startAt(text).endAt("$text\uF7FF").limitToFirst(10)
+        val usernameOrdered : Query  = databaseReference.orderByChild("username").startAt(text).endAt("$text\uF7FF").limitToFirst(20)
         suggestedUsers.clear()
-        adapter.notifyDataSetChanged()
-        usernameOrdered.addChildEventListener(object : ChildEventListener{
+        adapter.notifyItemRangeRemoved(0,suggestedUsers.size)
 
-            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                val item = snapshot.getValue(Athlete::class.java)
-                suggestedUsers.add(item!!)
-                adapter.notifyItemChanged(suggestedUsers.indexOf(item))
+        usernameOrdered.addListenerForSingleValueEvent(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for(item in snapshot.children){
+                    val tmp = item.getValue(Athlete::class.java)
+                    if(tmp != null){
+                        suggestedUsers.add(tmp)
+                        adapter.notifyItemChanged(suggestedUsers.indexOf(tmp))
+                    }
+                }
             }
-            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                Log.d("FindProfile", "entro changed")
-            }
-            override fun onChildRemoved(snapshot: DataSnapshot) {
-                Log.d("FindProfile", "entro removed")
-            }
-            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
-            }
+
             override fun onCancelled(error: DatabaseError) {
-                Log.d("FindProfile", "entro cancelled")
+                Toast.makeText(requireContext(),error.message,Toast.LENGTH_LONG).show()
             }
-
         })
+
     }
 }

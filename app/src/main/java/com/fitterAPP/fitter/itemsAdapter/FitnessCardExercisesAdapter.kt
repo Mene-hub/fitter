@@ -30,11 +30,6 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
 
     private val databaseRef = StaticFitnessCardDatabase.database.getReference(context2.getString(R.string.FitnessCardsReference))
 
-    //TODO("CONTROLLARE SE FUNZIONA ANCORA / SE è NECESSARIO")
-    /*
-    var recapDoneAlready : Boolean = false
-     */
-
     /**
       * Used to check at the very start of the adapter if a given recap for a given card is already been done today. calls valueListener()
       * @author Daniel Satriano
@@ -42,7 +37,6 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
     */
 
      init {
-         //StaticRecapDatabase.setSingleListenerToCardRecap(databaseRef = database, Athlete.UID, dayRecap, valueListener())
          checkForNullOrCorrectYear()
      }
 
@@ -61,14 +55,11 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
             if(edit_){
                 itemView.findViewById<ImageView>(R.id.editExercise_IV).setOnClickListener {
                     val controller = itemView.findFragment<ModifyCard>().findNavController()
-                    var action : NavDirections? = null
 
-                    when(ex.type){
-
-                        ExerciseType.warmup-> action =  ModifyCardDirections.actionModifyCardToSetWarmUpExercise(fitnessCard_, index, fitnessCard_.exercises?.get(index)!!)
-                        ExerciseType.normal-> action =  ModifyCardDirections.actionModifyCardToNewExercieFormDialog(fitnessCard_, index, fitnessCard_.exercises?.get(index)!!)
-                        ExerciseType.pyramid-> action = null
-                        else -> {action = null}
+                    val action : NavDirections? = when(ex.type){
+                        ExerciseType.warmup-> ModifyCardDirections.actionModifyCardToSetWarmUpExercise(fitnessCard_, index, fitnessCard_.exercises?.get(index)!!)
+                        ExerciseType.normal-> ModifyCardDirections.actionModifyCardToNewExercieFormDialog(fitnessCard_, index, fitnessCard_.exercises?.get(index)!!)
+                        ExerciseType.pyramid-> null
                     }
 
                     if(action != null)
@@ -84,12 +75,12 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
 
             when (ex.type){
                 ExerciseType.warmup -> {
-                    exReps.text = ex.exerciseDuration.toString() + " min"
+                    exReps.text = ex.exerciseDuration.toString().plus(" min")
                     icon.setImageResource(R.drawable.warmup_exercise_icon)
                 }
 
                 ExerciseType.normal -> {
-                    exReps.text = ex.exerciseSer.toString() + " x " + ex.exerciseRep.toString() + " - " + ex.exerciseRest + " s"
+                    exReps.text = ex.exerciseSer.toString().plus(" x " + ex.exerciseRep.toString() + " - " + ex.exerciseRest + " s")
                     icon.setImageResource(R.drawable.normal_exercise_icon)
                 }
 
@@ -101,12 +92,7 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
                         if(i < ex.piramidSeries?.lastIndex!!)
                             reps += " x "
                     }
-                    exReps.text = reps + " - " + ex.exerciseRest + " s"
-                }
-
-                else ->{
-                    exReps.text = ex.exerciseSer.toString() + " x " + ex.exerciseRep.toString() + " - " + ex.exerciseRest + " s"
-                    icon.setImageResource(R.drawable.normal_exercise_icon)
+                    exReps.text = reps.plus(" - " + ex.exerciseRest + " s")
                 }
             }
         }
@@ -176,49 +162,6 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
             monthlyRecap = MonthlyRecap(LocalDate.now().month.toString(), fitnessCard.key, mutableListOf())
         }
     }
-
-    //TODO("SISTEMARE RECAP ")
-/*
-    /**
-     * @author Daniel Satriano
-     * @since 30/07/2022
-     * Checks if the recap is already been done today, if it is then it sets [recapDoneAlready] to true. Note that this listener is not a normal ValueListener, but its a
-     * ListenerForSingleValueEvent
-     */
-    private fun valueListener(): ValueEventListener {
-        return object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if(snapshot.exists()){
-                   recapDoneAlready = true
-                }
-            }
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(context2, error.message,Toast.LENGTH_LONG).show()
-            }
-        }
-    }
-
-
-    /**
-     * Used to check if the recap that the user is trying to add is already added to the database for that given instance.
-     * this function is being used in Fragment_showCardDialog.kt
-     * @author Daniel Satriano
-     * @param index it's the index of the item that needs to be checked
-     * @return a boolean which defines whether it exists. If true it does exist, if false it doesn't
-     */
-    fun recapChecker(index : Int) : Boolean{
-        val exercise = fitnessCard.exercises!![index]
-
-        var alreadySet = false
-        for (item in exerciseRecap) {
-            if (item.exerciseName == exercise.exerciseName) {
-                alreadySet = true
-            }
-        }
-        return alreadySet
-    }
-*/
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val view: View = if(!isEditable) {

@@ -43,7 +43,7 @@ class MonthlyRecapChart : Fragment() {
         fitnessCard = args.fitnessCard
 
         //set text to textview in layout
-        binding.TVMonthlyRecap.text = (context?.getString(R.string.MonthlyRecap) + ": ${fitnessCard.name}")
+        binding.TVMonthlyRecap.text = context?.getString(R.string.MonthlyRecap).plus(": ${fitnessCard.name}")
 
         val monthlyRecap : MutableList<MonthlyRecap> = ArrayList()
 
@@ -127,8 +127,7 @@ class MonthlyRecapChart : Fragment() {
         graph.legend.isEnabled = false
 
         graph.animateY(1000)
-        //TODO("extract")
-        graph.setNoDataText("Click on a card to start checking your progress")
+        graph.setNoDataText(getString(R.string.graph_noDataText))
         graph.setNoDataTextTypeface(ResourcesCompat.getFont(requireContext(), R.font.roboto_regular))
 
         //region not working

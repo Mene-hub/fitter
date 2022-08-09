@@ -32,15 +32,6 @@
             android:textColor="@color/white"
             android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/recapCount_TV"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto_bold"
-            android:text=""
-            android:textColor="@color/white"
-            android:textSize="14sp" />
-
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

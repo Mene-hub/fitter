@@ -43,4 +43,6 @@
     <string name="kilogramsUsed">Quanti chili ?</string>
     <string name="user_profile">Profilo utente</string>
     <string name="MonthlyRecap">Riassunti mensili</string>
+    <string name="there_are">Ci sono</string>
+    <string name="graph_noDataText">Clicca su un recap per iniziare a vedere i tuoi progressi</string>
 </resources>

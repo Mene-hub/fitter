@@ -56,5 +56,7 @@
     <string name="logout" translatable="false">Logout</string>
     <string name="MonthlyRecap">Monthly Recaps</string>
     <string name="BookmarkReference" translatable="false">BOOKMARKED_CARDS</string>
+    <string name="there_are">There are</string>
+    <string name="graph_noDataText">Click on a recap to start checking your progress</string>
 
 </resources>
