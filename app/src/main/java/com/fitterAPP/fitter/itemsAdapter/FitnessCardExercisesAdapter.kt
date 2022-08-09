@@ -110,7 +110,6 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
      * @since 23/07/2022
      * @param index it's the index of the item that needs to be removed
      */
-    //TODO("Should it also delete each recap in that month ?")
     fun deleteItem(index : Int, recyclerView : RecyclerView){
         val deletedItem = fitnessCard.exercises!![index]
         fitnessCard.exercises!!.removeAt(index)
