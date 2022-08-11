@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.*
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.R
@@ -18,6 +20,7 @@ import com.fitterAPP.fitter.databinding.FragmentMonthlyRecapChartBinding
 import com.fitterAPP.fitter.itemsAdapter.MonthlyRecapAdapter
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -61,6 +64,7 @@ class MonthlyRecapChart : Fragment() {
             fitnessCard.key,
             monthlyRecapListener(monthlyRecap),
         )
+        showMonthSelectDialog()
     }
 
     /**
@@ -141,6 +145,39 @@ class MonthlyRecapChart : Fragment() {
         xAxis.position = XAxis.XAxisPosition.BOTTOM_INSIDE
         xAxis.setDrawGridLines(false)
 
+    }
+
+    fun showMonthSelectDialog(){
+        val newFitnessCard = FitnessCard()
+        // Create an alert builder
+        val builder = MaterialAlertDialogBuilder(requireContext(),  R.style.ThemeOverlay_App_MaterialAlertDialog)
+        // set the custom layout
+        val customLayout: View = layoutInflater.inflate(R.layout.dialog_month_select, null)
+        builder.setView(customLayout)
+
+        val recycle = customLayout.findViewById<ListView>(R.id.monthRecycle)
+        var months : MutableList<String> = ArrayList()
+        months.add("gennaio")
+        months.add("febbraio")
+        months.add("marzo")
+        months.add("aprile")
+        months.add("maggio")
+        months.add("giugno")
+        months.add("luglio")
+        months.add("agosto")
+        months.add("settembre")
+        months.add("ottobre")
+        months.add("novembre")
+        months.add("dicembre")
+
+        recycle.adapter =  ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, months)
+
+        recycle.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+            recycle.smoothScrollToPosition(position)
+        }
+
+        // add a button
+        builder.show()
     }
 
 

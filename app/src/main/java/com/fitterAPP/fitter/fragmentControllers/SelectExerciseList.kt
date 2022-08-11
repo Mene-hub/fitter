@@ -51,7 +51,7 @@ class SelectExerciseList : DialogFragment() {
         var warmupEx : MutableList<String> = gson.fromJson(warmupex, type)
 
         //adapter = context?.let { SuggestionAdapter((activity as MainActivity), warmupEx) }!!
-        binding.ExRecycle.adapter = ArrayAdapter(context!!, android.R.layout.simple_list_item_1,warmupEx)
+        binding.ExRecycle.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1,warmupEx)
 
         binding.ExRecycle.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             exercise.exerciseName = parent.getItemAtPosition(position) as String
