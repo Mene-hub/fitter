@@ -27,7 +27,6 @@ class Fragment_ViewOthersProfile : DialogFragment() {
     private var cardList : MutableList<FitnessCard> = mutableListOf()
     private val args by navArgs<Fragment_ViewOthersProfileArgs>()
     private lateinit var shimmerFrameLayout : ShimmerFrameLayout
-    private var isSameUser : Boolean = false
 
     /**
      * onCreate method which is used to set the dialog style. This mathod is paired with a WindowManager setting done in [onCreateView]
@@ -65,7 +64,7 @@ class Fragment_ViewOthersProfile : DialogFragment() {
                 .into(image)
         }
 
-        binding.TVUsernameCards.text = "${athlete.username}'s cards"
+        binding.TVUsernameCards.text = athlete.username.plus("'s cards")
 
         adapter = context?.let { FitnessCardFindUserAdapter((activity as MainActivity), cardList, athlete.UID) }!!
         binding.RVCards.adapter = adapter
@@ -93,11 +92,12 @@ class Fragment_ViewOthersProfile : DialogFragment() {
                         adapter.notifyItemInserted(cardList.indexOf(item))
                         Log.d("CountCard", cardList.size.toString())
                     }
+                    //Stop shimmer effect, make shimmer template gone and RecyclerView visible
+                    binding.RVCardsShimmer.visibility = View.GONE
+                    binding.RVCardsShimmer.stopShimmer()
+                    binding.RVCards.visibility = View.VISIBLE
                 }
-                //Stop shimmer effect, make shimmer template gone and RecyclerView visible
-                binding.RVCardsShimmer.visibility = View.GONE
-                binding.RVCardsShimmer.stopShimmer()
-                binding.RVCards.visibility = View.VISIBLE
+
             }
         }
     }

@@ -30,7 +30,6 @@ import com.google.firebase.ktx.Firebase
  */
 class Profile : Fragment() {
 
-    private val REQUEST_CODE = 121
     private lateinit var binding : FragmentProfileBinding
 
     private lateinit var auth : FirebaseAuth
