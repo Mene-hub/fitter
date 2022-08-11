@@ -9,11 +9,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import com.facebook.internal.Mutable
 import com.facebook.login.LoginManager
 import com.fitterAPP.fitter.classes.Athlete
 import com.fitterAPP.fitter.classes.BookmarkCard
-import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.databases.StaticBookmarkDatabase
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
@@ -188,7 +186,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@MainActivity,error.message, Toast.LENGTH_LONG)
+                Toast.makeText(this@MainActivity,error.message, Toast.LENGTH_LONG).show()
             }
 
         }

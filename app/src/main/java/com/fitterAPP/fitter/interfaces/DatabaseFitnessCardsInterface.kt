@@ -21,8 +21,18 @@ interface DatabaseFitnessCardsInterface {
      */
     val database : FirebaseDatabase
 
+
+
     /**
      * Method that will be used to get a specified card value listener
+     * @author Daniel Satriano
+     * @since 11/08/2022
+     */
+    fun setSingleValueEventListener(databaseRef: DatabaseReference, userID: String, fitnessCardListener: ValueEventListener)
+
+
+    /**
+     * Method that will be used to get a specified card child listener
      * @author Daniel Satriano
      * @since 04/06/2022
      */

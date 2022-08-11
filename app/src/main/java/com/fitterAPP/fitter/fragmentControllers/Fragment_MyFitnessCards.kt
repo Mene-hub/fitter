@@ -49,29 +49,66 @@ class MyFitnessCards : Fragment() {
         //grab event from companion class RealTimeDBHelper
 
 
-
         val recycle : RecyclerView = binding.MyFitnessCardsRV
         adapter = context?.let { FitnessCardAdapter((activity as MainActivity), fitnessCads, this) }!!
         if(fitnessCads.indexOf(dummyCard) == -1){
             fitnessCads.add(dummyCard)
         }
         recycle.adapter = adapter
-        adapter.notifyDataSetChanged()
+        adapter.notifyItemInserted(0)
 
         val recapRecycle : RecyclerView = binding.MyRecapsRV
         recapAdapter = context?.let { HomeRecapAdapter((activity as MainActivity), recapCards) }!!
         recapRecycle.adapter = recapAdapter
 
-        StaticFitnessCardDatabase.setFitnessCardChildListener(dbReference, Athlete.UID, getFitnessCardEventListener())
-        binding.MyFitnessCardsShimmerRV.visibility = View.INVISIBLE
-        binding.MyRecapsShimmerRV.visibility = View.INVISIBLE
-        binding.MyFitnessCardsShimmerRV.stopShimmer()
-        binding.MyRecapsShimmerRV.stopShimmer()
-
-        binding.MyFitnessCardsRV.visibility = View.VISIBLE
-        binding.MyRecapsRV.visibility = View.VISIBLE
+        StaticFitnessCardDatabase.setSingleValueEventListener(dbReference, Athlete.UID, initialCardDownload())
 
         Log.w("Fragment", binding.MyFitnessCardsRV.id.toString())
+    }
+
+    /**
+     * This method is used primarily for the shimmer effect, so that it gets done once and not everytime like if it was in a child event listener
+     * @author Daniel Satriano
+     * @since 11/08/2022
+     */
+    private fun initialCardDownload(): ValueEventListener {
+        return object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                for(tmp in snapshot.children){
+                    val item = tmp.getValue(FitnessCard::class.java)
+                    //aggiungo nuova fitness card
+                    if(!fitnessCads.contains(item)) {
+                        fitnessCads.remove(dummyCard)
+                        fitnessCads.add((item!!))
+                        fitnessCads.add(dummyCard)
+                        adapter.notifyItemInserted(fitnessCads.indexOf(item))
+                        adapter.notifyItemMoved(fitnessCads.size-2, fitnessCads.size-1)
+                    }
+                    if(!recapCards.contains(item)){
+                        recapCards.add(item!!)
+                        recapAdapter.notifyItemInserted(recapCards.indexOf(item))
+                    }
+                }
+
+                binding.MyFitnessCardsShimmerRV.visibility = View.INVISIBLE
+                binding.MyRecapsShimmerRV.visibility = View.INVISIBLE
+                binding.MyFitnessCardsShimmerRV.stopShimmer()
+                binding.MyRecapsShimmerRV.stopShimmer()
+
+                binding.MyFitnessCardsRV.visibility = View.VISIBLE
+                binding.MyRecapsRV.visibility = View.VISIBLE
+
+                StaticFitnessCardDatabase.setFitnessCardChildListener(dbReference, Athlete.UID, getFitnessCardEventListener())
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(requireContext(), error.message, Toast.LENGTH_LONG).show()
+            }
+
+        }
+
     }
 
     /**
@@ -123,8 +160,14 @@ class MyFitnessCards : Fragment() {
     }
 
 
+    /**
+     * Called right after the value listener has been called
+     * @author Daniel Satriano
+     * @since 1/06/2022
+     */
     private fun getFitnessCardEventListener(): ChildEventListener {
         val childEventListener = object : ChildEventListener {
+
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val item = snapshot.getValue(FitnessCard::class.java)
                 //aggiungo nuova fitness card

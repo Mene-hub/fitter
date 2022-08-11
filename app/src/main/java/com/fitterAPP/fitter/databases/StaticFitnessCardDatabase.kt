@@ -5,6 +5,7 @@ import com.fitterAPP.fitter.classes.ApiKeyRetriever
 import com.fitterAPP.fitter.classes.Exercise
 import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.interfaces.DatabaseFitnessCardsInterface
+import com.google.firebase.crashlytics.internal.model.CrashlyticsReport
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -18,6 +19,11 @@ import com.google.firebase.database.ValueEventListener
 class StaticFitnessCardDatabase {
     companion object : DatabaseFitnessCardsInterface{
         override val database: FirebaseDatabase = FirebaseDatabase.getInstance(ApiKeyRetriever.getDatabase())
+
+
+        override fun setSingleValueEventListener(databaseRef: DatabaseReference, userID: String, fitnessCardListener: ValueEventListener) {
+            databaseRef.child(userID).addListenerForSingleValueEvent(fitnessCardListener)
+        }
 
         override fun setFitnessCardChildListener(databaseRef : DatabaseReference, userID : String, fitnessCardListener: ChildEventListener){
             databaseRef.child(userID).addChildEventListener(fitnessCardListener)
