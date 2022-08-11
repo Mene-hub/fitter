@@ -64,7 +64,6 @@ class MonthlyRecapChart : Fragment() {
             fitnessCard.key,
             monthlyRecapListener(monthlyRecap),
         )
-        showMonthSelectDialog()
     }
 
     /**
@@ -147,6 +146,10 @@ class MonthlyRecapChart : Fragment() {
 
     }
 
+    /**
+     * metodo per la selezione del mese (da sistemare)
+     * @author Claudio Menegotto
+     */
     fun showMonthSelectDialog(){
         val newFitnessCard = FitnessCard()
         // Create an alert builder
