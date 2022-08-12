@@ -18,6 +18,8 @@ import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.classes.CardsCover
 import com.fitterAPP.fitter.databinding.FragmentMyFitnessCardsBinding
 import com.fitterAPP.fitter.itemsAdapter.HomeRecapAdapter
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.RequestConfiguration
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.database.*
 import java.time.LocalDateTime
@@ -33,6 +35,13 @@ class MyFitnessCards : Fragment() {
     private val fitnessCads : MutableList<FitnessCard> = ArrayList()
     private val recapCards : MutableList<FitnessCard> = ArrayList()
     private var dummyCard : FitnessCard = FitnessCard()
+
+
+    private companion object{
+        //TAG for debugging
+        private const val TAG = "FRAGMENT_MyFitnessCards"
+        private const val TAG_AD = "NATIVE_AD_TAG"
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
@@ -52,7 +61,7 @@ class MyFitnessCards : Fragment() {
         val recycle : RecyclerView = binding.MyFitnessCardsRV
         adapter = context?.let { FitnessCardAdapter((activity as MainActivity), fitnessCads, this) }!!
         if(fitnessCads.indexOf(dummyCard) == -1){
-            fitnessCads.add(dummyCard)
+            //fitnessCads.add(dummyCard)
         }
         recycle.adapter = adapter
         adapter.notifyItemInserted(0)
@@ -63,7 +72,9 @@ class MyFitnessCards : Fragment() {
 
         StaticFitnessCardDatabase.setSingleValueEventListener(dbReference, Athlete.UID, initialCardDownload())
 
-        Log.w("Fragment", binding.MyFitnessCardsRV.id.toString())
+
+
+        Log.w(TAG, binding.MyFitnessCardsRV.id.toString())
     }
 
     /**
@@ -79,16 +90,22 @@ class MyFitnessCards : Fragment() {
                     val item = tmp.getValue(FitnessCard::class.java)
                     //aggiungo nuova fitness card
                     if(!fitnessCads.contains(item)) {
-                        fitnessCads.remove(dummyCard)
+                        //fitnessCads.remove(dummyCard)
                         fitnessCads.add((item!!))
-                        fitnessCads.add(dummyCard)
+                        //fitnessCads.add(dummyCard)
                         adapter.notifyItemInserted(fitnessCads.indexOf(item))
-                        adapter.notifyItemMoved(fitnessCads.size-2, fitnessCads.size-1)
+                        //adapter.notifyItemMoved(fitnessCads.size-2, fitnessCads.size-1)
+
+
+
                     }
                     if(!recapCards.contains(item)){
                         recapCards.add(item!!)
                         recapAdapter.notifyItemInserted(recapCards.indexOf(item))
                     }
+                }
+                for (item in fitnessCads){
+                    Log.d("FITNESS_CARDS" ,item.toString())
                 }
 
                 binding.MyFitnessCardsShimmerRV.visibility = View.INVISIBLE
@@ -98,7 +115,6 @@ class MyFitnessCards : Fragment() {
 
                 binding.MyFitnessCardsRV.visibility = View.VISIBLE
                 binding.MyRecapsRV.visibility = View.VISIBLE
-
                 StaticFitnessCardDatabase.setFitnessCardChildListener(dbReference, Athlete.UID, getFitnessCardEventListener())
 
             }
@@ -172,10 +188,11 @@ class MyFitnessCards : Fragment() {
                 val item = snapshot.getValue(FitnessCard::class.java)
                 //aggiungo nuova fitness card
                 if(!fitnessCads.contains(item)) {
-                    fitnessCads.remove(dummyCard)
+                    //fitnessCads.remove(dummyCard)
                     fitnessCads.add((item!!))
-                    fitnessCads.add(dummyCard)
+                    //fitnessCads.add(dummyCard)
                     adapter.notifyItemInserted(fitnessCads.indexOf(item))
+                    //adapter.notifyItemMoved(fitnessCads.size-2, fitnessCads.size-1)
                 }
                 if(!recapCards.contains(item)){
                     recapCards.add(item!!)
@@ -206,7 +223,7 @@ class MyFitnessCards : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Log.w("Fragment_MyFitnessCards: ", "postcomments:onCancelled", error.toException())
+                Log.w(TAG, "postcomments:onCancelled", error.toException())
                 Toast.makeText(activity?.baseContext, "Failed to load comment.", Toast.LENGTH_SHORT).show()
             }
         }

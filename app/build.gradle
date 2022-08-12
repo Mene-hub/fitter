@@ -115,4 +115,9 @@ dependencies {
     //Html text cleaner
     implementation 'org.jsoup:jsoup:1.15.2'
 
+    //ADS
+    implementation 'com.google.android.gms:play-services-ads:21.1.0'
+
+
+
 }

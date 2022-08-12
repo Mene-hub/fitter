@@ -13,6 +13,9 @@ import com.facebook.login.LoginManager
 import com.fitterAPP.fitter.classes.Athlete
 import com.fitterAPP.fitter.classes.BookmarkCard
 import com.fitterAPP.fitter.databases.StaticBookmarkDatabase
+import com.google.android.gms.ads.*
+import com.google.android.gms.ads.nativead.NativeAd
+import com.google.android.gms.ads.nativead.NativeAdOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
 import com.google.firebase.auth.FirebaseAuth
@@ -38,10 +41,19 @@ class MainActivity : AppCompatActivity() {
     //Bottom sheet dialog
     private lateinit var menuiv : CardView
 
+    private companion object{
+        private const val TAG = "MainActivity"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        MobileAds.initialize(this){
+            initStatus ->
+            Log.d(TAG, "onCreate: onInitCompleted")
+        }
 
         dbReference = StaticAthleteDatabase.database.getReference(getString(R.string.AthleteReference))
 
