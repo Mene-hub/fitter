@@ -24,6 +24,7 @@ import com.fitterAPP.fitter.classes.Athlete
 import com.fitterAPP.fitter.classes.CardsCover
 import com.fitterAPP.fitter.classes.SwipeGesture
 import com.fitterAPP.fitter.databases.StaticFitnessCardDatabase
+import com.fitterAPP.fitter.databases.StaticRecapDatabase
 import com.fitterAPP.fitter.databinding.FragmentModifyCardBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -59,14 +60,14 @@ class ModifyCard() : DialogFragment() {
         fitnessCard = args.cardBundle
         val databaseRef = StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference))
 
+
         binding.backBt.setOnClickListener {
             activity?.onBackPressed()
         }
 
 
         screenHeightAdjustment()
-
-        deleteButtonSetup(fitnessCard, databaseRef)
+        deleteButtonSetup(fitnessCard, databaseRef, recapRef = StaticRecapDatabase.database.getReference(getString(R.string.RecapReference)))
 
         //exercises adapter
         recycle = binding.exercisesListRV
@@ -137,11 +138,17 @@ class ModifyCard() : DialogFragment() {
 
     }
 
-    private fun deleteButtonSetup(fitnessCard: FitnessCard, databaseRef: DatabaseReference) {
+    /**
+     * Method used to initialize the onClickListener of the FAB inside ModifyCard.xml, its job is to delete the fitnessCard from the database and its entire recaps.
+     * @author Daniel Satriano
+     * @since 13/08/2022
+     */
+    private fun deleteButtonSetup(fitnessCard: FitnessCard, databaseRef: DatabaseReference, recapRef : DatabaseReference) {
         val deleteButton = binding.deleteCardBT
         deleteButton.setOnClickListener{
             findNavController().navigate(R.id.action_modifyCard_to_myFitnessCards)
             StaticFitnessCardDatabase.removeFitnessCard(databaseRef,Athlete.UID, fitnessCard.key)
+            StaticRecapDatabase.removeRecap(recapRef,Athlete.UID,fitnessCard.key)
         }
     }
 
@@ -202,7 +209,7 @@ class ModifyCard() : DialogFragment() {
                 adapter.notifyItemInserted(fitnessCard.exercises!!.size)
 
                 try {
-                    cardDuration.text = fitnessCard.timeDuration.toString() + " " + getString(R.string.minutes)
+                    cardDuration.text = fitnessCard.timeDuration.toString().plus(" " + getString(R.string.minutes))
                 }catch(e:Exception){e.printStackTrace()}
             }
 

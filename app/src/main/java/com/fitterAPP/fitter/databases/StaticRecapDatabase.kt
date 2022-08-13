@@ -49,13 +49,12 @@ class StaticRecapDatabase {
          * Using the recap ID, removes the given recap from the database
          * @author Daniel Satriano
          * @param userID The user's ID
-         * @param recapID The recap ID
          * @param databaseRef The database reference
          * @param cardID The fitness card ID
          * @since 16/07/2022
          */
-        override fun removeRecap(databaseRef: DatabaseReference, userID: String, cardID: String, recapID: String) {
-            databaseRef.child(userID).child(cardID).child(recapID).removeValue()
+        override fun removeRecap(databaseRef: DatabaseReference, userID: String, cardID: String) {
+            databaseRef.child(userID).child(cardID).removeValue()
         }
     }
 }

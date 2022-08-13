@@ -40,7 +40,7 @@ interface DatabaseRecapInterface {
      * @author Daniel Satriano
      * @since 16/07/2022
      */
-    fun removeRecap(databaseRef: DatabaseReference, userID: String, cardID: String, recapID: String)
+    fun removeRecap(databaseRef: DatabaseReference, userID: String, cardID: String)
 
     /**
      * Makes you able to check if a given
