@@ -1,15 +1,12 @@
 package com.fitterAPP.fitter.fragmentControllers
 
 import android.os.Bundle
-import android.renderscript.Sampler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavDirections
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.R
@@ -22,7 +19,6 @@ import com.fitterAPP.fitter.itemsAdapter.MonthlyRecapAdapter
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -59,15 +55,6 @@ class MonthlyRecapChart : Fragment() {
         adapter = context?.let { MonthlyRecapAdapter((activity as MainActivity), monthlyRecap, binding.BarChartMonthlyRecap)}!!
         binding.monthlyRecapRecycler.adapter = adapter
 
-        //fill list
-        /*
-        StaticRecapDatabase.setRecapChildListener(
-            StaticRecapDatabase.database.getReference(getString(R.string.RecapReference)),
-            Athlete.UID,
-            fitnessCard.key,
-            monthlyRecapListener(monthlyRecap),
-        )*/
-
         StaticRecapDatabase.setSingleListenerToCardRecap(
             StaticRecapDatabase.database.getReference(getString(R.string.RecapReference)),
             Athlete.UID,
@@ -101,46 +88,6 @@ class MonthlyRecapChart : Fragment() {
             }
         }
     }
-
-/*
-    private fun monthlyRecapListener(monthlyRecap: MutableList<MonthlyRecap>): ChildEventListener {
-        return object : ChildEventListener{
-            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                val item = snapshot.getValue(MonthlyRecap::class.java)
-                if(item != null){
-                    monthlyRecap.add(item)
-                    adapter.notifyItemInserted(monthlyRecap.indexOf(item))
-                }
-            }
-
-            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                val item = snapshot.getValue(MonthlyRecap::class.java)
-                if(item != null){
-                    val index = monthlyRecap.indexOf(monthlyRecap.find { it.month == item.month})
-                    monthlyRecap[index] = item
-                    adapter.notifyItemChanged(index)
-                }
-            }
-
-            override fun onChildRemoved(snapshot: DataSnapshot) {
-                val item = snapshot.getValue(MonthlyRecap::class.java)
-                if(item != null){
-                    val index = monthlyRecap.indexOf(item)
-                    monthlyRecap.removeAt(index)
-                    adapter.notifyItemRemoved(index)
-                }
-            }
-
-            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(requireContext(),error.message,Toast.LENGTH_LONG).show()
-            }
-        }
-    }
-
-*/
 
     /**
      * Used to set the initial parameter for the graph
@@ -190,7 +137,7 @@ class MonthlyRecapChart : Fragment() {
         builder.setView(customLayout)
 
         val recycle = customLayout.findViewById<ListView>(R.id.monthRecycle)
-        var months : MutableList<String> = ArrayList()
+        val months : MutableList<String> = ArrayList()
         months.add("gennaio")
         months.add("febbraio")
         months.add("marzo")
