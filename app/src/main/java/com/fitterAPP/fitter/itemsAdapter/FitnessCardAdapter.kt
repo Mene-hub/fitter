@@ -103,24 +103,6 @@ class FitnessCardAdapter (val context2: Context, private val Cards:MutableList<F
 
     }
 
-    inner class HolderPlusButton(itemView : View) : RecyclerView.ViewHolder(itemView){
-
-
-
-            bgImage.scaleType = ImageView.ScaleType.FIT_CENTER
-            val padding = bgImage.resources.getDimensionPixelOffset(R.dimen.button_add_card_padding)
-            bgImage.setPadding(padding, padding, padding, padding)
-
-            itemView.setOnClickListener {
-                itemView.findViewById<LottieAnimationView>(R.id.lottie_add).playAnimation()
-                fitnessCards.showAlertDialogFitnessCard()
-            }
-
-
-    }
-
-
-
     private fun currentMonthRecapListener(Card: FitnessCard): ValueEventListener {
         return object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
