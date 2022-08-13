@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.fitterAPP.fitter.R
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
+import java.util.*
 
 /**
  * Class used to manage swipes and movements of listItems inside the exercise recyclerview
@@ -52,13 +53,14 @@ class SwipeGesture(){
      * @author Daniel Satriano
      * @since 27/07/2022
      */
-    abstract  class SwipeGestureRight(private val context : Context) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+    abstract  class SwipeGestureRight(private val context : Context) : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.START or  ItemTouchHelper.END, ItemTouchHelper.RIGHT) {
 
         private val recapColor = ContextCompat.getColor(context, R.color.green)
         private val recapIcon : Int = R.drawable.ic_check
         private val typeface = ResourcesCompat.getFont(context, R.font.roboto_regular)
 
         override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+
             return false
         }
 

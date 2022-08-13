@@ -32,9 +32,11 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import kotlin.collections.ArrayList
+import kotlin.concurrent.thread
 
 class Fragment_showCardDialog() : DialogFragment() {
 
@@ -87,6 +89,24 @@ class Fragment_showCardDialog() : DialogFragment() {
 
         //Inserisco il gestore dello SWIPE della listview
         val swipeGesture = object : SwipeGesture.SwipeGestureRight(requireContext()){
+
+            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+                var fromPosition = viewHolder.absoluteAdapterPosition
+                var toPosition = target.absoluteAdapterPosition
+
+                Collections.swap(newFitnessCard.exercises!!, fromPosition,toPosition)
+                adapter.notifyItemMoved(fromPosition,toPosition)
+
+                return true
+            }
+
+            override fun onMoved(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, fromPos: Int, target: RecyclerView.ViewHolder, toPos: Int, x: Int, y: Int) {
+                thread(start = true) {
+                    val db = StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference))
+                    StaticFitnessCardDatabase.setFitnessCardItem(db, Athlete.UID, newFitnessCard)
+                }
+                super.onMoved(recyclerView, viewHolder, fromPos, target, toPos, x, y)
+            }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 when(direction){
@@ -234,7 +254,7 @@ class Fragment_showCardDialog() : DialogFragment() {
         builder
             .setPositiveButton("OK") { _, _ -> // send data from the
                 // AlertDialog to the Activity
-                val recap = customLayout.findViewById<EditText>(R.id.et_improvement).text.toString()
+                val recap = editText.text.toString()
                 if(recap.isNotBlank() && recap.isNotEmpty()){
                     adapter.addRecap(viewHolder.absoluteAdapterPosition, Integer.parseInt(recap))
                 }
