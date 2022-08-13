@@ -36,10 +36,13 @@ import java.time.LocalDate
 
 class FitnessCardAdapter (val context2: Context, private val Cards:MutableList<FitnessCard>, val fitnessCards: MyFitnessCards?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    companion object{
-        private const val TAG = "FITNESS_CARDS"
-        private const val VIEW_TYPE_CONTENT = 0
-        private const val VIEW_TYPE_AD = 1
+    private companion object {
+        const val TAG = "CardsAdapter"
+        const val ITEMS_PER_AD = 2
+
+        const val AD_FREQUENCY = ITEMS_PER_AD + 1
+        const val AD_VIEWTYPE = 0
+        const val CARD_VIEWTYPE = 1
     }
 
     inner class HolderCards(itemView: View) : RecyclerView.ViewHolder(itemView){
@@ -210,47 +213,43 @@ class FitnessCardAdapter (val context2: Context, private val Cards:MutableList<F
 
     }
 
+    private fun isCard(position: Int) = (position + 1) % AD_FREQUENCY != 0
+
+    private fun getCardForPosition(position: Int): FitnessCard? {
+        val offset = position / AD_FREQUENCY
+        return if (isCard(position)) Cards[position - offset] else null
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view: View
-        if(viewType == VIEW_TYPE_CONTENT){
-            view = LayoutInflater.from(context2).inflate(R.layout.item_fitnesscard, parent, false)
-            return HolderCards(view)
-        }else{
+        return if(viewType == AD_VIEWTYPE){
             view = LayoutInflater.from(context2).inflate(R.layout.native_ad_card, parent, false)
-            return HolderNativeAd(view)
+            HolderNativeAd(view)
+        }else{
+            view = LayoutInflater.from(context2).inflate(R.layout.item_fitnesscard, parent, false)
+            HolderCards(view)
         }
+
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-
-        if (getItemViewType(position) == VIEW_TYPE_CONTENT) {
-            val model: FitnessCard = Cards[position]
-            (holder as HolderCards).setCard(model, context2)
-        } else if (getItemViewType(position) == VIEW_TYPE_AD) {
+        val card = getCardForPosition(position)
+        if (card == null){
             (holder as HolderNativeAd).createAD(context2)
-
+        } else {
+            val model: FitnessCard = card
+            (holder as HolderCards).setCard(model, context2)
         }
     }
 
+    override fun getItemViewType(position: Int) =
+        if (isCard(position))
+            CARD_VIEWTYPE
+        else
+            AD_VIEWTYPE
 
-    override fun getItemViewType(position: Int): Int {
-        //logic to display Native Ad between content
-        if(position != 0) {
-            return if (position % 2 == 0) {
-                //after 2 items, show native ad
-                VIEW_TYPE_AD
-            } else {
-                VIEW_TYPE_CONTENT
-            }
-        }
-        return VIEW_TYPE_CONTENT
-    }
-
-
-    override fun getItemCount(): Int {
-        return Cards.size
-    }
+    override fun getItemCount() =
+        Cards.size + (Cards.size / ITEMS_PER_AD)
 
 }
 

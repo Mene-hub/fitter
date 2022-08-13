@@ -34,13 +34,11 @@ class MyFitnessCards : Fragment() {
     //firebase database
     private val fitnessCads : MutableList<FitnessCard> = ArrayList()
     private val recapCards : MutableList<FitnessCard> = ArrayList()
-    private var dummyCard : FitnessCard = FitnessCard()
 
 
     private companion object{
         //TAG for debugging
         private const val TAG = "FRAGMENT_MyFitnessCards"
-        private const val TAG_AD = "NATIVE_AD_TAG"
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -54,17 +52,9 @@ class MyFitnessCards : Fragment() {
 
         dbReference = StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference))
 
-        dummyCard = FitnessCard("","",null,null,"addCard",CardsCover.addCard)
-        //grab event from companion class RealTimeDBHelper
-
-
         val recycle : RecyclerView = binding.MyFitnessCardsRV
         adapter = context?.let { FitnessCardAdapter((activity as MainActivity), fitnessCads, this) }!!
-        if(fitnessCads.indexOf(dummyCard) == -1){
-            //fitnessCads.add(dummyCard)
-        }
         recycle.adapter = adapter
-        adapter.notifyItemInserted(0)
 
         val recapRecycle : RecyclerView = binding.MyRecapsRV
         recapAdapter = context?.let { HomeRecapAdapter((activity as MainActivity), recapCards) }!!
@@ -90,14 +80,8 @@ class MyFitnessCards : Fragment() {
                     val item = tmp.getValue(FitnessCard::class.java)
                     //aggiungo nuova fitness card
                     if(!fitnessCads.contains(item)) {
-                        //fitnessCads.remove(dummyCard)
                         fitnessCads.add((item!!))
-                        //fitnessCads.add(dummyCard)
                         adapter.notifyItemInserted(fitnessCads.indexOf(item))
-                        //adapter.notifyItemMoved(fitnessCads.size-2, fitnessCads.size-1)
-
-
-
                     }
                     if(!recapCards.contains(item)){
                         recapCards.add(item!!)
@@ -188,11 +172,8 @@ class MyFitnessCards : Fragment() {
                 val item = snapshot.getValue(FitnessCard::class.java)
                 //aggiungo nuova fitness card
                 if(!fitnessCads.contains(item)) {
-                    //fitnessCads.remove(dummyCard)
                     fitnessCads.add((item!!))
-                    //fitnessCads.add(dummyCard)
                     adapter.notifyItemInserted(fitnessCads.indexOf(item))
-                    //adapter.notifyItemMoved(fitnessCads.size-2, fitnessCads.size-1)
                 }
                 if(!recapCards.contains(item)){
                     recapCards.add(item!!)
