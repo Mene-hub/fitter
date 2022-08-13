@@ -35,11 +35,21 @@ class StaticRecapDatabase {
          * @param recap The recap to be added
          * @param valueListener the object that will be listening database calls
          */
-        override fun setSingleListenerToCardRecap(databaseRef: DatabaseReference, userID: String, recap :MonthlyRecap , valueListener : ValueEventListener ){
-            //val query : Query = databaseRef.child(userID).child(recap.cardKey).orderByChild("key").equalTo(recap.key)
-            //query.addListenerForSingleValueEvent(valueListener)
+        override fun setSingleListenerToCardRecap(databaseRef: DatabaseReference, userID: String,cardID : String,  valueListener : ValueEventListener ){
+            val ref = databaseRef.child(userID).child(cardID)
+            ref.addListenerForSingleValueEvent(valueListener)
         }
 
+        /**
+         * Using the recap ID, removes the given recap from the database
+         * @author Daniel Satriano
+         * @param userID The user's ID
+         * @param databaseRef The database reference
+         * @param cardID The fitness card ID
+         * @param month Month to check
+         * @param valueListener the object that will be listening database calls
+         * @since 16/07/2022
+         */
         fun setSingleListenerForMonth(databaseRef: DatabaseReference, userID: String, cardID: String, month : String, valueListener: ValueEventListener){
             databaseRef.child(userID).child(cardID).child(month).addListenerForSingleValueEvent(valueListener)
         }

@@ -43,10 +43,10 @@ interface DatabaseRecapInterface {
     fun removeRecap(databaseRef: DatabaseReference, userID: String, cardID: String)
 
     /**
-     * Makes you able to check if a given
+     * Retrieves all the monthly recaps of the specific card
      * @author Daniel Satriano
      * @since 30/07/2022
      */
-    fun setSingleListenerToCardRecap(databaseRef: DatabaseReference, userID: String, recap :MonthlyRecap , valueListener : ValueEventListener)
+    fun setSingleListenerToCardRecap(databaseRef: DatabaseReference, userID: String,cardID : String,  valueListener : ValueEventListener)
 
 }

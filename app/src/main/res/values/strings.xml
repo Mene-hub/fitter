@@ -57,7 +57,7 @@
     <string name="MonthlyRecap">Monthly Recaps</string>
     <string name="BookmarkReference" translatable="false">BOOKMARKED_CARDS</string>
     <string name="there_are">There are</string>
-    <string name="graph_noDataText">Click on a recap to start checking your progress</string>
+    <string name="graph_noDataText">Start setting recaps for your card to make monthly recaps</string>
     <string name="ad" translatable="false">AD</string>
 
     <string name="native_ad_id_live" translatable="false">ca-app-pub-6886882793354789/7136026783</string>

@@ -1,6 +1,7 @@
 package com.fitterAPP.fitter.fragmentControllers
 
 import android.os.Bundle
+import android.renderscript.Sampler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +25,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import kotlin.collections.ArrayList
 
 class MonthlyRecapChart : Fragment() {
@@ -58,12 +60,21 @@ class MonthlyRecapChart : Fragment() {
         binding.monthlyRecapRecycler.adapter = adapter
 
         //fill list
+        /*
         StaticRecapDatabase.setRecapChildListener(
             StaticRecapDatabase.database.getReference(getString(R.string.RecapReference)),
             Athlete.UID,
             fitnessCard.key,
             monthlyRecapListener(monthlyRecap),
+        )*/
+
+        StaticRecapDatabase.setSingleListenerToCardRecap(
+            StaticRecapDatabase.database.getReference(getString(R.string.RecapReference)),
+            Athlete.UID,
+            fitnessCard.key,
+            monthlyRecapRetriever(monthlyRecap)
         )
+
     }
 
     /**
@@ -72,6 +83,26 @@ class MonthlyRecapChart : Fragment() {
      * @since 7/08/2022
      * @param monthlyRecap list passed where it'll add all the recaps
      */
+    private fun monthlyRecapRetriever(monthlyRecap: MutableList<MonthlyRecap>): ValueEventListener {
+        return object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for(tmp in snapshot.children){
+                    val item = tmp.getValue(MonthlyRecap::class.java)
+                    if(item != null){
+                        monthlyRecap.add(item)
+                        adapter.notifyItemInserted(monthlyRecap.indexOf(item))
+                        adapter.setFirstDisplayedItem(monthlyRecap[0])
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(requireContext(), error.message, Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+/*
     private fun monthlyRecapListener(monthlyRecap: MutableList<MonthlyRecap>): ChildEventListener {
         return object : ChildEventListener{
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
@@ -109,7 +140,7 @@ class MonthlyRecapChart : Fragment() {
         }
     }
 
-
+*/
 
     /**
      * Used to set the initial parameter for the graph
