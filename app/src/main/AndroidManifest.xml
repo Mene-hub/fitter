@@ -28,6 +28,12 @@
             android:screenOrientation="portrait"
             android:exported="false" />
 
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-6886882793354789~5635851666"/>
+
     </application>
+
+
 
 </manifest>

@@ -4,8 +4,7 @@
     android:id="@+id/ItemCard_CardView"
     android:layout_width="150dp"
     android:layout_height="250dp"
-
-    android:layout_marginRight="10dp"
+    android:layout_marginEnd="10dp"
     app:cardCornerRadius="16dp">
 
     <ImageView
@@ -15,22 +14,12 @@
         android:scaleType="centerCrop"
         app:srcCompat="@drawable/gigachad2" />
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/lottie_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="gone"
-        app:lottie_autoPlay="false"
-        app:lottie_loop="false"
-        app:lottie_rawRes="@raw/add" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_margin="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
         android:orientation="vertical">
 
         <TextView
