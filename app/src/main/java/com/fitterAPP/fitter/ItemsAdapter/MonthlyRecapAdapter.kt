@@ -16,6 +16,7 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.github.mikephil.charting.utils.ColorTemplate
 
+
 /**
  * An adapter for the recycler view inside [com.fitterAPP.fitter.fragmentControllers.MonthlyRecapChart] layout
  * @author Daniel Satriano
@@ -46,6 +47,16 @@ class MonthlyRecapAdapter(private val context2: Context, private val recapList: 
             */
         }
 
+    }
+
+
+    /**
+     * Used in [com.fitterAPP.fitter.fragmentControllers.MonthlyRecapChart] to set the default chart to display
+     * @author Daniel Satriano
+     * @since 13/08/2022
+     */
+    fun setFirstDisplayedItem(recap : MonthlyRecap){
+        updateGraph(recap)
     }
 
 
