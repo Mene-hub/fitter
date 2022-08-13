@@ -34,7 +34,7 @@ import com.google.firebase.database.ValueEventListener
 import java.time.LocalDate
 
 
-class FitnessCardAdapter (val context2: Context, private val Cards:MutableList<FitnessCard>, val fitnessCards: MyFitnessCards?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class FitnessCardAdapter (val context2: Context, private val Cards:MutableList<FitnessCard>, val fragment_fitnessCards: MyFitnessCards?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private companion object {
         const val TAG = "CardsAdapter"
@@ -43,8 +43,26 @@ class FitnessCardAdapter (val context2: Context, private val Cards:MutableList<F
         const val AD_FREQUENCY = ITEMS_PER_AD + 1
         const val AD_VIEWTYPE = 0
         const val CARD_VIEWTYPE = 1
+        const val BTADD_VIEWTYPE = 2
+
+        const val MAX_BUTTON_ADD = 1
     }
 
+
+    inner class HolderPlusButton(itemView : View) : RecyclerView.ViewHolder(itemView){
+        private val lottieAnimator : LottieAnimationView = itemView.findViewById(R.id.lottie_add)
+        private val cardView : CardView = itemView.findViewById(R.id.button_add)
+
+        fun setButtonAdd(){
+            itemView.setOnClickListener{
+                lottieAnimator.playAnimation()
+                fragment_fitnessCards?.showAlertDialogFitnessCard()
+            }
+        }
+
+    }
+
+    //region tmpDone
     inner class HolderCards(itemView: View) : RecyclerView.ViewHolder(itemView){
 
         private val cardName : TextView = itemView.findViewById(R.id.CardName_TV)
@@ -80,7 +98,6 @@ class FitnessCardAdapter (val context2: Context, private val Cards:MutableList<F
 
         }
     }
-
     inner class HolderNativeAd(itemView: View): RecyclerView.ViewHolder(itemView){
 
         val app_ad_background : ImageView = itemView.findViewById(R.id.ad_icon)
@@ -102,7 +119,6 @@ class FitnessCardAdapter (val context2: Context, private val Cards:MutableList<F
         }
 
     }
-
     private fun currentMonthRecapListener(Card: FitnessCard): ValueEventListener {
         return object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -117,7 +133,6 @@ class FitnessCardAdapter (val context2: Context, private val Cards:MutableList<F
             }
         }
     }
-
     private fun displayNativeAd(holderNativeAd: FitnessCardAdapter.HolderNativeAd, nativeAd: NativeAd) {
         /* Get Ad assets from the NativeAd Object  */
         val headline = nativeAd.headline
@@ -196,21 +211,21 @@ class FitnessCardAdapter (val context2: Context, private val Cards:MutableList<F
 
     }
 
-    private fun isCard(position: Int) = (position + 1) % AD_FREQUENCY != 0
 
-    private fun getCardForPosition(position: Int): FitnessCard? {
-        val offset = position / AD_FREQUENCY
-        return if (isCard(position)) Cards[position - offset] else null
-    }
+    //endregion
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view: View
-        return if(viewType == AD_VIEWTYPE){
-            view = LayoutInflater.from(context2).inflate(R.layout.native_ad_card, parent, false)
-            HolderNativeAd(view)
-        }else{
-            view = LayoutInflater.from(context2).inflate(R.layout.item_fitnesscard, parent, false)
-            HolderCards(view)
+
+        return when(viewType){
+            AD_VIEWTYPE ->{
+                HolderNativeAd(LayoutInflater.from(context2).inflate(R.layout.native_ad_card, parent, false))
+            }
+            BTADD_VIEWTYPE -> {
+                HolderPlusButton(LayoutInflater.from(context2).inflate(R.layout.item_add_button, parent, false))
+            }
+            else -> {
+                HolderCards(LayoutInflater.from(context2).inflate(R.layout.item_fitnesscard, parent, false))
+            }
         }
 
     }
@@ -220,19 +235,31 @@ class FitnessCardAdapter (val context2: Context, private val Cards:MutableList<F
         if (card == null){
             (holder as HolderNativeAd).createAD(context2)
         } else {
-            val model: FitnessCard = card
-            (holder as HolderCards).setCard(model, context2)
+            (holder as HolderCards).setCard(card, context2)
         }
     }
 
-    override fun getItemViewType(position: Int) =
-        if (isCard(position))
+    private fun isCard(position: Int) : Boolean {
+        return (position + 1) % AD_FREQUENCY != 0
+    }
+
+    private fun getCardForPosition(position: Int): FitnessCard? {
+        val offset = position / AD_FREQUENCY
+        return if (isCard(position)) Cards[position - offset] else null
+    }
+
+    override fun getItemViewType(position: Int) :Int {
+        return if (isCard(position))
             CARD_VIEWTYPE
         else
             AD_VIEWTYPE
+    }
 
-    override fun getItemCount() =
-        Cards.size + (Cards.size / ITEMS_PER_AD)
+    //TODO("+1 button add")
+    override fun getItemCount(): Int {
+        //Returns Cards.size + how many ads there are in the adapter
+        return Cards.size + (Cards.size / ITEMS_PER_AD)
+    }
 
 }
 
