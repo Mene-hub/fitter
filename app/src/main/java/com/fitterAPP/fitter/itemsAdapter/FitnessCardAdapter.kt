@@ -51,7 +51,6 @@ class FitnessCardAdapter (val context2: Context, private val Cards:MutableList<F
         private val cardDuration : TextView = itemView.findViewById(R.id.TimeDuration_TV)
         private val cardExercises : TextView = itemView.findViewById(R.id.ExerciseCount_TV)
         private val bgImage : ImageView = itemView.findViewById(R.id.CardBgImage_IV)
-        private val cardView : CardView = itemView.findViewById(R.id.ItemCard_CardView)
 
         fun setCard(Card:FitnessCard, context: Context){
             cardName.text = Card.name
@@ -64,32 +63,16 @@ class FitnessCardAdapter (val context2: Context, private val Cards:MutableList<F
                 cardExercises.text = "0".plus(context.getString(R.string.exercises))
             }
 
-            if(Card.key == "addCard"){
-                if(fitnessCards != null) {
-                    cardView.cardElevation = 0F
-                    bgImage.scaleType = ImageView.ScaleType.FIT_CENTER
-                    val padding = bgImage.resources.getDimensionPixelOffset(R.dimen.button_add_card_padding)
-                    bgImage.setPadding(padding, padding, padding, padding)
-                    cardExercises.text = ""
-                    itemView.findViewById<LottieAnimationView>(R.id.lottie_add).isGone = false
-                    itemView.setOnClickListener {
-                        itemView.findViewById<LottieAnimationView>(R.id.lottie_add).playAnimation()
-                        fitnessCards.showAlertDialogFitnessCard()
+            itemView.setOnClickListener {
 
-                    }
-                }
-            }else{
-                itemView.setOnClickListener {
+                StaticRecapDatabase.setSingleListenerForMonth(
+                    StaticRecapDatabase.database.getReference(context.getString(R.string.RecapReference)),
+                    Athlete.UID,
+                    Card.key,
+                    LocalDate.now().month.toString(),
+                    currentMonthRecapListener(Card)
+                )
 
-                    StaticRecapDatabase.setSingleListenerForMonth(
-                        StaticRecapDatabase.database.getReference(context.getString(R.string.RecapReference)),
-                        Athlete.UID,
-                        Card.key,
-                        LocalDate.now().month.toString(),
-                        currentMonthRecapListener(Card)
-                    )
-
-                }
             }
 
             val id: Int = context.resources.getIdentifier( "com.fitterAPP.fitter:drawable/" + Card.imageCover.toString(),null,null)
@@ -119,6 +102,24 @@ class FitnessCardAdapter (val context2: Context, private val Cards:MutableList<F
         }
 
     }
+
+    inner class HolderPlusButton(itemView : View) : RecyclerView.ViewHolder(itemView){
+
+
+
+            bgImage.scaleType = ImageView.ScaleType.FIT_CENTER
+            val padding = bgImage.resources.getDimensionPixelOffset(R.dimen.button_add_card_padding)
+            bgImage.setPadding(padding, padding, padding, padding)
+
+            itemView.setOnClickListener {
+                itemView.findViewById<LottieAnimationView>(R.id.lottie_add).playAnimation()
+                fitnessCards.showAlertDialogFitnessCard()
+            }
+
+
+    }
+
+
 
     private fun currentMonthRecapListener(Card: FitnessCard): ValueEventListener {
         return object : ValueEventListener {
