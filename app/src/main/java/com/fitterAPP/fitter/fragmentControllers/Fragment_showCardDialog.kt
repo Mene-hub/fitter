@@ -191,22 +191,27 @@ class Fragment_showCardDialog() : DialogFragment() {
     private fun cardValueEventListener(): ValueEventListener {
         return object :  ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()) {
+                    newFitnessCard = snapshot.getValue(FitnessCard::class.java)!!
 
-                newFitnessCard = snapshot.getValue(FitnessCard::class.java)!!
+                    val id: Int = CardsCover.getResource(newFitnessCard.imageCover)
 
-                val id: Int = CardsCover.getResource(newFitnessCard.imageCover)
+                    binding.CardBgImageIV.setImageResource(id)
 
-                binding.CardBgImageIV.setImageResource(id)
+                    binding.CardNameTV.text = newFitnessCard.name
+                    binding.DescriptionTV.text = newFitnessCard.description
+                    try {
+                        binding.TimeDurationTV.text =
+                            newFitnessCard.timeDuration.toString().plus(" ")
+                                .plus(getString(R.string.minutes))
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
 
-                binding.CardNameTV.text = newFitnessCard.name
-                binding.DescriptionTV.text = newFitnessCard.description
-                try {
-                    binding.TimeDurationTV.text = newFitnessCard.timeDuration.toString().plus(" ").plus(getString(R.string.minutes))
-                }catch(e:Exception){e.printStackTrace()}
-
-                if(newFitnessCard.exercises != null) {
-                    //Hypothetically the new item will always be the last one in the list, unless we do some swapping manually.
-                    adapter.notifyItemInserted(newFitnessCard.exercises!!.size)
+                    if (newFitnessCard.exercises != null) {
+                        //Hypothetically the new item will always be the last one in the list, unless we do some swapping manually.
+                        adapter.notifyItemInserted(newFitnessCard.exercises!!.size)
+                    }
                 }
             }
 

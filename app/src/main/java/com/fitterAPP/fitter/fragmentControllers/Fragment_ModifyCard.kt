@@ -29,6 +29,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 
 class ModifyCard() : DialogFragment() {
@@ -56,33 +57,16 @@ class ModifyCard() : DialogFragment() {
 
         //Get FitnessCard by bundle passed via navigation controller in [FitnessCardAdapter.kt] (the bundle is also set in fragment_navigation.xml
         fitnessCard = args.cardBundle
+        val databaseRef = StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference))
 
         binding.backBt.setOnClickListener {
             activity?.onBackPressed()
         }
 
 
-        var screenHeight = 0
+        screenHeightAdjustment()
 
-        //get screen height
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            try {
-                val windowMetrics = activity?.windowManager?.currentWindowMetrics
-                val display: Rect = windowMetrics?.bounds!!
-                screenHeight = display.height()/3
-            } catch (e: NoSuchMethodError) {}
-
-        } else {
-            val metrics = DisplayMetrics()
-            activity?.windowManager?.defaultDisplay?.getMetrics(metrics)
-            screenHeight = metrics.heightPixels/3
-        }
-
-        //set the image height
-        val params = FrameLayout.LayoutParams( RelativeLayout.LayoutParams.MATCH_PARENT, screenHeight)
-
-        binding.Header.layoutParams = params
-
+        deleteButtonSetup(fitnessCard, databaseRef)
 
         //exercises adapter
         recycle = binding.exercisesListRV
@@ -117,23 +101,20 @@ class ModifyCard() : DialogFragment() {
         val cardDescription: TextView = binding.DescriptionTV
 
         //edit image cover on click
-        val bgimage : ImageView = binding.CardBgImageIV
-        bgimage.setOnClickListener {
+        binding.CardBgImageIV.setOnClickListener {
             val modalBottomSheet = ImageSelector("Card image cover", fitnessCard)
             modalBottomSheet.show(activity?.supportFragmentManager!!, profileMenu.TAG)
         }
 
-
-
         //setting the card cover
         val id: Int? = context?.resources?.getIdentifier("com.fitterAPP.fitter:drawable/" + fitnessCard.imageCover.toString(), null, null )
 
-        bgimage.setImageResource(id!!)
+        binding.CardBgImageIV.setImageResource(id!!)
 
         //setting the card properties
         cardName.text = fitnessCard.name
         cardDescription.text = fitnessCard.description
-        cardDuration.text = fitnessCard.timeDuration.toString() + " " + getString(R.string.minutes)
+        cardDuration.text = fitnessCard.timeDuration.toString().plus(" " + getString(R.string.minutes))
 
         //new Exercise button clicked
         val newExerciseBT : ExtendedFloatingActionButton = binding.newExerciseBT
@@ -147,29 +128,51 @@ class ModifyCard() : DialogFragment() {
             findNavController().navigate(action)
         }
 
-        //edit card name
-        /*
-        binding.editCardName.setOnClickListener {
-            val modalBottomSheet = StringEditMenu("Card name", fitnessCard.name!!, fitnessCard)
-            modalBottomSheet.show(activity?.supportFragmentManager!!, profileMenu.TAG)
-        }
-
-        //edit card description
-        binding.editCardDescription.setOnClickListener {
-            val modalBottomSheet = StringEditMenu("Card description", fitnessCard.description!!, fitnessCard)
-            modalBottomSheet.show(activity?.supportFragmentManager!!, profileMenu.TAG)
-        }
-         */
-
         binding.ModifyCardInformations.setOnClickListener {
             showAlertDialogFitnessCard()
         }
 
         //gat database update
-        val databaseRef = StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference))
         StaticFitnessCardDatabase.setFitnessCardValueListener(databaseRef,Athlete.UID,fitnessCard,cardValueEventListener())
 
     }
+
+    private fun deleteButtonSetup(fitnessCard: FitnessCard, databaseRef: DatabaseReference) {
+        val deleteButton = binding.deleteCardBT
+        deleteButton.setOnClickListener{
+            findNavController().navigate(R.id.action_modifyCard_to_myFitnessCards)
+            StaticFitnessCardDatabase.removeFitnessCard(databaseRef,Athlete.UID, fitnessCard.key)
+        }
+    }
+
+
+    /**
+     * @author Claudio Menegotto
+     * @since 1/08/2022
+     */
+    private fun screenHeightAdjustment(){
+        var screenHeight = 0
+        //getting the screen height in px
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            try {
+                val windowMetrics = activity?.windowManager?.currentWindowMetrics
+                val display: Rect = windowMetrics?.bounds!!
+                screenHeight = display.height()/3
+            } catch (e: NoSuchMethodError) {}
+
+        } else {
+            val metrics = DisplayMetrics()
+            activity?.windowManager?.defaultDisplay?.getMetrics(metrics)
+            screenHeight = metrics.heightPixels/3
+        }
+
+        //setting the height
+        val params = FrameLayout.LayoutParams( RelativeLayout.LayoutParams.MATCH_PARENT, screenHeight)
+        binding.Header.layoutParams = params
+    }
+
+
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View {
         binding = FragmentModifyCardBinding.inflate(inflater, container, false)
