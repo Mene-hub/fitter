@@ -13,8 +13,13 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
+import com.facebook.login.LoginManager
+import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.classes.Athlete
+import com.fitterAPP.fitter.databases.StaticBookmarkDatabase
+import com.fitterAPP.fitter.databases.StaticFitnessCardDatabase
+import com.fitterAPP.fitter.databases.StaticRecapDatabase
 import com.fitterAPP.fitter.databinding.FragmentProfileBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
@@ -46,24 +51,44 @@ class Profile : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
         binding = FragmentProfileBinding.inflate(inflater, container, false)
-
-        dbReference = StaticAthleteDatabase.database.getReference(getString(R.string.AthleteReference))
-
         auth = Firebase.auth
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        dbReference = StaticAthleteDatabase.database.getReference(getString(R.string.AthleteReference))
 
         etUsername = binding.etUsername
         etBio = binding.etBio
         etEmail = binding.etEmail
 
-
-        val btnUpdate = binding.btnUpdate
-
+        binding.btnDelete.setOnClickListener(deleteProfile())
         updateVariableInfo(etUsername,etBio,etEmail)
 
-        btnUpdate.setOnClickListener(updateProfileListener())
-
-        return binding.root
+        binding.btnUpdate.setOnClickListener(updateProfileListener())
+        super.onViewCreated(view, savedInstanceState)
     }
+
+    private fun deleteProfile(): View.OnClickListener {
+        return View.OnClickListener {
+            //("Delete bookmark_cards")
+            val bookmarkReference = StaticBookmarkDatabase.database.getReference(getString(R.string.BookmarkReference))
+            StaticBookmarkDatabase.removeAllUserBookmark(bookmarkReference,Athlete.UID)
+            //("Delete recap_cards")
+            val recapReference = StaticRecapDatabase.database.getReference(getString(R.string.RecapReference))
+            StaticRecapDatabase.removeAllRecap(recapReference,Athlete.UID)
+            //("Delete user athlete infos")
+            val infoReference = dbReference
+            StaticAthleteDatabase.removeAthlete(infoReference, Athlete.UID)
+            //("Delete fitnessCards")
+            val fitnessReference = StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference))
+            StaticFitnessCardDatabase.removeAllFitnessCard(fitnessReference, Athlete.UID)
+            //("Delete profile auth")
+            auth.currentUser?.delete()
+            (requireActivity() as MainActivity).logout()
+        }
+    }
+
     /**
      * Update button listener, used to update data in the Realtime Database, it also closes the window once the update has been done and gives a Toast message to the user
      * as a feedback

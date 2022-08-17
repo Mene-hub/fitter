@@ -38,5 +38,5 @@ interface DatabaseAthleteInterface {
      * @author Daniel Satriano
      * @since 04/06/2022
      */
-    fun removeAthlete(databaseRef : DatabaseReference, key : String)
+    fun removeAthlete(databaseRef : DatabaseReference, userID : String)
 }

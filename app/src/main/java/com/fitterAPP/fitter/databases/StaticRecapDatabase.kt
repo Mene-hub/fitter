@@ -1,6 +1,7 @@
 package com.fitterAPP.fitter.databases
 
 import com.fitterAPP.fitter.classes.ApiKeyRetriever
+import com.fitterAPP.fitter.classes.Athlete
 import com.fitterAPP.fitter.classes.MonthlyRecap
 import com.fitterAPP.fitter.interfaces.DatabaseRecapInterface
 import com.google.firebase.database.*
@@ -32,12 +33,24 @@ class StaticRecapDatabase {
          * @since 30/07/2022
          * @param databaseRef The database reference
          * @param userID The user's ID
-         * @param recap The recap to be added
          * @param valueListener the object that will be listening database calls
+         * @param cardID The key/id of the card
          */
         override fun setSingleListenerToCardRecap(databaseRef: DatabaseReference, userID: String,cardID : String,  valueListener : ValueEventListener ){
             val ref = databaseRef.child(userID).child(cardID)
             ref.addListenerForSingleValueEvent(valueListener)
+        }
+
+
+        /**
+         * Is used to remove ALL the recaps from the given user node + the node itself
+         * @author Daniel Satriano
+         * @since 17/08/2022
+         * @param databaseRef The database reference
+         * @param userID The user's ID
+         */
+        override fun removeAllRecap(databaseRef: DatabaseReference, userID: String) {
+            databaseRef.child(userID).removeValue()
         }
 
         /**

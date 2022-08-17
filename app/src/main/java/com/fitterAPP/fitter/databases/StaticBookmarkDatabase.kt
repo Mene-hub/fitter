@@ -29,6 +29,10 @@ class StaticBookmarkDatabase {
             databaseRef.child(currentUserUID).setValue(bookmark)
         }
 
+        override fun removeAllUserBookmark(databaseRef: DatabaseReference, currentUserUID: String) {
+            databaseRef.child(currentUserUID).removeValue()
+        }
+
 
     }
 }

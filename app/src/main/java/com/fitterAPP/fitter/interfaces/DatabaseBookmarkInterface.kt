@@ -27,4 +27,11 @@ interface DatabaseBookmarkInterface{
      */
     fun updateBookmarkList(databaseRef : DatabaseReference, currentUserUID: String , bookmark : MutableList<BookmarkCard>)
 
+    /**
+     * Method which is used to remove the user bookmark and node from the parent node
+     * @author Daniel Satriano
+     * @since 17/08/2022
+     */
+    fun removeAllUserBookmark(databaseRef: DatabaseReference, currentUserUID: String)
+
 }

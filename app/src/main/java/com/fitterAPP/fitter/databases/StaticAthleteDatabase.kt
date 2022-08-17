@@ -25,8 +25,8 @@ class StaticAthleteDatabase{
             databaseRef.child(key).setValue(athlete)
         }
 
-        override fun removeAthlete(databaseRef : DatabaseReference, key : String){
-            databaseRef.child(key).removeValue()
+        override fun removeAthlete(databaseRef : DatabaseReference, userID: String){
+            databaseRef.child(userID).removeValue()
         }
 
     }

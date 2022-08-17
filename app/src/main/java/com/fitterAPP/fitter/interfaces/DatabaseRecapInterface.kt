@@ -49,4 +49,12 @@ interface DatabaseRecapInterface {
      */
     fun setSingleListenerToCardRecap(databaseRef: DatabaseReference, userID: String,cardID : String,  valueListener : ValueEventListener)
 
+
+    /**
+     * Is used to remove ALL the recaps from the given user node + the node itself
+     * @author Daniel Satriano
+     * @since 17/08/2022
+     */
+    fun removeAllRecap(databaseRef: DatabaseReference, userID: String)
+
 }
