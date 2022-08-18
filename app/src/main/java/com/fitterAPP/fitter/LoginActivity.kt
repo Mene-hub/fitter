@@ -184,9 +184,12 @@ class LoginActivity : AppCompatActivity() {
                 //Doesn't exists
                 val user = auth.currentUser
 
-                val name : String = user?.displayName.toString().lowercase().replace("\\s".toRegex(),"").trim()
+                var name : String = user?.displayName.toString().lowercase().replace("\\s".toRegex(),"").trim()
+                if(name.length > 20) {
+                    name = name.subSequence(0, 19).toString()
+                }
 
-                val updater = UserProfileChangeRequest.Builder().setDisplayName(name.subSequence(0,19).toString()).build()
+                val updater = UserProfileChangeRequest.Builder().setDisplayName(name).build()
                 auth.currentUser!!.updateProfile(updater).addOnCompleteListener{ task2 ->
                     if(task2.isSuccessful){
                         Log.d(TAG_login, "User profile updated")
