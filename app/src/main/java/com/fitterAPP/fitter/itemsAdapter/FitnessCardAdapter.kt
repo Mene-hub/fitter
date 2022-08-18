@@ -118,6 +118,11 @@ class FitnessCardAdapter (val context2: Context, private val Cards:MutableList<F
         }
     }
 
+    /**
+     * Used to populate the UI with the AD information
+     * @author Daniel Satriano
+     * @since 13/08/2022
+     */
     private fun displayNativeAd(holderNativeAd: FitnessCardAdapter.HolderNativeAd, nativeAd: NativeAd) {
         /* Get Ad assets from the NativeAd Object  */
         val headline = nativeAd.headline
@@ -196,8 +201,16 @@ class FitnessCardAdapter (val context2: Context, private val Cards:MutableList<F
 
     }
 
+    /**
+     * @author Daniel Satriano
+     * @since 13/08/2022
+     */
     private fun isCard(position: Int) = (position + 1) % AD_FREQUENCY != 0
 
+    /**
+     * @author Daniel Satriano
+     * @since 13/08/2022
+     */
     private fun getCardForPosition(position: Int): FitnessCard? {
         val offset = position / AD_FREQUENCY
         return if (isCard(position)) Cards[position - offset] else null
@@ -212,7 +225,6 @@ class FitnessCardAdapter (val context2: Context, private val Cards:MutableList<F
             view = LayoutInflater.from(context2).inflate(R.layout.item_fitnesscard, parent, false)
             HolderCards(view)
         }
-
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
