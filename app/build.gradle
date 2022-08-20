@@ -84,8 +84,10 @@ dependencies {
 
     //FACEBOOK
     implementation 'com.facebook.android:facebook-android-sdk:14.1.0'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.1'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.5.1'
+
+    //DO NOT UPDATE THESE 2 LIBRARY
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.0'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.5.0'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
