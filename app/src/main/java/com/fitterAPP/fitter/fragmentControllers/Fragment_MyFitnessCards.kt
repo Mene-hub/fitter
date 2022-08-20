@@ -62,9 +62,20 @@ class MyFitnessCards : Fragment() {
 
         StaticFitnessCardDatabase.setSingleValueEventListener(dbReference, Athlete.UID, initialCardDownload())
 
-
+        binding.addCardBT.setOnClickListener(buttonAddCardListener())
 
         Log.w(TAG, binding.MyFitnessCardsRV.id.toString())
+    }
+
+    /**
+     * TMP method (and button) used to call [showAlertDialogFitnessCard]
+     * @author Daniel Satriano
+     * @since 20/08/2022
+     */
+    private fun buttonAddCardListener(): View.OnClickListener {
+        return View.OnClickListener {
+            showAlertDialogFitnessCard()
+        }
     }
 
     /**
