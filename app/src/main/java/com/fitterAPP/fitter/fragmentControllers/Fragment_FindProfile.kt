@@ -17,7 +17,6 @@ import com.fitterAPP.fitter.databinding.FragmentFindprofileBinding
 import com.fitterAPP.fitter.itemsAdapter.SuggestionAdapter
 import com.google.firebase.database.*
 
-
 /**
  * Fragment used to implement "find other users" feature
  * @author Daniel Satriano
