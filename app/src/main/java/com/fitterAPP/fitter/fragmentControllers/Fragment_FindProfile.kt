@@ -1,21 +1,22 @@
 package com.fitterAPP.fitter.fragmentControllers
 
-import com.fitterAPP.fitter.databases.StaticAthleteDatabase
-import android.annotation.SuppressLint
-import com.fitterAPP.fitter.R
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.fitterAPP.fitter.MainActivity
+import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.classes.Athlete
+import com.fitterAPP.fitter.databases.StaticAthleteDatabase
 import com.fitterAPP.fitter.databinding.FragmentFindprofileBinding
 import com.fitterAPP.fitter.itemsAdapter.SuggestionAdapter
 import com.google.firebase.database.*
+
 
 /**
  * Fragment used to implement "find other users" feature
@@ -33,14 +34,23 @@ class FindProfile : Fragment() {
 
         databaseReference = StaticAthleteDatabase.database.getReference(getString(R.string.AthleteReference))
 
-        binding.SVFindUsers.clearFocus()
         binding.SVFindUsers.setOnQueryTextListener(queryTextListener())
+        binding.SVFindUsers.requestFocus()
+        binding.SVFindUsers.setOnQueryTextFocusChangeListener { view, hasFocus ->
+            if (hasFocus) { showInputMethod(view.findFocus()) }
+        }
 
         adapter = context?.let { SuggestionAdapter((activity as MainActivity), suggestedUsers) }!!
         binding.recyclerView.adapter = adapter
 
         return binding.root
     }
+
+    private fun showInputMethod(view: View) {
+        val imm: InputMethodManager = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.showSoftInput(view, 0)
+    }
+
 
     /**
      * * Private listener for the SearchView which updates on every change in the textfield or when submit is pressed.
@@ -75,25 +85,28 @@ class FindProfile : Fragment() {
      * @since 28/05/2022
      */
     fun databaseQuery(text : String?){
-        val usernameOrdered : Query  = databaseReference.orderByChild("username").startAt(text).endAt("$text\uF7FF").limitToFirst(20)
+        val usernameOrdered : Query  = databaseReference.orderByChild("username").startAt(text).endAt("$text\uF7FF").limitToFirst(10)
         suggestedUsers.clear()
-        adapter.notifyItemRangeRemoved(0,suggestedUsers.size)
+        adapter.notifyDataSetChanged()
+        usernameOrdered.addChildEventListener(object : ChildEventListener{
 
-        usernameOrdered.addListenerForSingleValueEvent(object : ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for(item in snapshot.children){
-                    val tmp = item.getValue(Athlete::class.java)
-                    if(tmp != null){
-                        suggestedUsers.add(tmp)
-                        adapter.notifyItemChanged(suggestedUsers.indexOf(tmp))
-                    }
-                }
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                val item = snapshot.getValue(Athlete::class.java)
+                suggestedUsers.add(item!!)
+                adapter.notifyItemChanged(suggestedUsers.indexOf(item))
             }
-
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                Log.d("FindProfile", "entro changed")
+            }
+            override fun onChildRemoved(snapshot: DataSnapshot) {
+                Log.d("FindProfile", "entro removed")
+            }
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+            }
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(requireContext(),error.message,Toast.LENGTH_LONG).show()
+                Log.d("FindProfile", "entro cancelled")
             }
-        })
 
+        })
     }
 }

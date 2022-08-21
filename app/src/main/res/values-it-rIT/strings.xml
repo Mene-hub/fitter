@@ -45,4 +45,5 @@
     <string name="MonthlyRecap">Riassunti mensili</string>
     <string name="there_are">Ci sono</string>
     <string name="graph_noDataText">Inizia a impostare riepiloghi per la tua carta per effettuare riepiloghi mensili</string>
+    <string name="searchView_queryHint">Cerca …</string>
 </resources>

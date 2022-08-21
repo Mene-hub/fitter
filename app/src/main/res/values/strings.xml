@@ -62,5 +62,6 @@
 
     <string name="native_ad_id_live" translatable="false">ca-app-pub-6886882793354789/7136026783</string>
     <string name="native_ad_id_test" translatable="false">ca-app-pub-3940256099942544/2247696110</string>
+    <string name="searchView_queryHint">Search here …</string>
 
 </resources>
