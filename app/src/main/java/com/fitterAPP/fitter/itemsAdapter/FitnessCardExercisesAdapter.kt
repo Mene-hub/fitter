@@ -156,8 +156,13 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
 
     }
 
+    /**
+     * This logic method is simply creating a new monthly recap whetever the given one from [Fragment_showCardDialog] is null or the year doesn't match the current one
+     * @author Daniel Satriano
+     * @since 1/08/2022
+     */
     private fun checkForNullOrCorrectYear(){
-        if(monthlyRecap == null || monthlyRecap!!.year == LocalDate.now().year){
+        if(monthlyRecap == null || monthlyRecap!!.year != LocalDate.now().year){
             monthlyRecap = MonthlyRecap(LocalDate.now().month.toString(), fitnessCard.key, mutableListOf())
         }
     }

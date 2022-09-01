@@ -56,6 +56,9 @@ class MyFitnessCards : Fragment() {
         adapter = context?.let { FitnessCardAdapter((activity as MainActivity), fitnessCads, this) }!!
         recycle.adapter = adapter
 
+
+
+
         val recapRecycle : RecyclerView = binding.MyRecapsRV
         recapAdapter = context?.let { HomeRecapAdapter((activity as MainActivity), recapCards) }!!
         recapRecycle.adapter = recapAdapter
