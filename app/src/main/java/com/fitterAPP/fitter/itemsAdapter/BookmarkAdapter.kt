@@ -27,16 +27,14 @@ class BookmarkAdapter(private val context : Context, private val bookmarks : Mut
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
-        private val name : TextView = itemView.findViewById(R.id.cardNameBookmark)
-        private val description : TextView = itemView.findViewById(R.id.descriptionBookmark)
-        private val duration : TextView = itemView.findViewById(R.id.durationBookmark)
-        private val numberOfExercise : TextView = itemView.findViewById(R.id.exerciseNumberBookmark)
-        private val image : ImageView = itemView.findViewById(R.id.cardBackground)
+        private val name : TextView = itemView.findViewById(R.id.bookmark_CardName)
+        private val duration : TextView = itemView.findViewById(R.id.bookmark_CardDuration)
+        private val numberOfExercise : TextView = itemView.findViewById(R.id.bookmark_CardExerciseCount)
+        private val image : ImageView = itemView.findViewById(R.id.bookmark_background)
 
         fun setCard(card : BookmarkCard, context: Context){
             name.text = card.name
             duration.text = context.getString(R.string.duration).plus(card.timeDuration.toString()).plus(" min")
-            description.text = card.description
 
             if(card.exercises != null)
                 numberOfExercise.text = card.exercises!!.size.toString().plus(" ").plus(context.getString(R.string.exercises).lowercase())

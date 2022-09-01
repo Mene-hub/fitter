@@ -13,9 +13,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         android:layout_margin="@dimen/HorizontalMargin_profile"
+        app:spanCount="2"
 
+        tools:itemCount="12"
+        tools:listitem="@layout/bookmark_card"
         />
 
 
