@@ -87,12 +87,12 @@ class Fragment_showCardDialog() : DialogFragment() {
         adapter = FitnessCardExercisesAdapter((activity as MainActivity),newFitnessCard,false, monthlyRecap)
         recycle.adapter = adapter
 
-        //Inserisco il gestore dello SWIPE della listview
+        //Swipe manager
         val swipeGesture = object : SwipeGesture.SwipeGestureRight(requireContext()){
 
             override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
-                var fromPosition = viewHolder.absoluteAdapterPosition
-                var toPosition = target.absoluteAdapterPosition
+                val fromPosition = viewHolder.absoluteAdapterPosition
+                val toPosition = target.absoluteAdapterPosition
 
                 Collections.swap(newFitnessCard.exercises!!, fromPosition,toPosition)
                 adapter.notifyItemMoved(fromPosition,toPosition)
@@ -109,9 +109,21 @@ class Fragment_showCardDialog() : DialogFragment() {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val item : Exercise = newFitnessCard.exercises!![viewHolder.absoluteAdapterPosition]
+
                 when(direction){
                     ItemTouchHelper.RIGHT -> {
-                        showAlertDialog(viewHolder)
+                        if(item.type == ExerciseType.pyramid){
+                            if(item.piramidSeries!!.size > 1){
+                                item.piramidSeries?.removeAt(0)
+                                adapter.notifyItemChanged(viewHolder.absoluteAdapterPosition)
+                            }else{
+                                showAlertDialog(viewHolder)
+                            }
+                        }else{
+                            showAlertDialog(viewHolder)
+                        }
+
                     }
                 }
             }

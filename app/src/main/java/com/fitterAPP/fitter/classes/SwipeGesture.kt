@@ -60,7 +60,6 @@ class SwipeGesture(){
         private val typeface = ResourcesCompat.getFont(context, R.font.roboto_regular)
 
         override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
-
             return false
         }
 

@@ -46,7 +46,7 @@
     <string name="restore_time">Restore Time</string>
     <string name="RecapReference" translatable="false">RECAP_SCHEDA</string>
     <string name="card_info">Card Informations</string>
-    <string name="delete">Delete</string>
+    <string name="delete">Delete acccount</string>
     <string name="done">Done</string>
     <string name="button_that_allows_you_to_modify_a_card">Allows you to modify a card</string>
     <string name="recap_information">Recap information</string>
