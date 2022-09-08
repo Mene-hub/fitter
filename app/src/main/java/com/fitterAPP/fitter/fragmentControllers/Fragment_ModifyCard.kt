@@ -32,6 +32,9 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.concurrent.thread
 
 class ModifyCard() : DialogFragment() {
     private lateinit var fitnessCard: FitnessCard
@@ -81,6 +84,25 @@ class ModifyCard() : DialogFragment() {
 
             //Inserisco il gestore dello SWIPE della listview
             val swipeGesture = object : SwipeGesture.SwipeGestureLeft(requireContext()){
+
+                override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+                    val fromPosition = viewHolder.absoluteAdapterPosition
+                    val toPosition = target.absoluteAdapterPosition
+
+                    Collections.swap(fitnessCard.exercises!!, fromPosition,toPosition)
+                    adapter.notifyItemMoved(fromPosition,toPosition)
+
+                    return true
+                }
+
+                override fun onMoved(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, fromPos: Int, target: RecyclerView.ViewHolder, toPos: Int, x: Int, y: Int) {
+                    thread(start = true) {
+                        val db = StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference))
+                        StaticFitnessCardDatabase.setFitnessCardItem(db, Athlete.UID, fitnessCard)
+                    }
+                    super.onMoved(recyclerView, viewHolder, fromPos, target, toPos, x, y)
+                }
+
 
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                     when(direction){

@@ -32,11 +32,9 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import kotlin.collections.ArrayList
-import kotlin.concurrent.thread
 
 class Fragment_showCardDialog() : DialogFragment() {
 
@@ -50,7 +48,7 @@ class Fragment_showCardDialog() : DialogFragment() {
     private var monthlyRecap : MonthlyRecap? = null
 
     /**
-     * onCreate method which is used to set the dialog style. This mathod is paired with a WindowManager setting done in [onCreateView]
+     * onCreate method which is used to set the dialog style. This method is paired with a WindowManager setting done in [onCreateView]
      * @author Daniel Satriano
      * @author Menegotto Claudio
      * @since 25/05/2022
@@ -58,7 +56,6 @@ class Fragment_showCardDialog() : DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.Theme_Fitter_FullScreenDialog)
-
     }
 
     //TODO("Spostare un po' di robe in funzioni esterne in modo da rendere il tutto più leggibile")
@@ -90,40 +87,10 @@ class Fragment_showCardDialog() : DialogFragment() {
         //Swipe manager
         val swipeGesture = object : SwipeGesture.SwipeGestureRight(requireContext()){
 
-            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
-                val fromPosition = viewHolder.absoluteAdapterPosition
-                val toPosition = target.absoluteAdapterPosition
-
-                Collections.swap(newFitnessCard.exercises!!, fromPosition,toPosition)
-                adapter.notifyItemMoved(fromPosition,toPosition)
-
-                return true
-            }
-
-            override fun onMoved(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, fromPos: Int, target: RecyclerView.ViewHolder, toPos: Int, x: Int, y: Int) {
-                thread(start = true) {
-                    val db = StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference))
-                    StaticFitnessCardDatabase.setFitnessCardItem(db, Athlete.UID, newFitnessCard)
-                }
-                super.onMoved(recyclerView, viewHolder, fromPos, target, toPos, x, y)
-            }
-
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val item : Exercise = newFitnessCard.exercises!![viewHolder.absoluteAdapterPosition]
-
                 when(direction){
                     ItemTouchHelper.RIGHT -> {
-                        if(item.type == ExerciseType.pyramid){
-                            if(item.piramidSeries!!.size > 1){
-                                item.piramidSeries?.removeAt(0)
-                                adapter.notifyItemChanged(viewHolder.absoluteAdapterPosition)
-                            }else{
-                                showAlertDialog(viewHolder)
-                            }
-                        }else{
-                            showAlertDialog(viewHolder)
-                        }
-
+                        showAlertDialog(viewHolder)
                     }
                 }
             }
@@ -166,10 +133,6 @@ class Fragment_showCardDialog() : DialogFragment() {
             Athlete.UID,newFitnessCard,
             cardValueEventListener()
         )
-
-
-
-
 
         // Inflate the layout for this fragment
         return binding.root
@@ -224,6 +187,8 @@ class Fragment_showCardDialog() : DialogFragment() {
                         //Hypothetically the new item will always be the last one in the list, unless we do some swapping manually.
                         adapter.notifyItemInserted(newFitnessCard.exercises!!.size)
                     }
+
+                    adapter.notifyDataSetChanged()
                 }
             }
 
@@ -255,6 +220,7 @@ class Fragment_showCardDialog() : DialogFragment() {
     private fun showAlertDialog(viewHolder : RecyclerView.ViewHolder){
         // set the custom layout
         val customLayout: View = layoutInflater.inflate(R.layout.improvement_dialog_showfitnesscard, null)
+        var cancelCheck = false   //Used to check if the user pressed on .setNegativeButton, cause there was a problem with the reset of the swipe since setOnDismiss gets called right after in any case
 
         //Check if the exercise is a warmup exercise or a normal exercise, and then set the correct hint for both cases
         val editText = customLayout.findViewById<TextInputEditText>(R.id.et_improvement)
@@ -275,12 +241,14 @@ class Fragment_showCardDialog() : DialogFragment() {
                 if(recap.isNotBlank() && recap.isNotEmpty()){
                     adapter.addRecap(viewHolder.absoluteAdapterPosition, Integer.parseInt(recap))
                 }
+                cancelCheck = true
+            }.setNegativeButton(getString(R.string.Cancel)) { _, _ ->
+                adapter.notifyItemChanged(viewHolder.absoluteAdapterPosition)
+                cancelCheck = true
 
-            }.setNegativeButton("Cancel") { _, _ ->
-                //TODO("Da pensarci, ancora non so come comportarmi in questo caso. Inserimento di una variabile di
-                // sistema che indica se l'utente vuole usare la feature recap oppure no ?")
             }.setOnDismissListener {
-                //TODO("Impostare il fatto che lo swipe viene annullato")
+                if(!cancelCheck)
+                    adapter.notifyItemChanged(viewHolder.absoluteAdapterPosition)
             }
             .show()
     }

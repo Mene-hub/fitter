@@ -134,12 +134,15 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
 
         val exercise = fitnessCard.exercises!![index]
 
+        //checks if the monthly recap is not empty
         if(monthlyRecap!!.recapExercise.isNotEmpty()) {
 
+            //trying to find the swiped exercise inside the recap list
             val index2 = monthlyRecap!!.recapExercise.indexOf(
                 monthlyRecap!!.recapExercise.find { it.exerciseName == exercise.exerciseName }
             )
 
+            //if its not found then it means its a new recap record, which will be added normally. If its found instead it makes the avarage between the user value and the monthly value
             if (index2 == -1) {
                 monthlyRecap!!.recapExercise.add(ExerciseRecap(exercise.exerciseName, improvement))
             } else {
@@ -149,15 +152,17 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
             }
 
         }else{
+            //if the monthly recap its empty it just add the exercise skipping all the code above, since its guaranteed to be a new record
             monthlyRecap!!.recapExercise.add(ExerciseRecap(exercise.exerciseName, improvement))
         }
 
+        //update the database
         StaticRecapDatabase.setRecapItem(database, Athlete.UID, monthlyRecap!!)
 
     }
 
     /**
-     * This logic method is simply creating a new monthly recap whetever the given one from [Fragment_showCardDialog] is null or the year doesn't match the current one
+     * This logic method is simply creating a new monthly recap whenever the given one from [Fragment_showCardDialog] is null or the year doesn't match the current one
      * @author Daniel Satriano
      * @since 1/08/2022
      */
