@@ -13,6 +13,7 @@
     <string name="exercises">Exercises</string>
     <string name="card_name">Card name<font color="#FF0000">*</font></string>
     <string name="duration">Duration<font color="#FF0000">*</font></string>
+    <string name="time">Duration</string>
     <string name="description">Description</string>
     <string name="minutes">Minutes</string>
     <string name="owner">Owner</string>

@@ -5,16 +5,15 @@
     android:layout_width="150dp"
     android:layout_height="250dp"
 
-    android:layout_marginRight="10dp"
+    android:layout_marginLeft="10dp"
     app:cardCornerRadius="16dp"
     app:cardElevation="5dp">
 
     <ImageView
-        android:background="@color/shimmer_color"
         android:id="@+id/CardBgImage_IV"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        />
+        android:background="@color/shimmer_color"
+        android:scaleType="centerCrop" />
 
 </androidx.cardview.widget.CardView>

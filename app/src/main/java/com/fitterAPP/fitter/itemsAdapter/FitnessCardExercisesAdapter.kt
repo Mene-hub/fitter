@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.findFragment
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
@@ -14,9 +15,7 @@ import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.classes.*
 import com.fitterAPP.fitter.databases.StaticFitnessCardDatabase
 import com.fitterAPP.fitter.databases.StaticRecapDatabase
-import com.fitterAPP.fitter.fragmentControllers.Fragment_showCardDialog
-import com.fitterAPP.fitter.fragmentControllers.ModifyCard
-import com.fitterAPP.fitter.fragmentControllers.ModifyCardDirections
+import com.fitterAPP.fitter.fragmentControllers.*
 import com.google.android.material.snackbar.Snackbar
 import java.time.LocalDate
 
@@ -59,7 +58,7 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
                     val action : NavDirections? = when(ex.type){
                         ExerciseType.warmup-> ModifyCardDirections.actionModifyCardToSetWarmUpExercise(fitnessCard_, index, fitnessCard_.exercises?.get(index)!!)
                         ExerciseType.normal-> ModifyCardDirections.actionModifyCardToNewExercieFormDialog(fitnessCard_, index, fitnessCard_.exercises?.get(index)!!)
-                        ExerciseType.pyramid-> null
+                        ExerciseType.pyramid-> ModifyCardDirections.actionModifyCardToSetPiramidalExercise(fitnessCard_, fitnessCard_.exercises?.get(index)!!, index)
                     }
 
                     if(action != null)
@@ -97,9 +96,28 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
             }
         }
 
-        fun showExerciseinformation(exercise: Exercise){
-            if(exercise.wgerBaseId != null)
-                itemView.findFragment<Fragment_showCardDialog>().showExerciseinformation(exercise)
+        fun showExerciseinformation(exercise: Exercise) {
+            var found: Boolean = false
+            if (exercise.wgerBaseId != null) {
+
+                try {
+                    itemView.findFragment<Fragment_showCardDialog>()
+                        .showExerciseinformation(exercise)
+                    found = true
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
+                try {
+                    if (found == false) {
+                        itemView.findFragment<ShowOthersCardDialog>()
+                            .showExerciseinformation(exercise)
+                        found = true
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
         }
 
     }

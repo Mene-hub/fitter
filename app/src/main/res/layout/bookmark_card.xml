@@ -5,7 +5,7 @@
     android:id="@+id/ItemCard_CardView"
     android:layout_width="150dp"
     android:layout_height="250dp"
-    android:layout_marginHorizontal="15dp"
+    android:layout_marginHorizontal="10dp"
     android:layout_marginBottom="10dp"
     app:cardCornerRadius="16dp">
 
@@ -13,9 +13,19 @@
         android:id="@+id/bookmark_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:contentDescription="@string/background_image"
         android:scaleType="centerCrop"
-        app:srcCompat="@drawable/gigachad2"
-        android:contentDescription="@string/background_image"/>
+        app:srcCompat="@drawable/gigachad2" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="right"
+        android:layout_marginTop="-9dp"
+        android:layout_marginRight="5dp"
+        app:srcCompat="@drawable/bookmark_24"
+        app:tint="@color/red" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -45,8 +55,8 @@
             android:text="DURATION 50MIN"
             android:textColor="@color/white"
             android:textSize="14sp"
-            tools:ignore="HardcodedText"
-            app:layout_constraintTop_toBottomOf="@+id/CardName_TV" />
+            app:layout_constraintTop_toBottomOf="@+id/CardName_TV"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/bookmark_CardExerciseCount"
@@ -56,8 +66,8 @@
             android:text="EXERCISE COUNT"
             android:textColor="@color/white"
             android:textSize="14sp"
-            tools:ignore="HardcodedText"
-            app:layout_constraintTop_toBottomOf="@+id/TimeDuration_TV" />
+            app:layout_constraintTop_toBottomOf="@+id/TimeDuration_TV"
+            tools:ignore="HardcodedText" />
 
     </LinearLayout>
 

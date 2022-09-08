@@ -54,7 +54,7 @@ class FitnessCardAdapter (val context2: Context, private val Cards:MutableList<F
 
         fun setCard(Card:FitnessCard, context: Context){
             cardName.text = Card.name
-            cardDuration.text = context.getString(R.string.duration).plus(": " + Card.timeDuration.toString() + " min")
+            cardDuration.text = context.getString(R.string.time).plus(": " + Card.timeDuration.toString() + " min")
 
 
             if(Card.exercises != null)

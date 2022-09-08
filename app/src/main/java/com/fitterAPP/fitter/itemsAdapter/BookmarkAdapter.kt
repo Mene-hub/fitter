@@ -34,7 +34,7 @@ class BookmarkAdapter(private val context : Context, private val bookmarks : Mut
 
         fun setCard(card : BookmarkCard, context: Context){
             name.text = card.name
-            duration.text = context.getString(R.string.duration).plus(card.timeDuration.toString()).plus(" min")
+            duration.text = context.getString(R.string.time).plus(": " + card.timeDuration.toString()).plus(" min")
 
             if(card.exercises != null)
                 numberOfExercise.text = card.exercises!!.size.toString().plus(" ").plus(context.getString(R.string.exercises).lowercase())

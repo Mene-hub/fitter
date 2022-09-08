@@ -9,7 +9,7 @@
         android:id="@+id/ad_call_to_action"
         android:layout_width="150dp"
         android:layout_height="250dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginLeft="10dp"
         app:cardCornerRadius="16dp">
 
 
@@ -17,37 +17,36 @@
             android:id="@+id/ad_background"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:background="@color/gray"/>
+            android:background="@color/gray"
+            android:scaleType="centerCrop" />
 
         <ImageView
             android:id="@+id/ad_icon"
             android:layout_width="match_parent"
-            android:scaleType="centerCrop"
             android:layout_height="100dp"
-            />
+            android:scaleType="centerCrop" />
 
-       <!-- Label to indicate its an AD -->
+        <!-- Label to indicate its an AD -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
+                style="@style/TextAppearance.Material3.LabelSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/TextAppearance.Material3.LabelSmall"
+                android:layout_marginTop="-2dp"
                 android:background="#FFC107"
                 android:padding="2dp"
-                android:layout_marginTop="-2dp"
                 android:text="@string/ad"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/ad_advertiser"
-                android:layout_marginStart="3dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
                 android:textColor="@color/black" />
 
         </LinearLayout>
@@ -62,9 +61,9 @@
 
             <TextView
                 android:id="@+id/ad_headline"
-                android:layout_marginEnd="2dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="2dp"
                 android:fontFamily="@font/roboto_bold"
                 android:textColor="@color/white"
                 android:textSize="14sp"
@@ -104,12 +103,9 @@
                     android:textSize="11sp" />
 
 
-
             </LinearLayout>
 
         </LinearLayout>
-
-
 
 
     </androidx.cardview.widget.CardView>

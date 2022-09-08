@@ -80,6 +80,9 @@
         <action
             android:id="@+id/action_modifyCard_to_setWarmUpExercise"
             app:destination="@id/setWarmUpExercise" />
+        <action
+            android:id="@+id/action_modifyCard_to_setPiramidalExercise"
+            app:destination="@id/setPiramidalExercise" />
     </dialog>
     <dialog
         android:id="@+id/newExercieFormDialog"

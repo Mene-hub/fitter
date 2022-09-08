@@ -4,16 +4,16 @@
     android:id="@+id/ItemCard_CardView"
     android:layout_width="150dp"
     android:layout_height="250dp"
-    android:layout_marginEnd="10dp"
+    android:layout_marginLeft="10dp"
     app:cardCornerRadius="16dp">
 
     <ImageView
         android:id="@+id/CardBgImage_IV"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:contentDescription="@string/background_image"
         android:scaleType="centerCrop"
-        app:srcCompat="@drawable/gigachad2"
-        android:contentDescription="@string/background_image" />
+        app:srcCompat="@drawable/gigachad2" />
 
     <LinearLayout
         android:layout_width="match_parent"

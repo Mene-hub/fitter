@@ -128,6 +128,8 @@ class SetPiramidalExercise : DialogFragment() {
         var addSeries = binding.addSeriesCV
         var textSeries = binding.SeriesTV
 
+
+
         subSeries.setOnClickListener{
             var tmp = textSeries.text.toString().toInt()
             if(tmp > 1){
@@ -140,8 +142,12 @@ class SetPiramidalExercise : DialogFragment() {
 
         }
 
-        exercise.piramidSeries?.add(1)
+        if(exercise.piramidSeries?.size==0)
+            exercise.piramidSeries?.add(1)
+
         adapter.notifyDataSetChanged()
+
+        textSeries.text = exercise.piramidSeries?.size.toString()
 
         addSeries.setOnClickListener{
             var tmp = textSeries.text.toString().toInt()

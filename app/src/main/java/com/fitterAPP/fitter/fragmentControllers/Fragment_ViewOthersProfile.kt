@@ -1,24 +1,33 @@
 package com.fitterAPP.fitter.fragmentControllers
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.core.view.isGone
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.navArgs
+import com.denzcoskun.imageslider.ImageSlider
+import com.denzcoskun.imageslider.constants.ScaleTypes
+import com.denzcoskun.imageslider.models.SlideModel
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.R
-import com.fitterAPP.fitter.classes.Athlete
-import com.fitterAPP.fitter.classes.BookmarkCard
-import com.fitterAPP.fitter.classes.FitnessCard
+import com.fitterAPP.fitter.classes.*
 import com.fitterAPP.fitter.databases.StaticFitnessCardDatabase
 import com.fitterAPP.fitter.databinding.FragmentViewOthersProfileBinding
 import com.fitterAPP.fitter.itemsAdapter.FitnessCardFindUserAdapter
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.database.Query
 import com.squareup.picasso.Picasso
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 class Fragment_ViewOthersProfile : DialogFragment() {
 
@@ -100,5 +109,59 @@ class Fragment_ViewOthersProfile : DialogFragment() {
 
             }
         }
+    }
+
+    fun showExerciseinformation( ex: Exercise){
+        // Create an alert builder
+        val builder = MaterialAlertDialogBuilder(requireContext(),  R.style.ThemeOverlay_App_MaterialAlertDialog)
+        // set the custom layout
+
+        val customLayout: View = layoutInflater.inflate(R.layout.dialog_open_exercise, null)
+
+
+        val imageList : ImageSlider = customLayout.findViewById(R.id.exercise_image_slider)
+        val list : MutableList<SlideModel> = ArrayList<SlideModel>()
+
+        val executor: ExecutorService = Executors.newSingleThreadExecutor()
+        val handler = Handler(Looper.getMainLooper())
+        var imageUri : MutableList<String> ?
+
+        executor.execute {
+            executor.run() {
+                imageUri = ExerciseQueryHelper.getImageFromExercise(ex.wgerBaseId!!)
+            }
+
+            handler.post {
+
+                if (imageUri != null && imageUri?.size!! > 0) {
+
+                    for (i in 1..imageUri?.size!!)
+                        list.add(SlideModel(imageUri?.get(i - 1)))
+
+                    imageList.setImageList(list, ScaleTypes.CENTER_INSIDE)
+                    customLayout.findViewById<ImageView>(R.id.placeHolder).isGone = true
+                } else
+                    customLayout.findViewById<ImageView>(R.id.placeHolder).isGone = false
+            }
+        }
+
+        builder.setView(customLayout)
+
+        val exName : TextView = customLayout.findViewById(R.id.ExName_TV)
+        exName.setText(ex.exerciseName)
+
+        val exDescription : TextView = customLayout.findViewById(R.id.exDescription_TV)
+        exDescription.setText(ex.description)
+
+        // add a button
+        builder
+
+            .setPositiveButton("OK") { _, _ -> // send data from the
+            }
+
+            .setOnDismissListener {
+
+            }
+            .show()
     }
 }
