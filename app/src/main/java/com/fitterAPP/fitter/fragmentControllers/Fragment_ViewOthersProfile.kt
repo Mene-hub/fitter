@@ -26,8 +26,10 @@ import com.fitterAPP.fitter.itemsAdapter.FitnessCardFindUserAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.database.Query
 import com.squareup.picasso.Picasso
+import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import kotlin.collections.ArrayList
 
 class Fragment_ViewOthersProfile : DialogFragment() {
 
@@ -73,7 +75,17 @@ class Fragment_ViewOthersProfile : DialogFragment() {
                 .into(image)
         }
 
-        binding.TVUsernameCards.text = athlete.username.plus("'s cards")
+        when(Locale.getDefault().language){
+            "en" ->{
+                binding.TVUsernameCards.text = athlete.username.plus("'s cards")
+            }
+            "it" ->{
+                binding.TVUsernameCards.text = "Schede di ".plus(athlete.username)
+            }
+            else ->{
+                binding.TVUsernameCards.text = athlete.username.plus("'s cards")
+            }
+        }
 
         adapter = context?.let { FitnessCardFindUserAdapter((activity as MainActivity), cardList, athlete.UID) }!!
         binding.RVCards.adapter = adapter

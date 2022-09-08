@@ -66,5 +66,10 @@
     <string name="searchView_queryHint">Search here …</string>
     <string name="Cancel">Cancel</string>
     <string name="Delete">Delete</string>
+    <string name="button_new_card">Allows you to create a new card</string>
+    <string name="saved_cards">Saved cards</string>
+    <string name="if_clicked_allows_you_to_start_a_timer_for_the_given_exercise">If clicked allows you to start a timer for the given exercise</string>
+    <string name="indicates_that_this_item_can_be_moved_if_long_pressed">Indicates that this item can be moved if long pressed</string>
+    <string name="edit_exercise">Allows you to edit the exercise</string>
 
 </resources>

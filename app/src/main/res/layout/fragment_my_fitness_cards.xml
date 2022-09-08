@@ -26,11 +26,12 @@
         android:layout_marginBottom="8dp"
         android:clickable="true"
         android:src="@drawable/ic_baseline_add_24"
-        app:backgroundTint="@color/primary"
         app:iconGravity="end"
+        app:fabSize="mini"
         app:iconSize="20dp"
         app:layout_constraintBottom_toBottomOf="@+id/MyFitnessCards_Shimmer_RV"
-        app:layout_constraintEnd_toEndOf="@+id/MyFitnessCards_Shimmer_RV" />
+        app:layout_constraintEnd_toEndOf="@+id/MyFitnessCards_Shimmer_RV"
+        android:contentDescription="@string/button_new_card" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/MyFitnessCards_RV"

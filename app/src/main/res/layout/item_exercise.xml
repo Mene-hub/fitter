@@ -25,12 +25,13 @@
             app:cardElevation="0dp">
 
             <LinearLayout
+                android:baselineAligned="false"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_margin="8dp"
                     android:layout_weight="1"
@@ -95,15 +96,16 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_gravity="right"
+                    android:layout_gravity="end"
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:id="@+id/exerciseNotes_IV"
+                        android:contentDescription="@string/if_clicked_allows_you_to_start_a_timer_for_the_given_exercise"
+                        android:id="@+id/exerciseTimer"
                         android:layout_width="25dp"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="10dp"
-                        app:srcCompat="@drawable/notes_24"
+                        app:srcCompat="@drawable/ic_stopwatch"
                         app:tint="@color/black" />
                 </LinearLayout>
 

@@ -25,12 +25,28 @@
             app:cardElevation="0dp">
 
             <LinearLayout
+                android:baselineAligned="false"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:contentDescription="@string/indicates_that_this_item_can_be_moved_if_long_pressed"
+                        android:layout_width="25dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="10dp"
+                        app:srcCompat="@drawable/notes_24"
+                        app:tint="@color/black" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_margin="8dp"
                     android:layout_weight="1"
@@ -69,7 +85,8 @@
                             android:maxLines="1"
                             android:text="Exercise Name"
                             android:textColor="@color/black"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            tools:ignore="HardcodedText" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -82,7 +99,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="8dp"
                                 android:text="3 x 10"
-                                android:textColor="@color/gray" />
+                                android:textColor="@color/gray"
+                                tools:ignore="HardcodedText" />
 
                         </LinearLayout>
 
@@ -93,10 +111,11 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_gravity="right"
+                    android:layout_gravity="end"
                     android:orientation="horizontal">
 
                     <ImageView
+                        android:contentDescription="@string/edit_exercise"
                         android:id="@+id/editExercise_IV"
                         android:layout_width="25dp"
                         android:layout_height="match_parent"

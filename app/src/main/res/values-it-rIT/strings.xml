@@ -49,4 +49,9 @@
     <string name="searchView_queryHint">Cerca …</string>
     <string name="Cancel">Annulla</string>
     <string name="Delete">Elimina</string>
+    <string name="button_new_card">Ti permette di creare una nuova scheda</string>
+    <string name="saved_cards">Schede salvate</string>
+    <string name="if_clicked_allows_you_to_start_a_timer_for_the_given_exercise">Se cliccato inizia un timer per il recupero del corrispondente esercizio</string>
+    <string name="indicates_that_this_item_can_be_moved_if_long_pressed">Indica che questo item può essere spostato se viene effettuato un long press</string>
+    <string name="edit_exercise">Ti permette di modificare l\'esercizio</string>
 </resources>
