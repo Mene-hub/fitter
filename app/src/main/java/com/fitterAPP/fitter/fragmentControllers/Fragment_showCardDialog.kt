@@ -58,8 +58,6 @@ class Fragment_showCardDialog() : DialogFragment() {
         setStyle(STYLE_NORMAL, R.style.Theme_Fitter_FullScreenDialog)
     }
 
-    //TODO("Spostare un po' di robe in funzioni esterne in modo da rendere il tutto più leggibile")
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentShowCardDialogBinding.inflate(inflater, container, false)
 
@@ -70,15 +68,11 @@ class Fragment_showCardDialog() : DialogFragment() {
         newFitnessCard = args.cardBundle
         monthlyRecap = args.monthlyRecap
 
-        binding.backBt.setOnClickListener {
-            findNavController().navigateUp()
-        }
+        binding.backBt.setOnClickListener { findNavController().navigateUp() }
 
         val recycle : RecyclerView = binding.exercisesListRV
 
-        if(newFitnessCard.exercises == null){
-            newFitnessCard.exercises = ArrayList()
-        }
+        if(newFitnessCard.exercises == null){ newFitnessCard.exercises = ArrayList() }
 
         //adapter for the exercises
         adapter = FitnessCardExercisesAdapter((activity as MainActivity),newFitnessCard,false, monthlyRecap)
@@ -99,23 +93,16 @@ class Fragment_showCardDialog() : DialogFragment() {
         val itemTouchHelper = ItemTouchHelper(swipeGesture)
         itemTouchHelper.attachToRecyclerView(recycle)
 
-
-        //binding the card properties
-        val cardName : TextView = binding.CardNameTV
-        val cardDuration : TextView = binding.TimeDurationTV
-        val cardDescription: TextView = binding.DescriptionTV
-
         //setting the card properties
-        cardName.text = newFitnessCard.name
-        cardDescription.text = newFitnessCard.description
+        binding.CardNameTV.text = newFitnessCard.name
+        binding.DescriptionTV.text = newFitnessCard.description
         val text = newFitnessCard.timeDuration.toString() +" "+ getString(R.string.minutes)
-        cardDuration.text = text
-        val bgimage : ImageView = binding.CardBgImageIV
+        binding.TimeDurationTV.text = text
 
         //setting the image cover
         val id: Int = CardsCover.getResource(newFitnessCard.imageCover)
 
-        bgimage.setImageResource(id)
+        binding.CardBgImageIV.setImageResource(id)
 
         //open edith view for card
         val edithBtn : FloatingActionButton = binding.edithCardView
