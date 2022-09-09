@@ -54,4 +54,6 @@
     <string name="if_clicked_allows_you_to_start_a_timer_for_the_given_exercise">Se cliccato inizia un timer per il recupero del corrispondente esercizio</string>
     <string name="indicates_that_this_item_can_be_moved_if_long_pressed">Indica che questo item può essere spostato se viene effettuato un long press</string>
     <string name="edit_exercise">Ti permette di modificare l\'esercizio</string>
+    <string name="warning">Attenzione!</string>
+    <string name="warning_message_modify_alert">A seconda delle operazioni che andrai a fare potresti perdere gli attuali progressi sulla scheda</string>
 </resources>

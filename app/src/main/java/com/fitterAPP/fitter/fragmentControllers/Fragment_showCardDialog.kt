@@ -46,6 +46,7 @@ class Fragment_showCardDialog() : DialogFragment() {
     private lateinit var newFitnessCard : FitnessCard
     private lateinit var adapter : FitnessCardExercisesAdapter
     private var monthlyRecap : MonthlyRecap? = null
+    private var swiped : Boolean = false    //Used as a check to see if the user swiped (flagged as done) an exercise.
 
     /**
      * onCreate method which is used to set the dialog style. This method is paired with a WindowManager setting done in [onCreateView]
@@ -80,10 +81,10 @@ class Fragment_showCardDialog() : DialogFragment() {
 
         //Swipe manager
         val swipeGesture = object : SwipeGesture.SwipeGestureRight(requireContext()){
-
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 when(direction){
                     ItemTouchHelper.RIGHT -> {
+                        swiped = true
                         showAlertDialog(viewHolder)
                     }
                 }
@@ -110,8 +111,13 @@ class Fragment_showCardDialog() : DialogFragment() {
         screenHeightAdjustment()
 
         edithBtn.setOnClickListener {
-            val action : NavDirections = Fragment_showCardDialogDirections.actionFragmentShowCardDialogToModifyCard(newFitnessCard)
-            findNavController().navigate(action)
+            if(swiped){
+                showModifyAlertDialog()
+            }else{
+                val action : NavDirections = Fragment_showCardDialogDirections.actionFragmentShowCardDialogToModifyCard(newFitnessCard)
+                findNavController().navigate(action)
+            }
+
         }
 
         //gat database update
@@ -124,6 +130,18 @@ class Fragment_showCardDialog() : DialogFragment() {
         // Inflate the layout for this fragment
         return binding.root
     }
+
+    private fun showModifyAlertDialog() {
+        val builder = MaterialAlertDialogBuilder(requireContext(),  R.style.ThemeOverlay_App_MaterialAlertDialog)
+        builder.setTitle(getString(R.string.warning))
+        builder.setMessage(getString(R.string.warning_message_modify_alert))
+            .setPositiveButton("OK") { _, _ ->
+                val action : NavDirections = Fragment_showCardDialogDirections.actionFragmentShowCardDialogToModifyCard(newFitnessCard)
+                findNavController().navigate(action)
+            }.setNegativeButton(getString(R.string.Cancel)) { _, _ -> }.setOnDismissListener {}
+            .show()
+    }
+
 
     /**
      * @author Claudio Menegotto
