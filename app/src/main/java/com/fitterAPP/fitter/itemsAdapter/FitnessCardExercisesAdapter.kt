@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.findFragment
 import androidx.navigation.NavDirections
@@ -16,6 +18,7 @@ import com.fitterAPP.fitter.classes.*
 import com.fitterAPP.fitter.databases.StaticFitnessCardDatabase
 import com.fitterAPP.fitter.databases.StaticRecapDatabase
 import com.fitterAPP.fitter.fragmentControllers.*
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import java.time.LocalDate
 
@@ -48,7 +51,7 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
         var fitnessCard_ = fitnessCard
 
 
-        fun setCard(ex:Exercise, index : Int){
+        fun setCard(ex:Exercise, index : Int, context2: Context){
             exName.text = ex.exerciseName
 
             if(edit_){
@@ -67,9 +70,20 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
                 }
             }else
             {
-                itemView.setOnClickListener {
+                itemView.findViewById<LinearLayout>(R.id.descriptionItem).setOnClickListener {
                     showExerciseinformation(ex)
                 }
+
+                itemView.findViewById<ImageView>(R.id.exerciseTimer).setOnClickListener {
+                    //visualiizzazione del timer
+                    //TODO fare un metodo nel fragment paent pe fare il building della view e visualizzare un timer
+                }
+
+                itemView.findViewById<ImageView>(R.id.notesIV).setOnClickListener {
+                    //visualiizzazione del timer
+                    //TODO fare un metodo nel fragment paent pe fare il building della view e visualizzare le note (modifcabili)
+                }
+
             }
 
             when (ex.type){
@@ -201,7 +215,7 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         val ex: Exercise = fitnessCard.exercises!![position]
-        holder.setCard(ex, position)
+        holder.setCard(ex, position, context2)
     }
 
     override fun getItemCount(): Int {

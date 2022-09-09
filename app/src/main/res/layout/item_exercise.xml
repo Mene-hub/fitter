@@ -31,6 +31,7 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
+                    android:id="@+id/descriptionItem"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_margin="8dp"
@@ -100,13 +101,24 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:contentDescription="@string/if_clicked_allows_you_to_start_a_timer_for_the_given_exercise"
                         android:id="@+id/exerciseTimer"
                         android:layout_width="25dp"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="10dp"
+                        android:contentDescription="@string/if_clicked_allows_you_to_start_a_timer_for_the_given_exercise"
                         app:srcCompat="@drawable/ic_stopwatch"
                         app:tint="@color/black" />
+
+                    <ImageView
+                        android:id="@+id/notesIV"
+                        android:layout_width="25dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/if_clicked_allows_you_to_start_a_timer_for_the_given_exercise"
+                        app:srcCompat="@drawable/ic_baseline_edit_note_24"
+                        app:tint="@color/black" />
+
                 </LinearLayout>
 
             </LinearLayout>
