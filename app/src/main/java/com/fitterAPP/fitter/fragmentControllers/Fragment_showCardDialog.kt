@@ -110,6 +110,7 @@ class Fragment_showCardDialog() : DialogFragment() {
 
         screenHeightAdjustment()
 
+        //checks if the user set as done an exercise or not. If he didn't then it proceeds to navigate to modifyCard. If he did before doing that it'll prompt a warning
         edithBtn.setOnClickListener {
             if(swiped){
                 showModifyAlertDialog()
@@ -131,6 +132,11 @@ class Fragment_showCardDialog() : DialogFragment() {
         return binding.root
     }
 
+    /**
+     * This method is used to show an alert dialog when the user decides to go inside the modify card section and has some exercise set as done
+     * @author Daniel Satriano
+     * @since 09/09/2022
+     */
     private fun showModifyAlertDialog() {
         val builder = MaterialAlertDialogBuilder(requireContext(),  R.style.ThemeOverlay_App_MaterialAlertDialog)
         builder.setTitle(getString(R.string.warning))
