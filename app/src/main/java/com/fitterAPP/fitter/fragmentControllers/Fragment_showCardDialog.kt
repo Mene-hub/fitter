@@ -3,10 +3,7 @@ package com.fitterAPP.fitter.fragmentControllers
 import com.fitterAPP.fitter.R
 import android.app.Dialog
 import android.graphics.Rect
-import android.os.Build
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
+import android.os.*
 import android.util.DisplayMetrics
 import android.view.*
 import android.view.animation.Animation
@@ -34,6 +31,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
 class Fragment_showCardDialog() : DialogFragment() {
@@ -318,4 +316,84 @@ class Fragment_showCardDialog() : DialogFragment() {
             .show()
     }
 
+    /**
+     * funzione per la visualizzazione e gestione del timer dell'esercizio
+     */
+    fun showTimer(exercise: Exercise){
+        // Create an alert builder
+        val builder = MaterialAlertDialogBuilder(requireContext(),  R.style.ThemeOverlay_App_MaterialAlertDialog)
+        // set the custom layout
+
+        val customLayout: View = layoutInflater.inflate(R.layout.dialog_exercise_timer, null)
+
+
+        builder.setView(customLayout)
+
+        val timerTV : TextView = customLayout.findViewById(R.id.TV_Timer)
+        val progressbar:ProgressBar = customLayout.findViewById(R.id.progressBar)
+
+        //initialisiing the timer
+        var duration:Long = TimeUnit.SECONDS.toMillis(exercise.exerciseRest?.toLong()!!)
+
+
+        // time count down for 30 seconds,
+        // with 1 second as countDown interval
+        object : CountDownTimer(duration, 1000) {
+
+            // Callback function, fired on regular interval
+            override fun onTick(millisUntilFinished: Long) {
+                timerTV.setText((millisUntilFinished / 1000).toString() + "s")
+                //setting the progressbar
+                progressbar.progress += 100/(exercise.exerciseRest!!)
+            }
+
+            // Callback function, fired
+            // when the time is up
+            override fun onFinish() {
+            }
+
+        }.start()
+
+            // add a button
+            builder
+
+                .setPositiveButton("OK") { _, _ -> // send data from the
+
+                }
+
+                .setOnDismissListener {
+
+                }
+                .show()
+    }
+
+    /**
+     * funzione per la visualizzazione e gestione delle note dell'esercizio
+     */
+    fun showNotes(exercise: Exercise){
+
+        // Create an alert builder
+        val builder = MaterialAlertDialogBuilder(requireContext(),  R.style.ThemeOverlay_App_MaterialAlertDialog)
+
+        // set the custom layout
+        val customLayout: View = layoutInflater.inflate(R.layout.dialog_exercise_note, null)
+
+        builder.setView(customLayout)
+
+        var notes = customLayout.findViewById<EditText>(R.id.ET_notes)
+        notes.setText(exercise.notes)
+
+
+        // add a button
+        builder
+
+            .setPositiveButton("OK") { _, _ -> // send data from the
+                exercise.notes = notes.text.toString()
+            }
+
+            .setOnDismissListener {
+
+            }
+            .show()
+    }
 }

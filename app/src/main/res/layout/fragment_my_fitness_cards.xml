@@ -22,16 +22,15 @@
         android:id="@+id/addCard_BT"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="-16dp"
         android:clickable="true"
+        android:contentDescription="@string/button_new_card"
         android:src="@drawable/ic_baseline_add_24"
         app:iconGravity="end"
-        app:fabSize="mini"
         app:iconSize="20dp"
         app:layout_constraintBottom_toBottomOf="@+id/MyFitnessCards_Shimmer_RV"
-        app:layout_constraintEnd_toEndOf="@+id/MyFitnessCards_Shimmer_RV"
-        android:contentDescription="@string/button_new_card" />
+        app:layout_constraintEnd_toEndOf="@+id/MyFitnessCards_Shimmer_RV" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/MyFitnessCards_RV"

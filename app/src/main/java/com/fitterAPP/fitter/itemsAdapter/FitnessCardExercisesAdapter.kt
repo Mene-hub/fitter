@@ -76,12 +76,20 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
 
                 itemView.findViewById<ImageView>(R.id.exerciseTimer).setOnClickListener {
                     //visualiizzazione del timer
-                    //TODO fare un metodo nel fragment paent pe fare il building della view e visualizzare un timer
+                    try {
+                        itemView.findFragment<Fragment_showCardDialog>().showTimer(ex)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
 
                 itemView.findViewById<ImageView>(R.id.notesIV).setOnClickListener {
-                    //visualiizzazione del timer
-                    //TODO fare un metodo nel fragment paent pe fare il building della view e visualizzare le note (modifcabili)
+                    //visualiizzazione delle notes
+                    try {
+                        itemView.findFragment<Fragment_showCardDialog>().showNotes(ex)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
 
             }
