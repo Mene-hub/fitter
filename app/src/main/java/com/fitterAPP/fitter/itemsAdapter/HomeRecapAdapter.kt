@@ -12,6 +12,12 @@ import com.fitterAPP.fitter.R
 import com.fitterAPP.fitter.classes.FitnessCard
 import com.fitterAPP.fitter.fragmentControllers.MyFitnessCardsDirections
 
+/**
+ *
+ * @author Daniel Satriano
+ * @property context2 context
+ * @property Cards mutable list of cards
+ */
 class HomeRecapAdapter(private val context2: Context, private val Cards:MutableList<FitnessCard>) : RecyclerView.Adapter<HomeRecapAdapter.Holder>() {
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView){
