@@ -33,14 +33,14 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
     private val databaseRef = StaticFitnessCardDatabase.database.getReference(context2.getString(R.string.FitnessCardsReference))
 
     /**
-      * Used to check at the very start of the adapter if a given recap for a given card is already been done today. calls valueListener()
-      * @author Daniel Satriano
-      * @since 30/07/2022
-    */
+     * Used to check at the very start of the adapter if a given recap for a given card is already been done today. calls valueListener()
+     * @author Daniel Satriano
+     * @since 30/07/2022
+     */
 
-     init {
-         checkForNullOrCorrectYear()
-     }
+    init {
+        checkForNullOrCorrectYear()
+    }
 
     class Holder(itemView: View, edit: Boolean, fitnessCard: FitnessCard) : RecyclerView.ViewHolder(itemView) {
 
@@ -214,9 +214,9 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val view: View = if(!isEditable) {
-                LayoutInflater.from(context2).inflate(R.layout.item_exercise, parent, false)
+            LayoutInflater.from(context2).inflate(R.layout.item_exercise, parent, false)
         }else{
-                LayoutInflater.from(context2).inflate(R.layout.item_edit_exercise, parent, false)
+            LayoutInflater.from(context2).inflate(R.layout.item_edit_exercise, parent, false)
         }
         return Holder(view, isEditable, fitnessCard)
     }
