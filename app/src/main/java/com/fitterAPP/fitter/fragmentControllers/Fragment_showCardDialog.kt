@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.graphics.Rect
 import android.os.*
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.*
 import android.view.animation.Animation
 import android.widget.*
@@ -35,6 +36,11 @@ import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
 class Fragment_showCardDialog() : DialogFragment() {
+
+    companion object{
+        const val tagExerciseNote : String = "showCardDialog: ExerciseNote"
+    }
+
 
     /** The system calls this to get the DialogFragment's layout, regardless
     of whether it's being displayed as a dialog or an embedded fragment. */
@@ -372,7 +378,7 @@ class Fragment_showCardDialog() : DialogFragment() {
     /**
      * funzione per la visualizzazione e gestione delle note dell'esercizio
      */
-    fun showNotes(exercise: Exercise){
+    fun showNotes(exerciseIndex: Int){
 
         // Create an alert builder
         val builder = MaterialAlertDialogBuilder(requireContext(),  R.style.ThemeOverlay_App_MaterialAlertDialog)
@@ -384,22 +390,15 @@ class Fragment_showCardDialog() : DialogFragment() {
 
         val notes = customLayout.findViewById<EditText>(R.id.ET_notes)
         //setto le note nella grafica
-        notes.setText(exercise.notes)
-
+        notes.setText(newFitnessCard.exercises?.get(exerciseIndex)?.notes)
 
         // add a button
         builder
-
             .setPositiveButton("OK") { _, _ -> // send data from the
-                exercise.notes = notes.text.toString()
-
-                //carricamento delle note su database (non funziona)
+                newFitnessCard.exercises?.get(exerciseIndex)?.notes = notes.text.toString()
                 StaticFitnessCardDatabase.setFitnessCardItem(StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference)), Athlete.UID, newFitnessCard)
             }
-
-            .setOnDismissListener {
-
-            }
+            .setOnDismissListener {}
             .show()
     }
 }

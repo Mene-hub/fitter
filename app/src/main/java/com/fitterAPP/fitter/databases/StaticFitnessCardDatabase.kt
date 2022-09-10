@@ -34,8 +34,7 @@ class StaticFitnessCardDatabase {
         }
 
         override fun setFitnessCardItem(databaseRef : DatabaseReference, userID : String, card : FitnessCard){
-            val currentDate = card.key
-            databaseRef.child(userID).child(currentDate).setValue(card)
+            databaseRef.child(userID).child(card.key).setValue(card)
         }
 
         override fun removeFitnessCard(databaseRef : DatabaseReference, userID: String, key : String){

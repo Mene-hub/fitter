@@ -58,14 +58,12 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
                 itemView.findViewById<ImageView>(R.id.editExercise_IV).setOnClickListener {
                     val controller = itemView.findFragment<ModifyCard>().findNavController()
 
-                    val action : NavDirections? = when(ex.type){
+                    val action : NavDirections = when(ex.type){
                         ExerciseType.warmup-> ModifyCardDirections.actionModifyCardToSetWarmUpExercise(fitnessCard_, index, fitnessCard_.exercises?.get(index)!!)
                         ExerciseType.normal-> ModifyCardDirections.actionModifyCardToNewExercieFormDialog(fitnessCard_, index, fitnessCard_.exercises?.get(index)!!)
                         ExerciseType.pyramid-> ModifyCardDirections.actionModifyCardToSetPiramidalExercise(fitnessCard_, fitnessCard_.exercises?.get(index)!!, index)
                     }
-
-                    if(action != null)
-                        controller.navigate(action)
+                    controller.navigate(action)
 
                 }
             }else
@@ -86,7 +84,7 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
                 itemView.findViewById<ImageView>(R.id.notesIV).setOnClickListener {
                     //visualiizzazione delle notes
                     try {
-                        itemView.findFragment<Fragment_showCardDialog>().showNotes(ex)
+                        itemView.findFragment<Fragment_showCardDialog>().showNotes(fitnessCard_.exercises!!.indexOf(ex))
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
