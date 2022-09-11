@@ -80,5 +80,6 @@
     <string name="infoAlert">Be aware that you can swipe left to right (on an exercise) to set as done an exercise and in the modify card option you can swipe right to left to delete an exercise.</string>
     <string name="inforWger">The list of exercise is taken from wger REST API, which is an online free database.</string>
     <string name="infoAuthors">Authors: Daniel Satriano, Claudio Menegotto.</string>
+    <string name="infoButton">infoButton</string>
 
 </resources>

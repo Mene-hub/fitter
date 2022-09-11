@@ -61,4 +61,5 @@
     <string name="infoAlert">Tieni presente che puoi fare swipe da sinistra a destra (su un esercizio) per impostare come \"fatto\" un esercizio e inoltre nella sezione di modifica della card potrai fare swipe da destra verso sinistra per eliminare un esercizio.</string>
     <string name="inforWger">L\'elenco degli esercizio è preso usando la REST API di wger, un database online gratuito.</string>
     <string name="infoAuthors">Autori: Daniel Satriano, Claudio Menegotto.</string>
+    <string name="infoButton">bottone per le informazioni</string>
 </resources>
