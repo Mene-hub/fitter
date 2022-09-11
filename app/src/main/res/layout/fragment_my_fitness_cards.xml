@@ -111,7 +111,6 @@
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <com.facebook.shimmer.ShimmerFrameLayout
-        android:layout_marginHorizontal="16dp"
         android:id="@+id/MyRecaps_Shimmer_RV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -128,9 +127,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <include layout="@layout/item_fitnesscard_shimmer" />
-            <include layout="@layout/item_fitnesscard_shimmer" />
-            <include layout="@layout/item_fitnesscard_shimmer" />
+            <include layout="@layout/item_recap_shimmer" />
+            <include layout="@layout/item_recap_shimmer" />
         </LinearLayout>
 
     </com.facebook.shimmer.ShimmerFrameLayout>
