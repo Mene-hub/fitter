@@ -24,6 +24,7 @@
         </activity>
 
         <activity
+            android:hardwareAccelerated="true"
             android:name=".MainActivity"
             android:screenOrientation="portrait"
             android:exported="false" />

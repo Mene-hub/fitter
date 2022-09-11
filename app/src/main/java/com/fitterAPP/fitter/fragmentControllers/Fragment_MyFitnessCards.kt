@@ -18,6 +18,8 @@ import com.fitterAPP.fitter.MainActivity
 import com.fitterAPP.fitter.classes.CardsCover
 import com.fitterAPP.fitter.databinding.FragmentMyFitnessCardsBinding
 import com.fitterAPP.fitter.itemsAdapter.HomeRecapAdapter
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.RequestConfiguration
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -57,6 +59,9 @@ class MyFitnessCards : Fragment() {
         recycle.adapter = adapter
 
 
+        val mAdView = binding.adView
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
 
 
         val recapRecycle : RecyclerView = binding.MyRecapsRV
