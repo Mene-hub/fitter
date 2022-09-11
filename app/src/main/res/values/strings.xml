@@ -77,5 +77,8 @@
     <string name="banner_ad_live" translatable="false">ca-app-pub-6886882793354789/3180251707</string>
     <string name="Continue">Continue</string>
     <string name="account_delete_warning">Are you sure you want to delete your account? this operation cannot be stopped or undone</string>
+    <string name="infoAlert">Be aware that you can swipe left to right (on an exercise) to set as done an exercise and in the modify card option you can swipe right to left to delete an exercise.</string>
+    <string name="inforWger">The list of exercise is taken from wger REST API, which is an online free database.</string>
+    <string name="infoAuthors">Authors: Daniel Satriano, Claudio Menegotto.</string>
 
 </resources>

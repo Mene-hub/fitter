@@ -58,4 +58,7 @@
     <string name="warning_message_modify_alert">A seconda delle operazioni che andrai a fare potresti perdere gli attuali progressi sulla scheda</string>
     <string name="Continue">Continua</string>
     <string name="account_delete_warning">Sei sicuro di voler eliminare il tuo account? Questa operazione non può essere fermata o annullata</string>
+    <string name="infoAlert">Tieni presente che puoi fare swipe da sinistra a destra (su un esercizio) per impostare come \"fatto\" un esercizio e inoltre nella sezione di modifica della card potrai fare swipe da destra verso sinistra per eliminare un esercizio.</string>
+    <string name="inforWger">L\'elenco degli esercizio è preso usando la REST API di wger, un database online gratuito.</string>
+    <string name="infoAuthors">Autori: Daniel Satriano, Claudio Menegotto.</string>
 </resources>

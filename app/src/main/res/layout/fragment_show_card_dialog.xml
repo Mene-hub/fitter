@@ -13,6 +13,8 @@
         android:layout_height="match_parent"
         android:background="@color/white"
         android:fillViewport="true"
+
+
 >
 
         <androidx.core.widget.NestedScrollView
@@ -86,7 +88,18 @@
                             android:contentDescription="@string/backArrow"
                             app:srcCompat="@drawable/arrow_back"
                             app:tint="@color/darkgray" />
+
                     </androidx.cardview.widget.CardView>
+
+                    <ImageView
+                        android:id="@+id/IV_info"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginTop="?attr/actionBarSize"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:src="@drawable/ic_info"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

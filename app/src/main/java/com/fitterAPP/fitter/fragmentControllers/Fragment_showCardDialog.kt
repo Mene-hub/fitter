@@ -99,6 +99,8 @@ class Fragment_showCardDialog() : DialogFragment() {
         val itemTouchHelper = ItemTouchHelper(swipeGesture)
         itemTouchHelper.attachToRecyclerView(recycle)
 
+        binding.IVInfo.setOnClickListener(infoButtonListener())
+
         //setting the card properties
         binding.CardNameTV.text = newFitnessCard.name
         binding.DescriptionTV.text = newFitnessCard.description
@@ -135,6 +137,28 @@ class Fragment_showCardDialog() : DialogFragment() {
 
         // Inflate the layout for this fragment
         return binding.root
+    }
+
+    /**
+     * Method used to display an infoAlert when the info imageview is pressed on the layout.
+     * @author Daniel Satriano
+     * @since 12/09/2022
+     * @return OnClickListener
+     */
+    private fun infoButtonListener(): View.OnClickListener {
+        return View.OnClickListener{
+            val builder = MaterialAlertDialogBuilder(requireContext(),  R.style.ThemeOverlay_App_MaterialAlertDialog)
+            builder.setMessage(getString(R.string.infoAlert)
+                .plus(System.getProperty("line.separator"))
+                .plus(System.getProperty("line.separator"))
+                .plus(getString(R.string.inforWger))
+                .plus(System.getProperty("line.separator"))
+                .plus(System.getProperty("line.separator"))
+                .plus(getString(R.string.infoAuthors))
+
+            ).setPositiveButton("OK") { _, _ -> }.show()
+        }
+
     }
 
     /**
