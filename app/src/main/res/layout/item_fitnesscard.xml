@@ -4,7 +4,7 @@
     android:id="@+id/ItemCard_CardView"
     android:layout_width="150dp"
     android:layout_height="250dp"
-    android:layout_marginLeft="10dp"
+    android:layout_marginStart="10dp"
     app:cardCornerRadius="16dp">
 
     <ImageView
