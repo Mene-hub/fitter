@@ -69,7 +69,7 @@ class ShowOthersCardDialog : DialogFragment() {
         isChecked = args.isChecked
         val lottieAnimator = binding.lottieBookmark
 
-        val adapter = FitnessCardExercisesAdapter((activity as MainActivity), fitnessCard,false )
+        val adapter = FitnessCardExercisesAdapter((activity as MainActivity), fitnessCard,false, null,false )
         val bookmark = BookmarkCard(fitnessCard, args.ownerUID)
 
         binding.CardNameTV.text = fitnessCard.name

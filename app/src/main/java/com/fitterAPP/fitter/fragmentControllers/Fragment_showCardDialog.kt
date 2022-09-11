@@ -81,7 +81,7 @@ class Fragment_showCardDialog() : DialogFragment() {
         if(newFitnessCard.exercises == null){ newFitnessCard.exercises = ArrayList() }
 
         //adapter for the exercises
-        adapter = FitnessCardExercisesAdapter((activity as MainActivity),newFitnessCard,false, monthlyRecap)
+        adapter = FitnessCardExercisesAdapter((activity as MainActivity),newFitnessCard,false, monthlyRecap, true)
         recycle.adapter = adapter
 
         //Swipe manager
@@ -327,52 +327,67 @@ class Fragment_showCardDialog() : DialogFragment() {
      * funzione per la visualizzazione e gestione del timer dell'esercizio
      */
     fun showTimer(exercise: Exercise){
-        // Create an alert builder
-        val builder = MaterialAlertDialogBuilder(requireContext(),  R.style.ThemeOverlay_App_MaterialAlertDialog)
-        // set the custom layout
+        try {
+            // Create an alert builder
+            val builder = MaterialAlertDialogBuilder(
+                requireContext(),
+                R.style.ThemeOverlay_App_MaterialAlertDialog
+            )
 
-        val customLayout: View = layoutInflater.inflate(R.layout.dialog_exercise_timer, null)
+            // set the custom layout
+            val customLayout: View = layoutInflater.inflate(R.layout.dialog_exercise_timer, null)
 
 
-        builder.setView(customLayout)
+            builder.setView(customLayout)
 
-        val timerTV : TextView = customLayout.findViewById(R.id.TV_Timer)
-        val progressbar:ProgressBar = customLayout.findViewById(R.id.progressBar)
+            val timerTV: TextView = customLayout.findViewById(R.id.TV_Timer)
+            val dialogtitle: TextView = customLayout.findViewById(R.id.DialogTitle_TV)
+            val progressbar: ProgressBar = customLayout.findViewById(R.id.progressBar)
 
-        //initialisiing the timer
-        var duration:Long = TimeUnit.SECONDS.toMillis(exercise.exerciseRest?.toLong()!!)
+            var duration: Long = 0
 
-        progressbar.max = exercise.exerciseRest!!.toInt()
 
-        // time count down for 30 seconds,
-        // with 1 second as countDown interval
-        object : CountDownTimer(duration, 1000) {
-
-            // Callback function, fired on regular interval
-            override fun onTick(millisUntilFinished: Long) {
-                timerTV.setText((millisUntilFinished / 1000).toString() + "s")
-                //setting the progressbar
-                progressbar.progress += 1
+            //initialisiing the timer
+            if (exercise.type == ExerciseType.warmup) {
+                duration = TimeUnit.MINUTES.toMillis(exercise.exerciseDuration?.toLong()!!)
+                dialogtitle.setText(context?.getText(R.string.duration))
+            } else {
+                duration = TimeUnit.SECONDS.toMillis(exercise.exerciseRest?.toLong()!!)
+                dialogtitle.setText(context?.getText(R.string.restore_time))
             }
 
-            // Callback function, fired
-            // when the time is up
-            override fun onFinish() {
-            }
+            progressbar.max = exercise.exerciseRest!!.toInt()
 
-        }.start()
+            // time count down for 30 seconds,
+            // with 1 second as countDown interval
+            object : CountDownTimer(duration, 1000) {
 
-        // add a button
-        builder
+                // Callback function, fired on regular interval
+                override fun onTick(millisUntilFinished: Long) {
+                    timerTV.setText((millisUntilFinished / 1000).toString() + "s")
+                    //setting the progressbar
+                    progressbar.progress += 1
+                }
 
-            .setPositiveButton("OK") { _, _ -> // send data from the
+                // Callback function, fired
+                // when the time is up
+                override fun onFinish() {
+                }
 
-            }
+            }.start()
 
-            .setOnDismissListener {
+            // add a button
+            builder
 
-            }
-            .show()
+                .setPositiveButton("OK") { _, _ -> // send data from the
+
+                }
+
+                .setOnDismissListener {
+
+                }
+                .show()
+        }catch(e:Exception){e.printStackTrace()}
     }
 
     /**

@@ -79,7 +79,7 @@ class ModifyCard() : DialogFragment() {
             fitnessCard.exercises = ArrayList()
 
         if(fitnessCard.exercises != null){
-            adapter = FitnessCardExercisesAdapter((activity as MainActivity),fitnessCard, true )
+            adapter = FitnessCardExercisesAdapter((activity as MainActivity),fitnessCard, true , null, false)
             recycle.adapter = adapter
 
             //Inserisco il gestore dello SWIPE della listview

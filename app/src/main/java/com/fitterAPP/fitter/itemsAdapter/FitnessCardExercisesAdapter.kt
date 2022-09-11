@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.findFragment
 import androidx.navigation.NavDirections
@@ -26,7 +28,7 @@ import java.time.LocalDate
  * Adapter for the Exercise RecycleView used for showind and edith exercises
  * @author Claudio Menegotto
  */
-class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: FitnessCard, val isEditable : Boolean, var monthlyRecap : MonthlyRecap? = null) : RecyclerView.Adapter<FitnessCardExercisesAdapter.Holder>() {
+class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: FitnessCard, val isEditable : Boolean, var monthlyRecap : MonthlyRecap? = null, var showControls:Boolean) : RecyclerView.Adapter<FitnessCardExercisesAdapter.Holder>() {
 
     val database = StaticRecapDatabase.database.getReference(context2.getString(R.string.RecapReference))
 
@@ -42,13 +44,14 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
         checkForNullOrCorrectYear()
     }
 
-    class Holder(itemView: View, edit: Boolean, fitnessCard: FitnessCard) : RecyclerView.ViewHolder(itemView) {
+    class Holder(itemView: View, edit: Boolean, fitnessCard: FitnessCard, showControls:Boolean) : RecyclerView.ViewHolder(itemView) {
 
         val exName : TextView = itemView.findViewById(R.id.ExName_TV)
         val exReps : TextView = itemView.findViewById(R.id.ExReps_TV)
         val icon : ImageView = itemView.findViewById(R.id.exercise_icon_IV)
         val edit_ : Boolean = edit
         var fitnessCard_ = fitnessCard
+        var showControls_ = showControls
 
 
         fun setCard(ex:Exercise, index : Int, context2: Context){
@@ -68,18 +71,23 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
                 }
             }else
             {
+                itemView.findViewById<LinearLayout>(R.id.propertys_LL).isGone = !showControls_
+
                 itemView.findViewById<LinearLayout>(R.id.descriptionItem).setOnClickListener {
                     showExerciseinformation(ex)
                 }
 
-                itemView.findViewById<ImageView>(R.id.exerciseTimer).setOnClickListener {
-                    //visualiizzazione del timer
-                    try {
-                        itemView.findFragment<Fragment_showCardDialog>().showTimer(ex)
-                    } catch (e: Exception) {
-                        e.printStackTrace()
+                if(ex.type == ExerciseType.warmup)
+                    itemView.findViewById<ImageView>(R.id.exerciseTimer).isGone = true
+                else
+                    itemView.findViewById<ImageView>(R.id.exerciseTimer).setOnClickListener {
+                        //visualiizzazione del timer
+                        try {
+                            itemView.findFragment<Fragment_showCardDialog>().showTimer(ex)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
                     }
-                }
 
                 itemView.findViewById<ImageView>(R.id.notesIV).setOnClickListener {
                     //visualiizzazione delle notes
@@ -216,7 +224,7 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
         }else{
             LayoutInflater.from(context2).inflate(R.layout.item_edit_exercise, parent, false)
         }
-        return Holder(view, isEditable, fitnessCard)
+        return Holder(view, isEditable, fitnessCard, showControls)
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
