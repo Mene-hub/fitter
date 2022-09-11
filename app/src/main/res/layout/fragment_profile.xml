@@ -12,18 +12,17 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
 
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
 
-        app:cardElevation="50dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
             android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
@@ -31,30 +30,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/HorizontalMargin_profile"
-                android:layout_marginBottom="8dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="8dp"
 
                 app:boxCornerRadiusBottomEnd="10dp"
                 app:boxCornerRadiusBottomStart="10dp"
 
-                app:counterEnabled="true"
-                app:counterMaxLength="20"
-
                 app:boxCornerRadiusTopEnd="10dp"
                 app:boxCornerRadiusTopStart="10dp"
+
+                app:counterEnabled="true"
+                app:counterMaxLength="20"
                 app:helperTextTextColor="@color/red"
                 app:startIconDrawable="@drawable/person_24">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:inputType="text"
-                    android:digits="qwertzuiopasdfghjklyxcvbnm._1234567890"
                     android:id="@+id/et_username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:digits="qwertzuiopasdfghjklyxcvbnm._1234567890"
                     android:drawablePadding="10dp"
                     android:fontFamily="@font/roboto_regular"
-                    android:maxLength="20"
-                    android:hint="@string/Username" />
+                    android:hint="@string/Username"
+                    android:inputType="text"
+                    android:maxLength="20" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -78,12 +77,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawablePadding="10dp"
-                    android:hint="@string/bio"
-                    android:text=""
-                    android:gravity="top|start"
                     android:fontFamily="@font/roboto_regular"
+                    android:gravity="top|start"
+                    android:hint="@string/bio"
                     android:lines="3"
-                    android:maxLength="100" />
+                    android:maxLength="100"
+                    android:text="" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -99,57 +98,56 @@
                 app:boxCornerRadiusTopEnd="10dp"
                 app:boxCornerRadiusTopStart="10dp"
 
-                app:errorTextColor="@color/red"
-                app:errorIconTint="@color/red"
                 app:errorEnabled="true"
                 app:errorIconDrawable="@drawable/ic_error"
+                app:errorIconTint="@color/red"
+                app:errorTextColor="@color/red"
                 app:startIconDrawable="@drawable/ic_email_24">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:focusable="false"
-                    android:inputType="none"
-                    android:editable="false"
                     android:id="@+id/et_email"
-                    android:fontFamily="@font/roboto_regular"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawablePadding="10dp"
+                    android:editable="false"
+                    android:focusable="false"
+                    android:fontFamily="@font/roboto_regular"
                     android:hint="@string/Email"
+                    android:inputType="none"
 
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="10dp"
+            <ImageButton
                 android:id="@+id/btn_update"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/HorizontalMargin_profile"
-
-                android:fontFamily="@font/roboto_regular"
-                android:text="@string/common_google_play_services_update_button"
-                android:textSize="17sp" />
-
-            <Button
-                android:layout_gravity="end"
-                android:layout_marginBottom="10dp"
-                android:id="@+id/btn_delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/HorizontalMargin_profile"
-
-                android:backgroundTint="@color/red"
-
-                android:fontFamily="@font/roboto_regular"
-                android:text="@string/delete"
-                android:textSize="14sp" />
+                android:layout_gravity="right"
+                android:layout_marginEnd="16dp"
+                android:backgroundTint="@color/primary"
+                android:src="@drawable/done"
+                android:tint="@color/white" />
 
         </LinearLayout>
 
 
     </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/btn_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/red"
+        android:fontFamily="@font/roboto_regular"
+        android:text="@string/delete"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
