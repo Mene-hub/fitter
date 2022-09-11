@@ -56,4 +56,6 @@
     <string name="edit_exercise">Ti permette di modificare l\'esercizio</string>
     <string name="warning">Attenzione!</string>
     <string name="warning_message_modify_alert">A seconda delle operazioni che andrai a fare potresti perdere gli attuali progressi sulla scheda</string>
+    <string name="Continue">Continua</string>
+    <string name="account_delete_warning">Sei sicuro di voler eliminare il tuo account? Questa operazione non può essere fermata o annullata</string>
 </resources>

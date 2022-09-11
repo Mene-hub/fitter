@@ -12,6 +12,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.facebook.login.LoginManager
 import com.fitterAPP.fitter.MainActivity
@@ -22,6 +23,7 @@ import com.fitterAPP.fitter.databases.StaticFitnessCardDatabase
 import com.fitterAPP.fitter.databases.StaticRecapDatabase
 import com.fitterAPP.fitter.databinding.FragmentProfileBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.navigation.NavigationBarView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -71,21 +73,32 @@ class Profile : Fragment() {
 
     private fun deleteProfile(): View.OnClickListener {
         return View.OnClickListener {
-            //("Delete bookmark_cards")
-            val bookmarkReference = StaticBookmarkDatabase.database.getReference(getString(R.string.BookmarkReference))
-            StaticBookmarkDatabase.removeAllUserBookmark(bookmarkReference,Athlete.UID)
-            //("Delete recap_cards")
-            val recapReference = StaticRecapDatabase.database.getReference(getString(R.string.RecapReference))
-            StaticRecapDatabase.removeAllRecap(recapReference,Athlete.UID)
-            //("Delete user athlete infos")
-            val infoReference = dbReference
-            StaticAthleteDatabase.removeAthlete(infoReference, Athlete.UID)
-            //("Delete fitnessCards")
-            val fitnessReference = StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference))
-            StaticFitnessCardDatabase.removeAllFitnessCard(fitnessReference, Athlete.UID)
-            //("Delete profile auth")
-            auth.currentUser?.delete()
-            (requireActivity() as MainActivity).logout()
+
+            val builder = MaterialAlertDialogBuilder(requireContext(),  R.style.ThemeOverlay_App_MaterialAlertDialog)
+            builder.setTitle(getString(R.string.warning))
+            builder.setMessage(getString(R.string.account_delete_warning))
+                .setPositiveButton(getString(R.string.Continue)) { _, _ ->
+
+                    //("Delete bookmark_cards")
+                    val bookmarkReference = StaticBookmarkDatabase.database.getReference(getString(R.string.BookmarkReference))
+                    StaticBookmarkDatabase.removeAllUserBookmark(bookmarkReference,Athlete.UID)
+                    //("Delete recap_cards")
+                    val recapReference = StaticRecapDatabase.database.getReference(getString(R.string.RecapReference))
+                    StaticRecapDatabase.removeAllRecap(recapReference,Athlete.UID)
+                    //("Delete user athlete infos")
+                    val infoReference = dbReference
+                    StaticAthleteDatabase.removeAthlete(infoReference, Athlete.UID)
+                    //("Delete fitnessCards")
+                    val fitnessReference = StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference))
+                    StaticFitnessCardDatabase.removeAllFitnessCard(fitnessReference, Athlete.UID)
+                    //("Delete profile auth")
+                    auth.currentUser?.delete()
+                    (requireActivity() as MainActivity).logout()
+
+                }.setNegativeButton(getString(R.string.Cancel)) { _, _ -> }.setOnDismissListener {}
+                .show()
+
+
         }
     }
 

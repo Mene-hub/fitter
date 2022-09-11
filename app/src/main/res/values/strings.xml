@@ -75,5 +75,7 @@
     <string name="native_ad_id_test" translatable="false">ca-app-pub-3940256099942544/2247696110</string>
     <string name="banner_ad_test" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
     <string name="banner_ad_live" translatable="false">ca-app-pub-6886882793354789/3180251707</string>
+    <string name="Continue">Continue</string>
+    <string name="account_delete_warning">Are you sure you want to delete your account? this operation cannot be stopped or undone</string>
 
 </resources>
