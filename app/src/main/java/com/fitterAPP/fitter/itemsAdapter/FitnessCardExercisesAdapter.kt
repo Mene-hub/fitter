@@ -62,9 +62,9 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
                     val controller = itemView.findFragment<ModifyCard>().findNavController()
 
                     val action : NavDirections = when(ex.type){
-                        ExerciseType.warmup-> ModifyCardDirections.actionModifyCardToSetWarmUpExercise(fitnessCard_, index, fitnessCard_.exercises?.get(index)!!)
-                        ExerciseType.normal-> ModifyCardDirections.actionModifyCardToNewExercieFormDialog(fitnessCard_, index, fitnessCard_.exercises?.get(index)!!)
-                        ExerciseType.pyramid-> ModifyCardDirections.actionModifyCardToSetPiramidalExercise(fitnessCard_, fitnessCard_.exercises?.get(index)!!, index)
+                        ExerciseType.warmup-> ModifyCardDirections.actionModifyCardToSetWarmUpExercise(fitnessCard_, index,ex)
+                        ExerciseType.normal-> ModifyCardDirections.actionModifyCardToNewExercieFormDialog(fitnessCard_, index, ex)
+                        ExerciseType.pyramid-> ModifyCardDirections.actionModifyCardToSetPiramidalExercise(fitnessCard_, ex, index)
                     }
                     controller.navigate(action)
 
