@@ -92,7 +92,7 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
                 itemView.findViewById<ImageView>(R.id.notesIV).setOnClickListener {
                     //visualiizzazione delle notes
                     try {
-                        itemView.findFragment<Fragment_showCardDialog>().showNotes(fitnessCard_.exercises!!.indexOf(ex))
+                        itemView.findFragment<Fragment_showCardDialog>().showNotes(index)
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }

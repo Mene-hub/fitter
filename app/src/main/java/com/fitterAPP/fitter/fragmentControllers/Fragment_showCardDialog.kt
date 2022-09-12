@@ -210,7 +210,6 @@ class Fragment_showCardDialog() : DialogFragment() {
                     newFitnessCard = snapshot.getValue(FitnessCard::class.java)!!
 
                     val id: Int = CardsCover.getResource(newFitnessCard.imageCover)
-
                     binding.CardBgImageIV.setImageResource(id)
 
                     binding.CardNameTV.text = newFitnessCard.name
