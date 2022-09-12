@@ -106,10 +106,17 @@ class FitnessCardAdapter (val context2: Context, private val Cards:MutableList<F
     private fun currentMonthRecapListener(Card: FitnessCard): ValueEventListener {
         return object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val item = snapshot.getValue(MonthlyRecap::class.java)
-                val action : NavDirections = MyFitnessCardsDirections.actionMyFitnessCardsToFragmentShowCardDialog(Card, item)
-                val containerView : FragmentContainerView = (context2 as MainActivity).findViewById(R.id.FragmentContainer)
-                Navigation.findNavController(containerView).navigate(action)
+                try {
+                    val item = snapshot.getValue(MonthlyRecap::class.java)
+                    val action: NavDirections =
+                        MyFitnessCardsDirections.actionMyFitnessCardsToFragmentShowCardDialog(
+                            Card,
+                            item
+                        )
+                    val containerView: FragmentContainerView =
+                        (context2 as MainActivity).findViewById(R.id.FragmentContainer)
+                    Navigation.findNavController(containerView).navigate(action)
+                }catch(e:IllegalArgumentException){e.printStackTrace()}
             }
 
             override fun onCancelled(error: DatabaseError) {

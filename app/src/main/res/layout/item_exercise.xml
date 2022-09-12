@@ -39,8 +39,9 @@
                     android:orientation="horizontal">
 
                     <androidx.cardview.widget.CardView
-                        android:layout_width="54dp"
-                        android:layout_height="match_parent"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center_vertical"
                         app:cardBackgroundColor="@color/white"
                         app:cardCornerRadius="10dp"
                         app:cardElevation="0dp">
@@ -52,7 +53,8 @@
                             android:layout_gravity="center"
                             android:contentDescription="@string/background_image"
                             android:padding="10dp"
-                            android:scaleType="centerCrop" />
+                            android:scaleType="center"
+                            tools:srcCompat="@drawable/normal_exercise_icon" />
 
                     </androidx.cardview.widget.CardView>
 
@@ -103,20 +105,22 @@
 
                     <ImageView
                         android:id="@+id/exerciseTimer"
-                        android:layout_width="25dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginHorizontal="10dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center_vertical"
                         android:contentDescription="@string/if_clicked_allows_you_to_start_a_timer_for_the_given_exercise"
+                        android:scaleType="center"
                         app:srcCompat="@drawable/ic_stopwatch"
                         app:tint="@color/black" />
 
                     <ImageView
                         android:id="@+id/notesIV"
-                        android:layout_width="25dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginHorizontal="10dp"
-                        android:layout_weight="1"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="5dp"
                         android:contentDescription="@string/if_clicked_allows_you_to_start_a_timer_for_the_given_exercise"
+                        android:scaleType="center"
                         app:srcCompat="@drawable/ic_baseline_edit_note_24"
                         app:tint="@color/black" />
 
