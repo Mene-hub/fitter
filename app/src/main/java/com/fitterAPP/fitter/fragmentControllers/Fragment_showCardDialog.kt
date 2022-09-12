@@ -74,7 +74,10 @@ class Fragment_showCardDialog() : DialogFragment() {
         newFitnessCard = args.cardBundle
         monthlyRecap = args.monthlyRecap
 
-        binding.backBt.setOnClickListener { findNavController().navigateUp() }
+        binding.backBt.setOnClickListener {
+            StaticFitnessCardDatabase.setFitnessCardItem(StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference)), Athlete.UID, newFitnessCard)
+            findNavController().navigateUp()
+        }
 
         val recycle : RecyclerView = binding.exercisesListRV
 
@@ -434,7 +437,6 @@ class Fragment_showCardDialog() : DialogFragment() {
         builder
             .setPositiveButton("OK") { _, _ -> // send data from the
                 newFitnessCard.exercises?.get(exerciseIndex)?.notes = notes.text.toString()
-                StaticFitnessCardDatabase.setFitnessCardItem(StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference)), Athlete.UID, newFitnessCard)
             }
             .setOnDismissListener {}
             .show()
