@@ -52,6 +52,9 @@ class Fragment_showCardDialog() : DialogFragment() {
     private var monthlyRecap : MonthlyRecap? = null
     private var swiped : Boolean = false    //Used as a check to see if the user swiped (flagged as done) an exercise.
 
+    //true quando viene aggionata una note altrimenti false
+    private var noteupdate:Boolean = false
+
 
     /**
      * onCreate method which is used to set the dialog style. This method is paired with a WindowManager setting done in [onCreateView]
@@ -227,7 +230,11 @@ class Fragment_showCardDialog() : DialogFragment() {
                         adapter.notifyItemInserted(newFitnessCard.exercises!!.size)
                     }
 
-                    adapter.notifyDataSetChanged()
+                    //quando l'update della scheda viene fatto solo per le notes allora non viene eseguito il notify
+                    if(!noteupdate)
+                        adapter.notifyDataSetChanged()
+
+                    noteupdate = false
                 }
             }
 
@@ -434,6 +441,9 @@ class Fragment_showCardDialog() : DialogFragment() {
         builder
             .setPositiveButton("OK") { _, _ -> // send data from the
                 newFitnessCard.exercises?.get(exerciseIndex)?.notes = notes.text.toString()
+
+                //tue perchè ho aggiornato le notes
+                noteupdate = true
                 StaticFitnessCardDatabase.setFitnessCardItem(StaticFitnessCardDatabase.database.getReference(getString(R.string.FitnessCardsReference)), Athlete.UID, newFitnessCard)
             }
             .setOnDismissListener {}
