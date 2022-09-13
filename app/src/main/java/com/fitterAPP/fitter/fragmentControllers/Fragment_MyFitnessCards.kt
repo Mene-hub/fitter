@@ -155,7 +155,7 @@ class MyFitnessCards : Fragment() {
                 val description = customLayout.findViewById<EditText>(R.id.et_description).text.toString()
                 val duration = customLayout.findViewById<EditText>(R.id.et_duration).text.toString()
 
-                if((name.isNotBlank() && name != "") || (duration.isNotBlank() && duration != "")){
+                if((name.isNotBlank() && name != "") && (duration.isNotBlank() && duration != "")){
                     newFitnessCard.name = name
                     newFitnessCard.description = description
                     newFitnessCard.key = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-M-yyyy hh:mm:ss"))
