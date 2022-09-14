@@ -77,7 +77,7 @@ class FitnessCardExercisesAdapter (val context2: Context, val fitnessCard: Fitne
                     showExerciseinformation(ex)
                 }
 
-                if(ex.type == ExerciseType.warmup)
+                if(ex.type == ExerciseType.warmup || ex.exerciseRest == 0)
                     itemView.findViewById<ImageView>(R.id.exerciseTimer).isGone = true
                 else
                     itemView.findViewById<ImageView>(R.id.exerciseTimer).setOnClickListener {
