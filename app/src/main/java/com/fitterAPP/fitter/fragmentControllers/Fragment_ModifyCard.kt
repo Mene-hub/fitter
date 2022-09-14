@@ -228,7 +228,7 @@ class ModifyCard() : DialogFragment() {
                 cardDescription.text = fitnessCard.description
 
                 //Hypothetically the new item will always be the last one in the list, unless we do some swapping manually.
-                adapter.notifyItemInserted(fitnessCard.exercises!!.size)
+                adapter.notifyDataSetChanged()
 
                 try {
                     cardDuration.text = fitnessCard.timeDuration.toString().plus(" " + getString(R.string.minutes))
